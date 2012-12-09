@@ -1,5 +1,12 @@
 <resources>
-
+	<string name="login_title">Únete a Wikicleta</string>
+	<string name="login_subtitle">¿Ya te registraste en Wikicleta? \nInicia sesión aquí:</string>
+	<string name="login_subtitle_social_nets">O mediante una red social</string>
+	<string name="login_subtitle_register">Registrate con tu correo electrónico</string>
+	<string name="login_register">Registrarme</string>
+	
+	<string name="twitter">Twitter</string>
+	<string name="facebook">Facebook</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Correo electrónico</string>
     <string name="prompt_password">Contraseña</string>

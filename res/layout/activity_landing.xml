@@ -1,61 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#3366FF"
     android:orientation="vertical" >
-
+	
+    <ImageView
+        android:id="@+id/photo1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:contentDescription="@string/none"
+        android:src="@drawable/photo_1"
+        android:layout_gravity="center" 
+        android:scaleType="centerCrop" />
+    
     <ImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
         android:contentDescription="@string/none"
         android:drawingCacheQuality="high"
         android:src="@drawable/logo" />
 
     <RelativeLayout
-        android:id="@+id/container" 
+        android:id="@+id/container"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="40dp">
-        
-        <Button
-        android:id="@+id/join"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/container"
-        android:layout_alignParentRight="true"
-        android:textSize="20dp"
-        android:textStyle="bold"
-		android:paddingRight="20dp"
-		android:paddingLeft="20dp"
-		android:paddingTop="5dp"
-		android:paddingBottom="10dp"
-		android:text="Únete" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+		android:layout_alignParentBottom="true" >
 
         <Button
-        android:id="@+id/explore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_marginRight="40dp"
-		android:layout_alignParentLeft="true"       
-		android:textSize="20dp" 
-		android:textStyle="bold"
-		android:paddingRight="20dp"
-		android:paddingLeft="20dp"
-		android:paddingBottom="10dp"
-		android:paddingTop="5dp"
-        android:text="Explora" />
+            android:id="@+id/join"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/container"
+            android:layout_alignParentRight="true"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="5dp"
+            android:text="Únete"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/explore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/button1"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="40dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="5dp"
+            android:text="Explora"
+            android:textSize="20dp"
+            android:textStyle="bold" />
     </RelativeLayout>
-
-
 
 </RelativeLayout>
 
