@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Landing Activity strings -->
+    <string name="landing_join_button">Únete</string>
+    <string name="landing_explore_button">Explora</string>
+    
+    <!-- Registration Activity strings -->
+    <string name="registration_title">Registro</string>
+    <string name="registration_prologue_text">Para registrarte, solo necesitamos los siguientes datos:</string>
+    <string name="registration_accept_button">Aceptar</string>
+    <string name="registration_back_button">Regresar</string>
+    
+    
+	<!-- Login Activity strings -->
+	<string name="login_title">Únete a Wikicleta</string>
+	<string name="login_subtitle">¿Ya te registraste en Wikicleta? \nInicia sesión aquí:</string>
+	<string name="login_subtitle_social_nets">O mediante una red social</string>
+	<string name="login_subtitle_register">Registrate con tu correo electrónico</string>
+	<string name="login_register">Registrarme</string>
+	
+	<string name="twitter">Twitter</string>
+	<string name="facebook">Facebook</string>
+    
+    <string name="prompt_email">Correo electrónico</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="prompt_password_confirmation">Confirma tu contraseña</string>
+    <string name="prompt_name">Tu nombre</string>
+    
+    <string name="action_sign_in_register"><b>Iniciar sesión</b></string>
+    <string name="action_sign_in_short">Iniciar sesión</string>
+    <string name="menu_forgot_password">Recuperar contraseña</string>
+    <string name="login_progress_signing_in">Iniciando sesión&#8230;</string>
+    <string name="error_invalid_email">El email no es válido</string>
+    <string name="error_invalid_password">La contraseña es demasiado corta</string>
+    <string name="error_incorrect_password">La contraseña es incorrecta</string>
+    <string name="error_field_required">Este campo es requerido</string>
+	<string name="none"></string>
+</resources>

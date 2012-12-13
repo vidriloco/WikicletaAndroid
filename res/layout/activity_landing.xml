@@ -43,23 +43,23 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="5dp"
-            android:text="Únete"
-            android:textSize="20dp"
+            android:text="@string/landing_join_button"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/explore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/button1"
+            android:layout_alignBottom="@+id/join"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="40dp"
             android:paddingBottom="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="5dp"
-            android:text="Explora"
-            android:textSize="20dp"
+            android:text="@string/landing_explore_button"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </RelativeLayout>
 

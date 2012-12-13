@@ -59,7 +59,7 @@
         android:layout_marginTop="55dp" >
 		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     		android:layout_width="fill_parent"
-    		android:layout_height="fill_parent"
+    		android:layout_height="wrap_content"
     		android:orientation="vertical">
 		    <RelativeLayout
             style="@style/LoginFormContainer"
@@ -119,8 +119,6 @@
                 android:layout_marginTop="5dp"
                 android:text="@string/action_sign_in_register" />
 
-
-			
         </RelativeLayout>
         	<RelativeLayout
 	    		android:layout_width="fill_parent"
@@ -176,7 +174,7 @@
 		           	android:textSize="18sp"/>
 		
 		    	<Button
-		    	    android:id="@+id/register"
+		    	    android:id="@+id/register_button"
 		    	    style="?android:attr/buttonStyleSmall"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
@@ -192,6 +190,4 @@
 		</LinearLayout>
         
     </ScrollView>
-
-	
 </merge>
