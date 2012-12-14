@@ -144,7 +144,11 @@ public class LoginActivity extends LoadingWithMessageActivity {
 				Map<String, String> parameters = new LinkedHashMap<String, String>();
 				parameters.put("email", mEmail);
 				parameters.put("password", mPassword);
-				NetworkOperations.postTo("/api/sessions", parameters);
+				
+				Map<String, Map<String, String>> superParams = new LinkedHashMap<String, Map<String, String>>();
+				superParams.put("session", parameters);
+				
+				NetworkOperations.postTo("/api/sessions", superParams);
 			} catch (Exception e) {
 				return false;
 			}

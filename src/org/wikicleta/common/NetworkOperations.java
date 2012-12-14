@@ -13,7 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.simple.*;
 
 public class NetworkOperations {
-	static String serverHost = "http://10.219.185.227:3000";
+	static String serverHost = "http://192.168.1.64:3000/";
 	
 	@SuppressWarnings("unchecked")
 	public static HttpResponse postTo(String path, Map<?,?> params) throws ClientProtocolException, IOException {

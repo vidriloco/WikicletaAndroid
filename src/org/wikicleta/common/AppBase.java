@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Timer;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -21,22 +20,8 @@ import android.view.Display;
 
 @SuppressLint("NewApi")
 public class AppBase {
-
-	private static String url = "http://132.248.51.251:9000/";
-	private static String routesResourceURL = "transports/8/lines";
-	private static String vehiclesResourceURL = "vehicles";
-	private static String instantsResourceURL = "instants/lastminute";
-	private static String serviceGeneralStatus = "service/status";
-	private static Timer timer;
 	
 	public static Activity currentActivity;
-	
-	public static Timer globalTimer() {
-		if(timer == null) {
-			timer = new Timer();
-		}
-		return timer;
-	}
 	
 	public static Display getScreenSize() {
 		return currentActivity.getWindowManager().getDefaultDisplay();
@@ -44,13 +29,7 @@ public class AppBase {
 	
 	public static String urlFor(String string) throws BadURLResourceException {
 		if(string.equalsIgnoreCase("routes"))
-			return url.concat(routesResourceURL);
-		else if(string.equalsIgnoreCase("vehicles"))
-			return url.concat(vehiclesResourceURL);
-		else if(string.equalsIgnoreCase("instants"))
-			return url.concat(instantsResourceURL);
-		else if(string.equalsIgnoreCase("serviceStatus"))
-			return url.concat(serviceGeneralStatus);
+			return "";
 		else
 			throw new AppBase.BadURLResourceException();
 	}

@@ -3,6 +3,7 @@ package org.mobility.wikicleta;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.http.HttpResponse;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.NetworkOperations;
@@ -129,7 +130,12 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 				parameters.put("email", mEmail);
 				parameters.put("password", mPassword);
 				parameters.put("name", mName);
-				NetworkOperations.postTo("/api/registrations", parameters);
+				
+				Map<String, Map<String, String>> superParams = new LinkedHashMap<String, Map<String, String>>();
+				superParams.put("registration", parameters);
+				
+				HttpResponse result = NetworkOperations.postTo("/api/registrations", superParams);
+				result
 			} catch (Exception e) {
 				return false;
 			}
