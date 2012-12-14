@@ -23,4 +23,12 @@ public class FieldValidators {
 		return matcher.matches();
 	}
 	
+	public static boolean isFieldShorterThan(String fieldValue, int size) {
+		return fieldValue.length() < size;
+	}
+	
+	public static boolean fieldsMatch(String firstFieldValue, String secondFieldValue) {
+		return firstFieldValue.equals(secondFieldValue);
+	}
+	
 }
