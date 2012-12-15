@@ -1,4 +1,4 @@
-package org.mobility.wikicleta;
+package com.wikicleta.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

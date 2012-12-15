@@ -1,15 +1,20 @@
-package org.mobility.wikicleta;
+package com.wikicleta.activities;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.http.HttpResponse;
-import org.wikicleta.common.AppBase;
-import org.wikicleta.common.FieldValidators;
-import org.wikicleta.common.NetworkOperations;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.mobility.wikicleta.R;
+
+import com.wikicleta.common.AppBase;
+import com.wikicleta.common.FieldValidators;
+import com.wikicleta.common.NetworkOperations;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -134,8 +139,11 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 				Map<String, Map<String, String>> superParams = new LinkedHashMap<String, Map<String, String>>();
 				superParams.put("registration", parameters);
 				
-				HttpResponse result = NetworkOperations.postTo("/api/registrations", superParams);
-				result
+				String result = NetworkOperations.postTo("/api/registrations", superParams);
+				Log.i("WWWWW", result);
+
+				Object obj = JSONValue.parse(result);
+				JSONObject object =(JSONObject) obj;
 			} catch (Exception e) {
 				return false;
 			}

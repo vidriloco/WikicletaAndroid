@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="55dip"
+        android:orientation="vertical"
+        android:background="#F58303" >
+	</RelativeLayout>
+	<com.wikicleta.views.PinchableMapView
+	 xmlns:android="http://schemas.android.com/apk/res/android"
+	 android:id="@+id/mapview"
+	 android:layout_width="fill_parent"
+	 android:layout_height="fill_parent"
+	 android:clickable="true"
+	 android:apiKey="0Sp8gbE2A7huBHKWXFaSnv0zQ4sNzPzWzqj9zcQ"/>
+</LinearLayout>

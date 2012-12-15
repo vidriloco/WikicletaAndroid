@@ -15,8 +15,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <uses-library android:name="com.google.android.maps" />
         <activity
-            android:name="org.mobility.wikicleta.LoginActivity"
+            android:name="com.wikicleta.activities.LoginActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait" >
@@ -27,7 +28,7 @@
         </activity>
         
         <activity
-            android:name="org.mobility.wikicleta.LandingActivity"
+            android:name="com.wikicleta.activities.LandingActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait" >
@@ -38,10 +39,22 @@
         </activity>
         
         <activity
-            android:name="org.mobility.wikicleta.RegistrationActivity"
+            android:name="com.wikicleta.activities.RegistrationActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="com.wikicleta.activities.DashboardActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:screenOrientation="portrait"
+            android:alwaysRetainTaskState="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />

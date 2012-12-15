@@ -1,14 +1,21 @@
-package org.mobility.wikicleta;
+package com.wikicleta.activities;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.wikicleta.common.AppBase;
-import org.wikicleta.common.FieldValidators;
-import org.wikicleta.common.NetworkOperations;
+import org.mobility.wikicleta.R;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
+import com.wikicleta.common.AppBase;
+import com.wikicleta.common.FieldValidators;
+import com.wikicleta.common.NetworkOperations;
+import com.wikicleta.models.User;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -139,6 +146,7 @@ public class LoginActivity extends LoadingWithMessageActivity {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
+			Log.i("Wikicleta", "Attempting login ... ");
 
 			try {
 				Map<String, String> parameters = new LinkedHashMap<String, String>();
@@ -147,9 +155,14 @@ public class LoginActivity extends LoadingWithMessageActivity {
 				
 				Map<String, Map<String, String>> superParams = new LinkedHashMap<String, Map<String, String>>();
 				superParams.put("session", parameters);
-				
-				NetworkOperations.postTo("/api/sessions", superParams);
+				Log.i("Wikicleta", "Sending params  ... ");
+
+				String result = NetworkOperations.postTo("/api/sessions", superParams);
+				JSONObject object =(JSONObject) JSONValue.parse(result);	
+								
+				User.storeWithParams(parameters, (String) object.get("token"));
 			} catch (Exception e) {
+				// In case authentication fails 
 				return false;
 			}
 
@@ -162,10 +175,15 @@ public class LoginActivity extends LoadingWithMessageActivity {
 			showProgress(false);
 
 			if (success) {
-				finish();
+				if(User.isSignedIn()) {
+					Intent intent = new Intent(AppBase.currentActivity, DashboardActivity.class);
+					AppBase.currentActivity.startActivity(intent);
+					finish();
+				} else {
+					Log.e("Wikicleta", "Something rare ocurred");
+				}
 			} else {
-				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
+				mPasswordView.setError(getString(R.string.error_incorrect_password));
 				mPasswordView.requestFocus();
 			}
 		}

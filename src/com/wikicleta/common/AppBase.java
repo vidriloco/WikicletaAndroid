@@ -1,4 +1,4 @@
-package org.wikicleta.common;
+package com.wikicleta.common;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -55,7 +55,7 @@ public class AppBase {
 	         is.close();
 	         result=sb.toString();
 	         
-	     } catch(Exception e){}
+	     } catch(Exception e){  }
 	     return result;
 	}
 	

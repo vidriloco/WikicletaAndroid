@@ -1,9 +1,8 @@
-package org.wikicleta.common;
+package com.wikicleta.common;
 
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
@@ -13,10 +12,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.simple.*;
 
 public class NetworkOperations {
-	static String serverHost = "http://192.168.1.64:3000/";
+	static String serverHost = "http://192.168.1.67:3000/";
 	
-	@SuppressWarnings("unchecked")
-	public static HttpResponse postTo(String path, Map<?,?> params) throws ClientProtocolException, IOException {
+	public static String postTo(String path, Map<?,?> params) throws ClientProtocolException, IOException {
 	    DefaultHttpClient httpclient = new DefaultHttpClient();
 	    HttpPost httpost = new HttpPost(serverHost.concat(path));	    
 
@@ -28,8 +26,8 @@ public class NetworkOperations {
 	    httpost.setHeader("Content-type", "application/json");
 	    
 	    //Handles what is returned from the page 
-	    @SuppressWarnings("rawtypes")
-		ResponseHandler responseHandler = new BasicResponseHandler();
+	    
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
 	    return httpclient.execute(httpost, responseHandler);
 	}
 }

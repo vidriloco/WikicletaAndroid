@@ -1,6 +1,8 @@
-package org.mobility.wikicleta;
+package com.wikicleta.activities;
 
-import org.wikicleta.common.AppBase;
+import org.mobility.wikicleta.R;
+
+import com.wikicleta.common.AppBase;
 
 import android.app.Activity;
 import android.content.Intent;

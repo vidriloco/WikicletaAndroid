@@ -1,4 +1,4 @@
-package org.wikicleta.common;
+package com.wikicleta.common;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
