@@ -3,6 +3,7 @@ package com.wikicleta.activities;
 import org.mobility.wikicleta.R;
 
 import com.wikicleta.common.AppBase;
+import com.wikicleta.models.User;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +16,14 @@ public class LandingActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AppBase.currentActivity = this;
+		
+		if(User.isSignedIn()) {
+			Intent intent = new Intent(AppBase.currentActivity, DashboardActivity.class);
+			AppBase.currentActivity.startActivity(intent);
+			finish();
+			return;
+		}
+		
 		this.setContentView(R.layout.activity_landing); 
 		
 		findViewById(R.id.join).setOnClickListener(

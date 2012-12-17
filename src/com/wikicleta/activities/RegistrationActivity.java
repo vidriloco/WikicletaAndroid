@@ -10,6 +10,7 @@ import org.mobility.wikicleta.R;
 import com.wikicleta.common.AppBase;
 import com.wikicleta.common.FieldValidators;
 import com.wikicleta.common.NetworkOperations;
+import com.wikicleta.models.User;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -144,7 +145,10 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 
 				Object obj = JSONValue.parse(result);
 				JSONObject object =(JSONObject) obj;
+				
+				User.storeWithParams(parameters, (String) object.get("token"));
 			} catch (Exception e) {
+				// Could not register
 				return false;
 			}
 
@@ -157,7 +161,13 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 			showProgress(false);
 
 			if (success) {
-				finish();
+				if(User.isSignedIn()) {
+					Intent intent = new Intent(AppBase.currentActivity, DashboardActivity.class);
+					AppBase.currentActivity.startActivity(intent);
+					finish();
+				} else {
+					Log.e("Wikicleta", "Something rare ocurred");
+				}
 			} else {
 				mPasswordView
 						.setError(getString(R.string.error_incorrect_password));
