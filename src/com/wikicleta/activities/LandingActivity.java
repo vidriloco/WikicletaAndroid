@@ -18,7 +18,7 @@ public class LandingActivity extends Activity {
 		AppBase.currentActivity = this;
 		
 		if(User.isSignedIn()) {
-			Intent intent = new Intent(AppBase.currentActivity, DashboardActivity.class);
+			Intent intent = new Intent(AppBase.currentActivity, RoutesActivity.class);
 			AppBase.currentActivity.startActivity(intent);
 			finish();
 			return;

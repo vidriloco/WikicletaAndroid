@@ -50,7 +50,19 @@
         </activity>
         
         <activity
-            android:name="com.wikicleta.activities.DashboardActivity"
+            android:name="com.wikicleta.activities.RoutesActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:screenOrientation="portrait"
+            android:alwaysRetainTaskState="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="com.wikicleta.activities.RoutesSavingActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait"

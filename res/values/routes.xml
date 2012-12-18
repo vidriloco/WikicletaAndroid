@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="routes_title">Rutas</string>
+	<string name="routes_save">Guardar</string>
+	<string name="routes_saving_title">Guardar Ruta</string>
+	
+	<string name="routes_stats_speed">VELOCIDAD</string>
+	<string name="routes_stats_time">TIEMPO</string>
+	<string name="routes_stats_distance">DISTANCIA</string>
+	
+	<string name="routes_saving_form_name">Nombre</string>
+	<string name="routes_saving_form_tags">Tags</string>
+	<string name="routes_saving_form_save">Guardar</string>
+	<string name="routes_saving_form_decline">Descartar</string>
+	<string name="routes_saving_form_tags_instructions">Escribe uno o más tags que describan esta ruta, separándolos por comas. Puedes escribir nombres de lugares cercanos a esta ruta</string>
+
 </resources>

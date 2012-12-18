@@ -176,7 +176,7 @@ public class LoginActivity extends LoadingWithMessageActivity {
 
 			if (success) {
 				if(User.isSignedIn()) {
-					Intent intent = new Intent(AppBase.currentActivity, DashboardActivity.class);
+					Intent intent = new Intent(AppBase.currentActivity, RoutesActivity.class);
 					AppBase.currentActivity.startActivity(intent);
 					finish();
 				} else {
