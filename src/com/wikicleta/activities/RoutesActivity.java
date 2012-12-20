@@ -14,6 +14,7 @@ import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -59,7 +61,10 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 	
 	protected AlertDialog.Builder alertDialog;
 
-	
+	protected NotificationCompat.Builder notificationBuilder;
+	protected NotificationManager notificationManager;
+	protected int ROUTE_RECORDING_ID = 1;
+	// fix notification http://pilhuhn.blogspot.mx/2010/12/pitfall-in-pendingintent-with-solution.html
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,7 +76,9 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 		mapView = (PinchableMapView) findViewById(R.id.mapview);
         mapView.setBuiltInZoomControls(false);
         
-
+		notificationBuilder = new NotificationCompat.Builder(this);
+		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		
         titleBarView = (RelativeLayout) findViewById(R.id.titlebar);
         toolBarView = (LinearLayout) findViewById(R.id.toolbar);
         recordRouteToolbarView = (LinearLayout) findViewById(R.id.route_recording_toolbar);
@@ -137,6 +144,7 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 							
 						}
 					});
+					alertDialog.setNeutralButton(null, null);
 					alertDialog.show();
 				} else {
 					resetControls();
@@ -160,6 +168,9 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 
 						100, 10, listener);
 				flagButton.setVisibility(View.VISIBLE);
+				
+				notificationBuilder.setContentTitle("Ruta Wikicleta").setContentText("Marcando ruta");
+				notificationManager.notify(ROUTE_RECORDING_ID, notificationBuilder.build());
 			}
 		});
     	
@@ -169,6 +180,8 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 				pauseRecording(true);
 		    	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 
 		    			10000, 10, listener);
+		    	notificationBuilder.setContentTitle("Ruta Wikicleta").setContentText("Marcado de ruta en pausa");
+				notificationManager.notify(ROUTE_RECORDING_ID, notificationBuilder.build());
 			}
 		});
     	

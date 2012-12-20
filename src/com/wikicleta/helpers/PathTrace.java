@@ -27,7 +27,7 @@ public class PathTrace {
 	protected Location lastLocation;
 	
 	protected float averageSpeed = 0;
-	protected float distance = 0;
+	protected float accumulatedDistance = 0;
 	
 	protected TextView timeTextView;
 	protected TextView speedTextView;
@@ -54,18 +54,23 @@ public class PathTrace {
 	}
 	
 	public void addLocation(Location location) {
+		Log.i("Wikicleta", "Location updated");
 		if(tracking) {
 			// calculate average speed
-			averageSpeed = averageSpeed + ((location.getSpeed() / 3600) / 2);
-			speedTextView.setText(decimalFormat.format((float) location.getSpeed()/3600).concat(" km/h"));
-			
+			float speed = (float) location.getSpeed()*3600 / 1000;
+			float distance = 0;
+
+			averageSpeed = (averageSpeed + speed)/2;
+			speedTextView.setText(decimalFormat.format(speed).concat(" km/h"));
+			Log.i("Wikicleta", "Speed change " + speed);
+
 			// calculate accumulated distance
 			if(lastLocation != null) {
-				distance = distance + location.distanceTo(lastLocation);
-				Log.i("Wikicleta", String.valueOf(distance));
+				distance = (float) location.distanceTo(lastLocation)/1000;
+				accumulatedDistance += distance;
 			} 
-			
-			distanceTextView.setText(decimalFormat.format((float) distance/1000).concat(" km"));
+
+			distanceTextView.setText(decimalFormat.format(distance).concat(" km"));
 			this.lastLocation = location;
 			this.locationList.add(GeoHelpers.buildFromLongitude(lastLocation));
 		}
@@ -80,7 +85,7 @@ public class PathTrace {
 		// Elapsed time in milliseconds
 		map.put("time", overallElapsedTime());
 		// Distance in meters
-		map.put("distance", distance);
+		map.put("distance", accumulatedDistance);
 		// Coordinates
 		
 		LinkedList<HashMap<String, Float>> coordinateList = new LinkedList<HashMap<String, Float>>();
@@ -99,7 +104,7 @@ public class PathTrace {
 		startTime = 0;
 		this.locationList.clear();
 		averageSpeed = 0;
-		distance = 0;
+		accumulatedDistance = 0;
 		
 		this.setToTracking(false);
 		
@@ -151,7 +156,7 @@ public class PathTrace {
 	
 	private Runnable mUpdateTimeTask = new Runnable() {
 		   public void run() {
-			   Log.i("Wikicleta", "Time now " + startTime + " Accum time " + overallElapsedTime());
+			   //Log.i("Wikicleta", "Time now " + startTime + " Accum time " + overallElapsedTime());
 		       int seconds = (int) (overallElapsedTime() / 1000);
 		       int minutes = seconds / 60;
 		       seconds     = seconds % 60;

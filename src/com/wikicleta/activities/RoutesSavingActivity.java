@@ -3,15 +3,20 @@ package com.wikicleta.activities;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
+import org.kroz.activerecord.ActiveRecordException;
+import org.kroz.activerecord.DatabaseBuilder;
 import org.mobility.wikicleta.R;
 
 import com.wikicleta.common.AppBase;
 import com.wikicleta.common.NetworkOperations;
+import com.wikicleta.drafts.RouteDraft;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +27,7 @@ public class RoutesSavingActivity extends Activity {
 	// UI references.
 	private EditText nameView;
 	private EditText tagsView;
+	protected DatabaseBuilder builder;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -57,22 +63,47 @@ public class RoutesSavingActivity extends Activity {
     			new View.OnClickListener() {
     				@Override
     				public void onClick(View view) {
-    		
-    					Map<String, Map<String, Object>> superParams = new LinkedHashMap<String, Map<String, Object>>();
-    					
-    					Map<String, Object> params = RoutesActivity.currentPath.closePath();
-    					params.put("name", nameView.getText().toString());
-    					params.put("tags", tagsView.getText().toString());
-    					
-    					superParams.put("/api/sessions", params);
-    					Log.i("Wikicleta", "Sending route params  ... ");
-    					
-    					try {
-							NetworkOperations.postTo("", superParams);
-						} catch (Exception e) {}
+    					RouteSavingAttempt routeSavingTask = new RouteSavingAttempt();
+    					routeSavingTask.execute((Void) null);
     				}
     	});
 	}
+	
+	public class RouteSavingAttempt extends AsyncTask<Void, Void, Boolean> {
+
+		@Override
+		protected Boolean doInBackground(Void... procParams) {
+			try {
+				Map<String, Map<String, Object>> superParams = new LinkedHashMap<String, Map<String, Object>>();
+				
+				Map<String, Object> params = RoutesActivity.currentPath.closePath();
+				params.put("name", nameView.getText().toString());
+				params.put("tags", tagsView.getText().toString());
+				
+				superParams.put("session", params);
+				Log.i("Wikicleta", "Sending route params  ... ");
+				
+				String result = NetworkOperations.postTo("/api/sessions", superParams);
+				Log.i("Wikicleta", result);
+				return true;
+			} catch (Exception e) {
+				try {
+					saveRoute();
+				} catch (ActiveRecordException e1) {
+					e1.printStackTrace();
+				}
+				return false;
+			}
+			
+		}
+		
+	}
+	
+	public void saveRoute() throws ActiveRecordException {
+		/*RouteDraft routeDraft = AppBase.getDBConnection().newEntity(RouteDraft.class);
+		routeDraft.save();*/
+	}
+
 	
 	// TODO: Decide whether it could be desirable that upon automatic return to activity 
 	// route is still getting tracked. If so, buttons state should behave accordingly 

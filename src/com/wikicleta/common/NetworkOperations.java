@@ -11,14 +11,17 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.simple.*;
 
+import android.util.Log;
+
 public class NetworkOperations {
-	static String serverHost = "http://10.219.185.227:3000/";
+	static String serverHost = "http://192.168.1.65:3000";
 	
 	public static String postTo(String path, Map<?,?> params) throws ClientProtocolException, IOException {
 	    DefaultHttpClient httpclient = new DefaultHttpClient();
 	    HttpPost httpost = new HttpPost(serverHost.concat(path));	    
 
 	    StringEntity se = new StringEntity(JSONValue.toJSONString(params));
+	    Log.i("WIKICLETA", "Params " + JSONValue.toJSONString(params));
 	    httpost.setEntity(se);
 
 	    httpost.setHeader("Accept", "application/json");
