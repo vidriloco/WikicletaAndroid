@@ -3,7 +3,9 @@ package com.wikicleta.helpers;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import com.google.android.maps.GeoPoint;
@@ -70,15 +72,26 @@ public class PathTrace {
 	}
 	
 	public Map<String, Object> closePath() {
-		this.setToTracking(false);
+		this.pause();
 		
 		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
 		// Speed in km/s
 		map.put("speed", averageSpeed);
 		// Elapsed time in milliseconds
-		map.put("time", this.overallElapsedTime());
+		map.put("time", overallElapsedTime());
 		// Distance in meters
-		map.put("distance", this.distance);
+		map.put("distance", distance);
+		// Coordinates
+		
+		LinkedList<HashMap<String, Float>> coordinateList = new LinkedList<HashMap<String, Float>>();
+		for(GeoPoint point : locationList) {
+			HashMap<String, Float> coord = new HashMap<String, Float>();
+			coord.put("lat", (float) (point.getLatitudeE6() / 1E6));
+			coord.put("lon", (float) (point.getLongitudeE6() / 1E6));
+			coordinateList.add(coord);
+		}
+		
+		map.put("coordinates", coordinateList);
 		return map;
 	}
 	
