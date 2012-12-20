@@ -34,10 +34,10 @@
       android:layout_width="fill_parent"
       android:layout_height="match_parent"
       android:layout_below="@+id/titlebar"
-      android:apiKey="0Sp8gbE2A7huBHKWXFaSnv0zQ4sNzPzWzqj9zcQ"
+      android:apiKey="0Sp8gbE2A7htK9pPiFzcliDPP5WT0D_TSkooX1w"
       android:clickable="true" />
-
-	 	<!--  android:apiKey="0Sp8gbE2A7htK9pPiFzcliDPP5WT0D_TSkooX1w" />-->
+      <!-- android:apiKey="0Sp8gbE2A7huBHKWXFaSnv0zQ4sNzPzWzqj9zcQ" -->
+  
   
     <LinearLayout
        android:id="@+id/stats_panel"

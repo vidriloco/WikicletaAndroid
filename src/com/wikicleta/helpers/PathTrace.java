@@ -1,21 +1,28 @@
 package com.wikicleta.helpers;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.google.android.maps.GeoPoint;
 
+import android.annotation.TargetApi;
 import android.location.Location;
+import android.os.Build;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.TextView;
 
+@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 public class PathTrace {
 	public ArrayList<GeoPoint> locationList;
 	public boolean tracking;
 	
 	protected long startTime;
 	protected long endTime;
+	protected Location lastLocation;
 	
 	protected float averageSpeed = 0;
 	protected float distance = 0;
@@ -23,7 +30,9 @@ public class PathTrace {
 	protected TextView timeTextView;
 	protected TextView speedTextView;
 	protected TextView distanceTextView;
-
+	
+	protected DecimalFormat decimalFormat = new DecimalFormat("##.##");
+	
 	private Handler mHandler;
 
 	public PathTrace(TextView textViewSpeed, TextView textViewTime, TextView textViewDistance) {
@@ -33,7 +42,8 @@ public class PathTrace {
 		this.distanceTextView = textViewDistance;
 		
 		mHandler = new Handler();
-
+		decimalFormat.setRoundingMode(RoundingMode.DOWN);
+		
 		this.locationList.add(GeoHelpers.buildFromLatLon(19.428704, -99.168563));
 		this.locationList.add(GeoHelpers.buildFromLatLon(19.430566, -99.164615));
 		this.locationList.add(GeoHelpers.buildFromLatLon(19.431457, -99.162469));
@@ -43,22 +53,19 @@ public class PathTrace {
 	
 	public void addLocation(Location location) {
 		if(tracking) {
-			
 			// calculate average speed
-			averageSpeed = averageSpeed + location.getSpeed() / 2;
-			speedTextView.setText(String.valueOf(location.getSpeed()/1000).concat(" km/h"));
+			averageSpeed = averageSpeed + ((location.getSpeed() / 3600) / 2);
+			speedTextView.setText(decimalFormat.format((float) location.getSpeed()/3600).concat(" km/h"));
 			
 			// calculate accumulated distance
-			if(locationList.size() >= 1) {
-				GeoPoint lastGeoPoint = locationList.get(locationList.size()-1);
-				Location lastLocation = new Location(location);
-				lastLocation.setLatitude(lastGeoPoint.getLatitudeE6());
-				lastLocation.setLongitude(lastGeoPoint.getLongitudeE6());
+			if(lastLocation != null) {
 				distance = distance + location.distanceTo(lastLocation);
-				distanceTextView.setText(String.valueOf((float) distance/1000).concat(" km "));
-			}
+				Log.i("Wikicleta", String.valueOf(distance));
+			} 
 			
-			this.locationList.add(GeoHelpers.buildFromLongitude(location));
+			distanceTextView.setText(decimalFormat.format((float) distance/1000).concat(" km"));
+			this.lastLocation = location;
+			this.locationList.add(GeoHelpers.buildFromLongitude(lastLocation));
 		}
 	}
 	
@@ -66,8 +73,12 @@ public class PathTrace {
 		this.setToTracking(false);
 		
 		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
+		// Speed in km/s
 		map.put("speed", averageSpeed);
+		// Elapsed time in milliseconds
 		map.put("time", this.overallElapsedTime());
+		// Distance in meters
+		map.put("distance", this.distance);
 		return map;
 	}
 	
@@ -93,9 +104,22 @@ public class PathTrace {
 		return this.locationList.isEmpty();
 	}
 	
-	public void setToTracking(boolean tracking) {
+	public void pause() {
+		this.setToTracking(false);
+	}
+	
+	public void resume() {
+		this.setToTracking(true);
+	}
+	
+	public boolean isPaused() {
+		return !this.tracking;
+	}
+	
+	protected void setToTracking(boolean tracking) {
 		this.tracking = tracking;
-		if(this.tracking) {
+		
+		if(tracking) {
 			if(startTime == 0)
 				startTime = System.currentTimeMillis();
 			else
@@ -114,16 +138,27 @@ public class PathTrace {
 	
 	private Runnable mUpdateTimeTask = new Runnable() {
 		   public void run() {
+			   Log.i("Wikicleta", "Time now " + startTime + " Accum time " + overallElapsedTime());
 		       int seconds = (int) (overallElapsedTime() / 1000);
 		       int minutes = seconds / 60;
 		       seconds     = seconds % 60;
-
-		       if (seconds < 10) {
-		    	   timeTextView.setText("" + minutes + ":0" + seconds);
-		       } else {
-		    	   timeTextView.setText("" + minutes + ":" + seconds);            
+		       
+		       String timeString = "";
+		       
+		       if(minutes > 0 && minutes < 10)
+		    	   timeString = "0" + String.valueOf(minutes) + ":";
+		       else if(minutes >= 10) 
+		    	   timeString = String.valueOf(minutes) + ":";
+		       else {
+		    	   timeString = "00:";
 		       }
-		     
+		       
+		       if (seconds < 10)
+		    	   timeString += "0"+seconds;
+		       else
+		    	   timeString += String.valueOf(seconds);
+		       
+	    	   timeTextView.setText(timeString);
 		       mHandler.postDelayed(mUpdateTimeTask, 100);
 		   }
 	};

@@ -22,7 +22,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -116,16 +115,16 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 			@Override
 			public void onClick(View v) {
 				if(!currentPath.isEmpty()) {
-					currentPath.setToTracking(false);
+					pauseRecording(false);
 
-					alertDialog.setTitle("Ruta marcada");
-					alertDialog.setMessage("ÀDeseas descartar la ruta que est‡s marcando?");
+					alertDialog.setTitle("Pregunta");
+					alertDialog.setMessage("ÀDeseas descartar esta ruta?");
 					// If the user chooses 'Yes', then
 					alertDialog.setPositiveButton("Si", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							// Resetting the captured path and backing to main floatant menu
-							resetControls(true);
+							resetControls();
 							currentPath.reset();
 						}
 					});
@@ -133,13 +132,15 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 					alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// Resume tracking
-							currentPath.setToTracking(true);
+							// Resume tracking (with auto-recording)
+							resumeRecording(false);
+							
 						}
 					});
 					alertDialog.show();
 				} else {
-					resetControls(false);
+					resetControls();
+					currentPath.reset();
 				}
 			}
 		});
@@ -154,10 +155,8 @@ public class RoutesActivity extends MapActivity implements LocationListener {
     	recButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				recButton.setVisibility(View.GONE);
-				pauseButton.setVisibility(View.VISIBLE);
 				mapView.postInvalidate();
-				currentPath.setToTracking(true);
+				resumeRecording(true);
 				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 
 						100, 10, listener);
 				flagButton.setVisibility(View.VISIBLE);
@@ -167,9 +166,7 @@ public class RoutesActivity extends MapActivity implements LocationListener {
     	pauseButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				pauseButton.setVisibility(View.GONE);
-				recButton.setVisibility(View.VISIBLE);
-				currentPath.setToTracking(false);
+				pauseRecording(true);
 		    	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 
 		    			10000, 10, listener);
 			}
@@ -177,14 +174,118 @@ public class RoutesActivity extends MapActivity implements LocationListener {
     	
     	flagButton.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				Intent intentActivity = new Intent(AppBase.currentActivity, RoutesSavingActivity.class);
-				AppBase.currentActivity.startActivity(intentActivity);
+			public void onClick(View v) {				
+				if(currentPath.isEmpty()) {
+					pauseRecording(false);
+
+					alertDialog.setTitle("Aviso").
+					setMessage("No puedes guardar una ruta vac’a").
+					setPositiveButton(null, null).
+					setNegativeButton(null, null).
+					setNeutralButton("Aceptar", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							resumeRecording(false);
+						}
+					});
+					
+					alertDialog.show();
+				} else {
+					if(currentPath.isPaused())
+						resumeRecording(true);
+					pauseRecording(true);
+					
+					Intent intentActivity = new Intent(AppBase.currentActivity, RoutesSavingActivity.class);
+					AppBase.currentActivity.startActivity(intentActivity);
+				}
 			}
     	});
 	}
+
+	protected void resetControls() {
+		showToolbarFor(TaskPanel.Main);	
+		recButton.setVisibility(View.VISIBLE);
+		pauseButton.setVisibility(View.GONE);
+		flagButton.setVisibility(View.GONE);
+	}
 	
-	@SuppressWarnings("static-access")
+	/*
+	 *  Pauses the recording of a new route
+	 *  @param controlSwitch will change the buttons state if true
+	 */
+	protected void pauseRecording(boolean controlSwitch) {
+		currentPath.pause();
+		// Show rec button and hide pause button
+		if(controlSwitch) {
+			recButton.setVisibility(View.VISIBLE);
+			pauseButton.setVisibility(View.GONE);
+		}
+	}
+	
+	/*
+	 *  Resumes the recording of a new route
+	 *  @param controlSwitch will change the buttons state if true
+	 */
+	protected void resumeRecording(boolean controlSwitch) {
+		currentPath.resume();
+		// Show pause button and hide rec button
+		if(controlSwitch) {
+			pauseButton.setVisibility(View.VISIBLE);
+			recButton.setVisibility(View.GONE);
+		}
+	}
+	
+	@Override
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	protected void setMapToDefaultValues() {
+		mapView.getController().animateTo(this.getDefaultLocation());
+        mapView.getController().setZoom(18);
+	}
+	
+	protected void setMapToLocation(Location location) {
+		mapView.getController().animateTo(GeoHelpers.buildFromLongitude(location));
+	}
+	
+	protected GeoPoint getDefaultLocation() {
+		return GeoHelpers.buildFromLatLon(19.412423, -99.169207);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if (keyCode == KeyEvent.KEYCODE_BACK) {
+	        moveTaskToBack(true);
+	        return true;
+	    }
+	    return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		this.setMapToLocation(location);
+		currentPath.addLocation(location);
+		mapView.postInvalidate();
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+	}
+	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
 	protected void showToolbarFor(TaskPanel newTask) {
 
@@ -299,66 +400,5 @@ public class RoutesActivity extends MapActivity implements LocationListener {
         translation.setFillAfter(true); //HERE
         translation.setFillEnabled(true);
         toolBarView.startAnimation(translation);     */   
-	}
-
-	protected void resetControls(boolean resetPath) {
-		showToolbarFor(TaskPanel.Main);	
-		recButton.setVisibility(View.VISIBLE);
-		pauseButton.setVisibility(View.GONE);
-		flagButton.setVisibility(View.GONE);
-		if(resetPath)
-			currentPath.reset();
-	}
-	
-	@Override
-	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	protected void setMapToDefaultValues() {
-		mapView.getController().animateTo(this.getDefaultLocation());
-        mapView.getController().setZoom(18);
-	}
-	
-	protected void setMapToLocation(Location location) {
-		mapView.getController().animateTo(GeoHelpers.buildFromLongitude(location));
-	}
-	
-	protected GeoPoint getDefaultLocation() {
-		return GeoHelpers.buildFromLatLon(19.412423, -99.169207);
-	}
-	
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-	    if (keyCode == KeyEvent.KEYCODE_BACK) {
-	        moveTaskToBack(true);
-	        return true;
-	    }
-	    return super.onKeyDown(keyCode, event);
-	}
-
-	@Override
-	public void onLocationChanged(Location location) {
-		this.setMapToLocation(location);
-		currentPath.addLocation(location);
-		mapView.postInvalidate();
-	}
-
-	@Override
-	public void onProviderDisabled(String provider) {
-		
-	}
-
-	@Override
-	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-		
 	}
 }
