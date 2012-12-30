@@ -5,8 +5,12 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MyLocationOverlay;
 import com.wikicleta.common.AppBase;
+import com.wikicleta.common.Constants;
 import com.wikicleta.helpers.GeoHelpers;
-import com.wikicleta.helpers.PathTrace;
+import com.wikicleta.helpers.NotificationBuilder;
+import com.wikicleta.helpers.RouteTracer;
+import com.wikicleta.models.Instant;
+import com.wikicleta.models.Route;
 import com.wikicleta.views.PinchableMapView;
 import com.wikicleta.views.RouteOverlay;
 
@@ -14,7 +18,6 @@ import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,13 +26,21 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+/*
+ * TODOS:
+ * 
+ * - Stop updating location if no route recording is being done
+ * - Increase update frequency of route by distance/time
+ * - Fix recording buttons and route timer for when canceling discarding of route
+ */
 
 public class RoutesActivity extends MapActivity implements LocationListener {
 
@@ -41,16 +52,14 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 	protected RelativeLayout titleBarView;
 	protected LinearLayout toolBarView;
 	protected LinearLayout recordRouteToolbarView;
-	protected LinearLayout statsToolbarView;
-		
-	protected int DY_TRANSLATION=100;	
+	protected LinearLayout statsToolbarView;	
 	
 	private ImageView recButton;
 	private ImageView pauseButton;
 	private ImageView flagButton;
 	
 	private LocationManager locationManager;
-	static PathTrace currentPath;
+	static RouteTracer currentPath;
 
 	private MyLocationOverlay locationOverlay;
 	protected RouteOverlay routeOverlay;
@@ -61,23 +70,16 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 	
 	protected AlertDialog.Builder alertDialog;
 
-	protected NotificationCompat.Builder notificationBuilder;
-	protected NotificationManager notificationManager;
-	protected int ROUTE_RECORDING_ID = 1;
-	// fix notification http://pilhuhn.blogspot.mx/2010/12/pitfall-in-pendingintent-with-solution.html
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AppBase.currentActivity = this;
 		listener = this;
 
-		setContentView(R.layout.android_routes);
+		setContentView(R.layout.activity_routes_on_map);
 		
 		mapView = (PinchableMapView) findViewById(R.id.mapview);
         mapView.setBuiltInZoomControls(false);
-        
-		notificationBuilder = new NotificationCompat.Builder(this);
-		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		
         titleBarView = (RelativeLayout) findViewById(R.id.titlebar);
         toolBarView = (LinearLayout) findViewById(R.id.toolbar);
@@ -89,11 +91,11 @@ public class RoutesActivity extends MapActivity implements LocationListener {
         this.setMapToDefaultValues();
         alertDialog = new AlertDialog.Builder(this);
         
-		currentPath = new PathTrace((TextView) findViewById(R.id.speed_number), 
+		currentPath = new RouteTracer((TextView) findViewById(R.id.speed_number), 
 				(TextView) findViewById(R.id.time_elapsed_number),
 				(TextView) findViewById(R.id.distance_number));
 		
-		routeOverlay = new RouteOverlay(currentPath);
+		routeOverlay = new RouteOverlay(currentPath.instantList);
 		mapView.getOverlays().add(routeOverlay);
 		
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -169,8 +171,6 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 						100, 10, listener);
 				flagButton.setVisibility(View.VISIBLE);
 				
-				notificationBuilder.setContentTitle("Ruta Wikicleta").setContentText("Marcando ruta");
-				notificationManager.notify(ROUTE_RECORDING_ID, notificationBuilder.build());
 			}
 		});
     	
@@ -180,8 +180,6 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 				pauseRecording(true);
 		    	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 
 		    			10000, 10, listener);
-		    	notificationBuilder.setContentTitle("Ruta Wikicleta").setContentText("Marcado de ruta en pausa");
-				notificationManager.notify(ROUTE_RECORDING_ID, notificationBuilder.build());
 			}
 		});
     	
@@ -213,8 +211,67 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 				}
 			}
     	});
+    	
+        this.checkForQueuedRoutes();
+        int instants = Instant.all(Instant.class).size();
+        int routes = Route.all(Route.class).size();
+        Log.e("Wikicleta", "Instants count: " + instants);
+        Log.e("Wikicleta", "Routes count: " + routes);
+        
 	}
 
+	
+	protected void checkForQueuedRoutes() {		
+		if(DraftRoutesActivity.queuedRoutesCount() > 0) {
+			
+			NotificationBuilder notification = new NotificationBuilder(this);
+			
+			String countString = DraftRoutesActivity.queuedRoutesCount() == 1 ? 
+					this.getString(R.string.route_drafts_notification_total_one) : 
+						this.getString(R.string.route_drafts_notification_total_many, DraftRoutesActivity.queuedRoutesCount()); 
+			
+			notification.addNotification(Constants.DRAFT_ROUTES_NOTIFICATION_ID, 
+					getString(R.string.app_name), countString, DraftRoutesActivity.class);
+			
+			TextView routesQueuedTextView = (TextView) findViewById(R.id.drafts_queued_text);
+			// set routes count on text view
+	        routesQueuedTextView.setText(String.valueOf(DraftRoutesActivity.queuedRoutesCount()));
+	        findViewById(R.id.drafts_text_container).setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					
+				}
+			});
+		}
+		
+		//this.toggleQueuedRoutesButton();
+	}
+	
+	// Refactor this views
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
+	public void toggleQueuedRoutesButton() {
+		if(DraftRoutesActivity.queuedRoutesCount() > 0) {
+			ImageView button = (ImageView) findViewById(R.id.drafts_button_icon);
+			View border = (View) findViewById(R.id.drafts_border);
+			RelativeLayout grouper = (RelativeLayout) findViewById(R.id.drafts_text_container);
+			
+			int visibilityForAll = View.GONE;
+			int alpha = 0;
+			if(button.getVisibility() == View.GONE) {
+				visibilityForAll = View.VISIBLE;
+				alpha = 1;
+			}
+			button.setVisibility(visibilityForAll);
+			button.animate().alpha(alpha);
+	        
+	        border.setVisibility(visibilityForAll);
+	        border.animate().alpha(alpha);
+	        
+	        grouper.setVisibility(visibilityForAll);
+	        grouper.animate().alpha(alpha);
+		}
+	}
+	
 	protected void resetControls() {
 		showToolbarFor(TaskPanel.Main);	
 		recButton.setVisibility(View.VISIBLE);
@@ -228,6 +285,7 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 	 */
 	protected void pauseRecording(boolean controlSwitch) {
 		currentPath.pause();
+		
 		// Show rec button and hide pause button
 		if(controlSwitch) {
 			recButton.setVisibility(View.VISIBLE);
@@ -241,6 +299,7 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 	 */
 	protected void resumeRecording(boolean controlSwitch) {
 		currentPath.resume();
+		
 		// Show pause button and hide rec button
 		if(controlSwitch) {
 			pauseButton.setVisibility(View.VISIBLE);
@@ -304,7 +363,7 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 
         if(newTask == TaskPanel.Main) {
         	if(this.currentTaskPanel == TaskPanel.Recording) {
-        		this.recordRouteToolbarView.animate().alpha(0).translationYBy(DY_TRANSLATION).setListener(new AnimatorListener(){
+        		this.recordRouteToolbarView.animate().alpha(0).translationYBy(Constants.DY_TRANSLATION).setListener(new AnimatorListener(){
 
 					@Override
 					public void onAnimationCancel(Animator animation) {
@@ -325,12 +384,11 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 
 					@Override
 					public void onAnimationStart(Animator animation) {
-						// TODO Auto-generated method stub
-						
+						//toggleQueuedRoutesButton();
 					}});
         	}
         		
-        	this.toolBarView.animate().alpha((float) 0.8).translationYBy(-DY_TRANSLATION).setListener(new AnimatorListener(){
+        	this.toolBarView.animate().alpha((float) 0.8).translationYBy(-Constants.DY_TRANSLATION).setListener(new AnimatorListener(){
 
 				@Override
 				public void onAnimationCancel(Animator animation) {
@@ -351,11 +409,10 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 				@Override
 				public void onAnimationStart(Animator animation) {
 					toolBarView.setVisibility(View.VISIBLE);
-					
 				}});
         } else if(newTask == TaskPanel.Recording) {
         	if(this.currentTaskPanel == TaskPanel.Main) 
-        		this.toolBarView.animate().alpha(0).translationYBy(DY_TRANSLATION).setListener(new AnimatorListener(){
+        		this.toolBarView.animate().alpha(0).translationYBy(Constants.DY_TRANSLATION).setListener(new AnimatorListener(){
 
 					@Override
 					public void onAnimationCancel(Animator animation) {
@@ -366,6 +423,7 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 					@Override
 					public void onAnimationEnd(Animator animation) {
 						toolBarView.setVisibility(View.GONE);
+						//toggleQueuedRoutesButton();
 					}
 
 					@Override
@@ -377,9 +435,8 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 					@Override
 					public void onAnimationStart(Animator animation) {
 						// TODO Auto-generated method stub
-						
 					}});
-        	this.recordRouteToolbarView.animate().alpha((float) 0.8).translationYBy(-DY_TRANSLATION).setListener(new AnimatorListener(){
+        	this.recordRouteToolbarView.animate().alpha((float) 0.8).translationYBy(-Constants.DY_TRANSLATION).setListener(new AnimatorListener(){
 
 				@Override
 				public void onAnimationCancel(Animator animation) {

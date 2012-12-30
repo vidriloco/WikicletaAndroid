@@ -25,7 +25,7 @@
     <string name="prompt_password">Contraseña</string>
     <string name="prompt_password_confirmation">Confirma tu contraseña</string>
     <string name="prompt_name">Tu nombre</string>
-    
+    <string name="prompt_username">Nombre de usuario</string>
     <string name="action_sign_in_register"><b>Iniciar sesión</b></string>
     <string name="action_sign_in_short">Iniciar sesión</string>
     <string name="menu_forgot_password">Recuperar contraseña</string>

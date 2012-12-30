@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="wikicleta_orange">#F58303</color>
+    <color name="wikicleta_light_orange">#EADCB8</color>
+    <color name="wikicleta_light_blue">#E4FCFF</color>
+	<color name="wikicleta_blue">#87AEFF</color>
+	<color name="wikicleta_white">#FFF</color>
+</resources>

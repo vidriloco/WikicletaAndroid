@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="15dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="15dp"
+    android:background="#fff" >
+
+    <TextView
+        android:id="@+id/route_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginBottom="5dip"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:text="@string/none"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/route_tags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dip"
+        android:layout_below="@+id/route_name"
+        android:textColor="#000"
+        android:text="@string/none"
+        android:textSize="12sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/route_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/route_tags"
+        android:layout_alignBottom="@+id/route_tags"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:text="@string/none"
+        android:textColor="#000"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="13sp" />
+
+</RelativeLayout>

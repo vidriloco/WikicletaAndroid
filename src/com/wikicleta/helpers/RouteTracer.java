@@ -3,12 +3,10 @@ package com.wikicleta.helpers;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.Date;
 
-import com.google.android.maps.GeoPoint;
+import com.wikicleta.models.Instant;
+import com.wikicleta.models.Route;
 
 import android.annotation.TargetApi;
 import android.location.Location;
@@ -18,8 +16,8 @@ import android.util.Log;
 import android.widget.TextView;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
-public class PathTrace {
-	public ArrayList<GeoPoint> locationList;
+public class RouteTracer {
+	public ArrayList<Instant> instantList;
 	public boolean tracking;
 	
 	protected long startTime;
@@ -37,8 +35,8 @@ public class PathTrace {
 	
 	private Handler mHandler;
 
-	public PathTrace(TextView textViewSpeed, TextView textViewTime, TextView textViewDistance) {
-		this.locationList = new ArrayList<GeoPoint>();
+	public RouteTracer(TextView textViewSpeed, TextView textViewTime, TextView textViewDistance) {
+		this.instantList = new ArrayList<Instant>();
 		this.timeTextView = textViewTime;
 		this.speedTextView = textViewSpeed;
 		this.distanceTextView = textViewDistance;
@@ -46,10 +44,10 @@ public class PathTrace {
 		mHandler = new Handler();
 		decimalFormat.setRoundingMode(RoundingMode.DOWN);
 		
-		this.locationList.add(GeoHelpers.buildFromLatLon(19.428704, -99.168563));
-		this.locationList.add(GeoHelpers.buildFromLatLon(19.430566, -99.164615));
-		this.locationList.add(GeoHelpers.buildFromLatLon(19.431457, -99.162469));
-		this.locationList.add(GeoHelpers.buildFromLatLon(19.431780, -99.161568));
+		this.instantList.add(new Instant(GeoHelpers.buildFromLatLon(19.428704, -99.168563), 0.3f, 44233));
+		this.instantList.add(new Instant(GeoHelpers.buildFromLatLon(19.430566, -99.164615), 1.0f, 59432));
+		this.instantList.add(new Instant(GeoHelpers.buildFromLatLon(19.431457, -99.162469), 8.0f, 67534));
+		this.instantList.add(new Instant(GeoHelpers.buildFromLatLon(19.431780, -99.161568), 33.0f, 70564));
 		
 	}
 	
@@ -70,39 +68,22 @@ public class PathTrace {
 				accumulatedDistance += distance;
 			} 
 
-			distanceTextView.setText(decimalFormat.format(distance).concat(" km"));
+			distanceTextView.setText(decimalFormat.format(accumulatedDistance).concat(" km"));
 			this.lastLocation = location;
-			this.locationList.add(GeoHelpers.buildFromLongitude(lastLocation));
+			this.instantList.add(new Instant(GeoHelpers.buildFromLongitude(lastLocation), speed, overallElapsedTime()));
 		}
 	}
 	
-	public Map<String, Object> closePath() {
-		this.pause();
-		
-		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
-		// Speed in km/s
-		map.put("speed", averageSpeed);
-		// Elapsed time in milliseconds
-		map.put("time", overallElapsedTime());
-		// Distance in meters
-		map.put("distance", accumulatedDistance);
-		// Coordinates
-		
-		LinkedList<HashMap<String, Float>> coordinateList = new LinkedList<HashMap<String, Float>>();
-		for(GeoPoint point : locationList) {
-			HashMap<String, Float> coord = new HashMap<String, Float>();
-			coord.put("lat", (float) (point.getLatitudeE6() / 1E6));
-			coord.put("lon", (float) (point.getLongitudeE6() / 1E6));
-			coordinateList.add(coord);
-		}
-		
-		map.put("coordinates", coordinateList);
-		return map;
+	public Pair<Route, ArrayList<Instant>> buildRoute(String name, String tags) {
+		this.pause();		
+		Route route = new Route(name, tags, overallElapsedTime(), averageSpeed, accumulatedDistance, new Date().getTime());
+		Pair<Route, ArrayList<Instant>> routeComponents = new Pair<Route, ArrayList<Instant>>(route, instantList);
+		return routeComponents;
 	}
 	
 	public void reset() {
 		startTime = 0;
-		this.locationList.clear();
+		this.instantList.clear();
 		averageSpeed = 0;
 		accumulatedDistance = 0;
 		
@@ -119,7 +100,7 @@ public class PathTrace {
 	}
 	
 	public boolean isEmpty() {
-		return this.locationList.isEmpty();
+		return this.instantList.isEmpty();
 	}
 	
 	public void pause() {

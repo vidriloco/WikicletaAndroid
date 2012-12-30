@@ -13,5 +13,20 @@
 	<string name="routes_saving_form_save">Guardar</string>
 	<string name="routes_saving_form_decline">Descartar</string>
 	<string name="routes_saving_form_tags_instructions">Escribe uno o más tags que describan esta ruta, separándolos por comas. Puedes escribir nombres de lugares cercanos a esta ruta</string>
-
+	
+	<string name="routes_details_ranked">RANKING</string>
+	<string name="routes_details_checkin">CHECK-INS</string>
+	
+	<string name="route_layers_menu_none">Ninguna</string>
+	<string name="route_layers_menu_basic_info">Detalles de ruta</string>
+	<string name="route_layers_menu_highlights">Puntos de riesgo</string>
+	<string name="route_layers_menu_places">Lugares</string>
+	
+	<string name="route_drafts_title">Rutas sin subir</string>
+	<string name="route_drafts_notification_total_one">Hay 1 ruta en borradores.</string>
+	<string name="route_drafts_notification_total_many">Hay %d rutas en borradores.</string>
+	<string name="route_draft_details_menu_item">Ver ruta a detalle</string>
+	<string name="route_draft_destroy_menu_item">Descartar ruta</string>
+	
+	<string name="route_being_sent">Subiendo ruta ..</string>
 </resources>

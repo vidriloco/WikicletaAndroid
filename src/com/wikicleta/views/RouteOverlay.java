@@ -1,25 +1,25 @@
 package com.wikicleta.views;
 
+import java.util.List;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-
-import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.Projection;
-import com.wikicleta.helpers.PathTrace;
+import com.wikicleta.models.Instant;
 
 public class RouteOverlay extends Overlay {
-	private PathTrace trace;
+	private List<Instant> instantList;
     private Paint paint;
     private int color;
     
-    public RouteOverlay(PathTrace trace) {
+    public RouteOverlay(List<Instant> instantList) {
     	this.paint = new Paint();
     	this.color = Color.BLUE;
-    	this.trace = trace;
+    	this.instantList = instantList;
     }
     
     @Override
@@ -38,12 +38,12 @@ public class RouteOverlay extends Overlay {
         Point point1 = new Point();
         Point point2 = new Point();
 
-        for (int i = 1; i < trace.locationList.size(); i++) {
-         GeoPoint geoPoint1 = trace.locationList.get(i-1);
-         GeoPoint geoPoint2 = trace.locationList.get(i);
+        for (int i = 1; i < instantList.size(); i++) {
+         Instant instantOne = instantList.get(i-1);
+         Instant instantTwo = instantList.get(i);
         
-         projection.toPixels(geoPoint1, point1);
-         projection.toPixels(geoPoint2, point2);
+         projection.toPixels(instantOne.geoPoint(), point1);
+         projection.toPixels(instantTwo.geoPoint(), point2);
             canvas.drawLine(point1.x, point1.y, point2.x, point2.y, paint);
         }
     }

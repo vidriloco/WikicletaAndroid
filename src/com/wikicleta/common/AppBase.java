@@ -12,9 +12,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.kroz.activerecord.ActiveRecordBase;
-import org.kroz.activerecord.ActiveRecordException;
-import org.kroz.activerecord.DatabaseBuilder;
 import org.mobility.wikicleta.R;
 
 import android.annotation.SuppressLint;
@@ -25,33 +22,11 @@ import android.view.Display;
 public class AppBase {
 	
 	public static Activity currentActivity;
-	private static DatabaseBuilder builder;
-	protected static ActiveRecordBase connection;
-	
-	private static int DBVERSION=1;
-	private static String DBNAME="Wikicleta";
-	
 	
 	public static Display getScreenSize() {
 		return currentActivity.getWindowManager().getDefaultDisplay();
 	}
-	
-	public static ActiveRecordBase getDBConnection() {
-		
-		try {
-			if(builder== null) {
-				builder = new DatabaseBuilder(DBNAME);
-				connection = ActiveRecordBase.open(AppBase.currentActivity, DBNAME, DBVERSION);
-			}
-			
-			return connection;
-		} catch (ActiveRecordException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-		
-	}
+
 	
 	public static String urlFor(String string) throws BadURLResourceException {
 		if(string.equalsIgnoreCase("routes"))

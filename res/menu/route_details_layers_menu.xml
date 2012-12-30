@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/route_layers_none_item"
+          android:title="@string/route_layers_menu_none" >
+    </item>
+    <item android:id="@+id/route_layers_basic_info_item"
+          android:title="@string/route_layers_menu_basic_info" >
+    </item>
+    <item android:id="@+id/route_layers_highlights_item"
+          android:title="@string/route_layers_menu_highlights" >
+    </item>
+    <item android:id="@+id/route_layers_places_item"
+          android:title="@string/route_layers_menu_places" >
+    </item>
+</menu>

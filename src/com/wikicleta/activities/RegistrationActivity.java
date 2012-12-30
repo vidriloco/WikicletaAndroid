@@ -26,8 +26,10 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 	private String mPassword;
 	private String mPasswordConfirmation;
 	private String mName;
+	private String mUsername;
 	
 	private EditText mEmailView;
+	private EditText mUsernameView;
 	private EditText mNameView;
 	private EditText mPasswordView;
 	private EditText mPasswordConfirmationView;
@@ -44,6 +46,7 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 		// Set up the login form
 		mNameView = (EditText) findViewById(R.id.name);
 		mEmailView = (EditText) findViewById(R.id.email);
+		mUsernameView = (EditText) findViewById(R.id.username);
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordConfirmationView = (EditText) findViewById(R.id.password_confirmation);
 		
@@ -79,9 +82,11 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 		mPasswordView.setError(null);
 		mPasswordConfirmationView.setError(null);
 		mNameView.setError(null);
+		mUsernameView.setError(null);
 		
 		// Populate registration fields
 		mEmail = mEmailView.getText().toString();
+		mUsername = mUsernameView.getText().toString();
 		mPassword = mPasswordView.getText().toString();
 		mName = mNameView.getText().toString();
 		mPasswordConfirmation = mPasswordConfirmationView.getText().toString();
@@ -89,6 +94,10 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 		if(FieldValidators.isFieldEmpty(mName)) {
 			mNameView.setError(getString(R.string.error_field_required));
 			return;
+		}
+		
+		if(FieldValidators.isFieldEmpty(mUsername)) {
+			mUsernameView.setError(getString(R.string.error_field_required));
 		}
 		
 		if (FieldValidators.isFieldEmpty(mEmail)) {
@@ -133,6 +142,7 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 
 			try {
 				Map<String, String> parameters = new LinkedHashMap<String, String>();
+				parameters.put("username", mUsername);
 				parameters.put("email", mEmail);
 				parameters.put("password", mPassword);
 				parameters.put("name", mName);
