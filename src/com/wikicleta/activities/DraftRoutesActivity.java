@@ -13,11 +13,11 @@ import com.wikicleta.models.Route;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -39,6 +39,16 @@ public class DraftRoutesActivity extends Activity {
 		this.drawRoutesList();
 		
 		NotificationBuilder.clearNotification(Constants.DRAFT_ROUTES_NOTIFICATION_ID);
+		
+		this.findViewById(R.id.back_icon).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intentActivity = new Intent(AppBase.currentActivity, RoutesActivity.class);
+				AppBase.currentActivity.startActivity(intentActivity);
+			}
+        });
+		
 	}
 	
 	public static int queuedRoutesCount() {
@@ -51,7 +61,6 @@ public class DraftRoutesActivity extends Activity {
 	}
 	
 	public void drawRoutesList() {
-		Log.e("Wikicleta", "Redrawing");
     	list = (ListView) findViewById(R.id.list);
     	
         // Getting adapter by passing xml data ArrayList

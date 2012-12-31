@@ -9,8 +9,6 @@ import com.wikicleta.common.Constants;
 import com.wikicleta.helpers.GeoHelpers;
 import com.wikicleta.helpers.NotificationBuilder;
 import com.wikicleta.helpers.RouteTracer;
-import com.wikicleta.models.Instant;
-import com.wikicleta.models.Route;
 import com.wikicleta.views.PinchableMapView;
 import com.wikicleta.views.RouteOverlay;
 
@@ -38,7 +36,6 @@ import android.widget.TextView;
  * TODOS:
  * 
  * - Stop updating location if no route recording is being done
- * - Increase update frequency of route by distance/time
  * - Fix recording buttons and route timer for when canceling discarding of route
  */
 
@@ -99,7 +96,7 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 		mapView.getOverlays().add(routeOverlay);
 		
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-    	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, this);
+    	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5, this);
 
     	locationOverlay = new MyLocationOverlay(this, mapView);
     	mapView.getOverlays().add(locationOverlay);
@@ -213,11 +210,6 @@ public class RoutesActivity extends MapActivity implements LocationListener {
     	});
     	
         this.checkForQueuedRoutes();
-        int instants = Instant.all(Instant.class).size();
-        int routes = Route.all(Route.class).size();
-        Log.e("Wikicleta", "Instants count: " + instants);
-        Log.e("Wikicleta", "Routes count: " + routes);
-        
 	}
 
 	
@@ -340,6 +332,7 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 		this.setMapToLocation(location);
 		currentPath.addLocation(location);
 		mapView.postInvalidate();
+		Log.e("Wikicleta", "Changed status");
 	}
 
 	@Override

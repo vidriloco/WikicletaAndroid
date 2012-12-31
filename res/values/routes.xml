@@ -25,8 +25,9 @@
 	<string name="route_drafts_title">Rutas sin subir</string>
 	<string name="route_drafts_notification_total_one">Hay 1 ruta en borradores.</string>
 	<string name="route_drafts_notification_total_many">Hay %d rutas en borradores.</string>
-	<string name="route_draft_details_menu_item">Ver ruta a detalle</string>
+	<string name="route_draft_details_menu_item">Revisar ruta</string>
 	<string name="route_draft_destroy_menu_item">Descartar ruta</string>
 	
 	<string name="route_being_sent">Subiendo ruta ..</string>
+	<string name="route_not_saved">Ruta sin guardar</string>
 </resources>

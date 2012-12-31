@@ -52,16 +52,44 @@
       android:clickable="true" />
       <!-- android:apiKey="0Sp8gbE2A7htK9pPiFzcliDPP5WT0D_TSkooX1w" -->
   
-  
+  	<LinearLayout
+       android:id="@+id/top_panel_route_status"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:padding="10dp"
+       android:orientation="horizontal"
+       android:layout_marginTop="20dp"
+       android:layout_centerHorizontal="true"
+       android:layout_below="@+id/titlebar"
+       android:background="#fff"
+       android:alpha="0"
+       android:visibility="gone" >
+  	    <TextView
+                android:id="@+id/route_not_saved_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:shadowRadius="1.3"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="1dp"
+                android:textAllCaps="true"
+                android:text="@string/route_not_saved"
+                android:textColor="#111"
+                android:textSize="18sp" />
+  	</LinearLayout>
+  	
     <LinearLayout
-       android:id="@+id/extended_route_info_panel"
+       android:id="@+id/top_panel_extra_route_info"
        android:layout_width="wrap_content"
        android:layout_height="60dp"
        android:orientation="horizontal"
        android:layout_marginTop="20dp"
        android:layout_centerHorizontal="true"
        android:layout_below="@+id/titlebar"
-       android:background="#fff" >
+       android:background="#fff"
+       android:alpha="0"
+       android:visibility="gone" >
 
         <RelativeLayout
             android:id="@+id/speed"
@@ -70,7 +98,7 @@
             android:layout_margin="10dp" >
 
             <ImageView
-            android:id="@+id/route_share_button"
+            android:id="@+id/route_button_det"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/nothing"
@@ -154,10 +182,41 @@
         </RelativeLayout>
   </LinearLayout>
   
-
+ <LinearLayout 
+     android:id="@+id/bottom_panel_route_status_actions"
+     android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:background="#000"
+       android:orientation="horizontal"
+       android:layout_alignBaseline="@+id/mapview"
+       android:layout_alignParentBottom="true"
+       android:layout_centerHorizontal="true"
+       android:alpha="0"
+       android:clickable="true"
+       android:visibility="gone">
+     <ImageView
+            android:id="@+id/route_discard_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/nothing"
+            android:src="@drawable/checkin"
+            android:clickable="true" />
+      <View 
+           android:layout_width="2dp"
+           android:background="#fff"
+           android:layout_height="fill_parent" 
+           />
+      <ImageView
+            android:id="@+id/route_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/nothing"
+            android:src="@drawable/share"
+            android:clickable="true" />
+ </LinearLayout>
   
  <LinearLayout 
-      android:id="@+id/route_recording_toolbar"
+      android:id="@+id/bottom_panel_route_actions"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:background="#000"
@@ -166,6 +225,7 @@
        android:layout_alignParentBottom="true"
        android:layout_centerHorizontal="true"
        android:alpha="0"
+       android:visibility="gone"
        android:clickable="true">
       <ImageView
             android:id="@+id/route_layers_button"

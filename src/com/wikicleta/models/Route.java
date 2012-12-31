@@ -79,6 +79,10 @@ public class Route extends Model {
 		return new Select().from(Route.class).execute();
 	}
 	
+	public boolean isDraft() {
+		return this.jsonRepresentation.length() != 0;
+	}
+	
 	@Override
 	public void delete() {
 		super.delete();

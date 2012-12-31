@@ -1,7 +1,11 @@
 package com.wikicleta.activities;
 
 import org.mobility.wikicleta.R;
+
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.TransitionDrawable;
 import android.location.Location;
@@ -30,7 +34,8 @@ public class RouteDetailsActivity extends MapActivity implements LocationListene
 	
 	protected RouteOverlay routeOverlay;
 	public static Route currentRoute;
-
+	public AlertDialog.Builder alertDialog;
+	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -56,26 +61,75 @@ public class RouteDetailsActivity extends MapActivity implements LocationListene
 			}
 	    	
 	    });
-        
-        final ImageView layersMenuButton = (ImageView) findViewById(R.id.route_layers_button);
-        layersMenuButton.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View arg0) {
-				openContextMenu(layersMenuButton);
-			}
-	    	
-	    });
-        registerForContextMenu(layersMenuButton);
-        
-        
+               
         this.mapView = (PinchableMapView) findViewById(R.id.mapview);
         mapView.setBuiltInZoomControls(false);
         
-        topToolBarView = (LinearLayout) findViewById(R.id.extended_route_info_panel);
-
-        bottomToolBarView = (LinearLayout) findViewById(R.id.route_recording_toolbar);
-        bottomToolBarView.animate().alpha((float) 0.8).translationYBy(-Constants.DY_TRANSLATION);
         drawRoutePath();
+        drawControls();
+        
+        this.mapView.getController().setCenter(currentRoute.instants().get(0).geoPoint());
+	}
+	
+	@SuppressLint("NewApi")
+	public void drawControls() {
+		if(currentRoute.isDraft()) {
+	        topToolBarView = (LinearLayout) findViewById(R.id.top_panel_route_status);
+	        bottomToolBarView = (LinearLayout) findViewById(R.id.bottom_panel_route_status_actions);
+	        
+	        // Buttons preparations
+	        findViewById(R.id.route_save_button).setOnClickListener(new OnClickListener() {
+
+				public void onClick(View arg0) {
+
+				}
+		    	
+		    });
+	        
+	     // Buttons preparations
+	    	alertDialog = new AlertDialog.Builder(this);
+
+	        findViewById(R.id.route_discard_button).setOnClickListener(new OnClickListener() {
+
+				public void onClick(View arg0) {
+					alertDialog.setTitle("Pregunta");
+					alertDialog.setMessage("ÀDeseas descartar esta ruta?");
+					alertDialog.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							currentRoute.delete();
+
+							Intent intentActivity = new Intent(AppBase.currentActivity, RoutesActivity.class);
+							AppBase.currentActivity.startActivity(intentActivity);
+						}
+					});
+					alertDialog.setNegativeButton("No", null);
+					alertDialog.setNeutralButton(null, null);
+					alertDialog.show();
+				}
+		    	
+		    });
+	        
+		} else {
+	        topToolBarView = (LinearLayout) findViewById(R.id.top_panel_extra_route_info);
+	        bottomToolBarView = (LinearLayout) findViewById(R.id.bottom_panel_route_actions);
+	        
+	        // Buttons preparations
+	        final ImageView layersMenuButton = (ImageView) findViewById(R.id.route_layers_button);
+	        layersMenuButton.setOnClickListener(new OnClickListener() {
+
+				public void onClick(View arg0) {
+					openContextMenu(layersMenuButton);
+				}
+		    	
+		    });
+	        registerForContextMenu(layersMenuButton);
+		}
+		
+        topToolBarView.setVisibility(View.VISIBLE);
+        topToolBarView.animate().alpha((float) 0.8);
+        bottomToolBarView.setVisibility(View.VISIBLE);
+        bottomToolBarView.animate().alpha((float) 0.8).translationYBy(-Constants.DY_TRANSLATION);
 	}
 
 	@Override

@@ -77,10 +77,10 @@ public class RoutesSavingActivity extends Activity {
 	}
 	
 	public class RouteSavingAttempt extends AsyncTask<Void, Void, Boolean> {
+		Pair<Route, ArrayList<Instant>> routeComponent = null;
 
 		@Override
 		protected Boolean doInBackground(Void... procParams) {
-			Pair<Route, ArrayList<Instant>> routeComponent = null;
 			try {
 				Map<String, Map<String, Object>> superParams = new LinkedHashMap<String, Map<String, Object>>();
 				
@@ -98,11 +98,12 @@ public class RoutesSavingActivity extends Activity {
 				
 			}
 			
-			NotificationBuilder.clearNotification(Constants.SENDING_ROUTE_NOTIFICATION_ID);
-			saveRoute(routeComponent);
+
 			RouteDetailsActivity.currentRoute = routeComponent.first;
 			Intent intentActivity = new Intent(AppBase.currentActivity, RouteDetailsActivity.class);
 			AppBase.currentActivity.startActivity(intentActivity);
+			NotificationBuilder.clearNotification(Constants.SENDING_ROUTE_NOTIFICATION_ID);
+			saveRoute(routeComponent);
 			return true;
 		}
 		
