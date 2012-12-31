@@ -3,8 +3,8 @@ package com.wikicleta.models;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import org.apache.commons.lang3.StringEscapeUtils;
+import android.location.Location;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -81,6 +81,10 @@ public class Route extends Model {
 	
 	public boolean isDraft() {
 		return this.jsonRepresentation.length() != 0;
+	}
+	
+	public Location getStartingLocation() {
+		return this.instants().get(0).location();
 	}
 	
 	@Override

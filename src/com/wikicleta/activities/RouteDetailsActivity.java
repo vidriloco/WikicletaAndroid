@@ -8,8 +8,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.TransitionDrawable;
-import android.location.Location;
-import android.location.LocationListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -20,14 +18,13 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.google.android.maps.MapActivity;
 import com.wikicleta.common.AppBase;
 import com.wikicleta.common.Constants;
 import com.wikicleta.models.Route;
 import com.wikicleta.views.PinchableMapView;
 import com.wikicleta.views.RouteOverlay;
 
-public class RouteDetailsActivity extends MapActivity implements LocationListener {
+public class RouteDetailsActivity extends LocationAwareMapActivity {
 	private PinchableMapView mapView;
 	private LinearLayout bottomToolBarView;
 	private LinearLayout topToolBarView;
@@ -38,10 +35,9 @@ public class RouteDetailsActivity extends MapActivity implements LocationListene
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState,R.layout.activity_route_details);
         AppBase.currentActivity = this;
-
-        this.setContentView(R.layout.activity_route_details);
+        this.centerMapOnCurrentLocationByDefault = false;
         
         TextView routeNameView = (TextView) findViewById(R.id.route_name);
         
@@ -68,7 +64,7 @@ public class RouteDetailsActivity extends MapActivity implements LocationListene
         drawRoutePath();
         drawControls();
         
-        this.mapView.getController().setCenter(currentRoute.instants().get(0).geoPoint());
+        this.setMapToLocation(currentRoute.getStartingLocation());
 	}
 	
 	@SuppressLint("NewApi")
@@ -156,30 +152,6 @@ public class RouteDetailsActivity extends MapActivity implements LocationListene
         
         return true;
     }
-	
-	@Override
-	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	protected void drawRoutePath() {
 		routeOverlay = new RouteOverlay(currentRoute.instants());

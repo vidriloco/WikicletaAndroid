@@ -1,30 +1,21 @@
 package com.wikicleta.activities;
 
 import org.mobility.wikicleta.R;
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MyLocationOverlay;
 import com.wikicleta.common.AppBase;
 import com.wikicleta.common.Constants;
-import com.wikicleta.helpers.GeoHelpers;
 import com.wikicleta.helpers.NotificationBuilder;
 import com.wikicleta.helpers.RouteTracer;
 import com.wikicleta.helpers.SimpleAnimatorListener;
-import com.wikicleta.views.PinchableMapView;
 import com.wikicleta.views.RouteOverlay;
 
 import com.nineoldandroids.animation.*;
 import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -39,12 +30,10 @@ import android.widget.TextView;
  * - Fix recording buttons and route timer for when canceling discarding of route
  */
 
-public class RoutesActivity extends MapActivity implements LocationListener {
+public class RoutesActivity extends LocationAwareMapActivity {
 
 	protected enum TaskPanel {Main, Recording};
 	protected TaskPanel currentTaskPanel;
-	
-	public PinchableMapView mapView;
 	
 	protected RelativeLayout titleBarView;
 	protected LinearLayout toolBarView;
@@ -55,29 +44,17 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 	private ImageView pauseButton;
 	private ImageView flagButton;
 	
-	private LocationManager locationManager;
 	static RouteTracer currentPath;
-
-	private MyLocationOverlay locationOverlay;
 	protected RouteOverlay routeOverlay;
 
 	AlertDialog.Builder builder;
-
-	protected LocationListener listener;
-	
 	protected AlertDialog.Builder alertDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState, R.layout.activity_routes_on_map);
 		AppBase.currentActivity = this;
-		listener = this;
-
-		setContentView(R.layout.activity_routes_on_map);
-		
-		mapView = (PinchableMapView) findViewById(R.id.mapview);
-        mapView.setBuiltInZoomControls(false);
-		
+				
         titleBarView = (RelativeLayout) findViewById(R.id.titlebar);
         toolBarView = (LinearLayout) findViewById(R.id.toolbar);
         recordRouteToolbarView = (LinearLayout) findViewById(R.id.route_recording_toolbar);
@@ -85,7 +62,6 @@ public class RoutesActivity extends MapActivity implements LocationListener {
                 
 		showToolbarFor(TaskPanel.Main);
         
-        this.setMapToDefaultValues();
         alertDialog = new AlertDialog.Builder(this);
         
 		currentPath = new RouteTracer((TextView) findViewById(R.id.speed_number), 
@@ -94,15 +70,6 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 		
 		routeOverlay = new RouteOverlay(currentPath.instantList);
 		mapView.getOverlays().add(routeOverlay);
-		
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-    	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5, this);
-
-    	locationOverlay = new MyLocationOverlay(this, mapView);
-    	mapView.getOverlays().add(locationOverlay);
-    	
-    	locationOverlay.enableMyLocation();
-    	locationOverlay.disableCompass();
     	
     	recButton = (ImageView) findViewById(R.id.routes_rec_button);
     	flagButton = (ImageView) findViewById(R.id.routes_finish_button);
@@ -164,10 +131,8 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 			public void onClick(View v) {
 				mapView.postInvalidate();
 				resumeRecording(true);
-				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 
-						100, 10, listener);
 				flagButton.setVisibility(View.VISIBLE);
-				
+				enableLocationManager();
 			}
 		});
     	
@@ -175,8 +140,7 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 			@Override
 			public void onClick(View v) {
 				pauseRecording(true);
-		    	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 
-		    			10000, 10, listener);
+				disableLocationManager();
 			}
 		});
     	
@@ -212,6 +176,18 @@ public class RoutesActivity extends MapActivity implements LocationListener {
         this.checkForQueuedRoutes();
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		if(currentPath.isPaused())
+			this.disableLocationManager();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		this.enableLocationManager();
+	}
 	
 	protected void checkForQueuedRoutes() {		
 		if(DraftRoutesActivity.queuedRoutesCount() > 0) {
@@ -300,21 +276,7 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 	
 	@Override
 	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
 		return false;
-	}
-	
-	protected void setMapToDefaultValues() {
-		mapView.getController().animateTo(this.getDefaultLocation());
-        mapView.getController().setZoom(18);
-	}
-	
-	protected void setMapToLocation(Location location) {
-		mapView.getController().animateTo(GeoHelpers.buildFromLongitude(location));
-	}
-	
-	protected GeoPoint getDefaultLocation() {
-		return GeoHelpers.buildFromLatLon(19.412423, -99.169207);
 	}
 	
 	@Override
@@ -328,26 +290,9 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 
 	@Override
 	public void onLocationChanged(Location location) {
-		this.setMapToLocation(location);
+		super.onLocationChanged(location);
 		currentPath.addLocation(location);
 		mapView.postInvalidate();
-		Log.e("Wikicleta", "Changed status");
-	}
-
-	@Override
-	public void onProviderDisabled(String provider) {
-		
-	}
-
-	@Override
-	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
 	}
 	
 	protected void showToolbarFor(TaskPanel newTask) {

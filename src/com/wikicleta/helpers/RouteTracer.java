@@ -18,7 +18,7 @@ import android.widget.TextView;
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 public class RouteTracer {
 	public ArrayList<Instant> instantList;
-	public boolean tracking;
+	protected boolean tracking;
 	
 	protected long startTime;
 	protected long endTime;

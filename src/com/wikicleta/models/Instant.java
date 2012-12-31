@@ -2,6 +2,9 @@ package com.wikicleta.models;
 
 import java.util.HashMap;
 
+import android.location.Location;
+import android.location.LocationManager;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -42,6 +45,13 @@ public class Instant extends Model {
 	
 	public GeoPoint geoPoint() {
 		return new GeoPoint(this.latitude, this.longitude);
+	}
+	
+	public Location location() {
+		Location loc = new Location(LocationManager.GPS_PROVIDER);
+		loc.setLatitude(this.getLatitude());
+		loc.setLongitude(this.getLongitude());
+		return loc;
 	}
 	
 	public HashMap<String, Object> toHashMap() {
