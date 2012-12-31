@@ -9,12 +9,13 @@ import com.wikicleta.common.Constants;
 import com.wikicleta.helpers.GeoHelpers;
 import com.wikicleta.helpers.NotificationBuilder;
 import com.wikicleta.helpers.RouteTracer;
+import com.wikicleta.helpers.SimpleAnimatorListener;
 import com.wikicleta.views.PinchableMapView;
 import com.wikicleta.views.RouteOverlay;
 
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
-import android.annotation.TargetApi;
+import com.nineoldandroids.animation.*;
+import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,7 +23,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -240,7 +240,6 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 	}
 	
 	// Refactor this views
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
 	public void toggleQueuedRoutesButton() {
 		if(DraftRoutesActivity.queuedRoutesCount() > 0) {
 			ImageView button = (ImageView) findViewById(R.id.drafts_button_icon);
@@ -254,13 +253,13 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 				alpha = 1;
 			}
 			button.setVisibility(visibilityForAll);
-			button.animate().alpha(alpha);
+			animate(button).alpha(alpha);
 	        
 	        border.setVisibility(visibilityForAll);
-	        border.animate().alpha(alpha);
+	        animate(border).alpha(alpha);
 	        
 	        grouper.setVisibility(visibilityForAll);
-	        grouper.animate().alpha(alpha);
+	        animate(grouper).alpha(alpha);
 		}
 	}
 	
@@ -351,117 +350,59 @@ public class RoutesActivity extends MapActivity implements LocationListener {
 		// TODO Auto-generated method stub
 	}
 	
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
 	protected void showToolbarFor(TaskPanel newTask) {
+		AnimatorSet showSet = new AnimatorSet();
+		AnimatorSet hideSet = new AnimatorSet();
 
         if(newTask == TaskPanel.Main) {
         	if(this.currentTaskPanel == TaskPanel.Recording) {
-        		this.recordRouteToolbarView.animate().alpha(0).translationYBy(Constants.DY_TRANSLATION).setListener(new AnimatorListener(){
-
-					@Override
-					public void onAnimationCancel(Animator animation) {
-						// TODO Auto-generated method stub
-					}
-
+        		// Hide previous panel (recording panel)
+        		hideSet.addListener(new SimpleAnimatorListener() {
 					@Override
 					public void onAnimationEnd(Animator animation) {
 						recordRouteToolbarView.setVisibility(View.GONE);
-						statsToolbarView.setVisibility(View.GONE);
+						statsToolbarView.setVisibility(View.GONE);						
 					}
-
-					@Override
-					public void onAnimationRepeat(Animator animation) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void onAnimationStart(Animator animation) {
-						//toggleQueuedRoutesButton();
-					}});
+        		});
+        		hideSet.playTogether(ObjectAnimator.ofFloat(recordRouteToolbarView, "alpha", 0), 
+        				ObjectAnimator.ofFloat(recordRouteToolbarView, "translationY", Constants.DY_TRANSLATION));
+        		hideSet.start();
         	}
-        		
-        	this.toolBarView.animate().alpha((float) 0.8).translationYBy(-Constants.DY_TRANSLATION).setListener(new AnimatorListener(){
-
-				@Override
-				public void onAnimationCancel(Animator animation) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onAnimationEnd(Animator animation) {
-				}
-
-				@Override
-				public void onAnimationRepeat(Animator animation) {
-					// TODO Auto-generated method stub
-					
-				}
-
+        	
+    		showSet.playTogether(ObjectAnimator.ofFloat(toolBarView, "alpha", 0.8f),
+    				ObjectAnimator.ofFloat(toolBarView, "translationY", -Constants.DY_TRANSLATION));
+    		showSet.addListener(new SimpleAnimatorListener() {
 				@Override
 				public void onAnimationStart(Animator animation) {
 					toolBarView.setVisibility(View.VISIBLE);
-				}});
+				}
+    		});
+    		showSet.start();
         } else if(newTask == TaskPanel.Recording) {
-        	if(this.currentTaskPanel == TaskPanel.Main) 
-        		this.toolBarView.animate().alpha(0).translationYBy(Constants.DY_TRANSLATION).setListener(new AnimatorListener(){
-
-					@Override
-					public void onAnimationCancel(Animator animation) {
-						// TODO Auto-generated method stub
-						
-					}
-
+        	if(this.currentTaskPanel == TaskPanel.Main) {
+        		// Hide previous panel (main panel)
+        		hideSet.addListener(new SimpleAnimatorListener() {
 					@Override
 					public void onAnimationEnd(Animator animation) {
-						toolBarView.setVisibility(View.GONE);
-						//toggleQueuedRoutesButton();
+						toolBarView.setVisibility(View.GONE);					
 					}
+        		});
+        		hideSet.playTogether(ObjectAnimator.ofFloat(toolBarView, "alpha", 0), 
+        				ObjectAnimator.ofFloat(toolBarView, "translationY", Constants.DY_TRANSLATION));    
+        		hideSet.start();
+        	}
 
-					@Override
-					public void onAnimationRepeat(Animator animation) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void onAnimationStart(Animator animation) {
-						// TODO Auto-generated method stub
-					}});
-        	this.recordRouteToolbarView.animate().alpha((float) 0.8).translationYBy(-Constants.DY_TRANSLATION).setListener(new AnimatorListener(){
-
-				@Override
-				public void onAnimationCancel(Animator animation) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onAnimationEnd(Animator animation) {
-					recordRouteToolbarView.setVisibility(View.VISIBLE);
-					statsToolbarView.setVisibility(View.VISIBLE);
-				}
-
-				@Override
-				public void onAnimationRepeat(Animator animation) {
-					// TODO Auto-generated method stub
-					
-				}
-
+    		showSet.playTogether(ObjectAnimator.ofFloat(recordRouteToolbarView, "alpha", 0.8f),
+    				ObjectAnimator.ofFloat(recordRouteToolbarView, "translationY", -Constants.DY_TRANSLATION));
+    		showSet.addListener(new SimpleAnimatorListener() {
 				@Override
 				public void onAnimationStart(Animator animation) {
-					// TODO Auto-generated method stub
-					
-				}});;
+                    recordRouteToolbarView.setVisibility(View.VISIBLE);
+					statsToolbarView.setVisibility(View.VISIBLE);
+				}
+    		});
+    		showSet.start();
         }
         this.currentTaskPanel = newTask;
-        
-        /*TranslateAnimation translation = new TranslateAnimation(Animation.RELATIVE_TO_SELF,0, Animation.RELATIVE_TO_SELF,-100);
-        translation.setDuration(1000);
-        
-        translation.setFillAfter(true); //HERE
-        translation.setFillEnabled(true);
-        toolBarView.startAnimation(translation);     */   
 	}
 }
