@@ -53,6 +53,16 @@ public class RoutesListAdapter extends BaseAdapter {
         
         ((TextView) view.findViewById(R.id.route_name)).setText(route.name);
         ((TextView) view.findViewById(R.id.route_tags)).setText(route.tags);
+        
+        ((TextView) view.findViewById(R.id.route_ranking)).setText(String.valueOf(route.ranking));
+        
+        if(!route.isDraft()) 
+        	view.findViewById(R.id.route_synced_status).setVisibility(View.GONE);
+        
+        String publicStatus = route.isPublic ? view.getContext().getString(R.string.route_privacy_public) : 
+        	view.getContext().getString(R.string.route_privacy_private);
+        
+        ((TextView) view.findViewById(R.id.route_privacy_status)).setText(publicStatus);
         ((TextView) view.findViewById(R.id.route_date)).setText(mSimpleDateFormat.format(new Date(route.createdAt)));
 
         return view;

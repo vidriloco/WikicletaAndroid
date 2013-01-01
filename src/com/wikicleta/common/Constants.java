@@ -5,5 +5,5 @@ public class Constants {
 	
 	// Notifications
 	public static int DRAFT_ROUTES_NOTIFICATION_ID = 0;
-	public static int SENDING_ROUTE_NOTIFICATION_ID = 1;
+	public static int ROUTES_SYNCING_NOTIFICATIONS_ID = 1;
 }

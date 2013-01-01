@@ -157,10 +157,10 @@ public class LoginActivity extends LoadingWithMessageActivity {
 				superParams.put("session", parameters);
 				Log.i("Wikicleta", "Sending params  ... ");
 
-				String result = NetworkOperations.postTo("/api/sessions", superParams);
-				JSONObject object =(JSONObject) JSONValue.parse(result);	
+				//String result = NetworkOperations.postJSONTo("/api/sessions", JSONValue.toJSONString(superParams));
+				//JSONObject object =(JSONObject) JSONValue.parse(result);	
 								
-				User.storeWithParams(parameters, (String) object.get("token"));
+				//User.storeWithParams(parameters, (String) object.get("token"));
 			} catch (Exception e) {
 				// In case authentication fails 
 				return false;

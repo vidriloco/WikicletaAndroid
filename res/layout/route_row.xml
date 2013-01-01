@@ -1,48 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#fff"
     android:orientation="horizontal"
+    android:layout_height="wrap_content"
     android:paddingTop="15dp"
-    android:paddingLeft="15dp"
-    android:paddingRight="10dp"
-    android:paddingBottom="15dp"
-    android:background="#fff" >
-
-    <TextView
-        android:id="@+id/route_name"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dip"
-        android:layout_marginBottom="5dip"
-        android:textColor="#000"
-        android:textStyle="bold"
-        android:text="@string/none"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/route_tags"
+	android:paddingLeft="15dp"
+	android:paddingRight="10dp"
+	android:paddingBottom="15dp"
+    android:layout_width="fill_parent">
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dip"
-        android:layout_below="@+id/route_name"
-        android:textColor="#000"
-        android:text="@string/none"
-        android:textSize="12sp"
-        android:textStyle="italic" />
+        android:orientation="vertical" >
+	    <ImageView 
+	        android:id="@+id/route_icon"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:contentDescription="@string/none"
+	        android:src="@drawable/new_doc"/>
 
-    <TextView
-        android:id="@+id/route_date"
+	    <LinearLayout
+	        android:id="@+id/route_ranking_container"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:orientation="horizontal" >
+
+	        <TextView
+	            android:id="@+id/route_ranking"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/dashes"
+	            android:layout_marginTop="3dp"
+	            android:textColor="#000"
+	            android:textSize="13sp"
+	            android:textStyle="bold" />
+			<TextView
+	            android:id="@+id/route_total"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/route_rank_top_value"
+	            android:layout_marginTop="3dp"
+	            android:textColor="#656A6E"
+	            android:textSize="11sp"
+	            android:textStyle="bold" />
+	    </LinearLayout>
+
+	</LinearLayout>
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/route_tags"
-        android:layout_alignBottom="@+id/route_tags"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:text="@string/none"
-        android:textColor="#000"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        android:textSize="13sp" />
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp" >
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/route_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/none"
+            android:textColor="#000"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/route_tags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/none"
+            android:textColor="#000"
+            android:textSize="10sp"
+            android:textStyle="italic" />
+	
+        <RelativeLayout 
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:orientation="horizontal"
+        	android:layout_marginTop="8dp">
+            <TextView
+            	android:id="@+id/route_date"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:text="@string/none"
+            	android:textAllCaps="true"
+            	android:textColor="#000"
+            	android:textSize="10sp"
+            	android:textStyle="bold" />
+            <TextView
+            	android:id="@+id/route_synced_status"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+				android:layout_alignParentRight="true"
+				android:layout_marginRight="15dp"
+            	android:text="@string/route_not_uploaded"
+            	android:textAllCaps="true"
+            	android:textColor="#E14E45"
+            	android:textSize="10sp"
+            	android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/route_privacy_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/route_date"
+                android:layout_marginLeft="20dp"
+                android:text="@string/route_privacy_private"
+                android:textAllCaps="true"
+                android:textColor="#000"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
+    
+  

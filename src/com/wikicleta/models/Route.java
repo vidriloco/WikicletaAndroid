@@ -2,7 +2,6 @@ package com.wikicleta.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import org.apache.commons.lang3.StringEscapeUtils;
 import android.location.Location;
 import com.activeandroid.Model;
@@ -34,7 +33,21 @@ public class Route extends Model {
 	@Column(name = "Json")
 	public String jsonRepresentation;
 	
-	public List<Instant> instants() {
+	@Column(name = "isPublic")
+	public boolean isPublic;
+	
+	@Column(name = "Owner")
+	public int owner;
+	
+	@Column(name = "CheckIns")
+	public int checkIns;
+	
+	@Column(name = "Ranking")
+	public int ranking;
+	
+	public boolean isUploading;
+	
+	public ArrayList<Instant> instants() {
 		return getMany(Instant.class, "Route");
 	}
 	
@@ -59,6 +72,8 @@ public class Route extends Model {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("name", this.name);
 		params.put("tags", this.tags);
+		params.put("isPublic", this.isPublic);
+		params.put("userId", this.owner);
 		params.put("elapsedTime", this.elapsedTime);
 		params.put("averageSpeed", this.averageSpeed);
 		params.put("kilometers", this.kilometers);
@@ -95,4 +110,6 @@ public class Route extends Model {
 			instant.delete();
 		}
 	}
+	
+	
 }

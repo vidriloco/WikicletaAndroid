@@ -24,25 +24,6 @@ public class Pair<F, S> implements JSONStringMerger {
         this.second = second;
     }
 
-    @SuppressWarnings("unchecked")
-	public Map<String, Object> generateParams() {
-    	Map<String, Object> params = null;
-    	if(this.first.getClass() == Route.class && this.second.getClass() == ArrayList.class) {
-    		Route route = (Route) this.first;
-    		params = route.toHashMap();
-    		
-    		ArrayList<HashMap<String, Object>> instants = new ArrayList<HashMap<String, Object>>();
-    		for(Instant instant : (ArrayList<Instant>) this.second) {
-    			instants.add(instant.toHashMap());
-    		}
-    		
-    		params.put("coordinates", instants);
-    	}
-    	
-    	
-    	return params;
-    }
-
 	@Override
 	public void mergeJSONString(String jsonString) {
 		if(this.first.getClass() == Route.class)

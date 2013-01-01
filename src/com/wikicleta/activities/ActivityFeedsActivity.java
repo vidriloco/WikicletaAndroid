@@ -13,17 +13,13 @@ import com.wikicleta.models.Route;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
-public class DraftRoutesActivity extends Activity {
+public class ActivityFeedsActivity extends Activity {
 
 	public static ArrayList<Route> routeList;
 	public static Route selectedRoute;
@@ -33,8 +29,10 @@ public class DraftRoutesActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		NotificationBuilder.clearNotification(Constants.ROUTES_SYNCING_NOTIFICATIONS_ID);
+
 		AppBase.currentActivity = this;
-		this.setContentView(R.layout.activity_routes_list);
+		this.setContentView(R.layout.activity_activity_feeds);
 		loadQueuedRoutes();
 		this.drawRoutesList();
 		
@@ -57,7 +55,7 @@ public class DraftRoutesActivity extends Activity {
 	}
 	
 	private static void loadQueuedRoutes() {
-		DraftRoutesActivity.routeList = Route.queued();
+		ActivityFeedsActivity.routeList = Route.queued();
 	}
 	
 	public void drawRoutesList() {
@@ -73,42 +71,10 @@ public class DraftRoutesActivity extends Activity {
 				launchRouteDetailsActivity();
 			}
         });
-        
-        list.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
-				selectedRoute = (Route) adapter.getItem(pos);
-				openContextMenu(list);
-                return true;
-            }
-        }); 
-        
-        registerForContextMenu(list);
     }
 	
-	@Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        getMenuInflater().inflate(R.menu.route_drafts_menu , menu);
-    }
 	
-	@Override
-    public boolean onContextItemSelected(MenuItem item) {
-
-        switch(item.getItemId()){
-            case R.id.route_draft_destroy:
-            	discardRoute();
-            	reloadAdapter();
-                break;
-            case R.id.route_draft_details:
-            	launchRouteDetailsActivity();
-                break;
-        }
-        
-        return true;
-    }
-	
-	public void discardRoute() {
+	/*public void discardRoute() {
     	selectedRoute.delete();
 		loadQueuedRoutes();
 		adapter.notifyDataSetChanged();
@@ -116,7 +82,7 @@ public class DraftRoutesActivity extends Activity {
 			this.launchDraftsRoutesActivity();
 		}
 		
-	}
+	}*/
 	
 	public void reloadAdapter() {
 		adapter = new RoutesListAdapter(this, routeList);

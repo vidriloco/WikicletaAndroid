@@ -44,11 +44,11 @@ public class RouteTracer {
 		mHandler = new Handler();
 		decimalFormat.setRoundingMode(RoundingMode.DOWN);
 		
-		this.instantList.add(new Instant(GeoHelpers.buildFromLatLon(19.428704, -99.168563), 0.3f, 44233));
+		/*this.instantList.add(new Instant(GeoHelpers.buildFromLatLon(19.428704, -99.168563), 0.3f, 44233));
 		this.instantList.add(new Instant(GeoHelpers.buildFromLatLon(19.430566, -99.164615), 1.0f, 59432));
 		this.instantList.add(new Instant(GeoHelpers.buildFromLatLon(19.431457, -99.162469), 8.0f, 67534));
 		this.instantList.add(new Instant(GeoHelpers.buildFromLatLon(19.431780, -99.161568), 33.0f, 70564));
-		
+		*/
 	}
 	
 	public void addLocation(Location location) {
@@ -74,11 +74,9 @@ public class RouteTracer {
 		}
 	}
 	
-	public Pair<Route, ArrayList<Instant>> buildRoute(String name, String tags) {
+	public Route buildRoute(String name, String tags) {
 		this.pause();		
-		Route route = new Route(name, tags, overallElapsedTime(), averageSpeed, accumulatedDistance, new Date().getTime());
-		Pair<Route, ArrayList<Instant>> routeComponents = new Pair<Route, ArrayList<Instant>>(route, instantList);
-		return routeComponents;
+		return new Route(name, tags, overallElapsedTime(), averageSpeed, accumulatedDistance, new Date().getTime());
 	}
 	
 	public void reset() {

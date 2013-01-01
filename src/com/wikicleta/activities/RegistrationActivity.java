@@ -150,13 +150,13 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 				Map<String, Map<String, String>> superParams = new LinkedHashMap<String, Map<String, String>>();
 				superParams.put("registration", parameters);
 				
-				String result = NetworkOperations.postTo("/api/registrations", superParams);
-				Log.i("WWWWW", result);
+				//String result = NetworkOperations.postTo("/api/registrations", superParams);
+				//Log.i("WWWWW", result);
 
-				Object obj = JSONValue.parse(result);
-				JSONObject object =(JSONObject) obj;
+				//Object obj = JSONValue.parse(result);
+				//JSONObject object =(JSONObject) obj;
 				
-				User.storeWithParams(parameters, (String) object.get("token"));
+				//User.storeWithParams(parameters, (String) object.get("token"));
 			} catch (Exception e) {
 				// Could not register
 				return false;

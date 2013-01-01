@@ -27,7 +27,7 @@ import android.widget.TextView;
  * TODOS:
  * 
  * - Stop updating location if no route recording is being done
- * - Fix recording buttons and route timer for when canceling discarding of route
+ * - Fix recording buttons and route timer for when canceling discarding of route and route recording was stopped
  */
 
 public class RoutesActivity extends LocationAwareMapActivity {
@@ -190,20 +190,20 @@ public class RoutesActivity extends LocationAwareMapActivity {
 	}
 	
 	protected void checkForQueuedRoutes() {		
-		if(DraftRoutesActivity.queuedRoutesCount() > 0) {
+		if(ActivityFeedsActivity.queuedRoutesCount() > 0) {
 			
 			NotificationBuilder notification = new NotificationBuilder(this);
 			
-			String countString = DraftRoutesActivity.queuedRoutesCount() == 1 ? 
+			String countString = ActivityFeedsActivity.queuedRoutesCount() == 1 ? 
 					this.getString(R.string.route_drafts_notification_total_one) : 
-						this.getString(R.string.route_drafts_notification_total_many, DraftRoutesActivity.queuedRoutesCount()); 
+						this.getString(R.string.route_drafts_notification_total_many, ActivityFeedsActivity.queuedRoutesCount()); 
 			
 			notification.addNotification(Constants.DRAFT_ROUTES_NOTIFICATION_ID, 
-					getString(R.string.app_name), countString, DraftRoutesActivity.class);
+					getString(R.string.app_name), countString, ActivityFeedsActivity.class);
 			
 			TextView routesQueuedTextView = (TextView) findViewById(R.id.drafts_queued_text);
 			// set routes count on text view
-	        routesQueuedTextView.setText(String.valueOf(DraftRoutesActivity.queuedRoutesCount()));
+	        routesQueuedTextView.setText(String.valueOf(ActivityFeedsActivity.queuedRoutesCount()));
 	        findViewById(R.id.drafts_text_container).setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -217,7 +217,7 @@ public class RoutesActivity extends LocationAwareMapActivity {
 	
 	// Refactor this views
 	public void toggleQueuedRoutesButton() {
-		if(DraftRoutesActivity.queuedRoutesCount() > 0) {
+		if(ActivityFeedsActivity.queuedRoutesCount() > 0) {
 			ImageView button = (ImageView) findViewById(R.id.drafts_button_icon);
 			View border = (View) findViewById(R.id.drafts_border);
 			RelativeLayout grouper = (RelativeLayout) findViewById(R.id.drafts_text_container);
