@@ -30,6 +30,7 @@ public class Route extends Model {
 	@Column(name = "CreatedAt")
 	public long createdAt;
 	
+	
 	@Column(name = "Json")
 	public String jsonRepresentation;
 	
@@ -45,10 +46,13 @@ public class Route extends Model {
 	@Column(name = "Ranking")
 	public int ranking;
 	
-	public boolean isUploading;
+	public boolean isBlocked;
+	public ArrayList<Instant> temporalInstants;
 	
 	public ArrayList<Instant> instants() {
-		return getMany(Instant.class, "Route");
+		if(temporalInstants == null)
+			return getMany(Instant.class, "Route");
+		return temporalInstants;
 	}
 	
 	public Route() {
@@ -95,7 +99,9 @@ public class Route extends Model {
 	}
 	
 	public boolean isDraft() {
-		return this.jsonRepresentation.length() != 0;
+		if(this.jsonRepresentation == null)
+			return false;
+		return !(this.jsonRepresentation.length() == 0);
 	}
 	
 	public Location getStartingLocation() {

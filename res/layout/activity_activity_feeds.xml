@@ -71,7 +71,7 @@
     <ListView
         android:id="@+id/list"
         android:layout_width="fill_parent"
-        android:layout_height="326dp"
+        android:layout_height="match_parent"
         android:divider="@color/wikicleta_blue"
         android:dividerHeight="0.5dp" >
     </ListView>

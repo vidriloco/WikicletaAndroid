@@ -56,8 +56,15 @@ public class RoutesListAdapter extends BaseAdapter {
         
         ((TextView) view.findViewById(R.id.route_ranking)).setText(String.valueOf(route.ranking));
         
-        if(!route.isDraft()) 
-        	view.findViewById(R.id.route_synced_status).setVisibility(View.GONE);
+        if(route.isDraft()) {
+        	view.findViewById(R.id.route_synced_status).setVisibility(View.VISIBLE);
+        	
+        	int syncing = route.isBlocked ? R.string.route_uploading : R.string.route_not_uploaded;
+    		((TextView) view.findViewById(R.id.route_synced_status)).setText(syncing);
+        } else {
+        	if(!route.isBlocked)
+        		view.findViewById(R.id.route_synced_status).setVisibility(View.GONE);
+        }
         
         String publicStatus = route.isPublic ? view.getContext().getString(R.string.route_privacy_public) : 
         	view.getContext().getString(R.string.route_privacy_private);

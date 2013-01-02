@@ -76,7 +76,9 @@ public class RouteTracer {
 	
 	public Route buildRoute(String name, String tags) {
 		this.pause();		
-		return new Route(name, tags, overallElapsedTime(), averageSpeed, accumulatedDistance, new Date().getTime());
+		Route route = new Route(name, tags, overallElapsedTime(), averageSpeed, accumulatedDistance, new Date().getTime());
+		route.temporalInstants = instantList;
+		return route;
 	}
 	
 	public void reset() {

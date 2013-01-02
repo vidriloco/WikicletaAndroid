@@ -8,6 +8,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.util.Log;
+
 public class NetworkOperations {
 	static String serverHost = "http://192.168.1.65:3000";
 	
@@ -27,7 +29,7 @@ public class NetworkOperations {
 	    httpost.setHeader("Accept", "application/json");
 	    httpost.setHeader("Content-type", "application/json");
 	    //Handles what is returned from the page 
-	    
+	    Log.e("WIKICLETA", jsonValue);
 	    try {
 			return client.execute(httpost).getStatusLine().getStatusCode();
 		} catch (ClientProtocolException e) {

@@ -74,7 +74,6 @@ public class RouteDetailsActivity extends LocationAwareMapActivity {
 
 				public void onClick(View arg0) {
 					RouteSavingAsync routeSavingTask = new RouteSavingAsync(currentRoute);
-					//routeSavingTask.execute((Void) null);
 					AsyncTaskManager.pushNewRouteTask(routeSavingTask);
 					
 					notification.addNotification(Constants.ROUTES_SYNCING_NOTIFICATIONS_ID, 

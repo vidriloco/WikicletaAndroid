@@ -35,4 +35,5 @@
 	<string name="route_privacy_private">Privada</string>
 	<string name="route_privacy_public">Pública</string>
 	<string name="route_not_uploaded">Sin subir</string>
+	<string name="route_uploading">Subiendo</string>
 </resources>

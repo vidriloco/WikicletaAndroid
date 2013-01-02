@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.mobility.wikicleta.R;
 
 import com.wikicleta.adapters.RoutesListAdapter;
+import com.wikicleta.async.AsyncTaskUIUpdater;
+import com.wikicleta.async.AsyncTaskManager;
 import com.wikicleta.common.AppBase;
 import com.wikicleta.common.Constants;
 import com.wikicleta.helpers.NotificationBuilder;
@@ -13,13 +15,14 @@ import com.wikicleta.models.Route;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class ActivityFeedsActivity extends Activity {
+public class ActivityFeedsActivity extends Activity implements AsyncTaskUIUpdater {
 
 	public static ArrayList<Route> routeList;
 	public static Route selectedRoute;
@@ -49,13 +52,20 @@ public class ActivityFeedsActivity extends Activity {
 		
 	}
 	
+	@Override
+	public void onStart() {
+		super.onStart();
+		AsyncTaskManager.executePendingTasks();
+		this.reloadAdapter();
+	}
+	
 	public static int queuedRoutesCount() {
 		loadQueuedRoutes();
 		return routeList.size();
 	}
 	
 	private static void loadQueuedRoutes() {
-		ActivityFeedsActivity.routeList = Route.queued();
+		routeList = Route.queued();
 	}
 	
 	public void drawRoutesList() {
@@ -67,8 +77,11 @@ public class ActivityFeedsActivity extends Activity {
         // Click event for single list row
         list.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
-				RouteDetailsActivity.currentRoute = (Route) adapter.getItem(pos);
-				launchRouteDetailsActivity();
+				Route route = (Route) adapter.getItem(pos);
+				if(!route.isBlocked) {
+					RouteDetailsActivity.currentRoute = route;
+					launchRouteDetailsActivity();
+				}
 			}
         });
     }
@@ -97,5 +110,29 @@ public class ActivityFeedsActivity extends Activity {
 	public void launchDraftsRoutesActivity() {
 		Intent intentActivity = new Intent(AppBase.currentActivity, RoutesActivity.class);
 		AppBase.currentActivity.startActivity(intentActivity);
+	}
+
+
+	
+	@Override
+	public void updateUI(Object object, boolean blockItem) {
+		if(object instanceof Route) {
+			Route route = this.getRouteById(((Route) object).getId());
+			if(route == null) {
+				routeList.add((Route) object);
+			} else {
+				route.isBlocked = true;
+			}
+			this.reloadAdapter();
+		}
+	}
+	
+	protected Route getRouteById(long id) {
+		for(Route route : routeList) {
+			if(route.getId() == id) {
+				return route;
+			}
+		}
+		return null;
 	}
 }
