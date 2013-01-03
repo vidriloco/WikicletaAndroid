@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.mobility.wikicleta"
+    package="org.wikicleta"
     android:versionCode="1"
     android:versionName="1.0" >
     
@@ -32,7 +32,7 @@
         </activity>
         
         <activity
-            android:name="com.wikicleta.activities.LandingActivity"
+            android:name="org.wikicleta.activities.LandingActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait" >
@@ -43,7 +43,7 @@
         </activity>
         
         <activity
-            android:name="com.wikicleta.activities.RegistrationActivity"
+            android:name="org.wikicleta.activities.RegistrationActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait" >
@@ -54,7 +54,7 @@
         </activity>
         
         <activity
-            android:name="com.wikicleta.activities.RoutesActivity"
+            android:name="org.wikicleta.activities.RoutesActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait"
@@ -66,7 +66,7 @@
         </activity>
         
         <activity
-            android:name="com.wikicleta.activities.RoutesSavingActivity"
+            android:name="org.wikicleta.activities.RoutesSavingActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait"
@@ -78,7 +78,7 @@
         </activity>
         
         <activity
-            android:name="com.wikicleta.activities.RouteDetailsActivity"
+            android:name="org.wikicleta.activities.RouteDetailsActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait"
@@ -90,7 +90,7 @@
         </activity>
         
         <activity
-            android:name="com.wikicleta.activities.ActivityFeedsActivity"
+            android:name="org.wikicleta.activities.ActivityFeedsActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait"
@@ -100,6 +100,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <service android:name="org.wikicleta.services.RoutesSyncingService"
+            	 android:process=":remote" />
     </application>
 
 </manifest>
