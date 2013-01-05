@@ -22,9 +22,9 @@ public class RouteUploader {
 			commitSuccessful = (200 == NetworkOperations.postJSONTo(
 					"/api/sessions", route.jsonRepresentation));
 		} else {
+			
 			String json = this.generateJSONValue(route);
-			commitSuccessful = (200 == NetworkOperations.postJSONTo(
-					"/api/sessions", json));
+			commitSuccessful = (200 == NetworkOperations.postJSONTo("/api/sessions", json));
 			if (!commitSuccessful)
 				route.jsonRepresentation = json;
 		}

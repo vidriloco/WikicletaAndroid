@@ -1,14 +1,20 @@
-package org.wikicleta.activities;
+	package org.wikicleta.activities;
 
 import org.wikicleta.R;
 import org.wikicleta.helpers.GeoHelpers;
+import org.wikicleta.services.RoutesManagementService;
+import org.wikicleta.services.RoutesManagementService.RoutesManagementBinder;
 import org.wikicleta.views.PinchableMapView;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.IBinder;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -22,6 +28,10 @@ public class LocationAwareMapActivity extends MapActivity implements LocationLis
 	
 	protected boolean centerMapOnCurrentLocationByDefault;
 	
+	// Service connectors
+	protected RoutesManagementService theService;
+    protected boolean serviceBound = false;
+    
 	protected void onCreate(Bundle savedInstanceState, int layoutID) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(layoutID);
@@ -102,5 +112,44 @@ public class LocationAwareMapActivity extends MapActivity implements LocationLis
 			locationManager.removeUpdates(this);
 			locationManagerEnabled = false;
 		}
+	}
+	
+	// Decide if we should leave a service implementation on this activity
+	/** Defines callbacks for service binding, passed to bindService() */
+    protected ServiceConnection serviceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+        	RoutesManagementBinder binder = (RoutesManagementBinder) service;
+            theService = binder.getService();
+            serviceBound = true;
+            afterServiceConnected();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+        	serviceBound = false;
+        }
+    };
+    
+    protected void afterServiceConnected() {
+    }
+    
+	@Override
+	protected void onStart() {
+		super.onStart();
+		Intent intent = new Intent(this, RoutesManagementService.class);
+        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		if (serviceBound) {
+            unbindService(serviceConnection);
+            serviceBound = false;
+        }
 	}
 }

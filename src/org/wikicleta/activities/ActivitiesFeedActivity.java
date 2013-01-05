@@ -6,7 +6,7 @@ import org.wikicleta.R;
 import org.wikicleta.adapters.RoutesListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.Route;
-import org.wikicleta.services.RoutesSyncingService;
+import org.wikicleta.services.RoutesManagementService;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,7 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class ActivityFeedsActivity extends Activity {
+public class ActivitiesFeedActivity extends Activity {
 	public static ArrayList<Route> routeList;
 	public static Route selectedRoute;
 	RoutesListAdapter adapter;
@@ -29,7 +29,7 @@ public class ActivityFeedsActivity extends Activity {
 		AppBase.currentActivity = this;
 		this.setContentView(R.layout.activity_activity_feeds);
 		
-		startService(new Intent(this, RoutesSyncingService.class));
+		startService(new Intent(this, RoutesManagementService.class));
 		
 		loadQueuedRoutes();
 		this.drawRoutesList();

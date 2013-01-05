@@ -1,8 +1,6 @@
 package org.wikicleta.common;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -14,6 +12,7 @@ public class NetworkOperations {
 	static String serverHost = "http://192.168.1.65:3000";
 	
 	public static int postJSONTo(String path, String jsonValue)  {
+		Log.e("WIKICLETA", jsonValue);
 	    HttpClient client = new DefaultHttpClient();
 	    HttpPost httpost = new HttpPost(serverHost.concat(path));	
 	    
@@ -32,13 +31,10 @@ public class NetworkOperations {
 	    Log.e("WIKICLETA", jsonValue);
 	    try {
 			return client.execute(httpost).getStatusLine().getStatusCode();
-		} catch (ClientProtocolException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 	    return 404;
 	}
 }

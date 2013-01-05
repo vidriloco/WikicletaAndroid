@@ -5,7 +5,7 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.RouteTracer;
 import org.wikicleta.helpers.SimpleAnimatorListener;
-import org.wikicleta.services.RoutesSyncingService;
+import org.wikicleta.services.RoutesManagementService;
 import org.wikicleta.views.RouteOverlay;
 
 
@@ -17,9 +17,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Messenger;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -58,7 +55,7 @@ public class RoutesActivity extends LocationAwareMapActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_routes_on_map);
 		AppBase.currentActivity = this;
-		startService(new Intent(this, RoutesSyncingService.class));
+		startService(new Intent(this, RoutesManagementService.class));
 
         titleBarView = (RelativeLayout) findViewById(R.id.titlebar);
         toolBarView = (LinearLayout) findViewById(R.id.toolbar);
@@ -177,19 +174,7 @@ public class RoutesActivity extends LocationAwareMapActivity {
 				}
 			}
     	});
-    	
 	}
-
-	Messenger messenger = null;
-
-	private Handler handler = new Handler() {
-		public void handleMessage(Message message) {
-			Bundle data = message.getData();
-			if (message.arg1 == RESULT_OK && data != null) {
-				
-			}
-		}
-	};
 	
 	@Override
 	protected void onPause() {
@@ -206,7 +191,7 @@ public class RoutesActivity extends LocationAwareMapActivity {
 	
 	// Refactor this views
 	public void toggleQueuedRoutesButton() {
-		if(ActivityFeedsActivity.queuedRoutesCount() > 0) {
+		if(ActivitiesFeedActivity.queuedRoutesCount() > 0) {
 			ImageView button = (ImageView) findViewById(R.id.drafts_button_icon);
 			View border = (View) findViewById(R.id.drafts_border);
 			RelativeLayout grouper = (RelativeLayout) findViewById(R.id.drafts_text_container);
@@ -338,5 +323,11 @@ public class RoutesActivity extends LocationAwareMapActivity {
     		showSet.start();
         }
         this.currentTaskPanel = newTask;
+	}
+	
+	@Override
+	protected void afterServiceConnected() {
+		super.afterServiceConnected();
+    	theService.notifyAboutStalledRoutes();
 	}
 }

@@ -5,7 +5,6 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.models.Route;
-import org.wikicleta.services.Intercommunicator;
 import org.wikicleta.views.PinchableMapView;
 import org.wikicleta.views.RouteOverlay;
 
@@ -59,7 +58,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity {
 	        closeMoreIcon.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View arg0) {
-					Intent intentActivity = new Intent(AppBase.currentActivity, ActivityFeedsActivity.class);
+					Intent intentActivity = new Intent(AppBase.currentActivity, ActivitiesFeedActivity.class);
 					AppBase.currentActivity.startActivity(intentActivity);
 				}
 		    	
@@ -72,8 +71,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity {
 	        findViewById(R.id.route_save_button).setOnClickListener(new OnClickListener() {
 
 				public void onClick(View arg0) {		
-					Intercommunicator.setRoute(currentRoute);
-					AppBase.launchActivity(ActivityFeedsActivity.class);
+					AppBase.launchActivity(ActivitiesFeedActivity.class);
 				}
 		    	
 		    });
@@ -93,7 +91,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity {
 							notification.addNotification(Constants.ROUTES_SYNCING_NOTIFICATIONS_ID, 
 	    							getString(R.string.app_name), getString(R.string.route_being_destroyed), null);
 							
-							Intent intentActivity = new Intent(AppBase.currentActivity, ActivityFeedsActivity.class);
+							Intent intentActivity = new Intent(AppBase.currentActivity, ActivitiesFeedActivity.class);
 							AppBase.currentActivity.startActivity(intentActivity);
 						}
 					});
