@@ -101,7 +101,7 @@
             </intent-filter>
         </activity>
         
-        <service android:name="org.wikicleta.services.RoutesManagementService"
+        <service android:name="org.wikicleta.services.RoutesService"
             android:enabled="true" />
     </application>
 

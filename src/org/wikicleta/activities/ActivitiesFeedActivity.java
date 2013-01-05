@@ -6,9 +6,13 @@ import org.wikicleta.R;
 import org.wikicleta.adapters.RoutesListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.Route;
-import org.wikicleta.services.RoutesManagementService;
+import org.wikicleta.services.RoutesService;
+import org.wikicleta.services.RoutesServiceListener;
+import org.wikicleta.services.ServiceConstructor;
+import org.wikicleta.services.ServiceListener;
 
 import android.app.Activity;
+import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,12 +20,17 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
-public class ActivitiesFeedActivity extends Activity {
+public class ActivitiesFeedActivity extends Activity implements ServiceListener, RoutesServiceListener {
 	public static ArrayList<Route> routeList;
 	public static Route selectedRoute;
 	RoutesListAdapter adapter;
 	ListView list;
+	
+	//Service
+	protected RoutesService theService;
+	ServiceConstructor serviceInitializator;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +38,7 @@ public class ActivitiesFeedActivity extends Activity {
 		AppBase.currentActivity = this;
 		this.setContentView(R.layout.activity_activity_feeds);
 		
-		startService(new Intent(this, RoutesManagementService.class));
+		startService(new Intent(this, RoutesService.class));
 		
 		loadQueuedRoutes();
 		this.drawRoutesList();
@@ -49,6 +58,14 @@ public class ActivitiesFeedActivity extends Activity {
 	public void onStart() {
 		super.onStart();
 		this.reloadAdapter();
+		serviceInitializator = new ServiceConstructor(this);
+        serviceInitializator.start(RoutesService.class);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+        serviceInitializator.stop();
 	}
 	
 	public static int queuedRoutesCount() {
@@ -111,5 +128,33 @@ public class ActivitiesFeedActivity extends Activity {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void routeDidUpload(Route route) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void routeDidNotUpload(final Route route) {
+		runOnUiThread(new Runnable() {
+		    public void run() {
+				Toast.makeText(getApplicationContext(), "Ruta no subi— " + route.name, Toast.LENGTH_SHORT).show();
+		    }
+		});
+	}
+
+	@Override
+	public void afterServiceConnected(Service service) {
+		if(service instanceof RoutesService) {
+			this.theService = (RoutesService) service;
+			((RoutesService) this.theService).executeStagedRoutesForUpload();
+		}
+	}
+
+	@Override
+	public void shouldBlockElement(Route route) {
+		
 	}
 }

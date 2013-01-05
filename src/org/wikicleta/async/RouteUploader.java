@@ -3,6 +3,7 @@ package org.wikicleta.async;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import org.json.simple.JSONValue;
@@ -13,16 +14,31 @@ import org.wikicleta.models.Route;
 import com.activeandroid.ActiveAndroid;
 
 public class RouteUploader {
-
-	public boolean uploadRoute(Route route) {
+	
+	protected LinkedList<Route> routesToUpload;
+	
+	public RouteUploader() {
+		this.routesToUpload = new LinkedList<Route>();
+	}
+	
+	public void addRoute(Route route) {
+		routesToUpload.add(route);
+	}
+	
+	public Route peekNext() {
+		return routesToUpload.peek();
+	}
+	
+	public boolean uploadNext() {
+		Route route = this.routesToUpload.poll();
 		if(route == null)
 			return false;
+		
 		boolean commitSuccessful = false;
 		if (route.isDraft()) {
 			commitSuccessful = (200 == NetworkOperations.postJSONTo(
 					"/api/sessions", route.jsonRepresentation));
 		} else {
-			
 			String json = this.generateJSONValue(route);
 			commitSuccessful = (200 == NetworkOperations.postJSONTo("/api/sessions", json));
 			if (!commitSuccessful)

@@ -1,18 +1,19 @@
 package org.wikicleta.common;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import android.util.Log;
-
 public class NetworkOperations {
-	static String serverHost = "http://192.168.1.65:3000";
+	static String serverHost = "http://192.168.1.68:3000";
 	
 	public static int postJSONTo(String path, String jsonValue)  {
-		Log.e("WIKICLETA", jsonValue);
 	    HttpClient client = new DefaultHttpClient();
 	    HttpPost httpost = new HttpPost(serverHost.concat(path));	
 	    
@@ -28,13 +29,19 @@ public class NetworkOperations {
 	    httpost.setHeader("Accept", "application/json");
 	    httpost.setHeader("Content-type", "application/json");
 	    //Handles what is returned from the page 
-	    Log.e("WIKICLETA", jsonValue);
-	    try {
-			return client.execute(httpost).getStatusLine().getStatusCode();
-		} catch (Exception e) {
+	    
+	   
+    	HttpResponse response = null;
+		try {
+			response = client.execute(httpost);
+		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
-	    return 404;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+    	return response.getStatusLine().getStatusCode();
 	}
 }

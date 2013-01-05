@@ -5,10 +5,14 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.models.Route;
+import org.wikicleta.services.RoutesService;
+import org.wikicleta.services.ServiceConstructor;
+import org.wikicleta.services.ServiceListener;
 import org.wikicleta.views.PinchableMapView;
 import org.wikicleta.views.RouteOverlay;
 
 import android.app.AlertDialog;
+import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 
-public class RouteDetailsActivity extends LocationAwareMapActivity {
+public class RouteDetailsActivity extends LocationAwareMapActivity implements ServiceListener {
 	private PinchableMapView mapView;
 	private LinearLayout bottomToolBarView;
 	private LinearLayout topToolBarView;
@@ -32,15 +36,17 @@ public class RouteDetailsActivity extends LocationAwareMapActivity {
 	public static Route currentRoute;
 	public AlertDialog.Builder alertDialog;
 	
+	//Service
+	protected RoutesService theService;
+	ServiceConstructor serviceInitializator;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState,R.layout.activity_route_details);
         AppBase.currentActivity = this;
         this.centerMapOnCurrentLocationByDefault = false;
         
-        TextView routeNameView = (TextView) findViewById(R.id.route_name);
-        
-        if(currentRoute != null)
-        	routeNameView.setText(currentRoute.name);
+        if(currentRoute == null)
+        	AppBase.launchActivity(RoutesActivity.class);
                
         this.mapView = (PinchableMapView) findViewById(R.id.mapview);
         mapView.setBuiltInZoomControls(false);
@@ -48,6 +54,8 @@ public class RouteDetailsActivity extends LocationAwareMapActivity {
         drawRoutePath();
         drawControls();
         
+        TextView routeNameView = (TextView) findViewById(R.id.route_name);
+    	routeNameView.setText(currentRoute.name);
         this.setMapToLocation(currentRoute.getStartingLocation());
         this.notification = new NotificationBuilder(this);
 	}
@@ -71,6 +79,8 @@ public class RouteDetailsActivity extends LocationAwareMapActivity {
 	        findViewById(R.id.route_save_button).setOnClickListener(new OnClickListener() {
 
 				public void onClick(View arg0) {		
+					theService.addRouteForUpload(currentRoute);
+
 					AppBase.launchActivity(ActivitiesFeedActivity.class);
 				}
 		    	
@@ -88,7 +98,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							currentRoute.delete();
-							notification.addNotification(Constants.ROUTES_SYNCING_NOTIFICATIONS_ID, 
+							notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
 	    							getString(R.string.app_name), getString(R.string.route_being_destroyed), null);
 							
 							Intent intentActivity = new Intent(AppBase.currentActivity, ActivitiesFeedActivity.class);
@@ -165,11 +175,24 @@ public class RouteDetailsActivity extends LocationAwareMapActivity {
 			mapView.getOverlays().add(routeOverlay);
 		}
 	}
-
+	
 	@Override
-	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
-		return false;
+	protected void onStart() {
+		super.onStart();
+		serviceInitializator = new ServiceConstructor(this);
+        serviceInitializator.start(RoutesService.class);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+        serviceInitializator.stop();
+	}
+	
+	@Override
+	public void afterServiceConnected(Service service) {
+		if(service instanceof RoutesService)
+			this.theService = (RoutesService) service;
 	}
 	
 	

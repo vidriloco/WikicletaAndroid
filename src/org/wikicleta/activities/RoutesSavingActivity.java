@@ -4,7 +4,7 @@ import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.models.Route;
-import org.wikicleta.services.RoutesManagementService;
+import org.wikicleta.services.RoutesService;
 import org.wikicleta.services.ServiceListener;
 import org.wikicleta.services.ServiceConstructor;
 
@@ -27,7 +27,7 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
 	NotificationBuilder notification;
 	
 	//Service
-	protected RoutesManagementService theService;
+	protected RoutesService theService;
 	ServiceConstructor serviceInitializator;
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -70,29 +70,31 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
     							nameView.getText().toString(), 
     							tagsView.getText().toString());
     					
-    					theService.uploadRoute(route);
+    					theService.addRouteForUpload(route);
     					AppBase.launchActivity(ActivitiesFeedActivity.class);
     				}
     	});
 	}
-    
-    public void afterServiceConnected(RoutesManagementService service) {
-    	this.theService = service;
-    }
-    
+	
 	@Override
 	protected void onStart() {
 		super.onStart();
 		serviceInitializator = new ServiceConstructor(this);
-        serviceInitializator.start(RoutesManagementService.class);
+        serviceInitializator.start(RoutesService.class);
 	}
 	
 	@Override
 	protected void onStop() {
 		super.onStop();
         serviceInitializator.stop();
-		
 	}
+	
+	@Override
+	public void afterServiceConnected(Service service) {
+		if(service instanceof RoutesService)
+			this.theService = (RoutesService) service;
+	}
+	
 	// TODO: Decide whether it could be desirable that upon automatic return to activity 
 	// route is still getting tracked. If so, buttons state should behave accordingly 
 	/*@Override
@@ -103,11 +105,5 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}*/
-
-	@Override
-	public void afterServiceConnected(Service service) {
-		if(service instanceof RoutesManagementService)
-			this.theService = (RoutesManagementService) service;
-	}
 	
 }

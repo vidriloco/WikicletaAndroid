@@ -5,14 +5,14 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.RouteTracer;
 import org.wikicleta.helpers.SimpleAnimatorListener;
-import org.wikicleta.services.RoutesManagementService;
+import org.wikicleta.services.RoutesService;
+import org.wikicleta.services.ServiceConstructor;
+import org.wikicleta.services.ServiceListener;
 import org.wikicleta.views.RouteOverlay;
-
-
 import com.nineoldandroids.animation.*;
 import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
-
 import android.app.AlertDialog;
+import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
@@ -30,8 +30,7 @@ import android.widget.TextView;
  * - Stop updating location if no route recording is being done
  * - Fix recording buttons and route timer for when canceling discarding of route and route recording was stopped
  */
-
-public class RoutesActivity extends LocationAwareMapActivity {
+public class RoutesActivity extends LocationAwareMapActivity implements ServiceListener {
 
 	protected enum TaskPanel {Main, Recording};
 	protected TaskPanel currentTaskPanel;
@@ -51,11 +50,15 @@ public class RoutesActivity extends LocationAwareMapActivity {
 	AlertDialog.Builder builder;
 	protected AlertDialog.Builder alertDialog;
 
+	//Service
+	protected RoutesService theService;
+	ServiceConstructor serviceInitializator;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_routes_on_map);
 		AppBase.currentActivity = this;
-		startService(new Intent(this, RoutesManagementService.class));
+		startService(new Intent(this, RoutesService.class));
 
         titleBarView = (RelativeLayout) findViewById(R.id.titlebar);
         toolBarView = (LinearLayout) findViewById(R.id.toolbar);
@@ -174,6 +177,8 @@ public class RoutesActivity extends LocationAwareMapActivity {
 				}
 			}
     	});
+    	
+    	
 	}
 	
 	@Override
@@ -187,6 +192,27 @@ public class RoutesActivity extends LocationAwareMapActivity {
 	protected void onResume() {
 		super.onResume();
 		this.enableLocationManager();
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		serviceInitializator = new ServiceConstructor(this);
+        serviceInitializator.start(RoutesService.class);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+        serviceInitializator.stop();
+	}
+	
+	@Override
+	public void afterServiceConnected(Service service) {
+		if(service instanceof RoutesService) {
+			this.theService = (RoutesService) service;
+			this.theService.notifyAboutStalledRoutes();
+		}
 	}
 	
 	// Refactor this views
@@ -323,11 +349,5 @@ public class RoutesActivity extends LocationAwareMapActivity {
     		showSet.start();
         }
         this.currentTaskPanel = newTask;
-	}
-	
-	@Override
-	protected void afterServiceConnected() {
-		super.afterServiceConnected();
-    	theService.notifyAboutStalledRoutes();
 	}
 }

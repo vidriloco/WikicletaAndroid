@@ -29,6 +29,9 @@
 	
 	<string name="route_being_sent">Subiendo ruta ..</string>
 	<string name="route_being_destroyed">Descartando ruta ..</string>
+	<string name="route_didnt_upload">No fue posible subir la ruta</string>
+		<string name="route_did_upload">Ruta subida correctamente</string>
+	
 	<string name="route_not_saved">Ruta sin guardar</string>
 	
 	<string name="route_rank_top_value">/10</string>

@@ -36,11 +36,14 @@ public class ServiceConstructor {
 
         @Override
         public void onServiceConnected(ComponentName className,
-                IBinder serviceBinder) {
+                IBinder binder) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
-            theService = ((ServiceBinder) serviceBinder).getService();
+        	ServiceBinder serviceBinder = (ServiceBinder) binder;
+            theService = serviceBinder.getService();
+            serviceBinder.setBindingActivity(activity);
+            
             serviceBound = true;
-            if(activity instanceof ServiceListener)
+            if(activity instanceof ServiceListener) 
             	((ServiceListener) activity).afterServiceConnected(theService);
         }
 
