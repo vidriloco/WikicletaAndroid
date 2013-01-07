@@ -5,79 +5,18 @@
   android:layout_width="wrap_content"
   android:layout_height="wrap_content">
 
-  <RelativeLayout
-        android:id="@+id/titlebar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#F58303"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true" >
+  <com.markupartist.android.widget.ActionBar
+	    xmlns:app="http://schemas.android.com/apk/res/org.wikicleta"
+	    android:id="@+id/actionbar"
+	    app:title="@string/routes_title"
+	    style="@style/ActionBar"/>
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:shadowColor="#1111"
-            android:shadowDx="1.5"
-            android:shadowDy="1.5"
-            android:shadowRadius="1.3"
-            android:text="@string/routes_title"
-            android:textColor="#fff"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-		<View
-		    android:id="@+id/drafts_border"
-            android:layout_height="fill_parent"
-            android:layout_width="0.2dp"
-            android:layout_alignLeft="@+id/drafts_button_icon"
-            android:layout_marginRight="25dp"
-            android:alpha="0"
-            android:visibility="gone"
-            android:background="#fff"/>
-        
-		<ImageView
-            android:id="@+id/drafts_button_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:contentDescription="@string/none"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/drafts"
-            android:alpha="0"
-            android:visibility="gone"
-            android:background="@drawable/highlight_effect" />
-		<RelativeLayout
-            android:id="@+id/drafts_text_container"
-            android:alpha="0"
-            android:layout_width="50dp"
-            android:layout_height="fill_parent"
-            android:textAlignment="center"
-            android:layout_alignParentRight="true"
-            android:visibility="gone" >
-		    
-		    <TextView android:id="@+id/drafts_queued_text"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:layout_centerVertical="true"
-            	android:layout_centerHorizontal="true"
-            	android:textAlignment="center"
-            	android:shadowColor="#1111"
-            	android:shadowDx="1.5"
-            	android:shadowDy="1.5"
-            	android:shadowRadius="1.3"
-            	android:text="@string/none"
-            	android:textColor="#053B44"
-            	android:textSize="15sp"
-            	android:textStyle="bold" />
-		</RelativeLayout>
-  </RelativeLayout>
   <org.wikicleta.views.PinchableMapView
       android:id="@+id/mapview"
       android:layout_width="fill_parent"
       android:layout_height="match_parent"
-      android:layout_below="@+id/titlebar"
+      android:layout_below="@+id/actionbar"
+      android:layout_marginTop="0dp"
       android:apiKey="0Sp8gbE2A7huBHKWXFaSnv0zQ4sNzPzWzqj9zcQ"
       android:clickable="true" />
       <!-- android:apiKey="0Sp8gbE2A7htK9pPiFzcliDPP5WT0D_TSkooX1w" -->
@@ -89,7 +28,7 @@
        android:layout_height="80dp"
        android:orientation="horizontal"
        android:layout_centerHorizontal="true"
-       android:layout_below="@+id/titlebar"
+       android:layout_below="@+id/actionbar"
        android:visibility="gone" >
 
         <RelativeLayout

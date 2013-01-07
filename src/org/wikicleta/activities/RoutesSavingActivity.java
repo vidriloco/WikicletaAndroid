@@ -14,6 +14,7 @@ import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -69,9 +70,11 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
     					Route route = RoutesActivity.currentPath.buildRoute(
     							nameView.getText().toString(), 
     							tagsView.getText().toString());
+    					Log.i("WIKICLETA", "Ruta en espera para subir "+ String.valueOf(route.name));
+
     					
     					theService.addRouteForUpload(route);
-    					AppBase.launchActivity(ActivitiesFeedActivity.class);
+    					AppBase.launchActivity(UserProfileActivity.class);
     				}
     	});
 	}

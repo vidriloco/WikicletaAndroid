@@ -1,12 +1,14 @@
 package org.wikicleta.adapters;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 import org.wikicleta.R;
 import org.wikicleta.models.Route;
+
+import com.nineoldandroids.animation.ObjectAnimator;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -14,18 +16,29 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class RoutesListAdapter extends BaseAdapter {
 
-    private ArrayList<Route> routes;
+    private LinkedList<Route> routes;
     private static LayoutInflater inflater=null;
- 
-    public RoutesListAdapter(Activity activity, ArrayList<Route> routes) {
-        this.routes= routes;        
-        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    private boolean unsyncedSectionDraw = false;
+    private boolean todaySectionDraw = false;
+    private boolean showUploaderReloading = false;
+    
+    
+    public RoutesListAdapter(Activity activity, LinkedList<Route> routes, boolean uploaderReloading) {
+        this.routes= routes;      
+        inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.showUploaderReloading = uploaderReloading;
+    }
+    
+    public RoutesListAdapter(Activity activity, LinkedList<Route> routes) {
+    	this(activity, routes, false);
     }
  
     public int getCount() {
@@ -54,25 +67,51 @@ public class RoutesListAdapter extends BaseAdapter {
         
         ((TextView) view.findViewById(R.id.route_name)).setText(route.name);
         ((TextView) view.findViewById(R.id.route_tags)).setText(route.tags);
-        
         ((TextView) view.findViewById(R.id.route_ranking)).setText(String.valueOf(route.ranking));
         
         if(route.isDraft()) {
-        	view.findViewById(R.id.route_synced_status).setVisibility(View.VISIBLE);
-        	
-        	int syncing = route.isBlocked ? R.string.route_uploading : R.string.route_not_uploaded;
-    		((TextView) view.findViewById(R.id.route_synced_status)).setText(syncing);
+        	view.findViewById(R.id.route_row).setBackgroundColor(view.getResources().getColor(R.color.route_staged));
+        	if(!unsyncedSectionDraw) {
+        		view.findViewById(R.id.unsynced_routes_group).setVisibility(View.VISIBLE);
+        		final ImageView resyncer = (ImageView) view.findViewById(R.id.route_resyncer);
+        		view.findViewById(R.id.unsynced_routes_group).setOnClickListener(new OnClickListener() {
+
+        			@Override
+        			public void onClick(View v) {
+        				animateUploadIndicator(resyncer, false);
+        			}
+                	
+                });
+        		animateUploadIndicator(resyncer, showUploaderReloading);
+        		
+        		unsyncedSectionDraw = true;
+        	}
         } else {
-        	if(!route.isBlocked)
-        		view.findViewById(R.id.route_synced_status).setVisibility(View.GONE);
+        	if(!todaySectionDraw) {
+        		view.findViewById(R.id.todays_routes_group).setVisibility(View.VISIBLE);
+        		todaySectionDraw = true;
+        	}
         }
-        
-        String publicStatus = route.isPublic ? view.getContext().getString(R.string.route_privacy_public) : 
-        	view.getContext().getString(R.string.route_privacy_private);
+
+        String publicStatus = view.getContext().getString(R.string.route_privacy_public);
+        if(!route.isPublic)
+        	publicStatus = view.getContext().getString(R.string.route_privacy_private);
         
         ((TextView) view.findViewById(R.id.route_privacy_status)).setText(publicStatus);
         ((TextView) view.findViewById(R.id.route_date)).setText(mSimpleDateFormat.format(new Date(route.createdAt)));
-
         return view;
+    }
+    
+    public void animateUploadIndicator(View view, boolean stop) {
+    	if(!stop) {
+    		ObjectAnimator oa = ObjectAnimator.ofFloat(view, "rotation", 0, 360);
+    		oa.setDuration(800);
+    		oa.setRepeatCount(ObjectAnimator.INFINITE);
+    		oa.setRepeatMode(ObjectAnimator.RESTART);
+    		oa.start();
+    	} else {
+    		view.clearAnimation();
+    	}
+    	
     }
 }

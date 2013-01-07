@@ -9,8 +9,10 @@ import org.wikicleta.services.RoutesService;
 import org.wikicleta.services.ServiceConstructor;
 import org.wikicleta.services.ServiceListener;
 import org.wikicleta.views.RouteOverlay;
+
+import com.markupartist.android.widget.ActionBar;
+import com.markupartist.android.widget.ActionBar.Action;
 import com.nineoldandroids.animation.*;
-import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.DialogInterface;
@@ -178,7 +180,21 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 			}
     	});
     	
-    	
+    	ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
+        actionBar.setHomeAction(new Action() {
+
+			@Override
+			public int getDrawable() {
+				return R.drawable.list_menu;
+			}
+
+			@Override
+			public void performAction(View view) {
+				// Open left-menu
+				
+			}
+        	
+        });
 	}
 	
 	@Override
@@ -211,13 +227,13 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 	public void afterServiceConnected(Service service) {
 		if(service instanceof RoutesService) {
 			this.theService = (RoutesService) service;
-			this.theService.notifyAboutStalledRoutes();
+			theService.notifyAboutStalledRoutes();
 		}
 	}
 	
 	// Refactor this views
 	public void toggleQueuedRoutesButton() {
-		if(ActivitiesFeedActivity.queuedRoutesCount() > 0) {
+		/*if(RouteDetailsActivity.queuedRoutesCount() > 0) {
 			ImageView button = (ImageView) findViewById(R.id.drafts_button_icon);
 			View border = (View) findViewById(R.id.drafts_border);
 			RelativeLayout grouper = (RelativeLayout) findViewById(R.id.drafts_text_container);
@@ -236,7 +252,7 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 	        
 	        grouper.setVisibility(visibilityForAll);
 	        animate(grouper).alpha(alpha);
-		}
+		}*/
 	}
 	
 	protected void resetControls() {

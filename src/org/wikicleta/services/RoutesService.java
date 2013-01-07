@@ -1,7 +1,8 @@
 package org.wikicleta.services;
 
+import java.util.LinkedList;
 import org.wikicleta.R;
-import org.wikicleta.activities.ActivitiesFeedActivity;
+import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.async.RouteUploader;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.NotificationBuilder;
@@ -12,6 +13,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
 public class RoutesService extends Service {
 	
@@ -22,8 +24,9 @@ public class RoutesService extends Service {
 	protected RouteUploader routeUploader;
 	protected NotificationBuilder notification;
 	protected final IBinder localBinder = new RoutesServiceBinder();
-	
+		
     private UploaderTask routeUploaderTask;
+    protected boolean uploadingRoutes;
     
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -33,7 +36,7 @@ public class RoutesService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		this.routeUploader = new RouteUploader();
+		reloadRouteUploadManager();
         this.notification = new NotificationBuilder(this);
 	}
 	 
@@ -49,30 +52,40 @@ public class RoutesService extends Service {
 		return Service.START_STICKY;
 	}
 	
+	public void reloadRouteUploadManager() {
+		this.routeUploader = new RouteUploader();
+	}
+	
 	public void addRouteForUpload(Route route) {
 		notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
 				getString(R.string.app_name), getString(R.string.route_being_sent), null);		
 		this.routeUploader.addRoute(route);
 	}
 	
-	public void executeStagedRoutesForUpload() {
+	public void uploadStagedRoutes() {
 		this.routeUploaderTask = new UploaderTask();
 		routeUploaderTask.execute();
 	}
 	
 	public void notifyAboutStalledRoutes() {
-		if(queuedRoutesCount() > 0) {			
-			String countString = ActivitiesFeedActivity.queuedRoutesCount() == 1 ? 
-					this.getString(R.string.route_drafts_notification_total_one) : 
-						this.getString(R.string.route_drafts_notification_total_many, ActivitiesFeedActivity.queuedRoutesCount()); 
+		Log.i("WIKICLETA", "Rutas "+ String.valueOf(queuedRoutesCount()));
+		if(queuedRoutesCount() > 0) {		
+			
+			String countString = this.getString(R.string.route_drafts_notification_total_one);
+			if(queuedRoutesCount() != 1)
+				countString = this.getString(R.string.route_drafts_notification_total_many, queuedRoutesCount());			 
 			
 			notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
-					getString(R.string.app_name), countString, ActivitiesFeedActivity.class);
+					getString(R.string.app_name), countString, UserProfileActivity.class);
 		}		
 	}
 	
-	protected int queuedRoutesCount() {
-		return Route.queued().size();
+	public int queuedRoutesCount() {
+		return routesQueued().size();
+	}
+	
+	public LinkedList<Route> routesQueued() {
+		return this.routeUploader.routesWaitingToUpload();
 	}
 	
 	// Local binder implementation
@@ -87,33 +100,51 @@ public class RoutesService extends Service {
 		}
     }
 	
+	public boolean isUploadingRoutes() {
+		return this.uploadingRoutes;
+	}
+	
 	private class UploaderTask extends AsyncTask<Void, Void, Void> {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			Route route = routeUploader.peekNext();
-			if(route == null)
-				return null;
 			
 			// Check if boundActivity is of the right type
 			RoutesServiceListener listener = null;
 			if(boundActivity instanceof RoutesServiceListener) {
 				listener = (RoutesServiceListener) boundActivity;
-				listener.shouldBlockElement(route);
+				listener.shouldUpdateView();
+				uploadingRoutes = true;
+			}
+						
+			while(routeUploader.peekNext() != null) {
+				routeUploader.uploadNext();
 			}
 			
-			// Attempt upload previously stored route
-			if(routeUploader.uploadNext()) {
-				notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
-						getString(R.string.app_name), getString(R.string.route_did_upload), null);
-				if(listener != null)
-					listener.routeDidUpload(route);
-			} else {
-				notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
-						getString(R.string.app_name), getString(R.string.route_didnt_upload), null);
-				if(listener != null) {
-					listener.routeDidNotUpload(route);
-				}
+			//do {
+				
+				// Attempt to upload all staged routes
+				/*if() {
+					notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
+							getString(R.string.app_name), getString(R.string.route_did_upload), null);
+					if(listener != null)
+						listener.routeDidUpload(route);
+				} else {
+					notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
+							getString(R.string.app_name), getString(R.string.route_didnt_upload), null);
+					if(listener != null) {
+						listener.routeDidNotUpload(route);
+						Log.i("WIKICLETA", "Ruta no subi— "+ String.valueOf(route.name));
+
+					}
+				}*/
+				
+			//} while(route != null);
+			
+			reloadRouteUploadManager();
+			if(boundActivity instanceof RoutesServiceListener) {
+				uploadingRoutes = false;
+				listener.shouldUpdateView();
 			}
 			return null;
 		}

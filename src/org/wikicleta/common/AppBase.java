@@ -41,6 +41,14 @@ public class AppBase {
 		AppBase.currentActivity.startActivity(intentActivity);
 	}
 	
+	public static void launchActivityAnimated(Class<?> activity) {
+		Intent intentActivity = new Intent(AppBase.currentActivity, activity);
+		//intentActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		AppBase.currentActivity.startActivity(intentActivity);
+    	AppBase.currentActivity.overridePendingTransition(R.anim.slide_up,
+                R.anim.slide_down);
+	}
+	
 	private static String fetchResource(String resource) {
 		InputStream is = null;
 	    String result = new String();

@@ -5,4 +5,13 @@
     <color name="wikicleta_light_blue">#E4FCFF</color>
 	<color name="wikicleta_blue">#87AEFF</color>
 	<color name="wikicleta_white">#FFF</color>
+	
+	<color name="actionbar_title">#043257</color>
+	<color name="actionbar_separator">#CEDFFF</color>
+    <color name="actionbar_background_start">#FFF</color>
+    <color name="actionbar_background_end">#B5C9D6</color>
+    <color name="actionbar_background_item_pressed_start">#A2B4BF</color>
+    <color name="actionbar_background_item_pressed_end">#A2B4BF</color>
+    
+    <color name="route_staged">#FFE0DB</color>
 </resources>

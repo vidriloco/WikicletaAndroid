@@ -10,7 +10,6 @@ import org.json.simple.JSONValue;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.models.Instant;
 import org.wikicleta.models.Route;
-
 import com.activeandroid.ActiveAndroid;
 
 public class RouteUploader {
@@ -19,38 +18,50 @@ public class RouteUploader {
 	
 	public RouteUploader() {
 		this.routesToUpload = new LinkedList<Route>();
+		this.routesToUpload.addAll(Route.queued());
 	}
 	
 	public void addRoute(Route route) {
 		routesToUpload.add(route);
 	}
 	
+	public void addRouteCollection(ArrayList<Route> routes) {
+		routesToUpload.addAll(routes);
+	}
+	
+	public LinkedList<Route> routesWaitingToUpload() {
+		return this.routesToUpload;
+	}
+	 
 	public Route peekNext() {
 		return routesToUpload.peek();
 	}
 	
 	public boolean uploadNext() {
 		Route route = this.routesToUpload.poll();
-		if(route == null)
-			return false;
-		
-		boolean commitSuccessful = false;
-		if (route.isDraft()) {
-			commitSuccessful = (200 == NetworkOperations.postJSONTo(
-					"/api/sessions", route.jsonRepresentation));
-		} else {
-			String json = this.generateJSONValue(route);
-			commitSuccessful = (200 == NetworkOperations.postJSONTo("/api/sessions", json));
-			if (!commitSuccessful)
-				route.jsonRepresentation = json;
-		}
 
-		if(commitSuccessful)
-			route.jsonRepresentation = new String();
+		if(route == null) {
+			return false;
+		} else {
+			boolean commitSuccessful = false;
+			if (route.isDraft()) {
+				commitSuccessful = (200 == NetworkOperations.postJSONTo(
+						"/api/sessions", route.jsonRepresentation));
+			} else {
+				String json = this.generateJSONValue(route);
+				commitSuccessful = (200 == NetworkOperations.postJSONTo("/api/sessions", json));
+				if (!commitSuccessful)
+					route.jsonRepresentation = json;
+			}
+
+			if(commitSuccessful)
+				route.jsonRepresentation = new String();
+			
+			commitLocally(route);
+			
+			return commitSuccessful;
+		}
 		
-		commitLocally(route);
-		
-		return commitSuccessful;
 	}
 	
 	protected String generateJSONValue(Route route) {

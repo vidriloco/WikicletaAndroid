@@ -11,7 +11,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 public class NetworkOperations {
-	static String serverHost = "http://192.168.1.68:3000";
+	static String serverHost = "http://192.168.1.64:3000";
 	
 	public static int postJSONTo(String path, String jsonValue)  {
 	    HttpClient client = new DefaultHttpClient();
@@ -41,6 +41,9 @@ public class NetworkOperations {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		if(response == null)
+			return 404;
 		
     	return response.getStatusLine().getStatusCode();
 	}

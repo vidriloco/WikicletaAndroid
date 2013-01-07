@@ -3,4 +3,56 @@
     <string name="app_name">Wikicleta</string>
 	<string name="nothing"></string>
 	<string name="dashes">--</string>
+	
+	<!-- Strings for routes -->
+	<string name="routes_title">Rutas</string>
+	<string name="routes_unsynced_title">Rutas sin sincronizar</string>
+	<string name="routes_syncing_title">Sincronizando rutas</string>
+	
+	<string name="routes_save">Guardar</string>
+	<string name="routes_saving_title">Guardar Ruta</string>
+	
+	<string name="routes_stats_speed">VELOCIDAD</string>
+	<string name="routes_stats_time">TIEMPO</string>
+	<string name="routes_stats_distance">DISTANCIA</string>
+	
+	<string name="routes_saving_form_name">Nombre</string>
+	<string name="routes_saving_form_tags">Tags</string>
+	<string name="routes_saving_form_save">Guardar</string>
+	<string name="routes_saving_form_decline">Descartar</string>
+	<string name="routes_saving_form_tags_instructions">Escribe uno o más tags que describan esta ruta, separándolos por comas. Puedes escribir nombres de lugares cercanos a esta ruta</string>
+	
+	<string name="routes_details_ranked">RANKING</string>
+	<string name="routes_details_checkin">CHECK-INS</string>
+	
+	<string name="route_layers_menu_none">Ninguna</string>
+	<string name="route_layers_menu_basic_info">Detalles de ruta</string>
+	<string name="route_layers_menu_highlights">Puntos de riesgo</string>
+	<string name="route_layers_menu_places">Lugares</string>
+	
+	<string name="route_drafts_notification_total_one">1 ruta sin subir.</string>
+	<string name="route_drafts_notification_total_many">%d rutas sin subir.</string>
+	<string name="route_draft_details_menu_item">Revisar ruta</string>
+	<string name="route_draft_destroy_menu_item">Descartar ruta</string>
+	
+	<string name="route_being_sent">Subiendo ruta ..</string>
+	<string name="route_being_destroyed">Descartando ruta ..</string>
+	<string name="route_didnt_upload">No fue posible subir la ruta</string>
+	<string name="route_did_upload">Ruta subida correctamente</string>
+	
+	<string name="route_not_saved">Ruta sin guardar</string>
+	
+	<string name="route_rank_top_value">/10</string>
+	<string name="route_privacy_private">Privada</string>
+	<string name="route_privacy_public">Pública</string>
+	<string name="route_not_uploaded">Sin subir</string>
+	<string name="route_uploading">Subiendo</string>
+	
+	<!-- Strings for user profile -->
+	<string name="user_profile_title">Tu Perfil</string>
+	<string name="user_profile_tab">Tu</string>
+	<string name="user_activity_tab">Actividad</string>
+	<string name="user_notifications_tab">Notificaciones</string>
+		
+	
 </resources>

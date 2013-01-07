@@ -60,13 +60,17 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
         this.notification = new NotificationBuilder(this);
 	}
 	
+	public static int queuedRoutesCount() {
+		return 0;
+	}
+	
 	public void drawControls() {
 		if(currentRoute != null && currentRoute.isDraft()) {
 	        final ImageView closeMoreIcon = (ImageView) findViewById(R.id.close_button);
 	        closeMoreIcon.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View arg0) {
-					Intent intentActivity = new Intent(AppBase.currentActivity, ActivitiesFeedActivity.class);
+					Intent intentActivity = new Intent(AppBase.currentActivity, UserProfileActivity.class);
 					AppBase.currentActivity.startActivity(intentActivity);
 				}
 		    	
@@ -81,7 +85,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 				public void onClick(View arg0) {		
 					theService.addRouteForUpload(currentRoute);
 
-					AppBase.launchActivity(ActivitiesFeedActivity.class);
+					AppBase.launchActivity(UserProfileActivity.class);
 				}
 		    	
 		    });
@@ -101,7 +105,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 							notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
 	    							getString(R.string.app_name), getString(R.string.route_being_destroyed), null);
 							
-							Intent intentActivity = new Intent(AppBase.currentActivity, ActivitiesFeedActivity.class);
+							Intent intentActivity = new Intent(AppBase.currentActivity, UserProfileActivity.class);
 							AppBase.currentActivity.startActivity(intentActivity);
 						}
 					});
@@ -153,18 +157,11 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 	@Override
     public boolean onContextItemSelected(MenuItem item) {
 
-        switch(item.getItemId()){
-            case R.id.route_layers_basic_info_item:
-            	this.topToolBarView.setVisibility(View.VISIBLE);
-                break;
-            case R.id.route_layers_highlights_item:
-                break;
-            case R.id.route_layers_none_item:
-            	this.topToolBarView.setVisibility(View.GONE);
-            	break;
-            case R.id.route_layers_places_item:
-            	break;
-        }
+		if(item.getItemId() == R.id.route_layers_basic_info_item) {
+        	this.topToolBarView.setVisibility(View.VISIBLE);
+		} else if(item.getItemId() == R.id.route_layers_none_item) {
+        	this.topToolBarView.setVisibility(View.GONE);
+		}
         
         return true;
     }
