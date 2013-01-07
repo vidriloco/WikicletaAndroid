@@ -204,7 +204,7 @@ public class UserProfileActivity extends FragmentActivity implements ServiceList
 		runOnUiThread(new Runnable() {
 		     public void run() {
 		 		ActivityFragment fragment = (ActivityFragment) pagerAdapter.getItem(1);
-				fragment.reloadAdapter();
+				fragment.drawUnsyncedRoutesList();
 		    }
 		});
 

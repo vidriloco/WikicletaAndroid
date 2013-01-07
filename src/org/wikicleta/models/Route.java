@@ -95,8 +95,12 @@ public class Route extends Model {
 	}
 	
 	public static ArrayList<Route> queued() {
-		return new Select().from(Route.class).execute();
+		return new Select().from(Route.class).where("Json IS NOT NULL").execute();
 	}
+	
+	public static ArrayList<Route> uploaded() {
+		return new Select().from(Route.class).where("Json IS NULL").execute();
+	} 
 	
 	public boolean isDraft() {
 		if(this.jsonRepresentation == null)

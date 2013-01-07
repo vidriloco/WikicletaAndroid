@@ -6,7 +6,10 @@
 	
 	<!-- Strings for routes -->
 	<string name="routes_title">Rutas</string>
-	<string name="routes_unsynced_title">Rutas sin sincronizar</string>
+	<string name="routes_unsynced_title">%d rutas sin sincronizar</string>
+	<string name="route_unsynced_title">1 ruta sin sincronizar</string>
+	<string name="empty_routes_title">No has compartido alguna ruta todavia</string>
+	
 	<string name="routes_syncing_title">Sincronizando rutas</string>
 	
 	<string name="routes_save">Guardar</string>

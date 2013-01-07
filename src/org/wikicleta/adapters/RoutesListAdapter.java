@@ -1,6 +1,7 @@
 package org.wikicleta.adapters;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,10 +17,8 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class RoutesListAdapter extends BaseAdapter {
@@ -30,6 +29,15 @@ public class RoutesListAdapter extends BaseAdapter {
     private boolean todaySectionDraw = false;
     private boolean showUploaderReloading = false;
     
+    
+    public RoutesListAdapter(Activity activity, ArrayList<Route> routes_, boolean uploaderReloading) {
+    	routes = new LinkedList<Route>();
+    	for(Route route : routes_){
+    		routes.add(route);
+    	}
+        inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.showUploaderReloading = uploaderReloading;
+    }
     
     public RoutesListAdapter(Activity activity, LinkedList<Route> routes, boolean uploaderReloading) {
         this.routes= routes;      
@@ -71,21 +79,6 @@ public class RoutesListAdapter extends BaseAdapter {
         
         if(route.isDraft()) {
         	view.findViewById(R.id.route_row).setBackgroundColor(view.getResources().getColor(R.color.route_staged));
-        	if(!unsyncedSectionDraw) {
-        		view.findViewById(R.id.unsynced_routes_group).setVisibility(View.VISIBLE);
-        		final ImageView resyncer = (ImageView) view.findViewById(R.id.route_resyncer);
-        		view.findViewById(R.id.unsynced_routes_group).setOnClickListener(new OnClickListener() {
-
-        			@Override
-        			public void onClick(View v) {
-        				animateUploadIndicator(resyncer, false);
-        			}
-                	
-                });
-        		animateUploadIndicator(resyncer, showUploaderReloading);
-        		
-        		unsyncedSectionDraw = true;
-        	}
         } else {
         	if(!todaySectionDraw) {
         		view.findViewById(R.id.todays_routes_group).setVisibility(View.VISIBLE);
@@ -100,18 +93,5 @@ public class RoutesListAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.route_privacy_status)).setText(publicStatus);
         ((TextView) view.findViewById(R.id.route_date)).setText(mSimpleDateFormat.format(new Date(route.createdAt)));
         return view;
-    }
-    
-    public void animateUploadIndicator(View view, boolean stop) {
-    	if(!stop) {
-    		ObjectAnimator oa = ObjectAnimator.ofFloat(view, "rotation", 0, 360);
-    		oa.setDuration(800);
-    		oa.setRepeatCount(ObjectAnimator.INFINITE);
-    		oa.setRepeatMode(ObjectAnimator.RESTART);
-    		oa.start();
-    	} else {
-    		view.clearAnimation();
-    	}
-    	
     }
 }
