@@ -81,8 +81,7 @@ public class LoginActivity extends LoadingWithMessageActivity {
 			new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(AppBase.currentActivity, RegistrationActivity.class);
-					AppBase.currentActivity.startActivity(intent);
+					AppBase.launchActivity(RegistrationActivity.class);
 				}
 		});
 	}

@@ -17,6 +17,7 @@ import org.wikicleta.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Display;
 
 @SuppressLint("NewApi")
@@ -37,7 +38,13 @@ public class AppBase {
 	}
 	
 	public static void launchActivity(Class<?> activity) {
+		launchActivityWithBundle(activity, null);
+	}
+	
+	public static void launchActivityWithBundle(Class<?> activity, Bundle bundle) {
 		Intent intentActivity = new Intent(AppBase.currentActivity, activity);
+		if(bundle != null)
+			intentActivity.putExtras(bundle);
 		AppBase.currentActivity.startActivity(intentActivity);
 	}
 	

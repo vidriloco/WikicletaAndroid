@@ -2,34 +2,57 @@ package org.wikicleta.activities;
 
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.helpers.SimpleAnimatorListener;
 import org.wikicleta.models.User;
+
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 public class LandingActivity extends Activity {
-	
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AppBase.currentActivity = this;
-		
-		if(User.isSignedIn()) {
-			Intent intent = new Intent(AppBase.currentActivity, RoutesActivity.class);
-			AppBase.currentActivity.startActivity(intent);
-			finish();
+		this.setContentView(R.layout.activity_landing); 
+
+		if(!User.isSignedIn()) {
+			
+			findViewById(R.id.container).setVisibility(View.GONE);
+			
+	    	AnimatorSet set = new AnimatorSet();
+	    	set.playTogether(
+	    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "scaleX", 1, 1.2f),
+	    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "scaleY", 1, 1.2f),
+	    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "alpha", 0, 1, 1)
+	    	);
+	    	
+	    	set.addListener(new SimpleAnimatorListener() {
+	    		@Override
+	    		public void onAnimationEnd(Animator animation) {
+	    			// TODO Auto-generated method stub
+	    			AppBase.launchActivity(RoutesActivity.class);
+	    			finish();
+	    		}
+	    	});
+	    	
+	    	set.setDuration(2000).start();
+	    	
 			return;
 		}
 		
-		this.setContentView(R.layout.activity_landing); 
 		
 		findViewById(R.id.join).setOnClickListener(
 			new View.OnClickListener() {
 				@Override
 			public void onClick(View view) {
-				Intent intent = new Intent(AppBase.currentActivity, LoginActivity.class);
-				AppBase.currentActivity.startActivity(intent);
+				AppBase.launchActivity(LoginActivity.class);
 			}
 		});
 	}

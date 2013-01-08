@@ -94,6 +94,12 @@ public class Route extends Model {
 		return StringEscapeUtils.unescapeJava(jsonRepresentation);
 	}
 	
+	public static Route findById(Long id) {
+		if(id == null)
+			return null;
+		return (Route) new Select().from(Route.class).where("Id = ?", id).execute().get(0);
+	}
+	
 	public static ArrayList<Route> queued() {
 		return new Select().from(Route.class).where("Json IS NOT NULL").execute();
 	}

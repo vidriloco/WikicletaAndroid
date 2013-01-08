@@ -11,6 +11,9 @@ import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.models.User;
 
+import com.markupartist.android.widget.ActionBar;
+import com.markupartist.android.widget.ActionBar.Action;
+
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -54,15 +57,6 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 		messageContainerView = findViewById(R.id.signup_status);
 		viewMessage = (TextView) findViewById(R.id.signup_status_message);
 		
-		findViewById(R.id.registration_back_button).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Intent intent = new Intent(AppBase.currentActivity, LoginActivity.class);
-						AppBase.currentActivity.startActivity(intent);
-					}
-		});
-		
 		findViewById(R.id.registration_accept_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
@@ -70,6 +64,22 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 						attemptSignup();
 					}
 		});
+		
+		ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
+
+        actionBar.addAction(new Action() {
+
+			@Override
+			public int getDrawable() {
+				return R.drawable.close_icon;
+			}
+
+			@Override
+			public void performAction(View view) {
+				AppBase.launchActivity(LoginActivity.class);
+			}
+        	
+        });
 	}
 	
 	public void attemptSignup() {

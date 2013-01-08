@@ -5,49 +5,16 @@
   android:layout_width="wrap_content"
   android:layout_height="wrap_content">
 
-  <RelativeLayout
-        android:id="@+id/titlebar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#F58303"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true" >
-
-        <TextView
-            android:id="@+id/route_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:shadowColor="#1111"
-            android:shadowDx="1.5"
-            android:shadowDy="1.5"
-            android:shadowRadius="1.3"
-            android:text="@string/none"
-            android:textColor="#fff"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-		<View
-            android:layout_height="fill_parent"
-            android:layout_width="0.2dp"
-            android:layout_alignLeft="@+id/close_button"
-            android:layout_marginRight="25dp"
-            android:background="#fff"/>
-        
-		<ImageView
-            android:id="@+id/close_button"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:contentDescription="@string/none"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/back"
-            android:background="@drawable/highlight_effect" />
-  </RelativeLayout>
+  <com.markupartist.android.widget.ActionBar
+	    xmlns:app="http://schemas.android.com/apk/res/org.wikicleta"
+	    android:id="@+id/actionbar"
+	    app:title="@string/none"
+	    style="@style/ActionBar"/>
   <org.wikicleta.views.PinchableMapView
       android:id="@+id/mapview"
       android:layout_width="fill_parent"
       android:layout_height="match_parent"
-      android:layout_below="@+id/titlebar"
+      android:layout_below="@+id/actionbar"
       android:apiKey="0Sp8gbE2A7huBHKWXFaSnv0zQ4sNzPzWzqj9zcQ"
       android:clickable="true" />
       <!-- android:apiKey="0Sp8gbE2A7htK9pPiFzcliDPP5WT0D_TSkooX1w" -->
@@ -60,7 +27,7 @@
        android:orientation="horizontal"
        android:layout_marginTop="20dp"
        android:layout_centerHorizontal="true"
-       android:layout_below="@+id/titlebar"
+       android:layout_below="@+id/actionbar"
        android:background="#fff"
        android:alpha="0"
        android:visibility="gone" >

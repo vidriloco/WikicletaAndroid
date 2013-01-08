@@ -4,6 +4,7 @@ import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.NotificationBuilder;
+import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.Route;
 import org.wikicleta.services.RoutesService;
 import org.wikicleta.services.ServiceConstructor;
@@ -23,7 +24,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 
 public class RouteDetailsActivity extends LocationAwareMapActivity implements ServiceListener {
@@ -33,7 +33,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 	
 	protected NotificationBuilder notification;
 	protected RouteOverlay routeOverlay;
-	public static Route currentRoute;
+	public Route currentRoute;
 	public AlertDialog.Builder alertDialog;
 	
 	//Service
@@ -45,6 +45,9 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
         AppBase.currentActivity = this;
         this.centerMapOnCurrentLocationByDefault = false;
         
+        Bundle bundle = this.getIntent().getExtras();
+        currentRoute = Route.findById(bundle.getLong("routeId"));
+        
         if(currentRoute == null)
         	AppBase.launchActivity(RoutesActivity.class);
                
@@ -53,11 +56,11 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
         
         drawRoutePath();
         drawControls();
-        
-        TextView routeNameView = (TextView) findViewById(R.id.route_name);
-    	routeNameView.setText(currentRoute.name);
+    	
         this.setMapToLocation(currentRoute.getStartingLocation());
         this.notification = new NotificationBuilder(this);
+        
+        SlidingMenuAndActionBarHelper.loadWithActionBarTitle(this, currentRoute.name);
 	}
 	
 	public static int queuedRoutesCount() {
@@ -66,7 +69,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 	
 	public void drawControls() {
 		if(currentRoute != null && currentRoute.isDraft()) {
-	        final ImageView closeMoreIcon = (ImageView) findViewById(R.id.close_button);
+	        /*final ImageView closeMoreIcon = (ImageView) findViewById(R.id.close_button);
 	        closeMoreIcon.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View arg0) {
@@ -74,7 +77,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 					AppBase.currentActivity.startActivity(intentActivity);
 				}
 		    	
-		    });
+		    });*/
 			
 	        topToolBarView = (LinearLayout) findViewById(R.id.top_panel_route_status);
 	        bottomToolBarView = (LinearLayout) findViewById(R.id.bottom_panel_route_status_actions);
@@ -84,7 +87,6 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 
 				public void onClick(View arg0) {		
 					theService.addRouteForUpload(currentRoute);
-
 					AppBase.launchActivity(UserProfileActivity.class);
 				}
 		    	
@@ -117,7 +119,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 		    });
 	        
 		} else {
-			final ImageView closeMoreIcon = (ImageView) findViewById(R.id.close_button);
+			/*final ImageView closeMoreIcon = (ImageView) findViewById(R.id.close_button);
 	        closeMoreIcon.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View arg0) {
@@ -125,7 +127,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 					AppBase.currentActivity.startActivity(intentActivity);
 				}
 		    	
-		    });
+		    });*/
 	        
 	        topToolBarView = (LinearLayout) findViewById(R.id.top_panel_extra_route_info);
 	        bottomToolBarView = (LinearLayout) findViewById(R.id.bottom_panel_route_actions);

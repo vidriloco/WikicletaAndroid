@@ -78,8 +78,10 @@ public class ActivityFragment extends Fragment {
         list.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
                     Route route = (Route) adapter.getItem(pos);
-                    RouteDetailsActivity.currentRoute = route;
-                    AppBase.launchActivityAnimated(RouteDetailsActivity.class);
+                    
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("routeId", route.getId());
+                    AppBase.launchActivityWithBundle(RouteDetailsActivity.class, bundle);
             }
         });
 		list.setAdapter(adapter);

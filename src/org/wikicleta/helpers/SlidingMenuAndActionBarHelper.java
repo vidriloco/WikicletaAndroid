@@ -14,13 +14,12 @@ import android.app.Activity;
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class SlidingMenuAndActionBarHelper {
 	static Typeface font;
 	
-	public static void load(Activity activity) {
+	public static void loadWithActionBarTitle(Activity activity, String title) {
 		if(font == null)
 			font = Typeface.createFromAsset(activity.getAssets(), "GothamRnd-Bold.ttf");  
 
@@ -89,6 +88,8 @@ public class SlidingMenuAndActionBarHelper {
 		menu.setBehindOffsetRes(R.dimen.actionbar_home_width);
 		
 		ActionBar actionBar = (ActionBar) activity.findViewById(R.id.actionbar);
+		if(title != null)
+			actionBar.setTitle(title);
         actionBar.setHomeAction(new Action() {
 
 			@Override
@@ -102,6 +103,10 @@ public class SlidingMenuAndActionBarHelper {
 			}
         	
         });
+	}
+	
+	public static void load(Activity activity) {
+		loadWithActionBarTitle(activity, null);
 	}
 	
 
