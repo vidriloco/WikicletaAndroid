@@ -101,6 +101,30 @@
             </intent-filter>
         </activity>
         
+        <activity
+            android:name="org.wikicleta.activities.PlacesActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:screenOrientation="portrait"
+            android:alwaysRetainTaskState="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="org.wikicleta.activities.HighlightsActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:screenOrientation="portrait"
+            android:alwaysRetainTaskState="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
         <service android:name="org.wikicleta.services.RoutesService"
             android:enabled="true" />
     </application>

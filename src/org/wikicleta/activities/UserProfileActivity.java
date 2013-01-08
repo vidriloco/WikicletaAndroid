@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Vector;
 import org.wikicleta.R;
 import org.wikicleta.adapters.PagerAdapter;
+import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.Route;
 import org.wikicleta.routes.fragments.ActivityFragment;
 import org.wikicleta.routes.fragments.NotificationsFragment;
@@ -13,15 +14,12 @@ import org.wikicleta.services.RoutesService;
 import org.wikicleta.services.RoutesServiceListener;
 import org.wikicleta.services.ServiceConstructor;
 import org.wikicleta.services.ServiceListener;
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.Action;
 import android.app.Service;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.TabHost.TabContentFactory;
@@ -54,21 +52,7 @@ public class UserProfileActivity extends FragmentActivity implements ServiceList
         // Intialise ViewPager
         this.intialiseViewPager();
         
-        ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-        actionBar.setHomeAction(new Action() {
-
-			@Override
-			public int getDrawable() {
-				return R.drawable.list_menu;
-			}
-
-			@Override
-			public void performAction(View view) {
-				// Open left-menu
-				
-			}
-        	
-        });
+        SlidingMenuAndActionBarHelper.load(this);
     }
     
     

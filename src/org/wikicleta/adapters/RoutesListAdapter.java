@@ -8,9 +8,6 @@ import java.util.Date;
 import java.util.TimeZone;
 import org.wikicleta.R;
 import org.wikicleta.models.Route;
-
-import com.nineoldandroids.animation.ObjectAnimator;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
