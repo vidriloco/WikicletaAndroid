@@ -3,6 +3,7 @@ package org.wikicleta.activities;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
+import org.wikicleta.helpers.MenuList;
 import org.wikicleta.helpers.RouteTracer;
 import org.wikicleta.helpers.SimpleAnimatorListener;
 import org.wikicleta.services.RoutesService;
@@ -13,6 +14,8 @@ import org.wikicleta.views.RouteOverlay;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
 import com.nineoldandroids.animation.*;
+import com.slidingmenu.lib.SlidingMenu;
+
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.DialogInterface;
@@ -180,6 +183,8 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 			}
     	});
     	
+        final SlidingMenu menu = MenuList.prepareMenuElementsForActivity(this);
+
     	ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
         actionBar.setHomeAction(new Action() {
 
@@ -190,11 +195,11 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 
 			@Override
 			public void performAction(View view) {
-				// Open left-menu
-				
+				menu.toggle();
 			}
         	
         });
+        
 	}
 	
 	@Override
