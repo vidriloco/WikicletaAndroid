@@ -15,7 +15,7 @@
 	<string name="routes_title">Rutas</string>
 	<string name="routes_unsynced_title">%d rutas sin sincronizar</string>
 	<string name="route_unsynced_title">1 ruta sin sincronizar</string>
-	<string name="empty_routes_title">No has compartido alguna ruta todavia</string>
+	<string name="empty_routes_title">No has compartido ninguna ruta aún</string>
 	
 	<string name="routes_syncing_title">Sincronizando rutas</string>
 	

@@ -30,6 +30,10 @@ import android.widget.TabHost.TabContentFactory;
   * flicks to move between the tabs.
 ***/
 public class UserProfileActivity extends FragmentActivity implements ServiceListener, RoutesServiceListener, TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
+	
+	public enum ViewStatus {BLOCK, UNBLOCK};
+	public ViewStatus currentViewStatus;
+	
 	private TabHost tabHost;
 	private ViewPager mViewPager;
 	private HashMap<String, TabInfo> mapTabInfo = new HashMap<String, UserProfileActivity.TabInfo>();
@@ -184,14 +188,27 @@ public class UserProfileActivity extends FragmentActivity implements ServiceList
 	
 
 	@Override
-	public void shouldUpdateView() {
+	public void shouldBlockView() {
+		this.currentViewStatus = ViewStatus.BLOCK;
+
 		runOnUiThread(new Runnable() {
 		     public void run() {
 		 		ActivityFragment fragment = (ActivityFragment) pagerAdapter.getItem(1);
-				fragment.drawUnsyncedRoutesList();
+				fragment.drawView();
 		    }
 		});
+	}
+	
+	@Override
+	public void shouldUnblockView() {
+		this.currentViewStatus = ViewStatus.UNBLOCK;
 
+		runOnUiThread(new Runnable() {
+		     public void run() {
+		 		ActivityFragment fragment = (ActivityFragment) pagerAdapter.getItem(1);
+				fragment.drawView();
+		    }
+		});
 	}
 	
 	

@@ -26,7 +26,6 @@ public class RoutesService extends Service {
 	protected final IBinder localBinder = new RoutesServiceBinder();
 		
     private UploaderTask routeUploaderTask;
-    protected boolean uploadingRoutes;
     
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -100,52 +99,25 @@ public class RoutesService extends Service {
 		}
     }
 	
-	public boolean isUploadingRoutes() {
-		return this.uploadingRoutes;
-	}
-	
 	private class UploaderTask extends AsyncTask<Void, Void, Void> {
 
 		@Override
 		protected Void doInBackground(Void... params) {
 			
 			// Check if boundActivity is of the right type
-			RoutesServiceListener listener = null;
-			if(boundActivity instanceof RoutesServiceListener) {
-				listener = (RoutesServiceListener) boundActivity;
-				listener.shouldUpdateView();
-				uploadingRoutes = true;
-			}
+			RoutesServiceListener listener = (RoutesServiceListener) boundActivity;
+			if(boundActivity instanceof RoutesServiceListener)
+				listener.shouldBlockView();
 						
 			while(routeUploader.peekNext() != null) {
 				routeUploader.uploadNext();
+				Log.e("WIKICLETA", "Error al subir");
 			}
-			
-			//do {
-				
-				// Attempt to upload all staged routes
-				/*if() {
-					notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
-							getString(R.string.app_name), getString(R.string.route_did_upload), null);
-					if(listener != null)
-						listener.routeDidUpload(route);
-				} else {
-					notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
-							getString(R.string.app_name), getString(R.string.route_didnt_upload), null);
-					if(listener != null) {
-						listener.routeDidNotUpload(route);
-						Log.i("WIKICLETA", "Ruta no subi— "+ String.valueOf(route.name));
-
-					}
-				}*/
-				
-			//} while(route != null);
 			
 			reloadRouteUploadManager();
-			if(boundActivity instanceof RoutesServiceListener) {
-				uploadingRoutes = false;
-				listener.shouldUpdateView();
-			}
+			if(boundActivity instanceof RoutesServiceListener)
+				listener.shouldUnblockView();
+			Log.e("WIKICLETA", "Stopped");
 			return null;
 		}
     }

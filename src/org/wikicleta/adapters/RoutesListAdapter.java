@@ -22,24 +22,19 @@ public class RoutesListAdapter extends BaseAdapter {
 
     private LinkedList<Route> routes;
     private static LayoutInflater inflater=null;
-    private boolean unsyncedSectionDraw = false;
     private boolean todaySectionDraw = false;
-    private boolean showUploaderReloading = false;
     
-    
-    public RoutesListAdapter(Activity activity, ArrayList<Route> routes_, boolean uploaderReloading) {
+    public RoutesListAdapter(Activity activity, ArrayList<Route> routes_) {
     	routes = new LinkedList<Route>();
     	for(Route route : routes_){
     		routes.add(route);
     	}
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.showUploaderReloading = uploaderReloading;
     }
     
     public RoutesListAdapter(Activity activity, LinkedList<Route> routes, boolean uploaderReloading) {
         this.routes= routes;      
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.showUploaderReloading = uploaderReloading;
     }
     
     public RoutesListAdapter(Activity activity, LinkedList<Route> routes) {

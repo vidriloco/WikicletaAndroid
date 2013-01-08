@@ -5,6 +5,7 @@ import org.wikicleta.models.Route;
 public interface RoutesServiceListener {
 	public void routeDidUpload(Route route);
 	public void routeDidNotUpload(Route route);
-	public void shouldUpdateView();
+	public void shouldBlockView();
+	public void shouldUnblockView();
 
 }
