@@ -40,7 +40,7 @@
 	        android:layout_below="@id/menu_title"
 	        android:paddingTop="15dp"
 	        android:paddingBottom="15dp"
-	        android:alpha="0.3" >
+	        android:alpha="0.5" >
 
         <ImageView
             android:id="@+id/places_img"
@@ -72,7 +72,7 @@
 	        android:layout_height="wrap_content"
 	        android:paddingTop="15dp"
 	        android:paddingBottom="15dp"
-	        android:alpha="0.3"
+	        android:alpha="0.5"
 	        android:layout_below="@id/places_menu_group" >
 
         <ImageView
@@ -106,7 +106,7 @@
 	        android:layout_height="wrap_content"
 	        android:paddingTop="15dp"
 	        android:paddingBottom="15dp"
-	        android:alpha="0.3"
+	        android:alpha="0.5"
 	        android:layout_below="@id/routes_menu_group" >
 
         <ImageView
@@ -146,7 +146,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
 	        android:layout_below="@+id/divider"
-	        android:alpha="0.3"
+	        android:alpha="0.5"
 	        android:background="@drawable/menu_item_background"
 	        android:paddingBottom="15dp"
 	        android:paddingTop="15dp" >

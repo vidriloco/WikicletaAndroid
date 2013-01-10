@@ -4,15 +4,17 @@ import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.models.Route;
-import org.wikicleta.services.RoutesService;
-import org.wikicleta.services.ServiceListener;
-import org.wikicleta.services.ServiceConstructor;
+import org.wikicleta.routes.services.RoutesService;
+import org.wikicleta.routes.services.ServiceConstructor;
+import org.wikicleta.routes.services.ServiceListener;
+
+import com.markupartist.android.widget.ActionBar;
+import com.markupartist.android.widget.ActionBar.Action;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,26 +43,32 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
         this.tagsView = (EditText) findViewById(R.id.route_tags);
         this.notification = new NotificationBuilder(this);
         
-        findViewById(R.id.cancel).setOnClickListener(
-    			new View.OnClickListener() {
-    				@Override
-    				public void onClick(View view) {
-    					AlertDialog.Builder alertDialog = new AlertDialog.Builder(AppBase.currentActivity);
-    					alertDialog.setTitle("Descartar ruta");
-    					alertDialog.setMessage("ÀQuieres descartar esta ruta?");
-    					alertDialog.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-    						@Override
-    						public void onClick(DialogInterface dialog, int which) {
-    							Intent intentActivity = new Intent(AppBase.currentActivity, RoutesActivity.class);
-    	    					AppBase.currentActivity.startActivity(intentActivity);
-    	    					overridePendingTransition(R.anim.slide_up, R.anim.slide_down);
-    						}
-    					});
-    					// If user chooses 'No', then the dialog closes
-    					alertDialog.setNegativeButton("No", null);
-    					alertDialog.show();
-    				}
-    	});
+		ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
+
+        actionBar.addAction(new Action() {
+
+			@Override
+			public int getDrawable() {
+				return R.drawable.close_icon;
+			}
+
+			@Override
+			public void performAction(View view) {
+				AlertDialog.Builder alertDialog = new AlertDialog.Builder(AppBase.currentActivity);
+				alertDialog.setTitle("Descartar ruta");
+				alertDialog.setMessage("ÀQuieres descartar esta ruta?");
+				alertDialog.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						AppBase.launchActivity(RoutesActivity.class);
+					}
+				});
+				// If user chooses 'No', then the dialog closes
+				alertDialog.setNegativeButton("No", null);
+				alertDialog.show();
+			}
+        	
+        });
         
         findViewById(R.id.save_route).setOnClickListener(
     			new View.OnClickListener() {

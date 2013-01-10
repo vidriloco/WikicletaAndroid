@@ -6,9 +6,9 @@ import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.Route;
-import org.wikicleta.services.RoutesService;
-import org.wikicleta.services.ServiceConstructor;
-import org.wikicleta.services.ServiceListener;
+import org.wikicleta.routes.services.RoutesService;
+import org.wikicleta.routes.services.ServiceConstructor;
+import org.wikicleta.routes.services.ServiceListener;
 import org.wikicleta.views.PinchableMapView;
 import org.wikicleta.views.RouteOverlay;
 

@@ -1,4 +1,4 @@
-package org.wikicleta.services;
+package org.wikicleta.routes.services;
 
 import java.util.LinkedList;
 import org.wikicleta.R;
@@ -35,7 +35,7 @@ public class RoutesService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		reloadRouteUploadManager();
+		reload();
         this.notification = new NotificationBuilder(this);
 	}
 	 
@@ -51,9 +51,21 @@ public class RoutesService extends Service {
 		return Service.START_STICKY;
 	}
 	
-	public void reloadRouteUploadManager() {
+	public void reload() {
 		this.routeUploader = new RouteUploader();
 	}
+	
+	/*
+	 * Methods for routes recording
+	 */
+	
+	
+	
+	
+	
+	/*
+	 * Methods for routes uploading
+	 */
 	
 	public void addRouteForUpload(Route route) {
 		notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
@@ -105,17 +117,20 @@ public class RoutesService extends Service {
 		protected Void doInBackground(Void... params) {
 			
 			// Check if boundActivity is of the right type
-			RoutesServiceListener listener = (RoutesServiceListener) boundActivity;
-			if(boundActivity instanceof RoutesServiceListener)
+			RoutesServiceListener listener = null;
+			if(boundActivity instanceof RoutesServiceListener) {
+				listener = (RoutesServiceListener) boundActivity;
 				listener.shouldBlockView();
+			}
+				
 						
 			while(routeUploader.peekNext() != null) {
 				routeUploader.uploadNext();
 				Log.e("WIKICLETA", "Error al subir");
 			}
 			
-			reloadRouteUploadManager();
-			if(boundActivity instanceof RoutesServiceListener)
+			reload();
+			if(listener != null)
 				listener.shouldUnblockView();
 			Log.e("WIKICLETA", "Stopped");
 			return null;

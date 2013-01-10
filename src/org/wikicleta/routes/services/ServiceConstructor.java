@@ -1,4 +1,4 @@
-package org.wikicleta.services;
+package org.wikicleta.routes.services;
 
 import android.app.Activity;
 import android.app.Service;

@@ -88,6 +88,12 @@ public class ActivityFragment extends Fragment {
 		return list;
     }
 	
+	@Override
+	public void onResume() {
+		super.onResume();
+		this.drawView();
+	}
+	
 	public void drawView() {
 		final UserProfileActivity activity = (UserProfileActivity) this.getActivity();
 

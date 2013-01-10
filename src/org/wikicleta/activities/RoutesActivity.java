@@ -6,9 +6,9 @@ import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.helpers.RouteTracer;
 import org.wikicleta.helpers.SimpleAnimatorListener;
-import org.wikicleta.services.RoutesService;
-import org.wikicleta.services.ServiceConstructor;
-import org.wikicleta.services.ServiceListener;
+import org.wikicleta.routes.services.RoutesService;
+import org.wikicleta.routes.services.ServiceConstructor;
+import org.wikicleta.routes.services.ServiceListener;
 import org.wikicleta.views.RouteOverlay;
 import com.nineoldandroids.animation.*;
 import android.app.AlertDialog;
@@ -213,30 +213,6 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 			this.theService = (RoutesService) service;
 			theService.notifyAboutStalledRoutes();
 		}
-	}
-	
-	// Refactor this views
-	public void toggleQueuedRoutesButton() {
-		/*if(RouteDetailsActivity.queuedRoutesCount() > 0) {
-			ImageView button = (ImageView) findViewById(R.id.drafts_button_icon);
-			View border = (View) findViewById(R.id.drafts_border);
-			RelativeLayout grouper = (RelativeLayout) findViewById(R.id.drafts_text_container);
-			
-			int visibilityForAll = View.GONE;
-			int alpha = 0;
-			if(button.getVisibility() == View.GONE) {
-				visibilityForAll = View.VISIBLE;
-				alpha = 1;
-			}
-			button.setVisibility(visibilityForAll);
-			animate(button).alpha(alpha);
-	        
-	        border.setVisibility(visibilityForAll);
-	        animate(border).alpha(alpha);
-	        
-	        grouper.setVisibility(visibilityForAll);
-	        animate(grouper).alpha(alpha);
-		}*/
 	}
 	
 	protected void resetControls() {

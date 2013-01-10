@@ -10,10 +10,11 @@ import org.wikicleta.models.Route;
 import org.wikicleta.routes.fragments.ActivityFragment;
 import org.wikicleta.routes.fragments.NotificationsFragment;
 import org.wikicleta.routes.fragments.ProfileFragment;
-import org.wikicleta.services.RoutesService;
-import org.wikicleta.services.RoutesServiceListener;
-import org.wikicleta.services.ServiceConstructor;
-import org.wikicleta.services.ServiceListener;
+import org.wikicleta.routes.services.RoutesService;
+import org.wikicleta.routes.services.RoutesServiceListener;
+import org.wikicleta.routes.services.ServiceConstructor;
+import org.wikicleta.routes.services.ServiceListener;
+
 import android.app.Service;
 import android.content.Context;
 import android.os.Bundle;

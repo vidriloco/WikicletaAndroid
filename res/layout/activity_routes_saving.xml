@@ -1,37 +1,20 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".LoginActivity" >
-
-	<RelativeLayout
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="55dip"
-        android:orientation="vertical"
-        android:background="#F58303" >
-        
-	    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:shadowColor="#1111"
-            android:shadowDx="1.5"
-            android:shadowDy="1.5"
-            android:shadowRadius="1.3"
-            android:text="@string/routes_saving_title"
-            android:textColor="#fff"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-	</RelativeLayout>
+	
+    <com.markupartist.android.widget.ActionBar
+    	xmlns:app="http://schemas.android.com/apk/res/org.wikicleta"
+    	android:id="@+id/actionbar"
+    	app:title="@string/routes_saving_title"
+    	style="@style/ActionBar"/>
 	
 	<ScrollView
         android:id="@+id/routes_saving_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="55dp" >
+        android:layout_marginTop="53dp" >
 
-		   <RelativeLayout
+		   <LinearLayout
 		       style="@style/LoginFormContainer"
 		       android:layout_width="match_parent"
 		       android:layout_height="292dp"
@@ -42,7 +25,6 @@
                 android:id="@+id/route_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="@string/routes_saving_form_name"
@@ -57,9 +39,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:shadowRadius="1.3"
-                android:layout_below="@+id/route_name"
                 android:layout_marginTop="20dp"
-                android:layout_centerHorizontal="true"
                 android:text="@string/routes_saving_form_tags_instructions"
                 android:textColor="#111"
                 android:textSize="15sp" />
@@ -67,8 +47,6 @@
                 android:id="@+id/route_tags"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/subtitle"
-                android:layout_centerHorizontal="true"
                 android:ems="10"
 				android:layout_marginTop="20dp"
                 android:hint="@string/routes_saving_form_tags"
@@ -77,28 +55,16 @@
                 android:singleLine="true" />
 
             <Button
-                android:id="@+id/cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/save_route"
-                android:layout_alignBottom="@+id/save_route"
-                android:layout_alignLeft="@+id/route_tags"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:text="@string/routes_saving_form_decline" />
-
-            <Button
                 android:id="@+id/save_route"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignRight="@+id/route_tags"
-                android:layout_below="@+id/route_tags"
-                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
+				android:layout_marginTop="50dp"
+				android:layout_marginBottom="20dp"
                 android:text="@string/routes_saving_form_save" />
-
-        	</RelativeLayout>
+        	</LinearLayout>
         	        
     </ScrollView>
 </merge>
