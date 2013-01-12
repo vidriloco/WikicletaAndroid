@@ -33,7 +33,9 @@
             android:textSize="25sp"
             android:textStyle="bold" />
 	    </RelativeLayout>
-	    <RelativeLayout android:id="@+id/places_menu_group"
+	    
+	    
+	    <RelativeLayout android:id="@+id/map_menu_group"
 	        android:layout_width="fill_parent"
 	        android:background="@drawable/menu_item_background"
 	        android:layout_height="wrap_content"
@@ -43,16 +45,17 @@
 	        android:alpha="0.5" >
 
         <ImageView
-            android:id="@+id/places_img"
+            android:id="@+id/map_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="38dp"
+            android:contentDescription="@string/none"
             android:src="@drawable/places_menu_icon" />
 
         <TextView
-            android:id="@+id/places_title"
+            android:id="@+id/map_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -60,121 +63,117 @@
             android:gravity="right"
             android:padding="10dp"
             android:layout_marginRight="20dp"
-            android:text="@string/places_activity_menu"
+            android:text="@string/map_section"
             android:textColor="#000"
             android:textSize="18sp"
             android:textStyle="bold" />
 
 	    </RelativeLayout>
-	    <RelativeLayout android:id="@+id/routes_menu_group"
+
+	    <RelativeLayout android:id="@+id/now_menu_group"
 	        android:layout_width="fill_parent"
 	        android:background="@drawable/menu_item_background"
 	        android:layout_height="wrap_content"
+	        android:layout_below="@id/map_menu_group"
 	        android:paddingTop="15dp"
 	        android:paddingBottom="15dp"
-	        android:alpha="0.5"
-	        android:layout_below="@id/places_menu_group" >
+	        android:alpha="0.5" >
 
         <ImageView
-            android:id="@+id/route_img"
+            android:id="@+id/now_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="31dp"
+            android:layout_marginLeft="38dp"
+            android:contentDescription="@string/none"
             android:src="@drawable/routes_menu_icon" />
 
         <TextView
-            android:id="@+id/routes_title"
+            android:id="@+id/now_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-			android:layout_marginRight="20dp"
             android:gravity="right"
             android:padding="10dp"
-            android:text="@string/routes_activity_menu"
+            android:layout_marginRight="20dp"
+            android:text="@string/real_time_section"
             android:textColor="#000"
             android:textSize="18sp"
             android:textStyle="bold" />
 
 	    </RelativeLayout>
-
-	    <RelativeLayout android:id="@+id/highlight_menu_group"
+	    
+	    <RelativeLayout android:id="@+id/market_menu_group"
 	        android:layout_width="fill_parent"
 	        android:background="@drawable/menu_item_background"
 	        android:layout_height="wrap_content"
+	        android:layout_below="@id/now_menu_group"
 	        android:paddingTop="15dp"
 	        android:paddingBottom="15dp"
-	        android:alpha="0.5"
-	        android:layout_below="@id/routes_menu_group" >
+	        android:alpha="0.5" >
 
         <ImageView
-            android:id="@+id/highlight_img"
+            android:id="@+id/market_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="31dp"
+            android:layout_marginLeft="38dp"
+            android:contentDescription="@string/none"
             android:src="@drawable/highlights_menu_icon" />
 
         <TextView
-            android:id="@+id/highlight_title"
+            android:id="@+id/market_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-			android:layout_marginRight="20dp"
             android:gravity="right"
             android:padding="10dp"
-            android:text="@string/highlights_activity_menu"
+            android:layout_marginRight="20dp"
+            android:text="@string/market_section"
             android:textColor="#000"
             android:textSize="18sp"
             android:textStyle="bold" />
 
 	    </RelativeLayout>
-		<RelativeLayout 
-		    android:id="@+id/divider"
-		    android:layout_width="fill_parent"
-	        android:layout_height="1dp"
-	        android:background="#1C2026"
-	        android:layout_below="@+id/highlight_menu_group"
-	        android:alpha="0.2"></RelativeLayout>
-	    <RelativeLayout
-	        android:id="@+id/profile_menu_group"
+	    
+	    <RelativeLayout android:id="@+id/profile_menu_group"
 	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_below="@+id/divider"
-	        android:alpha="0.5"
 	        android:background="@drawable/menu_item_background"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/market_menu_group"
+	        android:paddingTop="15dp"
 	        android:paddingBottom="15dp"
-	        android:paddingTop="15dp" >
+	        android:alpha="0.5" >
 
-	        <ImageView
-	            android:id="@+id/profile_img"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentLeft="true"
-	            android:layout_centerVertical="true"
-	            android:layout_marginLeft="31dp"
-	            android:src="@drawable/profiles_menu_icon" />
+        <ImageView
+            android:id="@+id/profile_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="38dp"
+            android:contentDescription="@string/none"
+            android:src="@drawable/profiles_menu_icon" />
 
-	        <TextView
-	            android:id="@+id/profile_title"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentLeft="true"
-	            android:layout_centerVertical="true"
-	            android:layout_marginRight="20dp"
-	            android:gravity="right"
-	            android:padding="10dp"
-	            android:text="@string/profile_activity_menu"
-	            android:textColor="#000"
-	            android:textSize="18sp"
-	            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/profile_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="right"
+            android:padding="10dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/profile_section"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
 	    </RelativeLayout>
-
 	</RelativeLayout>
 
 </RelativeLayout>

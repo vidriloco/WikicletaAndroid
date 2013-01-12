@@ -3,7 +3,6 @@ package org.wikicleta.activities;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.NotificationBuilder;
-import org.wikicleta.models.Route;
 import org.wikicleta.routes.services.RoutesService;
 import org.wikicleta.routes.services.ServiceConstructor;
 import org.wikicleta.routes.services.ServiceListener;
@@ -16,7 +15,6 @@ import android.app.AlertDialog;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -60,7 +58,7 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
 				alertDialog.setPositiveButton("Si", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						AppBase.launchActivity(RoutesActivity.class);
+						AppBase.launchActivity(MapActivity.class);
 					}
 				});
 				// If user chooses 'No', then the dialog closes
@@ -74,14 +72,7 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
     			new View.OnClickListener() {
     				@Override
     				public void onClick(View view) {
-    					
-    					Route route = RoutesActivity.currentPath.buildRoute(
-    							nameView.getText().toString(), 
-    							tagsView.getText().toString());
-    					Log.i("WIKICLETA", "Ruta en espera para subir "+ String.valueOf(route.name));
-
-    					
-    					theService.addRouteForUpload(route);
+    					theService.addRecordedRouteToUploader(nameView.getText().toString(), tagsView.getText().toString());
     					AppBase.launchActivity(UserProfileActivity.class);
     				}
     	});

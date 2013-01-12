@@ -49,7 +49,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
         currentRoute = Route.findById(bundle.getLong("routeId"));
         
         if(currentRoute == null)
-        	AppBase.launchActivity(RoutesActivity.class);
+        	AppBase.launchActivity(MapActivity.class);
                
         this.mapView = (PinchableMapView) findViewById(R.id.mapview);
         mapView.setBuiltInZoomControls(false);

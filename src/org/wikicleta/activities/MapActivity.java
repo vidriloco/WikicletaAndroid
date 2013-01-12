@@ -4,8 +4,8 @@ import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
-import org.wikicleta.helpers.RouteTracer;
 import org.wikicleta.helpers.SimpleAnimatorListener;
+import org.wikicleta.routes.services.RoutesRecordingListener;
 import org.wikicleta.routes.services.RoutesService;
 import org.wikicleta.routes.services.ServiceConstructor;
 import org.wikicleta.routes.services.ServiceListener;
@@ -15,7 +15,6 @@ import android.app.AlertDialog;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,10 +26,9 @@ import android.widget.TextView;
 /*
  * TODOS:
  * 
- * - Stop updating location if no route recording is being done
  * - Fix recording buttons and route timer for when canceling discarding of route and route recording was stopped
  */
-public class RoutesActivity extends LocationAwareMapActivity implements ServiceListener {
+public class MapActivity extends LocationAwareMapActivity implements ServiceListener, RoutesRecordingListener {
 
 	protected enum TaskPanel {Main, Recording};
 	protected TaskPanel currentTaskPanel;
@@ -44,7 +42,10 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 	private ImageView pauseButton;
 	private ImageView flagButton;
 	
-	static RouteTracer currentPath;
+	protected TextView speedTextValue;
+	protected TextView timeTextValue;
+	protected TextView distanceTextValue;
+	
 	protected RouteOverlay routeOverlay;
 
 	AlertDialog.Builder builder;
@@ -68,13 +69,6 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 		showToolbarFor(TaskPanel.Main);
         
         alertDialog = new AlertDialog.Builder(this);
-        
-		currentPath = new RouteTracer((TextView) findViewById(R.id.speed_number), 
-				(TextView) findViewById(R.id.time_elapsed_number),
-				(TextView) findViewById(R.id.distance_number));
-		
-		routeOverlay = new RouteOverlay(currentPath.instantList);
-		mapView.getOverlays().add(routeOverlay);
     	
     	recButton = (ImageView) findViewById(R.id.routes_rec_button);
     	flagButton = (ImageView) findViewById(R.id.routes_finish_button);
@@ -82,17 +76,21 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 
     	alertDialog = new AlertDialog.Builder(this);
     	
+    	speedTextValue = (TextView) findViewById(R.id.speed_number);
+    	timeTextValue = (TextView) findViewById(R.id.time_elapsed_number);
+    	distanceTextValue = (TextView) findViewById(R.id.distance_number);
+    	
     	findViewById(R.id.routes_add_button).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				showToolbarFor(TaskPanel.Recording);
+				
 			}
 		});
     	
     	findViewById(R.id.routes_back_button).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(!currentPath.isEmpty()) {
+				if(!theService.routeRecorder.isEmpty()) {
 					pauseRecording(false);
 
 					alertDialog.setTitle("Pregunta");
@@ -102,8 +100,7 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							// Resetting the captured path and backing to main floatant menu
-							resetControls();
-							currentPath.reset();
+							resetRouteRecorder();
 						}
 					});
 					// If user chooses 'No', then the dialog closes
@@ -112,14 +109,12 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 						public void onClick(DialogInterface dialog, int which) {
 							// Resume tracking (with auto-recording)
 							resumeRecording(false);
-							
 						}
 					});
 					alertDialog.setNeutralButton(null, null);
 					alertDialog.show();
 				} else {
-					resetControls();
-					currentPath.reset();
+					resetRouteRecorder();
 				}
 			}
 		});
@@ -134,10 +129,9 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
     	recButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mapView.postInvalidate();
 				resumeRecording(true);
 				flagButton.setVisibility(View.VISIBLE);
-				enableLocationManager();
+				mapView.postInvalidate();
 			}
 		});
     	
@@ -145,14 +139,13 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 			@Override
 			public void onClick(View v) {
 				pauseRecording(true);
-				disableLocationManager();
 			}
 		});
     	
     	flagButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {				
-				if(currentPath.isEmpty()) {
+				if(theService.routeRecorder.isEmpty()) {
 					pauseRecording(false);
 
 					alertDialog.setTitle("Aviso").
@@ -168,12 +161,11 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 					
 					alertDialog.show();
 				} else {
-					if(currentPath.isPaused())
+					if(theService.routeRecorder.isPaused())
 						resumeRecording(true);
 					pauseRecording(true);
 					
-					Intent intentActivity = new Intent(AppBase.currentActivity, RoutesSavingActivity.class);
-					AppBase.currentActivity.startActivity(intentActivity);
+					AppBase.launchActivity(RoutesSavingActivity.class);
 				}
 			}
     	});
@@ -184,14 +176,14 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if(currentPath.isPaused())
-			this.disableLocationManager();
+		//if(currentPath.isPaused())
+		//	this.disableLocationManager();
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		this.enableLocationManager();
+		//this.enableLocationManager();
 	}
 	
 	@Override
@@ -212,14 +204,22 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 		if(service instanceof RoutesService) {
 			this.theService = (RoutesService) service;
 			theService.notifyAboutStalledRoutes();
+			
+			routeOverlay = new RouteOverlay(theService.routeRecorder.coordinateVector);
+			mapView.getOverlays().add(routeOverlay);
 		}
 	}
 	
-	protected void resetControls() {
+	protected void resetRouteRecorder() {
 		showToolbarFor(TaskPanel.Main);	
 		recButton.setVisibility(View.VISIBLE);
 		pauseButton.setVisibility(View.GONE);
 		flagButton.setVisibility(View.GONE);
+		
+		this.timeTextValue.setText(getString(R.string.dashes));
+		this.distanceTextValue.setText(getString(R.string.dashes));
+		this.speedTextValue.setText(getString(R.string.dashes));
+		theService.routeRecorder.reset();
 	}
 	
 	/*
@@ -227,8 +227,7 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 	 *  @param controlSwitch will change the buttons state if true
 	 */
 	protected void pauseRecording(boolean controlSwitch) {
-		currentPath.pause();
-		
+		theService.pauseRecording();
 		// Show rec button and hide pause button
 		if(controlSwitch) {
 			recButton.setVisibility(View.VISIBLE);
@@ -241,8 +240,7 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 	 *  @param controlSwitch will change the buttons state if true
 	 */
 	protected void resumeRecording(boolean controlSwitch) {
-		currentPath.resume();
-		
+		theService.resumeRecording();
 		// Show pause button and hide rec button
 		if(controlSwitch) {
 			pauseButton.setVisibility(View.VISIBLE);
@@ -262,13 +260,6 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
 	        return true;
 	    }
 	    return super.onKeyDown(keyCode, event);
-	}
-
-	@Override
-	public void onLocationChanged(Location location) {
-		super.onLocationChanged(location);
-		currentPath.addLocation(location);
-		mapView.postInvalidate();
 	}
 	
 	protected void showToolbarFor(TaskPanel newTask) {
@@ -325,5 +316,22 @@ public class RoutesActivity extends LocationAwareMapActivity implements ServiceL
     		showSet.start();
         }
         this.currentTaskPanel = newTask;
+	}
+
+	@Override
+	public void onRouteRecordingFieldsUpdated() {
+		if(this.centerMapOnCurrentLocationByDefault)
+			this.setMapToLocation(theService.lastLocationCatched);	
+		
+		String speed = theService.routeRecorder.speedTextValue;
+		String time = theService.routeRecorder.timeTextValue;
+		String distance = theService.routeRecorder.distanceTextValue;
+		
+		if(speed != null)
+			this.speedTextValue.setText(speed);
+		if(time != null)
+			this.timeTextValue.setText(time);
+		if(distance != null)
+			this.distanceTextValue.setText(distance);
 	}
 }

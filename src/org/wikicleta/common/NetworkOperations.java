@@ -11,12 +11,12 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 public class NetworkOperations {
-	static String serverHost = "http://192.168.1.64:3000";
+	static String serverHost = "http://www.wikicleta.com";
 	
 	public static int postJSONTo(String path, String jsonValue)  {
 	    HttpClient client = new DefaultHttpClient();
 	    HttpPost httpost = new HttpPost(serverHost.concat(path));	
-	    
+	   
 	    StringEntity se;
 		try {
 			se = new StringEntity(jsonValue);

@@ -5,11 +5,10 @@
 	<string name="dashes">--</string>
 	
 	<!-- Sliding Menu options -->
-	<string name="profile_activity_menu">Perfil</string>
-	<string name="routes_activity_menu">Rutas</string>
-	<string name="places_activity_menu">Lugares</string>
-	<string name="highlights_activity_menu">Puntos de riesgo</string>
-	<string name="about_activity_menu">Acerca de</string>
+	<string name="map_section">Mapa</string>
+	<string name="real_time_section">Ahora</string>
+	<string name="market_section">Mercado</string>
+	<string name="profile_section">Perfil</string>
 			
 	<!-- Strings for routes -->
 	<string name="routes_title">Rutas</string>

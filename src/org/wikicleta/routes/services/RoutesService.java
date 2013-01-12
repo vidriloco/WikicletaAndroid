@@ -2,30 +2,36 @@ package org.wikicleta.routes.services;
 
 import java.util.LinkedList;
 import org.wikicleta.R;
+import org.wikicleta.activities.MapActivity;
 import org.wikicleta.activities.UserProfileActivity;
-import org.wikicleta.async.RouteUploader;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.models.Route;
+import org.wikicleta.routes.helpers.RouteRecorder;
+import org.wikicleta.routes.helpers.RouteUploader;
+
 import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
-public class RoutesService extends Service {
+public class RoutesService extends LocationAwareService {
 	
 	public static final int UPLOAD_ROUTE = 1;
 	public static final int NOTIFY_ABOUT_STALLED = 2;
 	
-	protected Activity boundActivity;
+	// Route uploading methods
 	protected RouteUploader routeUploader;
 	protected NotificationBuilder notification;
 	protected final IBinder localBinder = new RoutesServiceBinder();
-		
     private UploaderTask routeUploaderTask;
+
+    // Route recording methods
+	public RouteRecorder routeRecorder;
     
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -53,15 +59,44 @@ public class RoutesService extends Service {
 	
 	public void reload() {
 		this.routeUploader = new RouteUploader();
+		this.routeRecorder = new RouteRecorder(this);
 	}
 	
 	/*
 	 * Methods for routes recording
 	 */
 	
+	@Override
+	public void onLocationChanged(Location location) {
+		super.onLocationChanged(location);
+		this.routeRecorder.addLocation(location);
+		this.notifyFieldsUpdated();
+	}
 	
+	public void updateTimingDisplay() {
+		this.notifyFieldsUpdated();
+	}
 	
+	protected void notifyFieldsUpdated() {
+		if(this.boundActivity instanceof MapActivity) {
+			((MapActivity) this.boundActivity).onRouteRecordingFieldsUpdated();
+		}
+	}
 	
+	public void addRecordedRouteToUploader(String name, String tags) {
+		this.addRouteForUpload(routeRecorder.buildRoute(name, tags));
+	}
+	
+	public void pauseRecording() {
+		disableLocationManager();
+		routeRecorder.pause();
+	}
+	
+	public void resumeRecording() {
+		enableLocationManager();
+		routeRecorder.resume();
+
+	}
 	
 	/*
 	 * Methods for routes uploading
@@ -126,13 +161,11 @@ public class RoutesService extends Service {
 						
 			while(routeUploader.peekNext() != null) {
 				routeUploader.uploadNext();
-				Log.e("WIKICLETA", "Error al subir");
 			}
 			
 			reload();
 			if(listener != null)
 				listener.shouldUnblockView();
-			Log.e("WIKICLETA", "Stopped");
 			return null;
 		}
     }

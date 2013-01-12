@@ -6,7 +6,7 @@ import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class HighlightsActivity extends Activity {
+public class MarketActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -1,4 +1,4 @@
-package org.wikicleta.async;
+package org.wikicleta.routes.helpers;
 
 import java.util.ArrayList;
 import java.util.HashMap;

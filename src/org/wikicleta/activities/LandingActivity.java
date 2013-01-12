@@ -36,7 +36,7 @@ public class LandingActivity extends Activity {
 	    		@Override
 	    		public void onAnimationEnd(Animator animation) {
 	    			// TODO Auto-generated method stub
-	    			AppBase.launchActivity(RoutesActivity.class);
+	    			AppBase.launchActivity(MapActivity.class);
 	    			finish();
 	    		}
 	    	});

@@ -182,7 +182,7 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 
 			if (success) {
 				if(User.isSignedIn()) {
-					Intent intent = new Intent(AppBase.currentActivity, RoutesActivity.class);
+					Intent intent = new Intent(AppBase.currentActivity, MapActivity.class);
 					AppBase.currentActivity.startActivity(intent);
 					finish();
 				} else {

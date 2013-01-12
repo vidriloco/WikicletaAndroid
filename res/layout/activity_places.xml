@@ -7,6 +7,6 @@
   <com.markupartist.android.widget.ActionBar
 	    xmlns:app="http://schemas.android.com/apk/res/org.wikicleta"
 	    android:id="@+id/actionbar"
-	    app:title="@string/places_activity_menu"
+	    app:title="@string/map_section"
 	    style="@style/ActionBar"/>
 </RelativeLayout>

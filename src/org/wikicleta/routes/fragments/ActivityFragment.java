@@ -10,6 +10,7 @@ import org.wikicleta.models.Route;
 import com.nineoldandroids.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +68,6 @@ public class ActivityFragment extends Fragment {
     	this.uploaderAnimator = ObjectAnimator.ofFloat(routeResyncer, "rotation", 0, 360);
     	this.uploaderAnimator.setDuration(800);
     	this.uploaderAnimator.setRepeatCount(ObjectAnimator.INFINITE);
-    	this.uploaderAnimator.setRepeatMode(ObjectAnimator.RESTART);
     	
         return fragmentView;
     } 
@@ -113,6 +113,7 @@ public class ActivityFragment extends Fragment {
 			}
         	
         });
+        
         this.unsyncedRoutesLayout.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -137,9 +138,9 @@ public class ActivityFragment extends Fragment {
             
             this.unsyncedRoutesTitle.setText(routesMsj);
             
-            if(activity.currentViewStatus == ViewStatus.UNBLOCK)
-            	this.uploaderAnimator.end();
-            else {
+            if(activity.currentViewStatus == ViewStatus.UNBLOCK) {
+            	this.uploaderAnimator.cancel();
+            } else {
             	this.uploaderAnimator.start();
             	this.unsyncedRoutesTitle.setText(getString(R.string.routes_syncing_title));
             }

@@ -1,9 +1,9 @@
 package org.wikicleta.helpers;
 
 import org.wikicleta.R;
-import org.wikicleta.activities.HighlightsActivity;
-import org.wikicleta.activities.PlacesActivity;
-import org.wikicleta.activities.RoutesActivity;
+import org.wikicleta.activities.MarketActivity;
+import org.wikicleta.activities.NowActivity;
+import org.wikicleta.activities.MapActivity;
 import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.AppBase;
 import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
@@ -36,7 +36,6 @@ public class SlidingMenuAndActionBarHelper {
         
         TextView profileTitle = (TextView) menu.getMenu().findViewById(R.id.profile_title);
         profileTitle.setTypeface(font);
-        
         menu.getMenu().findViewById(R.id.profile_menu_group).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -47,38 +46,38 @@ public class SlidingMenuAndActionBarHelper {
         	
         });
 
-        TextView highlightTitle = (TextView) menu.getMenu().findViewById(R.id.highlight_title);
-        highlightTitle.setTypeface(font); 
-        menu.getMenu().findViewById(R.id.highlight_menu_group).setOnClickListener(new OnClickListener() {
+        TextView mapTitle = (TextView) menu.getMenu().findViewById(R.id.map_title);
+        mapTitle.setTypeface(font); 
+        menu.getMenu().findViewById(R.id.map_menu_group).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				animate(v).alpha(0.9f).setDuration(100);
-				AppBase.launchActivity(HighlightsActivity.class);
+				AppBase.launchActivity(MapActivity.class);
 			}
         	
         });
         
-        TextView placesTitle = (TextView) menu.getMenu().findViewById(R.id.places_title);
-        placesTitle.setTypeface(font); 
-        menu.getMenu().findViewById(R.id.places_menu_group).setOnClickListener(new OnClickListener() {
+        TextView nowTitle = (TextView) menu.getMenu().findViewById(R.id.now_title);
+        nowTitle.setTypeface(font); 
+        menu.getMenu().findViewById(R.id.now_menu_group).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				animate(v).alpha(0.9f).setDuration(100);
-				AppBase.launchActivity(PlacesActivity.class);
+				AppBase.launchActivity(NowActivity.class);
 			}
         	
         });
         
-        TextView routesTitle = (TextView) menu.getMenu().findViewById(R.id.routes_title);
-        routesTitle.setTypeface(font); 
-        menu.getMenu().findViewById(R.id.routes_menu_group).setOnClickListener(new OnClickListener() {
+        TextView marketTitle = (TextView) menu.getMenu().findViewById(R.id.market_title);
+        marketTitle.setTypeface(font); 
+        menu.getMenu().findViewById(R.id.market_menu_group).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				animate(v).alpha(0.9f).setDuration(100);
-				AppBase.launchActivity(RoutesActivity.class);
+				AppBase.launchActivity(MarketActivity.class);
 			}
         	
         });
