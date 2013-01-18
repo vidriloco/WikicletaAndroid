@@ -9,6 +9,9 @@
 	<string name="real_time_section">Ahora</string>
 	<string name="market_section">Mercado</string>
 	<string name="profile_section">Perfil</string>
+	
+	<!-- Subsections -->
+	<string name="route_recording_section">Trazar una ruta</string>
 			
 	<!-- Strings for routes -->
 	<string name="routes_title">Rutas</string>

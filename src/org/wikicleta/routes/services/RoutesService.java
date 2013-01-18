@@ -2,11 +2,11 @@ package org.wikicleta.routes.services;
 
 import java.util.LinkedList;
 import org.wikicleta.R;
-import org.wikicleta.activities.MapActivity;
 import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.models.Route;
+import org.wikicleta.routes.activities.NewRouteActivity;
 import org.wikicleta.routes.helpers.RouteRecorder;
 import org.wikicleta.routes.helpers.RouteUploader;
 
@@ -78,8 +78,8 @@ public class RoutesService extends LocationAwareService {
 	}
 	
 	protected void notifyFieldsUpdated() {
-		if(this.boundActivity instanceof MapActivity) {
-			((MapActivity) this.boundActivity).onRouteRecordingFieldsUpdated();
+		if(this.boundActivity instanceof NewRouteActivity) {
+			((NewRouteActivity) this.boundActivity).onRouteRecordingFieldsUpdated();
 		}
 	}
 	
@@ -95,7 +95,6 @@ public class RoutesService extends LocationAwareService {
 	public void resumeRecording() {
 		enableLocationManager();
 		routeRecorder.resume();
-
 	}
 	
 	/*

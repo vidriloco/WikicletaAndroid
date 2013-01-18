@@ -1,6 +1,8 @@
-package org.wikicleta.activities;
+package org.wikicleta.routes.activities;
 
 import org.wikicleta.R;
+import org.wikicleta.activities.MainMapActivity;
+import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.routes.services.RoutesService;
@@ -58,7 +60,8 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
 				alertDialog.setPositiveButton("Si", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						AppBase.launchActivity(MapActivity.class);
+						theService.routeRecorder.reset();
+						AppBase.launchActivity(MainMapActivity.class);
 					}
 				});
 				// If user chooses 'No', then the dialog closes

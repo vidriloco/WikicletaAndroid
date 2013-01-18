@@ -1,12 +1,13 @@
 package org.wikicleta.routes.fragments;
 
 import org.wikicleta.R;
-import org.wikicleta.activities.RouteDetailsActivity;
 import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.activities.UserProfileActivity.ViewStatus;
 import org.wikicleta.adapters.RoutesListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.Route;
+import org.wikicleta.routes.activities.RouteDetailsActivity;
+
 import com.nineoldandroids.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

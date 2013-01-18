@@ -1,21 +1,26 @@
-package org.wikicleta.activities;
+package org.wikicleta.routes.activities;
 
 import org.wikicleta.R;
+import org.wikicleta.activities.LocationAwareMapActivity;
+import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.common.AppBase;
-import org.wikicleta.common.Constants;
-import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
-import org.wikicleta.helpers.SimpleAnimatorListener;
 import org.wikicleta.routes.services.RoutesRecordingListener;
 import org.wikicleta.routes.services.RoutesService;
 import org.wikicleta.routes.services.ServiceConstructor;
 import org.wikicleta.routes.services.ServiceListener;
 import org.wikicleta.views.RouteOverlay;
-import com.nineoldandroids.animation.*;
+
+import com.markupartist.android.widget.ActionBar;
+import com.markupartist.android.widget.ActionBar.Action;
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.ValueAnimator;
+
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,18 +28,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-/*
- * TODOS:
- * 
- * - Fix recording buttons and route timer for when canceling discarding of route and route recording was stopped
- */
-public class MapActivity extends LocationAwareMapActivity implements ServiceListener, RoutesRecordingListener {
-
-	protected enum TaskPanel {Main, Recording};
-	protected TaskPanel currentTaskPanel;
+public class NewRouteActivity extends LocationAwareMapActivity implements ServiceListener, RoutesRecordingListener {
 	
 	protected RelativeLayout titleBarView;
-	protected LinearLayout toolBarView;
 	protected LinearLayout recordRouteToolbarView;
 	protected LinearLayout statsToolbarView;	
 	
@@ -57,17 +53,14 @@ public class MapActivity extends LocationAwareMapActivity implements ServiceList
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.activity_routes_on_map);
+		super.onCreate(savedInstanceState, R.layout.new_route_activity);
 		AppBase.currentActivity = this;
 		startService(new Intent(this, RoutesService.class));
 
         titleBarView = (RelativeLayout) findViewById(R.id.titlebar);
-        toolBarView = (LinearLayout) findViewById(R.id.toolbar);
         recordRouteToolbarView = (LinearLayout) findViewById(R.id.route_recording_toolbar);
         statsToolbarView = (LinearLayout) findViewById(R.id.stats_panel);
-                
-		showToolbarFor(TaskPanel.Main);
-        
+                        
         alertDialog = new AlertDialog.Builder(this);
     	
     	recButton = (ImageView) findViewById(R.id.routes_rec_button);
@@ -79,53 +72,7 @@ public class MapActivity extends LocationAwareMapActivity implements ServiceList
     	speedTextValue = (TextView) findViewById(R.id.speed_number);
     	timeTextValue = (TextView) findViewById(R.id.time_elapsed_number);
     	distanceTextValue = (TextView) findViewById(R.id.distance_number);
-    	
-    	findViewById(R.id.routes_add_button).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				
-			}
-		});
-    	
-    	findViewById(R.id.routes_back_button).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(!theService.routeRecorder.isEmpty()) {
-					pauseRecording(false);
 
-					alertDialog.setTitle("Pregunta");
-					alertDialog.setMessage("ÀDeseas descartar esta ruta?");
-					// If the user chooses 'Yes', then
-					alertDialog.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// Resetting the captured path and backing to main floatant menu
-							resetRouteRecorder();
-						}
-					});
-					// If user chooses 'No', then the dialog closes
-					alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// Resume tracking (with auto-recording)
-							resumeRecording(false);
-						}
-					});
-					alertDialog.setNeutralButton(null, null);
-					alertDialog.show();
-				} else {
-					resetRouteRecorder();
-				}
-			}
-		});
-    	
-    	findViewById(R.id.routes_search_button).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				toolBarView.setVisibility(View.GONE);
-			}
-		});
-    	
     	recButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -170,7 +117,58 @@ public class MapActivity extends LocationAwareMapActivity implements ServiceList
 			}
     	});
     	
-        SlidingMenuAndActionBarHelper.load(this);
+    	ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
+
+        actionBar.addAction(new Action() {
+
+			@Override
+			public int getDrawable() {
+				return R.drawable.back_arrow;
+			}
+
+			@Override
+			public void performAction(View view) {
+				final boolean wasRecording;
+				if(!theService.routeRecorder.isEmpty()) {
+					wasRecording = !theService.routeRecorder.isPaused();
+					pauseRecording(false);
+
+					alertDialog.setTitle("Pregunta");
+					alertDialog.setMessage("ÀDeseas descartar esta ruta?");
+					// If the user chooses 'Yes', then
+					alertDialog.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							cancelRecording();
+						}
+					});
+					// If user chooses 'No', then the dialog closes
+					alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							if(wasRecording) {
+								// Resume tracking (with auto-recording)
+								resumeRecording(true);
+							}
+								
+						}
+					});
+					alertDialog.setNeutralButton(null, null);
+					alertDialog.show();
+				} else {
+					cancelRecording();
+				}
+			}	
+        });
+        
+        ValueAnimator va = ObjectAnimator.ofFloat(recordRouteToolbarView, "translationY", -100);
+        va.setDuration(800);
+        va.start();
+	}
+	
+	protected void cancelRecording() {
+		theService.routeRecorder.reset();
+		AppBase.launchActivity(MainMapActivity.class);
 	}
 	
 	@Override
@@ -211,7 +209,6 @@ public class MapActivity extends LocationAwareMapActivity implements ServiceList
 	}
 	
 	protected void resetRouteRecorder() {
-		showToolbarFor(TaskPanel.Main);	
 		recButton.setVisibility(View.VISIBLE);
 		pauseButton.setVisibility(View.GONE);
 		flagButton.setVisibility(View.GONE);
@@ -248,6 +245,17 @@ public class MapActivity extends LocationAwareMapActivity implements ServiceList
 		}
 	}
 	
+	protected void toggleControls() {
+		if(theService.routeRecorder.isPaused()) {
+			recButton.setVisibility(View.VISIBLE);
+			pauseButton.setVisibility(View.GONE);
+		} else {
+			recButton.setVisibility(View.GONE);
+			pauseButton.setVisibility(View.VISIBLE);
+			flagButton.setVisibility(View.VISIBLE);
+		}
+	}
+	
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
@@ -261,77 +269,26 @@ public class MapActivity extends LocationAwareMapActivity implements ServiceList
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}
-	
-	protected void showToolbarFor(TaskPanel newTask) {
-		AnimatorSet showSet = new AnimatorSet();
-		AnimatorSet hideSet = new AnimatorSet();
-
-        if(newTask == TaskPanel.Main) {
-        	if(this.currentTaskPanel == TaskPanel.Recording) {
-        		// Hide previous panel (recording panel)
-        		hideSet.addListener(new SimpleAnimatorListener() {
-					@Override
-					public void onAnimationEnd(Animator animation) {
-						recordRouteToolbarView.setVisibility(View.GONE);
-						statsToolbarView.setVisibility(View.GONE);						
-					}
-        		});
-        		hideSet.playTogether(ObjectAnimator.ofFloat(recordRouteToolbarView, "alpha", 0), 
-        				ObjectAnimator.ofFloat(recordRouteToolbarView, "translationY", Constants.DY_TRANSLATION));
-        		hideSet.start();
-        	}
-        	
-    		showSet.playTogether(ObjectAnimator.ofFloat(toolBarView, "alpha", 0.8f),
-    				ObjectAnimator.ofFloat(toolBarView, "translationY", -Constants.DY_TRANSLATION));
-    		showSet.addListener(new SimpleAnimatorListener() {
-				@Override
-				public void onAnimationStart(Animator animation) {
-					toolBarView.setVisibility(View.VISIBLE);
-				}
-    		});
-    		showSet.start();
-        } else if(newTask == TaskPanel.Recording) {
-        	if(this.currentTaskPanel == TaskPanel.Main) {
-        		// Hide previous panel (main panel)
-        		hideSet.addListener(new SimpleAnimatorListener() {
-					@Override
-					public void onAnimationEnd(Animator animation) {
-						toolBarView.setVisibility(View.GONE);					
-					}
-        		});
-        		hideSet.playTogether(ObjectAnimator.ofFloat(toolBarView, "alpha", 0), 
-        				ObjectAnimator.ofFloat(toolBarView, "translationY", Constants.DY_TRANSLATION));    
-        		hideSet.start();
-        	}
-
-    		showSet.playTogether(ObjectAnimator.ofFloat(recordRouteToolbarView, "alpha", 0.8f),
-    				ObjectAnimator.ofFloat(recordRouteToolbarView, "translationY", -Constants.DY_TRANSLATION));
-    		showSet.addListener(new SimpleAnimatorListener() {
-				@Override
-				public void onAnimationStart(Animator animation) {
-                    recordRouteToolbarView.setVisibility(View.VISIBLE);
-					statsToolbarView.setVisibility(View.VISIBLE);
-				}
-    		});
-    		showSet.start();
-        }
-        this.currentTaskPanel = newTask;
-	}
 
 	@Override
 	public void onRouteRecordingFieldsUpdated() {
-		if(this.centerMapOnCurrentLocationByDefault)
-			this.setMapToLocation(theService.lastLocationCatched);	
-		
-		String speed = theService.routeRecorder.speedTextValue;
-		String time = theService.routeRecorder.timeTextValue;
-		String distance = theService.routeRecorder.distanceTextValue;
-		
-		if(speed != null)
-			this.speedTextValue.setText(speed);
-		if(time != null)
-			this.timeTextValue.setText(time);
-		if(distance != null)
-			this.distanceTextValue.setText(distance);
+		runOnUiThread(new Runnable() {
+		    public void run() {
+				if(centerMapOnCurrentLocationByDefault)
+					setMapToLocation(theService.lastLocationCatched);	
+				
+				String speed = theService.routeRecorder.speedTextValue;
+				String time = theService.routeRecorder.timeTextValue;
+				String distance = theService.routeRecorder.distanceTextValue;
+				
+				if(speed != null)
+					speedTextValue.setText(speed);
+				if(time != null)
+					timeTextValue.setText(time);
+				if(distance != null)
+					distanceTextValue.setText(distance);
+		    }
+		});
+
 	}
 }

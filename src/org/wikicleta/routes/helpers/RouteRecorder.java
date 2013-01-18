@@ -43,7 +43,6 @@ public class RouteRecorder {
 		this.routesService = routesService;
 			
 		this.coordinateVector = new ArrayList<Instant>();
-		this.timeUpdater = new TimeUpdaterTask();
 
 		decimalFormat.setRoundingMode(RoundingMode.DOWN);
 		this.reset();
@@ -93,11 +92,7 @@ public class RouteRecorder {
 		this.timeTextValue = null;
 		this.speedTextValue = null;
 		this.distanceTextValue = null;
-
-		if(this.timer != null)
-			this.timer.cancel();
-		this.timer = new Timer();
-		
+		reScheduleTask();
 		this.setToTracking(false);
 	}
 	
@@ -126,7 +121,7 @@ public class RouteRecorder {
 				startTime = System.currentTimeMillis();
 			else
 				startTime += System.currentTimeMillis()-endTime;
-            timer.schedule(timeUpdater, 100);
+			reScheduleTask();
 		} else {
             endTime = System.currentTimeMillis();
 		}
@@ -135,6 +130,16 @@ public class RouteRecorder {
 	
 	private long overallElapsedTime() {
 		return System.currentTimeMillis() - startTime;
+	}
+	
+	private void reScheduleTask() {
+		if(this.timer != null)
+			this.timer.cancel();
+		this.timer = new Timer();
+		this.timeUpdater = new TimeUpdaterTask();
+		if(!isPaused()) {
+			timer.schedule(timeUpdater, 100);
+		}
 	}
 	
 	private class TimeUpdaterTask extends TimerTask {
@@ -163,9 +168,7 @@ public class RouteRecorder {
 		    timeTextValue = timeString;
 		    
 		    routesService.updateTimingDisplay();
-		    if(!isPaused()) {
-			   timer.schedule(timeUpdater, 100);
-		    }
+		    reScheduleTask();
 		}
     }
 }
