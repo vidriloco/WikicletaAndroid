@@ -16,7 +16,7 @@
          
 		<RelativeLayout 
 		    android:layout_width="fill_parent"
-             android:layout_height="wrap_content">
+            android:layout_height="wrap_content">
              <TextView
             android:id="@+id/unsynced_route_title"
             android:layout_width="wrap_content"
@@ -47,13 +47,14 @@
         android:layout_width="wrap_content"
     	android:layout_height="wrap_content">
 		<ListView
-        android:id="@+id/list_unsynced"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:divider="@color/wikicleta_white"
-        android:dividerHeight="0.5dp"
-        android:visibility="gone" >
-    </ListView></LinearLayout>
+        	android:id="@+id/list_unsynced"
+        	android:layout_width="fill_parent"
+        	android:layout_height="fill_parent"
+        	android:divider="@color/wikicleta_white"
+        	android:dividerHeight="0.5dp"
+        	android:visibility="gone" >
+    	</ListView>
+    </LinearLayout>
     
 
     <LinearLayout 
@@ -82,7 +83,7 @@
 
     </LinearLayout>
     <ListView
-        android:id="@+id/list"
+        android:id="@+id/list_synced"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:divider="@color/wikicleta_blue"

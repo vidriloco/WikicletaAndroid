@@ -9,18 +9,15 @@ import org.wikicleta.routes.services.RoutesService;
 import org.wikicleta.routes.services.ServiceConstructor;
 import org.wikicleta.routes.services.ServiceListener;
 import org.wikicleta.views.RouteOverlay;
-
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
-
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -131,7 +128,7 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 				final boolean wasRecording;
 				if(!theService.routeRecorder.isEmpty()) {
 					wasRecording = !theService.routeRecorder.isPaused();
-					pauseRecording(false);
+					pauseRecording(true);
 
 					alertDialog.setTitle("Pregunta");
 					alertDialog.setMessage("ÀDeseas descartar esta ruta?");
@@ -149,8 +146,7 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 							if(wasRecording) {
 								// Resume tracking (with auto-recording)
 								resumeRecording(true);
-							}
-								
+							} 
 						}
 					});
 					alertDialog.setNeutralButton(null, null);
@@ -174,14 +170,11 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 	@Override
 	protected void onPause() {
 		super.onPause();
-		//if(currentPath.isPaused())
-		//	this.disableLocationManager();
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		//this.enableLocationManager();
 	}
 	
 	@Override

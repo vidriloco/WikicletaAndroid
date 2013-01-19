@@ -93,7 +93,7 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 		});
 		addMenu = addBuilder.create();
 		
-		final CharSequence[] layersItems = {"Rutas y bici-buses", "Lugares bici-amigables", "Bici-estacionamientos", "Puntos de riesgo"};
+		final CharSequence[] layersItems = {"Rutas y bici-buses", "Lugares bici-amigables", "Bici-estacionamientos", "Puntos de riesgo", "Bicicletas Pœblicas"};
 		
     	AlertDialog.Builder toggleBuilder = new AlertDialog.Builder(this);
 

@@ -5,8 +5,10 @@ import org.wikicleta.R;
 import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.NotificationBuilder;
+import org.wikicleta.helpers.NotificationBuilder.Ticker;
 import org.wikicleta.models.Route;
 import org.wikicleta.routes.activities.NewRouteActivity;
+import org.wikicleta.routes.fragments.ActivityFragment;
 import org.wikicleta.routes.helpers.RouteRecorder;
 import org.wikicleta.routes.helpers.RouteUploader;
 
@@ -103,7 +105,7 @@ public class RoutesService extends LocationAwareService {
 	
 	public void addRouteForUpload(Route route) {
 		notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
-				getString(R.string.app_name), getString(R.string.route_being_sent), null);		
+				getString(R.string.app_name), getString(R.string.route_being_sent), null, Ticker.MESSAGE);		
 		this.routeUploader.addRoute(route);
 	}
 	
@@ -120,8 +122,10 @@ public class RoutesService extends LocationAwareService {
 			if(queuedRoutesCount() != 1)
 				countString = this.getString(R.string.route_drafts_notification_total_many, queuedRoutesCount());			 
 			
+			Intent notificationIntent = new Intent(this, UserProfileActivity.class);  
+			notificationIntent.putExtra("fragment", ActivityFragment.class.getName());
 			notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
-					getString(R.string.app_name), countString, UserProfileActivity.class);
+					countString, "Seleccionar para revisarlas y subirlas", notificationIntent, Ticker.TITLE);
 		}		
 	}
 	

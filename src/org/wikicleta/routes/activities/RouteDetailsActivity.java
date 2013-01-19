@@ -7,8 +7,10 @@ import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.NotificationBuilder;
+import org.wikicleta.helpers.NotificationBuilder.Ticker;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.Route;
+import org.wikicleta.routes.fragments.ActivityFragment;
 import org.wikicleta.routes.services.RoutesService;
 import org.wikicleta.routes.services.ServiceConstructor;
 import org.wikicleta.routes.services.ServiceListener;
@@ -18,7 +20,6 @@ import org.wikicleta.views.RouteOverlay;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -87,10 +88,13 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 	        
 	        // Save button preparation
 	        findViewById(R.id.route_save_button).setOnClickListener(new OnClickListener() {
-
+	        	
 				public void onClick(View arg0) {		
-					theService.addRouteForUpload(currentRoute);
-					AppBase.launchActivity(UserProfileActivity.class);
+					Bundle bundle = new Bundle();
+					bundle.putString("fragment", ActivityFragment.class.getName());
+					notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
+					getString(R.string.app_name), getString(R.string.route_being_sent), null, Ticker.MESSAGE);
+					AppBase.launchActivityWithBundle(UserProfileActivity.class, bundle);
 				}
 		    	
 		    });
@@ -107,11 +111,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							currentRoute.delete();
-							notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
-	    							getString(R.string.app_name), getString(R.string.route_being_destroyed), null);
-							
-							Intent intentActivity = new Intent(AppBase.currentActivity, UserProfileActivity.class);
-							AppBase.currentActivity.startActivity(intentActivity);
+							AppBase.launchActivity(MainMapActivity.class);
 						}
 					});
 					alertDialog.setNegativeButton("No", null);

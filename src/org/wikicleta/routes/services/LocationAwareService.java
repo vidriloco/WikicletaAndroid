@@ -13,8 +13,8 @@ import android.os.IBinder;
 public class LocationAwareService extends Service implements LocationListener {
 
 	protected Activity boundActivity;
-	protected LocationManager locationManager;
-	protected boolean locationManagerEnabled;
+	protected static LocationManager locationManager;
+	protected static boolean locationManagerEnabled;
 	
 	public Location lastLocationCatched;
 	
@@ -56,7 +56,7 @@ public class LocationAwareService extends Service implements LocationListener {
 	public void enableLocationManager() {
 		if(!locationManagerEnabled) {
 			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 
-					100, 10, this);
+					1, 1, this);
 			locationManagerEnabled = true;
 		}
 	}

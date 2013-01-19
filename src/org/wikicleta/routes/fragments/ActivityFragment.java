@@ -2,12 +2,12 @@ package org.wikicleta.routes.fragments;
 
 import org.wikicleta.R;
 import org.wikicleta.activities.UserProfileActivity;
-import org.wikicleta.activities.UserProfileActivity.ViewStatus;
 import org.wikicleta.adapters.RoutesListAdapter;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.common.Constants;
+import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.models.Route;
 import org.wikicleta.routes.activities.RouteDetailsActivity;
-
 import com.nineoldandroids.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -99,18 +99,18 @@ public class ActivityFragment extends Fragment {
 		final UserProfileActivity activity = (UserProfileActivity) this.getActivity();
 
         if(Route.uploaded().size() > 0) {
-    		this.listUploaded = this.drawRoutesList(R.id.list, new RoutesListAdapter(activity, Route.uploaded()));
+    		this.listUploaded = this.drawRoutesList(R.id.list_synced, new RoutesListAdapter(activity, Route.uploaded()));
         } else {
         	this.emptyRoutesLayout.setVisibility(View.VISIBLE);
         }
         
+		listUnsynced = this.drawRoutesList(R.id.list_unsynced, new RoutesListAdapter(activity, Route.queued()));
 
         fragmentView.findViewById(R.id.route_resyncer).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				if(activity.currentViewStatus == ViewStatus.UNBLOCK)
-					getUserProfileActivity().theService.uploadStagedRoutes();
+				getUserProfileActivity().theService.uploadStagedRoutes();
 			}
         	
         });
@@ -119,34 +119,42 @@ public class ActivityFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				if(activity.currentViewStatus == ViewStatus.UNBLOCK) {
-					if(listUnsynced.getVisibility() == View.GONE)
-						listUnsynced.setVisibility(View.VISIBLE);
-					else
-						listUnsynced.setVisibility(View.GONE);
+				Log.e("WIKICLETA", "Error error");
+				if(listUnsynced.getVisibility() == View.GONE) {
+					listUnsynced.setVisibility(View.VISIBLE);
+					Log.e("WIKICLETA", "Hacer visible");
+				}
+				else {
+					listUnsynced.setVisibility(View.GONE);
+					Log.e("WIKICLETA", "Ocultar");
+
 				}
 			}
         	
         });
+	}
+	
+	public void blockUI() {
+		this.uploaderAnimator.start();
+    	this.unsyncedRoutesTitle.setText(getString(R.string.routes_syncing_title));
+    	
+    	this.unsyncedRoutesLayout.setClickable(false);
+    	this.listUnsynced.setVisibility(View.GONE);
+	}
+	
+	public void unblockUI() {
+		int queuedRoutes = Route.queued().size();
+    	String routesMsj = getString(R.string.routes_unsynced_title, queuedRoutes);
+        if(queuedRoutes == 1)
+        	routesMsj = getString(R.string.route_unsynced_title);
         
-        int queuedRoutes = getUserProfileActivity().theService.queuedRoutesCount();
-        if(queuedRoutes > 0) {
-            this.unsyncedRoutesLayout.setVisibility(View.VISIBLE);
-            
-            String routesMsj = getString(R.string.routes_unsynced_title, queuedRoutes);
-            if(queuedRoutes == 1)
-            	routesMsj = getString(R.string.route_unsynced_title);
-            
-            this.unsyncedRoutesTitle.setText(routesMsj);
-            
-            if(activity.currentViewStatus == ViewStatus.UNBLOCK) {
-            	this.uploaderAnimator.cancel();
-            } else {
-            	this.uploaderAnimator.start();
-            	this.unsyncedRoutesTitle.setText(getString(R.string.routes_syncing_title));
-            }
-    		this.listUnsynced = this.drawRoutesList(R.id.list_unsynced, new RoutesListAdapter(activity, activity.theService.routesQueued()));
-        }
+        this.unsyncedRoutesTitle.setText(routesMsj);
+		this.uploaderAnimator.cancel();
+		
+    	this.unsyncedRoutesLayout.setClickable(true);
+		this.listUnsynced.setVisibility(View.VISIBLE);
+		
+		new NotificationBuilder(this.getActivity()).clearNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID);
 	}
 	
 	protected UserProfileActivity getUserProfileActivity() {
