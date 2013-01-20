@@ -46,6 +46,8 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState,R.layout.activity_route_details);
+		setTheme(R.style.Theme_wikicleta);
+		
         AppBase.currentActivity = this;
         this.centerMapOnCurrentLocationByDefault = false;
         

@@ -17,6 +17,7 @@ import org.wikicleta.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Display;
 
@@ -24,11 +25,17 @@ import android.view.Display;
 public class AppBase {
 	
 	public static Activity currentActivity;
+	protected static Typeface font;
 	
 	public static Display getScreenSize() {
 		return currentActivity.getWindowManager().getDefaultDisplay();
 	}
 
+	public static Typeface getDefaultTypeface(String type) {
+		if(font == null)
+			font = Typeface.createFromAsset(currentActivity.getAssets(), "GothamRnd-"+type+".ttf");  
+		return font;
+	}
 	
 	public static String urlFor(String string) throws BadURLResourceException {
 		if(string.equalsIgnoreCase("routes"))

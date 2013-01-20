@@ -51,6 +51,8 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.new_route_activity);
+		setTheme(R.style.Theme_wikicleta);
+		
 		AppBase.currentActivity = this;
 		startService(new Intent(this, RoutesService.class));
 

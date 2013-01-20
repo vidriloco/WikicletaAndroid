@@ -35,6 +35,8 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTheme(R.style.Theme_wikicleta);
+		
         AppBase.currentActivity = this;
         
         this.setContentView(R.layout.activity_routes_saving);

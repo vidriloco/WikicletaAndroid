@@ -1,8 +1,6 @@
 package org.wikicleta.helpers;
 
 import org.wikicleta.R;
-import org.wikicleta.common.Constants;
-
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;

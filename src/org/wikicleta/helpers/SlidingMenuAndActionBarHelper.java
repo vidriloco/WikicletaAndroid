@@ -11,17 +11,13 @@ import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
 import com.slidingmenu.lib.SlidingMenu;
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 public class SlidingMenuAndActionBarHelper {
-	static Typeface font;
 	
 	public static void loadWithActionBarTitle(Activity activity, String title) {
-		if(font == null)
-			font = Typeface.createFromAsset(activity.getAssets(), "GothamRnd-Bold.ttf");  
 
 		// customize the SlidingMenu
         final SlidingMenu menu = new SlidingMenu(activity);
@@ -32,10 +28,10 @@ public class SlidingMenuAndActionBarHelper {
         menu.setMenu(R.layout.sliding_menu);        
         
         TextView menuTitle = (TextView) menu.getMenu().findViewById(R.id.menu_layout_title);
-        menuTitle.setTypeface(font); 
+        menuTitle.setTypeface(AppBase.getDefaultTypeface("Bold")); 
         
         TextView profileTitle = (TextView) menu.getMenu().findViewById(R.id.profile_title);
-        profileTitle.setTypeface(font);
+        profileTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
         menu.getMenu().findViewById(R.id.profile_menu_group).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -47,7 +43,7 @@ public class SlidingMenuAndActionBarHelper {
         });
 
         TextView mapTitle = (TextView) menu.getMenu().findViewById(R.id.map_title);
-        mapTitle.setTypeface(font); 
+        mapTitle.setTypeface(AppBase.getDefaultTypeface("Bold")); 
         menu.getMenu().findViewById(R.id.map_menu_group).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -59,7 +55,7 @@ public class SlidingMenuAndActionBarHelper {
         });
         
         TextView nowTitle = (TextView) menu.getMenu().findViewById(R.id.now_title);
-        nowTitle.setTypeface(font); 
+        nowTitle.setTypeface(AppBase.getDefaultTypeface("Bold")); 
         menu.getMenu().findViewById(R.id.now_menu_group).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -71,7 +67,7 @@ public class SlidingMenuAndActionBarHelper {
         });
         
         TextView marketTitle = (TextView) menu.getMenu().findViewById(R.id.market_title);
-        marketTitle.setTypeface(font); 
+        marketTitle.setTypeface(AppBase.getDefaultTypeface("Bold")); 
         menu.getMenu().findViewById(R.id.market_menu_group).setOnClickListener(new OnClickListener() {
 
 			@Override

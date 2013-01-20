@@ -48,6 +48,8 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_routes_on_map);
+		setTheme(R.style.Theme_wikicleta);
+		
 		AppBase.currentActivity = this;
 		startService(new Intent(this, RoutesService.class));
 

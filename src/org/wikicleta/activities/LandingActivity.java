@@ -41,7 +41,7 @@ public class LandingActivity extends Activity {
 	    		}
 	    	});
 	    	
-	    	set.setDuration(2000).start();
+	    	set.setDuration(1000).start();
 	    	
 			return;
 		}

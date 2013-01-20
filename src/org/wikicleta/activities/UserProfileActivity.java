@@ -46,14 +46,7 @@ public class UserProfileActivity extends FragmentActivity implements
 
 		this.initialiseTabHost(savedInstanceState);
 		if (savedInstanceState != null) {
-			tabHost.setCurrentTabByTag(savedInstanceState.getString("tab")); // set
-																				// the
-																				// tab
-																				// as
-																				// per
-																				// the
-																				// saved
-																				// state
+			tabHost.setCurrentTabByTag(savedInstanceState.getString("tab")); 
 		}
 
 		fragmentsNames = new Vector<String>();
@@ -221,9 +214,9 @@ public class UserProfileActivity extends FragmentActivity implements
 
 		runOnUiThread(new Runnable() {
 			public void run() {
-				ActivityFragment fragment = (ActivityFragment) pagerAdapter
-						.getItem(1);
-				fragment.blockUI();
+				ActivityFragment fragment = (ActivityFragment) pagerAdapter.getItem(1);
+				if(fragment != null)
+					fragment.blockUI();
 			}
 		});
 	}
@@ -232,9 +225,9 @@ public class UserProfileActivity extends FragmentActivity implements
 	public void shouldUnblockView() {
 		runOnUiThread(new Runnable() {
 			public void run() {
-				ActivityFragment fragment = (ActivityFragment) pagerAdapter
-						.getItem(1);
-				fragment.unblockUI();
+				ActivityFragment fragment = (ActivityFragment) pagerAdapter.getItem(1);
+				if(fragment != null)
+					fragment.unblockUI();
 			}
 		});
 	}

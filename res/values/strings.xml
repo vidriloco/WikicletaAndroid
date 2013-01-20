@@ -65,6 +65,20 @@
 	<string name="user_profile_tab">Tu</string>
 	<string name="user_activity_tab">Actividad</string>
 	<string name="user_notifications_tab">Notificaciones</string>
-		
 	
+	<string name="profile_road_gear_title_text">Equipo para rodar:</string>
+	<string name="profile_stats_title_text">Cifras:</string>
+	<string name="profile_pedal_distance_title_text">Distancia recorrida:</string>
+	<string name="profile_road_time_title_text">Tiempo rodando:</string>
+	<string name="profile_routes_title_text">Rutas</string>
+	<string name="profile_places_title_text">Lugares</string>
+	<string name="profile_highlights_title_text">Riesgos</string>
+	<string name="profile_badges_title_text">Insignias ganadas:</string>		
+	<string name="profile_badge_faster_than_cars">Más rápido que los autos</string>	
+	<string name="profile_badge_long_runner">Aguantador</string>	
+	<string name="profile_badge_brompton">Brompton</string>	
+	<string name="profile_badge_survivor">Sobreviviente</string>	
+	
+	<string name="profile_erase_account_text_text">Eliminar mi cuenta de este teléfono</string>
+	<string name="profile_erase_account_text_button_text">Eliminar</string>
 </resources>
