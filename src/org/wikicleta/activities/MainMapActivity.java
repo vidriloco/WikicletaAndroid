@@ -100,10 +100,13 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
     	AlertDialog.Builder toggleBuilder = new AlertDialog.Builder(this);
 
     	toggleBuilder.setTitle("Mostrar/Ocultar capas");
-    	toggleBuilder.setItems(layersItems, new DialogInterface.OnClickListener() {
-		    public void onClick(DialogInterface dialog, int item) {
-		    }
-		});
+    	toggleBuilder.setMultiChoiceItems(layersItems, null, new DialogInterface.OnMultiChoiceClickListener() {
+    		@Override
+            public void onClick(DialogInterface dialog, int which,
+                    boolean isChecked) {
+    			
+    		}
+    	});
 		
 		toggleLayersMenu = toggleBuilder.create();
 	}

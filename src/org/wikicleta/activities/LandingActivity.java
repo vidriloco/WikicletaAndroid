@@ -21,17 +21,18 @@ public class LandingActivity extends Activity {
 		AppBase.currentActivity = this;
 		this.setContentView(R.layout.activity_landing); 
 
+		
+		AnimatorSet set = new AnimatorSet();
+    	set.playTogether(
+    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "scaleX", 1, 1.2f),
+    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "scaleY", 1, 1.2f),
+    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "alpha", 0, 1, 1)
+    	);
+		set.setDuration(800).start();
+
 		if(!User.isSignedIn()) {
 			
 			findViewById(R.id.container).setVisibility(View.GONE);
-			
-	    	AnimatorSet set = new AnimatorSet();
-	    	set.playTogether(
-	    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "scaleX", 1, 1.2f),
-	    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "scaleY", 1, 1.2f),
-	    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "alpha", 0, 1, 1)
-	    	);
-	    	
 	    	set.addListener(new SimpleAnimatorListener() {
 	    		@Override
 	    		public void onAnimationEnd(Animator animation) {
@@ -40,12 +41,8 @@ public class LandingActivity extends Activity {
 	    			finish();
 	    		}
 	    	});
-	    	
-	    	set.setDuration(1000).start();
-	    	
 			return;
 		}
-		
 		
 		findViewById(R.id.join).setOnClickListener(
 			new View.OnClickListener() {

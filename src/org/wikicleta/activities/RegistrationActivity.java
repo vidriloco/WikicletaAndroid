@@ -9,21 +9,23 @@ import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.NetworkOperations;
+import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.models.User;
 
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
-public class RegistrationActivity extends LoadingWithMessageActivity {
+public class RegistrationActivity extends Activity {
 	
 	private String mEmail;
 	private String mPassword;
@@ -37,6 +39,7 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 	private EditText mPasswordView;
 	private EditText mPasswordConfirmationView;
 	
+	protected AlertDialog alertDialog;
 	private UserRegistrationTask mRegAuthTask = null;
 	
 	@Override
@@ -52,10 +55,6 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 		mUsernameView = (EditText) findViewById(R.id.username);
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordConfirmationView = (EditText) findViewById(R.id.password_confirmation);
-		
-		previousContainerView = findViewById(R.id.registration_form);
-		messageContainerView = findViewById(R.id.signup_status);
-		viewMessage = (TextView) findViewById(R.id.signup_status_message);
 		
 		findViewById(R.id.registration_accept_button).setOnClickListener(
 				new View.OnClickListener() {
@@ -80,6 +79,8 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 			}
         	
         });
+        
+        this.alertDialog = DialogBuilder.buildLoadingDialogWithMessage(this, "Cargando ...");
 	}
 	
 	public void attemptSignup() {
@@ -134,9 +135,6 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 			return;
 		}
 		
-		viewMessage.setText(R.string.login_progress_signing_up);
-		showProgress(true);
-		
 		mRegAuthTask = new UserRegistrationTask();
 		mRegAuthTask.execute((Void) null);
 	}
@@ -160,13 +158,12 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 				Map<String, Map<String, String>> superParams = new LinkedHashMap<String, Map<String, String>>();
 				superParams.put("registration", parameters);
 				
-				//String result = NetworkOperations.postTo("/api/registrations", superParams);
-				//Log.i("WWWWW", result);
-
-				//Object obj = JSONValue.parse(result);
-				//JSONObject object =(JSONObject) obj;
+				String result = NetworkOperations.postJSONExpectingStringTo("/api/registrations", JSONValue.toJSONString(superParams));
+				Log.e("WIKICLETA", result);
+				Object obj = JSONValue.parse(result);
+				JSONObject object =(JSONObject) obj;
 				
-				//User.storeWithParams(parameters, (String) object.get("token"));
+				User.storeWithParams(parameters, (String) object.get("token"));
 			} catch (Exception e) {
 				// Could not register
 				return false;
@@ -176,10 +173,15 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 		}
 
 		@Override
+		protected void onPreExecute() {
+			alertDialog.show();
+		}
+		
+		@Override
 		protected void onPostExecute(final Boolean success) {
 			mRegAuthTask = null;
-			showProgress(false);
-
+			alertDialog.hide();
+			
 			if (success) {
 				if(User.isSignedIn()) {
 					Intent intent = new Intent(AppBase.currentActivity, MainMapActivity.class);
@@ -198,7 +200,7 @@ public class RegistrationActivity extends LoadingWithMessageActivity {
 		@Override
 		protected void onCancelled() {
 			mRegAuthTask = null;
-			showProgress(false);
+			alertDialog.hide();
 		}
 	}
 }

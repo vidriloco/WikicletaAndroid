@@ -11,9 +11,32 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 public class NetworkOperations {
-	static String serverHost = "http://www.wikicleta.com";
+	static String serverHost = "http://10.219.185.227:3000";
 	
-	public static int postJSONTo(String path, String jsonValue)  {
+	public static int postJSONTo(String path, String jsonValue) {
+		HttpResponse response = NetworkOperations.postJSON(path, jsonValue);
+		
+		if(response == null)
+			return 404;
+		
+		return response.getStatusLine().getStatusCode();
+	}
+	
+	public static String postJSONExpectingStringTo(String path, String jsonValue) {
+		HttpResponse response = NetworkOperations.postJSON(path, jsonValue);
+		if(response==null)
+			return new String();
+		try {
+			return response.getEntity().getContent().toString();
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new String();
+	}
+	
+	protected static HttpResponse postJSON(String path, String jsonValue)  {
 	    HttpClient client = new DefaultHttpClient();
 	    HttpPost httpost = new HttpPost(serverHost.concat(path));	
 	   
@@ -42,9 +65,6 @@ public class NetworkOperations {
 			e.printStackTrace();
 		}
 		
-		if(response == null)
-			return 404;
-		
-    	return response.getStatusLine().getStatusCode();
+    	return response;
 	}
 }

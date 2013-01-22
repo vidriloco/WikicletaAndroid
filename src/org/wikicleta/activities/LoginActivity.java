@@ -6,18 +6,14 @@ import java.util.Map;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
-import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.models.User;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-
-
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -27,7 +23,7 @@ import android.widget.TextView;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class LoginActivity extends LoadingWithMessageActivity {
+public class LoginActivity extends Activity {
 
 	/**
 	 * Keep track of the login task to ensure we can cancel it if requested.
@@ -41,10 +37,11 @@ public class LoginActivity extends LoadingWithMessageActivity {
 	// UI references.
 	private EditText mEmailView;
 	private EditText mPasswordView;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTheme(R.style.Theme_wikicleta);
 
 		setContentView(R.layout.activity_login);
 		AppBase.currentActivity = this;
@@ -65,10 +62,6 @@ public class LoginActivity extends LoadingWithMessageActivity {
 			}
 		});
 
-		previousContainerView = findViewById(R.id.login_form);
-		messageContainerView = findViewById(R.id.login_status);
-		viewMessage = (TextView) findViewById(R.id.login_status_message);
-
 		findViewById(R.id.sign_in_button).setOnClickListener(
 			new View.OnClickListener() {
 				@Override
@@ -84,13 +77,7 @@ public class LoginActivity extends LoadingWithMessageActivity {
 					AppBase.launchActivity(RegistrationActivity.class);
 				}
 		});
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		getMenuInflater().inflate(R.menu.activity_login, menu);
-		return true;
+		
 	}
 
 	/**
@@ -131,8 +118,6 @@ public class LoginActivity extends LoadingWithMessageActivity {
 
 		// Show a progress spinner, and kick off a background task to
 		// perform the user login attempt.
-		viewMessage.setText(R.string.login_progress_signing_in);
-		showProgress(true);
 		mAuthTask = new UserLoginTask();
 		mAuthTask.execute((Void) null);
 	}
@@ -142,11 +127,13 @@ public class LoginActivity extends LoadingWithMessageActivity {
 	 * the user.
 	 */
 	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+		
+		private ProgressDialog progressDialog;
+		
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
 			Log.i("Wikicleta", "Attempting login ... ");
-
 			try {
 				Map<String, String> parameters = new LinkedHashMap<String, String>();
 				parameters.put("email", mEmail);
@@ -169,10 +156,18 @@ public class LoginActivity extends LoadingWithMessageActivity {
 		}
 
 		@Override
+		protected void onPreExecute() {
+		    super.onPreExecute();
+		    progressDialog = ProgressDialog.show(AppBase.currentActivity, "", 
+		            "Attempting to log-in", true);
+		}
+		
+		@Override
 		protected void onPostExecute(final Boolean success) {
+			super.onPostExecute(success);
 			mAuthTask = null;
-			showProgress(false);
-
+			progressDialog.dismiss();
+			
 			if (success) {
 				if(User.isSignedIn()) {
 					Intent intent = new Intent(AppBase.currentActivity, MainMapActivity.class);
@@ -185,12 +180,12 @@ public class LoginActivity extends LoadingWithMessageActivity {
 				mPasswordView.setError(getString(R.string.error_incorrect_password));
 				mPasswordView.requestFocus();
 			}
+			
 		}
 
 		@Override
 		protected void onCancelled() {
 			mAuthTask = null;
-			showProgress(false);
 		}
 	}
 }
