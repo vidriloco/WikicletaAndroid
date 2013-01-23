@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 
 public class RouteDetailsActivity extends LocationAwareMapActivity implements ServiceListener {
@@ -66,7 +67,16 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
         this.setMapToLocation(currentRoute.getStartingLocation());
         this.notification = new NotificationBuilder(this);
         
-        SlidingMenuAndActionBarHelper.loadWithActionBarTitle(this, currentRoute.name);
+        SlidingMenuAndActionBarHelper.loadWithActionBarTitle(this, "Detalles de ruta");
+        
+        TextView textView = (TextView) this.findViewById(R.id.route_name);
+        textView.setText(currentRoute.name);
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		this.locationOverlay.disableMyLocation();
 	}
 	
 	public static int queuedRoutesCount() {

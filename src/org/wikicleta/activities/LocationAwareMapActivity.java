@@ -17,7 +17,7 @@ import com.google.android.maps.MyLocationOverlay;
 public class LocationAwareMapActivity extends MapActivity {
 	protected PinchableMapView mapView;
 	protected LocationManager locationManager;
-	private CustomMyLocationOverlay locationOverlay;
+	protected CustomMyLocationOverlay locationOverlay;
 	protected boolean locationManagerEnabled;
 	
 	protected boolean centerMapOnCurrentLocationByDefault;
@@ -68,7 +68,7 @@ public class LocationAwareMapActivity extends MapActivity {
 	}
 	
 	
-	class CustomMyLocationOverlay extends MyLocationOverlay {
+	protected class CustomMyLocationOverlay extends MyLocationOverlay {
 
 		public CustomMyLocationOverlay(Context arg0, MapView arg1) {
 			super(arg0, arg1);
