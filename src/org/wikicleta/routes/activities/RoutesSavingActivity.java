@@ -5,6 +5,7 @@ import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.NotificationBuilder;
+import org.wikicleta.routes.fragments.ActivityFragment;
 import org.wikicleta.routes.services.RoutesService;
 import org.wikicleta.routes.services.ServiceConstructor;
 import org.wikicleta.routes.services.ServiceListener;
@@ -77,8 +78,10 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
     			new View.OnClickListener() {
     				@Override
     				public void onClick(View view) {
+    					Bundle bundle = new Bundle();
+    					bundle.putString("fragment", ActivityFragment.class.getName());
     					theService.addRecordedRouteToUploader(nameView.getText().toString(), tagsView.getText().toString());
-    					AppBase.launchActivity(UserProfileActivity.class);
+    					AppBase.launchActivityWithBundle(UserProfileActivity.class, bundle);
     				}
     	});
 	}

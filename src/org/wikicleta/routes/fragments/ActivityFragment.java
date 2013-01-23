@@ -78,11 +78,11 @@ public class ActivityFragment extends Fragment {
         // Click event for single list row
         list.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
-                    Route route = (Route) adapter.getItem(pos);
+            	Route route = (Route) adapter.getItem(pos);
                     
-                    Bundle bundle = new Bundle();
-                    bundle.putLong("routeId", route.getId());
-                    AppBase.launchActivityWithBundle(RouteDetailsActivity.class, bundle);
+            	Bundle bundle = new Bundle();
+            	bundle.putLong("routeId", route.getId());
+            	AppBase.launchActivityWithBundle(RouteDetailsActivity.class, bundle);
             }
         });
 		list.setAdapter(adapter);
@@ -95,7 +95,7 @@ public class ActivityFragment extends Fragment {
 		this.drawView();
 	}
 	
-	public void drawView() {
+	public void drawLists() {
 		final UserProfileActivity activity = (UserProfileActivity) this.getActivity();
 
         if(Route.uploaded().size() > 0) {
@@ -104,8 +104,17 @@ public class ActivityFragment extends Fragment {
         	this.emptyRoutesLayout.setVisibility(View.VISIBLE);
         }
         
+        if(Route.queued().size() > 0) {
+			this.unsyncedRoutesLayout.setVisibility(View.VISIBLE);
+		} else {
+			this.unsyncedRoutesLayout.setVisibility(View.GONE);
+		}
+                
 		listUnsynced = this.drawRoutesList(R.id.list_unsynced, new RoutesListAdapter(activity, Route.queued()));
-
+	}
+	
+	public void drawView() {
+		this.drawLists();
         fragmentView.findViewById(R.id.route_resyncer).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -139,6 +148,7 @@ public class ActivityFragment extends Fragment {
     	this.unsyncedRoutesTitle.setText(getString(R.string.routes_syncing_title));
     	
     	this.unsyncedRoutesLayout.setClickable(false);
+    	
     	this.listUnsynced.setVisibility(View.GONE);
 	}
 	
@@ -152,6 +162,8 @@ public class ActivityFragment extends Fragment {
 		this.uploaderAnimator.cancel();
 		
     	this.unsyncedRoutesLayout.setClickable(true);
+    	
+		this.drawLists();
 		this.listUnsynced.setVisibility(View.VISIBLE);
 		
 		new NotificationBuilder(this.getActivity()).clearNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID);

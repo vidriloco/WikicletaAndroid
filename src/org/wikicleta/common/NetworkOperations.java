@@ -11,7 +11,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 public class NetworkOperations {
-	static String serverHost = "http://10.219.185.227:3000";
+	static String serverHost = "http://wikicleta.com";
 	
 	public static int postJSONTo(String path, String jsonValue) {
 		HttpResponse response = NetworkOperations.postJSON(path, jsonValue);

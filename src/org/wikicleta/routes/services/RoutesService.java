@@ -116,8 +116,7 @@ public class RoutesService extends LocationAwareService {
 	
 	public void notifyAboutStalledRoutes() {
 		Log.i("WIKICLETA", "Rutas "+ String.valueOf(queuedRoutesCount()));
-		if(queuedRoutesCount() > 0) {		
-			
+		if(queuedRoutesCount() > 0) {
 			String countString = this.getString(R.string.route_drafts_notification_total_one);
 			if(queuedRoutesCount() != 1)
 				countString = this.getString(R.string.route_drafts_notification_total_many, queuedRoutesCount());			 

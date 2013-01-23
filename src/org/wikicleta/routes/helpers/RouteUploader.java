@@ -30,6 +30,8 @@ public class RouteUploader {
 	}
 	
 	public LinkedList<Route> routesWaitingToUpload() {
+		this.routesToUpload.clear();
+		this.routesToUpload.addAll(Route.queued());
 		return this.routesToUpload;
 	}
 	 

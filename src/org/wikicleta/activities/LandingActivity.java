@@ -30,7 +30,7 @@ public class LandingActivity extends Activity {
     	);
 		set.setDuration(800).start();
 
-		if(!User.isSignedIn()) {
+		if(User.isSignedIn()) {
 			
 			findViewById(R.id.container).setVisibility(View.GONE);
 	    	set.addListener(new SimpleAnimatorListener() {
@@ -43,6 +43,14 @@ public class LandingActivity extends Activity {
 	    	});
 			return;
 		}
+		
+		findViewById(R.id.explore).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				AppBase.launchActivity(MainMapActivity.class);
+			}
+		});
 		
 		findViewById(R.id.join).setOnClickListener(
 			new View.OnClickListener() {
