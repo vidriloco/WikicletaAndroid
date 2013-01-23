@@ -4,7 +4,7 @@ import org.wikicleta.R;
 import org.wikicleta.activities.LocationAwareMapActivity;
 import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.common.AppBase;
-import org.wikicleta.routes.services.RoutesRecordingListener;
+import org.wikicleta.routes.services.NavigationListener;
 import org.wikicleta.routes.services.RoutesService;
 import org.wikicleta.routes.services.ServiceConstructor;
 import org.wikicleta.routes.services.ServiceListener;
@@ -25,7 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class NewRouteActivity extends LocationAwareMapActivity implements ServiceListener, RoutesRecordingListener {
+public class NewRouteActivity extends LocationAwareMapActivity implements ServiceListener, NavigationListener {
 	
 	protected RelativeLayout titleBarView;
 	protected LinearLayout recordRouteToolbarView;
@@ -266,16 +266,13 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 	}
 
 	@Override
-	public void onRouteRecordingFieldsUpdated() {
+	public void onFieldsUpdated() {
 		runOnUiThread(new Runnable() {
 		    public void run() {
-				if(centerMapOnCurrentLocationByDefault)
-					setMapToLocation(theService.lastLocationCatched);	
-				
 				String speed = theService.routeRecorder.speedTextValue;
 				String time = theService.routeRecorder.timeTextValue;
 				String distance = theService.routeRecorder.distanceTextValue;
-				
+
 				if(speed != null)
 					speedTextValue.setText(speed);
 				if(time != null)

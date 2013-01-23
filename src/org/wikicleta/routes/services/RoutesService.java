@@ -7,7 +7,6 @@ import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.helpers.NotificationBuilder.Ticker;
 import org.wikicleta.models.Route;
-import org.wikicleta.routes.activities.NewRouteActivity;
 import org.wikicleta.routes.fragments.ActivityFragment;
 import org.wikicleta.routes.helpers.RouteRecorder;
 import org.wikicleta.routes.helpers.RouteUploader;
@@ -80,8 +79,8 @@ public class RoutesService extends LocationAwareService {
 	}
 	
 	protected void notifyFieldsUpdated() {
-		if(this.boundActivity instanceof NewRouteActivity) {
-			((NewRouteActivity) this.boundActivity).onRouteRecordingFieldsUpdated();
+		if(this.boundActivity instanceof NavigationListener) {
+			((NavigationListener) this.boundActivity).onFieldsUpdated();
 		}
 	}
 	

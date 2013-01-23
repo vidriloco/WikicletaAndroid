@@ -23,7 +23,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-
 public class MainMapActivity extends LocationAwareMapActivity implements ServiceListener {
 	
 	protected static int ROUTE_ACTION=0;
@@ -122,6 +121,12 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 	protected void onStop() {
 		super.onStop();
         serviceInitializator.stop();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		theService.disableLocationManager();
 	}
 	
 	@Override

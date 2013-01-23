@@ -56,7 +56,7 @@ public class LocationAwareService extends Service implements LocationListener {
 	public void enableLocationManager() {
 		if(!locationManagerEnabled) {
 			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 
-					1, 1, this);
+					100, 1, this);
 			locationManagerEnabled = true;
 		}
 	}

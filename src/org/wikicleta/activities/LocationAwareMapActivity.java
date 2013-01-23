@@ -4,18 +4,20 @@ import org.wikicleta.R;
 import org.wikicleta.helpers.GeoHelpers;
 import org.wikicleta.views.PinchableMapView;
 
+import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 
 public class LocationAwareMapActivity extends MapActivity {
 	protected PinchableMapView mapView;
 	protected LocationManager locationManager;
-	private MyLocationOverlay locationOverlay;
+	private CustomMyLocationOverlay locationOverlay;
 	protected boolean locationManagerEnabled;
 	
 	protected boolean centerMapOnCurrentLocationByDefault;
@@ -29,11 +31,20 @@ public class LocationAwareMapActivity extends MapActivity {
         mapView.setBuiltInZoomControls(false);
         this.setMapToDefaultValues();
                 
-    	locationOverlay = new MyLocationOverlay(this, mapView);
+    	locationOverlay = new CustomMyLocationOverlay(this, mapView);
     	mapView.getOverlays().add(locationOverlay);
-    	
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
     	locationOverlay.enableMyLocation();
-    	locationOverlay.disableCompass();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		locationOverlay.disableMyLocation();
 	}
 	
 	protected void setMapToDefaultValues() {
@@ -54,6 +65,21 @@ public class LocationAwareMapActivity extends MapActivity {
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	
+	class CustomMyLocationOverlay extends MyLocationOverlay {
+
+		public CustomMyLocationOverlay(Context arg0, MapView arg1) {
+			super(arg0, arg1);
+		}
+		
+		@Override
+		public void onLocationChanged(Location location) {
+			super.onLocationChanged(location);
+			setMapToLocation(location);
+		}
+		
 	}
 	
 }
