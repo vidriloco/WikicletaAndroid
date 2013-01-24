@@ -54,11 +54,11 @@ public class LocationAwareMapActivity extends MapActivity {
 	
 	protected void setMapToLocation(Location location) {
 		if(location != null)
-			mapView.getController().animateTo(GeoHelpers.buildFromLongitude(location));
+			mapView.getController().animateTo(GeoHelpers.buildGeoPointFromLongitude(location));
 	}
 	
 	protected GeoPoint getDefaultLocation() {
-		return GeoHelpers.buildFromLatLon(19.412423, -99.169207);
+		return GeoHelpers.buildGeoPointFromLatLon(19.412423, -99.169207);
 	}
 
 	@Override

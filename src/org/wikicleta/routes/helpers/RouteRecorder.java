@@ -46,11 +46,6 @@ public class RouteRecorder {
 
 		decimalFormat.setRoundingMode(RoundingMode.DOWN);
 		this.reset();
-
-		this.coordinateVector.add(new Instant(GeoHelpers.buildFromLatLon(19.428704, -99.168563), 0.3f, 44233));
-		this.coordinateVector.add(new Instant(GeoHelpers.buildFromLatLon(19.430566, -99.164615), 1.0f, 59432));
-		this.coordinateVector.add(new Instant(GeoHelpers.buildFromLatLon(19.431457, -99.162469), 8.0f, 67534));
-		this.coordinateVector.add(new Instant(GeoHelpers.buildFromLatLon(19.431780, -99.161568), 33.0f, 70564));
 	}
 	
 	public void addLocation(Location location) {
@@ -72,7 +67,7 @@ public class RouteRecorder {
 
 			distanceTextValue = decimalFormat.format(accumulatedDistance).concat(" km");
 			this.lastLocation = location;
-			this.coordinateVector.add(new Instant(GeoHelpers.buildFromLongitude(lastLocation), speed, overallElapsedTime()));
+			this.coordinateVector.add(new Instant(GeoHelpers.buildGeoPointFromLongitude(lastLocation), speed, overallElapsedTime()));
 		}
 	}
 	
