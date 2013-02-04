@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    <ImageView   
+        android:contentDescription="@string/none" 
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content" 
+    	android:layout_marginTop="26dp"
+        android:background="@drawable/dialog_background">
+    </ImageView>
+    <LinearLayout android:id="@+id/menu_layout_overlay"
+	    android:orientation="vertical"
+	    android:layout_height="wrap_content"
+	    android:layout_width="match_parent">
+		<LinearLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:background="@drawable/toolbar_inv">
+		    
+		    <ImageView android:id="@+id/dialog_close"
+		        android:contentDescription="@string/none"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:src="@drawable/dialog_close_icon"/>
+		    
+		    <TextView
+	           android:id="@+id/dialog_menu_title"
+	           android:layout_width="fill_parent"
+	           android:layout_height="wrap_content"
+	           android:gravity="right"
+	           android:layout_gravity="center_vertical"
+	           android:text="@string/dialog_add"
+	           android:textColor="#203b50"
+	           android:textSize="20sp"
+	           android:padding="10dp"
+	           android:layout_marginRight="20dp"
+	           android:textStyle="bold" />
+		</LinearLayout>
+		    
+		<LinearLayout android:id="@+id/route_dialog_group"
+	        android:layout_width="fill_parent"
+	        android:background="@drawable/menu_item_background"
+	        android:layout_height="wrap_content"
+	        android:paddingTop="15dp"
+	        android:paddingBottom="15dp"
+	        android:alpha="0.6" >
+	
+	       <ImageView
+	           android:id="@+id/route_img"
+	           android:layout_width="wrap_content"
+	           android:layout_height="wrap_content"
+	           android:layout_marginLeft="50dp"
+	           android:contentDescription="@string/none"
+	           android:src="@drawable/routes_dialog_icon" />
+	
+	       <TextView
+	           android:id="@+id/route_title"
+	           android:layout_width="fill_parent"
+	           android:layout_height="wrap_content"
+	           android:layout_gravity="center_vertical|center_horizontal"
+	           android:layout_marginLeft="20dp"
+	           android:gravity="left"
+	           android:padding="10dp"
+	           android:text="@string/routes_dialog_section"
+	           android:textColor="#000"
+	           android:textSize="15sp"
+	           android:textStyle="bold" />
+	
+		</LinearLayout>
+	
+		<LinearLayout
+		    android:id="@+id/highlight_dialog_group"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:alpha="0.6"
+		    android:background="@drawable/menu_item_background"
+		    android:paddingBottom="15dp"
+		    android:paddingTop="15dp" >
+	
+		    <ImageView
+		        android:id="@+id/highlight_img"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+	            android:layout_marginLeft="50dp"
+		        android:contentDescription="@string/none"
+		        android:src="@drawable/highlights_dialog_section" />
+	
+		    <TextView
+		        android:id="@+id/highlight_title"
+		        android:layout_width="166dp"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center_vertical|center_horizontal"
+		        android:layout_marginLeft="20dp"
+		        android:gravity="left"
+		        android:padding="10dp"
+		        android:text="@string/highlights_dialog_section"
+		        android:textColor="#000"
+		        android:textSize="15sp"
+		        android:textStyle="bold" />
+	
+		</LinearLayout>
+	
+		<LinearLayout
+		    android:id="@+id/bicibus_dialog_group"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:alpha="0.6"
+		    android:background="@drawable/menu_item_background"
+		    android:paddingBottom="15dp"
+		    android:paddingTop="15dp" >
+	
+		    <ImageView
+		        android:id="@+id/bicibus_img"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="50dp"
+		        android:contentDescription="@string/none"
+		        android:src="@drawable/bicibus_dialog_section" />
+	
+		    <TextView
+		        android:id="@+id/bicibus_title"
+		        android:layout_width="166dp"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center_vertical|center_horizontal"
+		        android:layout_marginLeft="20dp"
+		        android:gravity="left"
+		        android:padding="10dp"
+		        android:text="@string/bicibus_dialog_section"
+		        android:textColor="#000"
+		        android:textSize="15sp"
+		        android:textStyle="bold" />
+	
+		</LinearLayout>
+		<LinearLayout
+		    android:id="@+id/bike_parking_dialog_group"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:alpha="0.6"
+		    android:background="@drawable/menu_item_background"
+		    android:paddingBottom="15dp"
+		    android:paddingTop="15dp" >
+	
+		    <ImageView
+		        android:id="@+id/bike_parking_img"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="50dp"
+		        android:contentDescription="@string/none"
+		        android:src="@drawable/bikeparking_dialog_section" />
+	
+		    <TextView
+		        android:id="@+id/bike_parking_title"
+		        android:layout_width="166dp"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center_vertical|center_horizontal"
+		        android:layout_marginLeft="20dp"
+		        android:gravity="left"
+		        android:padding="10dp"
+		        android:text="@string/bike_parking_dialog_section"
+		        android:textColor="#000"
+		        android:textSize="15sp"
+		        android:textStyle="bold" />
+	
+		</LinearLayout>
+	</LinearLayout>
+</RelativeLayout>

@@ -3,6 +3,7 @@ package org.wikicleta.activities;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.SimpleAnimatorListener;
+import org.wikicleta.models.Route;
 import org.wikicleta.models.User;
 
 import com.nineoldandroids.animation.Animator;
@@ -21,7 +22,7 @@ public class LandingActivity extends Activity {
 		AppBase.currentActivity = this;
 		this.setContentView(R.layout.activity_landing); 
 
-		
+		Route.build();
 		AnimatorSet set = new AnimatorSet();
     	set.playTogether(
     	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "scaleX", 1, 1.2f),

@@ -9,27 +9,25 @@ import org.wikicleta.routes.services.RoutesService;
 import org.wikicleta.routes.services.ServiceConstructor;
 import org.wikicleta.routes.services.ServiceListener;
 import org.wikicleta.views.RouteOverlay;
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.Action;
-import com.nineoldandroids.animation.ObjectAnimator;
-import com.nineoldandroids.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class NewRouteActivity extends LocationAwareMapActivity implements ServiceListener, NavigationListener {
 	
-	protected RelativeLayout titleBarView;
 	protected LinearLayout recordRouteToolbarView;
-	protected LinearLayout statsToolbarView;	
+	protected LinearLayout statsToolbarView;
+	
+	protected LinearLayout gpsWaitingView;
 	
 	private ImageView recButton;
 	private ImageView pauseButton;
@@ -56,10 +54,10 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 		AppBase.currentActivity = this;
 		startService(new Intent(this, RoutesService.class));
 
-        titleBarView = (RelativeLayout) findViewById(R.id.titlebar);
         recordRouteToolbarView = (LinearLayout) findViewById(R.id.route_recording_toolbar);
         statsToolbarView = (LinearLayout) findViewById(R.id.stats_panel);
-                        
+        gpsWaitingView = (LinearLayout) findViewById(R.id.gps_loading);
+        
         alertDialog = new AlertDialog.Builder(this);
     	
     	recButton = (ImageView) findViewById(R.id.routes_rec_button);
@@ -116,17 +114,10 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 			}
     	});
     	
-    	ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
-
-        actionBar.addAction(new Action() {
+    	this.findViewById(R.id.routes_back_button).setOnClickListener(new OnClickListener() {
 
 			@Override
-			public int getDrawable() {
-				return R.drawable.back_arrow;
-			}
-
-			@Override
-			public void performAction(View view) {
+			public void onClick(View arg0) {
 				final boolean wasRecording;
 				if(!theService.routeRecorder.isEmpty()) {
 					wasRecording = !theService.routeRecorder.isPaused();
@@ -155,13 +146,10 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 					alertDialog.show();
 				} else {
 					cancelRecording();
-				}
-			}	
-        });
-        
-        ValueAnimator va = ObjectAnimator.ofFloat(recordRouteToolbarView, "translationY", -100);
-        va.setDuration(800);
-        va.start();
+				}				
+			}
+    		
+    	});
 	}
 	
 	protected void cancelRecording() {
@@ -172,6 +160,8 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 	@Override
 	protected void onPause() {
 		super.onPause();
+		if(theService.routeRecorder.isPaused())
+			theService.disableLocationManager();
 	}
 	
 	@Override
@@ -200,6 +190,8 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 			
 			routeOverlay = new RouteOverlay(theService.routeRecorder.coordinateVector);
 			mapView.getOverlays().add(routeOverlay);
+	        theService.enableLocationManager();
+	        this.firstLocationReceived();
 		}
 	}
 	
@@ -264,6 +256,24 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}
+	
+	public void firstLocationReceived() {
+		if(recordRouteToolbarView.getVisibility() == View.GONE)
+			recordRouteToolbarView.setVisibility(View.VISIBLE);
+		if(statsToolbarView.getVisibility() == View.GONE)
+			statsToolbarView.setVisibility(View.VISIBLE);
+		if(gpsWaitingView.getVisibility() == View.VISIBLE)
+			gpsWaitingView.setVisibility(View.GONE);
+	}
+	
+	public void locationUpdated() {
+		Log.e("WIKICLETA", "Pruebas");
+		runOnUiThread(new Runnable() {
+		    public void run() {
+		    	firstLocationReceived();
+		    }
+		});
+	}
 
 	@Override
 	public void onFieldsUpdated() {
@@ -272,7 +282,7 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 				String speed = theService.routeRecorder.speedTextValue;
 				String time = theService.routeRecorder.timeTextValue;
 				String distance = theService.routeRecorder.distanceTextValue;
-
+				
 				if(speed != null)
 					speedTextValue.setText(speed);
 				if(time != null)

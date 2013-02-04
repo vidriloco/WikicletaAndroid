@@ -27,9 +27,6 @@ public class SlidingMenuAndActionBarHelper {
         menu.attachToActivity(activity, SlidingMenu.SLIDING_CONTENT);
         menu.setMenu(R.layout.sliding_menu);        
         
-        TextView menuTitle = (TextView) menu.getMenu().findViewById(R.id.menu_layout_title);
-        menuTitle.setTypeface(AppBase.getDefaultTypeface("Bold")); 
-        
         TextView profileTitle = (TextView) menu.getMenu().findViewById(R.id.profile_title);
         profileTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
         menu.getMenu().findViewById(R.id.profile_menu_group).setOnClickListener(new OnClickListener() {

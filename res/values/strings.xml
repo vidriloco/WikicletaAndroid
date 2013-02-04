@@ -10,6 +10,20 @@
 	<string name="market_section">Mercado</string>
 	<string name="profile_section">Perfil</string>
 	
+	
+	<string name="routes_dialog_section">Ruta</string>
+	<string name="highlights_dialog_section">Punto de Riesgo</string>
+	<string name="bicibus_dialog_section">Bicibus</string>
+	<string name="bike_parking_dialog_section">Estacionamiento</string>
+	
+	<string name="routes_dialog_layer_section">Rutas/Bicibuses</string>
+	<string name="highlights_dialog_layer_section">Puntos de Riesgo</string>
+	<string name="bike_parking_dialog_layer_section">Estacionamientos</string>
+	<string name="bikesharing_dialog_layer_section">Bicis públicas</string>
+	
+	<string name="dialog_add">Añadir</string>
+	<string name="dialog_toggle">Mostrar u Ocultar</string>
+	
 	<!-- Subsections -->
 	<string name="route_recording_section">Trazar una ruta</string>
 			
@@ -36,6 +50,7 @@
 	
 	<string name="routes_details_ranked">RANKING</string>
 	<string name="routes_details_checkin">CHECK-INS</string>
+	<string name="routes_details_speed">VELOCIDAD</string>
 	
 	<string name="route_layers_menu_none">Ninguna</string>
 	<string name="route_layers_menu_basic_info">Detalles de ruta</string>
@@ -44,8 +59,8 @@
 	
 	<string name="route_drafts_notification_total_one">1 ruta sin subir.</string>
 	<string name="route_drafts_notification_total_many">%d rutas sin subir.</string>
-	<string name="route_draft_details_menu_item">Revisar ruta</string>
-	<string name="route_draft_destroy_menu_item">Descartar ruta</string>
+	<string name="route_details_menu_item">Ver en el mapa</string>
+	<string name="route_destroy_menu_item">Descartar ruta</string>
 	
 	<string name="route_being_sent">Subiendo ruta ..</string>
 	<string name="route_being_destroyed">Descartando ruta ..</string>
@@ -60,6 +75,7 @@
 	<string name="route_not_uploaded">Sin subir</string>
 	<string name="route_uploading">Subiendo</string>
 	
+	<string name="waiting_for_gps">Esperando ubicación ...</string>
 	<!-- Strings for user profile -->
 	<string name="user_profile_title">Tu Perfil</string>
 	<string name="user_profile_tab">Tu</string>
@@ -75,7 +91,7 @@
 	<string name="profile_highlights_title_text">Riesgos</string>
 	<string name="profile_badges_title_text">Insignias ganadas:</string>		
 	<string name="profile_badge_faster_than_cars">Más rápido que los autos</string>	
-	<string name="profile_badge_long_runner">Aguantador</string>	
+	<string name="profile_badge_long_runner">Ironman</string>	
 	<string name="profile_badge_brompton">Brompton</string>	
 	<string name="profile_badge_survivor">Sobreviviente</string>	
 	

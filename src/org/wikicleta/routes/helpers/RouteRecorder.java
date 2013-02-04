@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.wikicleta.helpers.Formatters;
 import org.wikicleta.helpers.GeoHelpers;
 import org.wikicleta.models.Instant;
 import org.wikicleta.models.Route;
@@ -141,26 +142,7 @@ public class RouteRecorder {
 
 		@Override
 		public void run() {
-			int seconds = (int) (overallElapsedTime() / 1000);
-		    int minutes = seconds / 60;
-		    seconds     = seconds % 60;
-	       
-		    String timeString = "";
-	       
-		    if(minutes > 0 && minutes < 10)
-	    	   timeString = "0" + String.valueOf(minutes) + ":";
-		    else if(minutes >= 10) 
-	    	   timeString = String.valueOf(minutes) + ":";
-		    else {
-	    	   timeString = "00:";
-		    }
-	       
-		    if (seconds < 10)
-	    	   timeString += "0"+seconds;
-		    else
-	    	   timeString += String.valueOf(seconds);
-	       
-		    timeTextValue = timeString;
+		    timeTextValue = Formatters.millisecondsToTime(overallElapsedTime());
 		    
 		    routesService.updateTimingDisplay();
 		    reScheduleTask();

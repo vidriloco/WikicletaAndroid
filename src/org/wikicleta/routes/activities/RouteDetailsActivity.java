@@ -3,19 +3,18 @@ package org.wikicleta.routes.activities;
 import org.wikicleta.R;
 import org.wikicleta.activities.LocationAwareMapActivity;
 import org.wikicleta.activities.MainMapActivity;
-import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.AppBase;
-import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.NotificationBuilder;
-import org.wikicleta.helpers.NotificationBuilder.Ticker;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.Route;
-import org.wikicleta.routes.fragments.ActivityFragment;
 import org.wikicleta.routes.services.RoutesService;
 import org.wikicleta.routes.services.ServiceConstructor;
 import org.wikicleta.routes.services.ServiceListener;
 import org.wikicleta.views.PinchableMapView;
-import org.wikicleta.views.RouteOverlay;
+import org.wikicleta.layers.RoutesOverlay;
+
+import com.markupartist.android.widget.ActionBar;
+import com.markupartist.android.widget.ActionBar.Action;
 
 import android.app.AlertDialog;
 import android.app.Service;
@@ -29,7 +28,6 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 
 public class RouteDetailsActivity extends LocationAwareMapActivity implements ServiceListener {
 	private PinchableMapView mapView;
@@ -37,9 +35,10 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 	private LinearLayout topToolBarView;
 	
 	protected NotificationBuilder notification;
-	protected RouteOverlay routeOverlay;
+	protected RoutesOverlay routesOverlay;
 	public Route currentRoute;
 	public AlertDialog.Builder alertDialog;
+	protected AlertDialog toggleLayersMenu;
 	
 	//Service
 	protected RoutesService theService;
@@ -69,6 +68,22 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
         
         SlidingMenuAndActionBarHelper.loadWithActionBarTitle(this, "Detalles de ruta");
         
+        ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
+
+        actionBar.addAction(new Action() {
+
+            @Override
+            public int getDrawable() {
+            	return R.drawable.arrow_back_simple;
+            }
+
+            @Override
+            public void performAction(View view) {
+            	onBackPressed();
+            }
+                
+        });
+        
         TextView textView = (TextView) this.findViewById(R.id.route_name);
         textView.setText(currentRoute.name);
 	}
@@ -84,7 +99,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 	}
 	
 	public void drawControls() {
-		if(currentRoute != null && currentRoute.isDraft()) {
+		if(currentRoute != null && !currentRoute.isDraft()) {
 	        /*final ImageView closeMoreIcon = (ImageView) findViewById(R.id.close_button);
 	        closeMoreIcon.setOnClickListener(new OnClickListener() {
 
@@ -94,7 +109,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 				}
 		    	
 		    });*/
-			
+			/*
 	        topToolBarView = (LinearLayout) findViewById(R.id.top_panel_route_status);
 	        bottomToolBarView = (LinearLayout) findViewById(R.id.bottom_panel_route_status_actions);
 	        
@@ -132,7 +147,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 				}
 		    	
 		    });
-	        
+	        */
 		} else {
 			/*final ImageView closeMoreIcon = (ImageView) findViewById(R.id.close_button);
 	        closeMoreIcon.setOnClickListener(new OnClickListener() {
@@ -144,25 +159,41 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 		    	
 		    });*/
 	        
+			final CharSequence[] layersItems = {"Detalles de Ruta", "Puntos de riesgo", "Lugares bici-amigables"};
+			boolean[] layersSelected = {true, false, false};
+	    	AlertDialog.Builder toggleBuilder = new AlertDialog.Builder(this);
+
+	    	toggleBuilder.setTitle("Mostrar/Ocultar");
+	    	toggleBuilder.setMultiChoiceItems(layersItems, layersSelected, new DialogInterface.OnMultiChoiceClickListener() {
+	    		@Override
+	            public void onClick(DialogInterface dialog, int item, boolean isChecked) {
+	    			if(item == 0) {
+	    				if(isChecked)
+	    					topToolBarView.setVisibility(View.VISIBLE);
+	    				else
+	    					topToolBarView.setVisibility(View.GONE);
+	    			}
+	    		}
+	    	});
+	    	
+			toggleLayersMenu = toggleBuilder.create();
+			
 	        topToolBarView = (LinearLayout) findViewById(R.id.top_panel_extra_route_info);
 	        bottomToolBarView = (LinearLayout) findViewById(R.id.bottom_panel_route_actions);
 	        
 	        // Buttons preparations
-	        final ImageView layersMenuButton = (ImageView) findViewById(R.id.route_layers_button);
+	        final ImageView layersMenuButton = (ImageView) findViewById(R.id.map_layers_button);
 	        layersMenuButton.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View arg0) {
-					openContextMenu(layersMenuButton);
+					toggleLayersMenu.show();
 				}
 		    	
 		    });
-	        registerForContextMenu(layersMenuButton);
 		}
 		
         topToolBarView.setVisibility(View.VISIBLE);
         bottomToolBarView.setVisibility(View.VISIBLE);
-        animate(topToolBarView).alpha((float) 0.8);
-        animate(bottomToolBarView).alpha((float) 0.8).translationYBy(-Constants.DY_TRANSLATION);
 	}
 
 	@Override
@@ -185,8 +216,9 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 	
 	protected void drawRoutePath() {
 		if(currentRoute != null) {
-			routeOverlay = new RouteOverlay(currentRoute.instants());
-			mapView.getOverlays().add(routeOverlay);
+			routesOverlay = new RoutesOverlay(((int) (long) currentRoute.getId()), currentRoute);
+			mapView.getOverlays().add(routesOverlay);
+			routesOverlay.detailedView = true;
 		}
 	}
 	
@@ -208,6 +240,4 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 		if(service instanceof RoutesService)
 			this.theService = (RoutesService) service;
 	}
-	
-	
 }

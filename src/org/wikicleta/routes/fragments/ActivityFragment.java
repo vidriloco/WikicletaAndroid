@@ -12,8 +12,13 @@ import com.nineoldandroids.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -27,7 +32,7 @@ public class ActivityFragment extends Fragment {
 	
     ListView listUnsynced;
     ListView listUploaded;
-
+    int selectedListItem;
     View fragmentView;
     
     LinearLayout emptyRoutesLayout;
@@ -75,6 +80,7 @@ public class ActivityFragment extends Fragment {
 	
 	protected ListView drawRoutesList(int listType, final RoutesListAdapter adapter) {
 		ListView list = (ListView) fragmentView.findViewById(listType);
+    	this.registerForContextMenu(list);
         // Click event for single list row
         list.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
@@ -85,6 +91,7 @@ public class ActivityFragment extends Fragment {
             	AppBase.launchActivityWithBundle(RouteDetailsActivity.class, bundle);
             }
         });
+        
 		list.setAdapter(adapter);
 		return list;
     }
@@ -93,6 +100,38 @@ public class ActivityFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		this.drawView();
+	}
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+	                                ContextMenuInfo menuInfo) {
+	    super.onCreateContextMenu(menu, v, menuInfo);
+	    MenuInflater inflater = this.getActivity().getMenuInflater();
+	    inflater.inflate(R.menu.routes_menu, menu);
+	    
+	    AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+	    selectedListItem = info.position;
+	}
+	
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+    	Route route = (Route) listUnsynced.getAdapter().getItem(selectedListItem);
+
+	    switch (item.getItemId()) {
+	        case R.id.route_destroy:
+                route.delete();
+                unblockUI();
+	            return true;
+	        case R.id.route_details:
+                
+            	Bundle bundle = new Bundle();
+            	bundle.putLong("routeId", route.getId());
+            	AppBase.launchActivityWithBundle(RouteDetailsActivity.class, bundle);
+	            return true;
+	        default:
+	            return super.onContextItemSelected(item);
+	    }
 	}
 	
 	public void drawLists() {

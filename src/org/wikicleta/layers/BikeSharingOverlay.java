@@ -106,7 +106,7 @@ public class BikeSharingOverlay extends ItemizedOverlay<OverlayItem> implements 
 	}
 
 	@Override
-	public Integer getIdentifier() {
+	public int getIdentifier() {
 		return Constants.BIKESHARING_OVERLAY;
 	}
 }
