@@ -22,7 +22,7 @@ public class LandingActivity extends Activity {
 		AppBase.currentActivity = this;
 		this.setContentView(R.layout.activity_landing); 
 
-		Route.build();
+		//Route.build();
 		AnimatorSet set = new AnimatorSet();
     	set.playTogether(
     	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "scaleX", 1, 1.2f),

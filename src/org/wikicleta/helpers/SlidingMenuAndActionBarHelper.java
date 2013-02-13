@@ -80,6 +80,7 @@ public class SlidingMenuAndActionBarHelper {
 		menu.setBehindOffsetRes(R.dimen.actionbar_home_width);
 		
 		ActionBar actionBar = (ActionBar) activity.findViewById(R.id.actionbar);
+		
 		if(title != null)
 			actionBar.setTitle(title);
         actionBar.setHomeAction(new Action() {
