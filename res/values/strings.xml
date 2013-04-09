@@ -7,25 +7,27 @@
 	<!-- Sliding Menu options -->
 	<string name="map_section">Mapa</string>
 	<string name="real_time_section">Ahora</string>
-	<string name="market_section">Mercado</string>
+	<string name="market_section">Bicis y Más</string>
+	<string name="bikecity_section">Pasea</string>
 	<string name="profile_section">Perfil</string>
 	
-	
+	<string name="select_location_on_map">Ubica el pin de Wikicleta debajo de la ubicación deseada</string>
 	<string name="routes_dialog_section">Ruta</string>
-	<string name="highlights_dialog_section">Punto de Riesgo</string>
+	<string name="tips_dialog_section">Tip</string>
 	<string name="bicibus_dialog_section">Bicibus</string>
 	<string name="bike_parking_dialog_section">Estacionamiento</string>
+	<string name="bike_repair_dialog_section">Taller/tienda</string>
 	
 	<string name="routes_dialog_layer_section">Rutas/Bicibuses</string>
-	<string name="highlights_dialog_layer_section">Puntos de Riesgo</string>
+	<string name="tips_dialog_layer_section">Tips</string>
 	<string name="bike_parking_dialog_layer_section">Estacionamientos</string>
 	<string name="bikesharing_dialog_layer_section">Bicis públicas</string>
-	
+	<string name="bikerepair_dialog_layer_section">Talleres y tiendas</string>
 	<string name="dialog_add">Añadir</string>
 	<string name="dialog_toggle">Mostrar u Ocultar</string>
 	
 	<!-- Subsections -->
-	<string name="route_recording_section">Trazar una ruta</string>
+	<string name="route_recording_section">Nueva ruta</string>
 			
 	<!-- Strings for routes -->
 	<string name="routes_title">Rutas</string>
@@ -37,10 +39,12 @@
 	
 	<string name="routes_save">Guardar</string>
 	<string name="routes_saving_title">Guardar Ruta</string>
-	
-	<string name="routes_stats_speed">VELOCIDAD</string>
-	<string name="routes_stats_time">TIEMPO</string>
-	<string name="routes_stats_distance">DISTANCIA</string>
+	<string name="routes_recording_paused">Captura de ruta en pausa</string>
+	<string name="routes_recording_resumed">Capturando ruta</string>
+	<string name="routes_ready_for_recording">Puedes empezar a capturar tu ruta ahora</string>
+	<string name="routes_stats_speed">Velocidad</string>
+	<string name="routes_stats_time">Tiempo</string>
+	<string name="routes_stats_distance">Distancia</string>
 	
 	<string name="routes_saving_form_name">Nombre</string>
 	<string name="routes_saving_form_tags">Tags</string>
@@ -75,7 +79,12 @@
 	<string name="route_not_uploaded">Sin subir</string>
 	<string name="route_uploading">Subiendo</string>
 	
-	<string name="waiting_for_gps">Esperando ubicación ...</string>
+	<string name="tips_new_title">Nuevo Tip</string>
+	<string name="tips_saving_title">Guardando Tip</string>
+	
+	<string name="tips_form_content_hint">Contenido del tip</string>
+	
+	<string name="waiting_for_gps">Esperando GPS &#8230;</string>
 	<!-- Strings for user profile -->
 	<string name="user_profile_title">Tu Perfil</string>
 	<string name="user_profile_tab">Tu</string>

@@ -35,6 +35,7 @@ public class UserProfileActivity extends FragmentActivity implements
 	// Service
 	public RoutesService theService;
 	ServiceConstructor serviceInitializator;
+	
 	List<String> fragmentsNames;
 
 	@Override

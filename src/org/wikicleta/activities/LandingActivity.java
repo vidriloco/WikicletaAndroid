@@ -3,7 +3,6 @@ package org.wikicleta.activities;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.SimpleAnimatorListener;
-import org.wikicleta.models.Route;
 import org.wikicleta.models.User;
 
 import com.nineoldandroids.animation.Animator;

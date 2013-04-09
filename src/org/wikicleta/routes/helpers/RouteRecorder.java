@@ -50,7 +50,7 @@ public class RouteRecorder {
 	}
 	
 	public void addLocation(Location location) {
-		Log.i("Wikicleta", "Location updated");
+		Log.i("Wikicleta", "Adding location");
 		if(tracking) {
 			// calculate average speed
 			float speed = (float) location.getSpeed()*3600 / 1000;

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout 
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content">
+
+  <com.markupartist.android.widget.ActionBar
+	    xmlns:app="http://schemas.android.com/apk/res/org.wikicleta"
+	    android:id="@+id/actionbar"
+	    app:title="@string/tips_new_title"
+	    style="@style/ActionBar"/>
+      <!-- android:apiKey="0Sp8gbE2A7htK9pPiFzcliDPP5WT0D_TSkooX1w" -->
+
+  <org.wikicleta.views.PinchableMapView
+      android:id="@+id/mapview"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:layout_alignParentLeft="true"
+      android:layout_below="@+id/actionbar"
+      android:layout_above="@+id/tips_toolbar"
+      android:apiKey="0Sp8gbE2A7huBHKWXFaSnv0zQ4sNzPzWzqj9zcQ"
+      android:clickable="true" >
+  </org.wikicleta.views.PinchableMapView>
+  
+   <LinearLayout
+       android:id="@+id/tips_toolbar"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_alignParentBottom="true"
+       android:gravity="center"
+       android:background="@drawable/toolbar"
+       android:padding="5dp" >
+         <ImageView
+            android:id="@+id/tips_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/nothing"
+            android:src="@drawable/back_arrow"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:clickable="true" />
+
+        <ImageView
+            android:id="@+id/tips_finish_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/nothing"
+            android:src="@drawable/save"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:clickable="true" />
+        <ImageView
+            android:id="@+id/centermap_search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/nothing"
+            android:src="@drawable/centermap"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:clickable="true"
+            android:visibility="gone" />
+		<ImageView
+            android:id="@+id/centermap_search_button_enabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/nothing"
+            android:src="@drawable/centermap_enabled"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:clickable="true" />
+  </LinearLayout>
+</RelativeLayout>

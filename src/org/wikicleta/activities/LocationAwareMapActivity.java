@@ -18,17 +18,19 @@ public class LocationAwareMapActivity extends MapActivity {
 	protected PinchableMapView mapView;
 	protected LocationManager locationManager;
 	protected CustomMyLocationOverlay locationOverlay;
-	protected boolean locationManagerEnabled;
 	
 	protected boolean centerMapOnCurrentLocationByDefault;
-    
-	protected void onCreate(Bundle savedInstanceState, int layoutID) {
+	
+	public void onCreate(Bundle savedInstanceState, int layoutID) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(layoutID);
+		this.initialize();
+	}
+	
+	protected void initialize() {
 		this.centerMapOnCurrentLocationByDefault = true;
-		
-		mapView = (PinchableMapView) findViewById(R.id.mapview);
-        mapView.setBuiltInZoomControls(false);
+		this.mapView = (PinchableMapView) findViewById(R.id.mapview);
+        this.mapView.setBuiltInZoomControls(false);
         this.setMapToDefaultValues();
                 
     	locationOverlay = new CustomMyLocationOverlay(this, mapView);
@@ -38,13 +40,18 @@ public class LocationAwareMapActivity extends MapActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-    	locationOverlay.enableMyLocation();
+		if(shouldEnableMyLocationOnResume()) 
+			locationOverlay.enableMyLocation();
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
 		locationOverlay.disableMyLocation();
+	}
+	
+	protected boolean shouldEnableMyLocationOnResume() {
+		return true;
 	}
 	
 	protected void setMapToDefaultValues() {
@@ -79,6 +86,7 @@ public class LocationAwareMapActivity extends MapActivity {
 			super.onLocationChanged(location);
 			setMapToLocation(location);
 		}
+
 		
 	}
 	

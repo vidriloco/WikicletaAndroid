@@ -39,70 +39,70 @@ public class ProfileFragment extends Fragment {
 		View fragment =  inflater.inflate(R.layout.fragment_profile, container, false);
 		
 		TextView profileUsername = (TextView) fragment.findViewById(R.id.profile_username);
-		profileUsername.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileUsername.setTypeface(AppBase.getTypefaceStrong());
 		
 		TextView profileCity = (TextView) fragment.findViewById(R.id.profile_city);
-		profileCity.setTypeface(AppBase.getDefaultTypeface("Light"));
+		profileCity.setTypeface(AppBase.getTypefaceLight());
 
 		TextView profileGearTitle = (TextView) fragment.findViewById(R.id.profile_road_gear_title);
-		profileGearTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileGearTitle.setTypeface(AppBase.getTypefaceStrong());
 
 		TextView profileGearDescription = (TextView) fragment.findViewById(R.id.profile_road_gear_description);
-		profileGearDescription.setTypeface(AppBase.getDefaultTypeface("Light"));
+		profileGearDescription.setTypeface(AppBase.getTypefaceLight());
 
 		// Activity contents
 		TextView profileStats = (TextView) fragment.findViewById(R.id.profile_stats_title);
-		profileStats.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileStats.setTypeface(AppBase.getTypefaceStrong());
 
 		TextView profilePlacesTitle = (TextView) fragment.findViewById(R.id.profile_places_total_title);
-		profilePlacesTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profilePlacesTitle.setTypeface(AppBase.getTypefaceStrong());
 
 		TextView profileRoutesTitle = (TextView) fragment.findViewById(R.id.profile_routes_total_title);
-		profileRoutesTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileRoutesTitle.setTypeface(AppBase.getTypefaceStrong());
 
 		TextView profileHighlightsTitle = (TextView) fragment.findViewById(R.id.profile_highlights_total_title);
-		profileHighlightsTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileHighlightsTitle.setTypeface(AppBase.getTypefaceStrong());
 		
 		TextView profilePlacesCount = (TextView) fragment.findViewById(R.id.profile_places_total_count);
-		profilePlacesCount.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profilePlacesCount.setTypeface(AppBase.getTypefaceStrong());
 
 		TextView profileRoutesCount = (TextView) fragment.findViewById(R.id.profile_routes_total_count);
-		profileRoutesCount.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileRoutesCount.setTypeface(AppBase.getTypefaceStrong());
 
 		TextView profileHighlightsCount = (TextView) fragment.findViewById(R.id.profile_highlights_total_count);
-		profileHighlightsCount.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileHighlightsCount.setTypeface(AppBase.getTypefaceStrong());
 		
 		// Stats contents
 		TextView profileDistanceTitle = (TextView) fragment.findViewById(R.id.profile_pedal_distance_title);
-		profileDistanceTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileDistanceTitle.setTypeface(AppBase.getTypefaceStrong());
 
 		TextView profileDistanceCount = (TextView) fragment.findViewById(R.id.profile_pedal_distance_count);
-		profileDistanceCount.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileDistanceCount.setTypeface(AppBase.getTypefaceStrong());
 
 		TextView profileTimeOnRoadTitle = (TextView) fragment.findViewById(R.id.profile_road_time_title);
-		profileTimeOnRoadTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileTimeOnRoadTitle.setTypeface(AppBase.getTypefaceStrong());
 
 		TextView profileTimeOnRoadCount = (TextView) fragment.findViewById(R.id.profile_road_time_count);
-		profileTimeOnRoadCount.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileTimeOnRoadCount.setTypeface(AppBase.getTypefaceStrong());
 		
 		//Badges contents
 		TextView profileBadgesTitle = (TextView) fragment.findViewById(R.id.profile_badges_title);
-		profileBadgesTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileBadgesTitle.setTypeface(AppBase.getTypefaceStrong());
 		
 		TextView profileBadgeRunner = (TextView) fragment.findViewById(R.id.profile_badge_long_runner);
-		profileBadgeRunner.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileBadgeRunner.setTypeface(AppBase.getTypefaceStrong());
 		
 		TextView profileBadgeFasterThanACar = (TextView) fragment.findViewById(R.id.profile_badge_faster_than_acar);
-		profileBadgeFasterThanACar.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileBadgeFasterThanACar.setTypeface(AppBase.getTypefaceStrong());
 		
 		TextView profileBadgeBromton = (TextView) fragment.findViewById(R.id.profile_badge_brompton);
-		profileBadgeBromton.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileBadgeBromton.setTypeface(AppBase.getTypefaceStrong());
 
 		TextView profileBadgeSurvivor = (TextView) fragment.findViewById(R.id.profile_badge_survivor);
-		profileBadgeSurvivor.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileBadgeSurvivor.setTypeface(AppBase.getTypefaceStrong());
 		
 		TextView profileEraseAccountText = (TextView) fragment.findViewById(R.id.profile_erase_account_text);
-		profileEraseAccountText.setTypeface(AppBase.getDefaultTypeface("Bold"));
+		profileEraseAccountText.setTypeface(AppBase.getTypefaceStrong());
 		
 		fragment.findViewById(R.id.profile_erase_acount_button).setOnClickListener(new OnClickListener() {
 

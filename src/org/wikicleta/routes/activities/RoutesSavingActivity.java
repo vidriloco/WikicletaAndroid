@@ -5,6 +5,7 @@ import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.NotificationBuilder;
+import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.routes.fragments.ActivityFragment;
 import org.wikicleta.routes.services.RoutesService;
 import org.wikicleta.routes.services.ServiceConstructor;
@@ -20,6 +21,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class RoutesSavingActivity extends Activity implements ServiceListener {
 	
@@ -44,6 +46,10 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
         
         this.nameView = (EditText) findViewById(R.id.route_name);
         this.tagsView = (EditText) findViewById(R.id.route_tags);
+        
+        TextView subtitle = (TextView) findViewById(R.id.subtitle);
+        subtitle.setTypeface(AppBase.getTypefaceLight());
+        
         this.notification = new NotificationBuilder(this);
         
 		ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
@@ -84,6 +90,8 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
     					AppBase.launchActivityWithBundle(UserProfileActivity.class, bundle);
     				}
     	});
+    	SlidingMenuAndActionBarHelper.setDefaultFontForActionBar(this);
+
 	}
 	
 	@Override

@@ -1,33 +1,38 @@
 package org.wikicleta.routes.activities;
 
 import org.wikicleta.R;
-import org.wikicleta.activities.LocationAwareMapActivity;
 import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.routes.services.NavigationListener;
 import org.wikicleta.routes.services.RoutesService;
 import org.wikicleta.routes.services.ServiceConstructor;
 import org.wikicleta.routes.services.ServiceListener;
-import org.wikicleta.views.RouteOverlay;
+
+import com.markupartist.android.widget.ActionBar;
+import com.markupartist.android.widget.ActionBar.Action;
+import com.nineoldandroids.animation.ObjectAnimator;
+
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class NewRouteActivity extends LocationAwareMapActivity implements ServiceListener, NavigationListener {
+public class NewRouteActivity extends Activity implements ServiceListener, NavigationListener {
 	
 	protected LinearLayout recordRouteToolbarView;
-	protected LinearLayout statsToolbarView;
 	
-	protected LinearLayout gpsWaitingView;
+	protected RelativeLayout gpsWaitingView;
+	protected RelativeLayout statsView;
 	
 	private ImageView recButton;
 	private ImageView pauseButton;
@@ -36,36 +41,49 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 	protected TextView speedTextValue;
 	protected TextView timeTextValue;
 	protected TextView distanceTextValue;
+	protected TextView routesRecordingTitle;
 	
-	protected RouteOverlay routeOverlay;
-
 	AlertDialog.Builder builder;
 	protected AlertDialog.Builder alertDialog;
 
 	//Service
 	protected RoutesService theService;
 	ServiceConstructor serviceInitializator;
+
+	protected boolean firstLocationReceived = false;
+	private ObjectAnimator uploaderAnimator;
+	
+	protected ActionBar actionBar;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.new_route_activity);
+		super.onCreate(savedInstanceState);		
 		setTheme(R.style.Theme_wikicleta);
-		
 		AppBase.currentActivity = this;
+		this.setContentView(R.layout.new_route_activity);
+
 		startService(new Intent(this, RoutesService.class));
 
         recordRouteToolbarView = (LinearLayout) findViewById(R.id.route_recording_toolbar);
-        statsToolbarView = (LinearLayout) findViewById(R.id.stats_panel);
-        gpsWaitingView = (LinearLayout) findViewById(R.id.gps_loading);
+        statsView = (RelativeLayout) findViewById(R.id.stats_container);
+        gpsWaitingView = (RelativeLayout) findViewById(R.id.waiting_for_gps_container);
+        
+        this.uploaderAnimator = ObjectAnimator.ofFloat(gpsWaitingView, "alpha", 1, 0.2f, 1);
+    	this.uploaderAnimator.setDuration(3000);
+    	this.uploaderAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+        this.uploaderAnimator.start();
+        
+        TextView gpsWaiting = (TextView) findViewById(R.id.waiting_for_gps);
+        gpsWaiting.setTypeface(AppBase.getTypefaceStrong());
         
         alertDialog = new AlertDialog.Builder(this);
     	
     	recButton = (ImageView) findViewById(R.id.routes_rec_button);
     	flagButton = (ImageView) findViewById(R.id.routes_finish_button);
     	pauseButton = (ImageView) findViewById(R.id.routes_pause_button);
-
-    	alertDialog = new AlertDialog.Builder(this);
     	
+		routesRecordingTitle = (TextView) findViewById(R.id.routes_recording_state_title);
+
     	speedTextValue = (TextView) findViewById(R.id.speed_number);
     	timeTextValue = (TextView) findViewById(R.id.time_elapsed_number);
     	distanceTextValue = (TextView) findViewById(R.id.distance_number);
@@ -75,7 +93,6 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 			public void onClick(View v) {
 				resumeRecording(true);
 				flagButton.setVisibility(View.VISIBLE);
-				mapView.postInvalidate();
 			}
 		});
     	
@@ -150,6 +167,24 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 			}
     		
     	});
+    	
+    	actionBar = (ActionBar) this.findViewById(R.id.actionbar);
+    	
+    	SlidingMenuAndActionBarHelper.setDefaultFontForActionBar(this);
+    	
+        actionBar.addAction(new Action() {
+
+			@Override
+			public int getDrawable() {
+				return R.drawable.close_icon;
+			}
+
+			@Override
+			public void performAction(View view) {
+				finish();
+			}
+        	
+        });
 	}
 	
 	protected void cancelRecording() {
@@ -188,10 +223,7 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 			this.theService = (RoutesService) service;
 			theService.notifyAboutStalledRoutes();
 			
-			routeOverlay = new RouteOverlay(theService.routeRecorder.coordinateVector);
-			mapView.getOverlays().add(routeOverlay);
 	        theService.enableLocationManager();
-	        this.firstLocationReceived();
 		}
 	}
 	
@@ -217,6 +249,7 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 			recButton.setVisibility(View.VISIBLE);
 			pauseButton.setVisibility(View.GONE);
 		}
+		routesRecordingTitle.setText(R.string.routes_recording_paused);
 	}
 	
 	/*
@@ -230,6 +263,7 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 			pauseButton.setVisibility(View.VISIBLE);
 			recButton.setVisibility(View.GONE);
 		}
+		routesRecordingTitle.setText(R.string.routes_recording_resumed);
 	}
 	
 	protected void toggleControls() {
@@ -244,11 +278,6 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 	}
 	
 	@Override
-	protected boolean isRouteDisplayed() {
-		return false;
-	}
-	
-	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if (keyCode == KeyEvent.KEYCODE_BACK) {
 	        moveTaskToBack(true);
@@ -260,21 +289,44 @@ public class NewRouteActivity extends LocationAwareMapActivity implements Servic
 	public void firstLocationReceived() {
 		if(recordRouteToolbarView.getVisibility() == View.GONE)
 			recordRouteToolbarView.setVisibility(View.VISIBLE);
-		if(statsToolbarView.getVisibility() == View.GONE)
-			statsToolbarView.setVisibility(View.VISIBLE);
-		if(gpsWaitingView.getVisibility() == View.VISIBLE)
+		if(statsView.getVisibility() == View.GONE)
+			statsView.setVisibility(View.VISIBLE);
+		if(gpsWaitingView.getVisibility() == View.VISIBLE) {
+			this.uploaderAnimator.cancel();
 			gpsWaitingView.setVisibility(View.GONE);
+		}
+		
+		this.findViewById(R.id.wikicleta_logo).setVisibility(View.VISIBLE);
+		actionBar.removeAllActions();
+		
+		TextView speedTitle = (TextView) findViewById(R.id.speed_title);
+		speedTitle.setTypeface(AppBase.getTypefaceStrong());
+		TextView timeTitle = (TextView) findViewById(R.id.time_title);
+		timeTitle.setTypeface(AppBase.getTypefaceStrong());
+		TextView distanceTitle = (TextView) findViewById(R.id.distance_title);
+		distanceTitle.setTypeface(AppBase.getTypefaceStrong());
+		
+		routesRecordingTitle.setTypeface(AppBase.getTypefaceLight());
+		
+        speedTextValue.setTypeface(AppBase.getTypefaceLight());
+        timeTextValue.setTypeface(AppBase.getTypefaceLight());
+        distanceTextValue.setTypeface(AppBase.getTypefaceLight());
+
+        
 	}
 	
 	public void locationUpdated() {
-		Log.e("WIKICLETA", "Pruebas");
 		runOnUiThread(new Runnable() {
 		    public void run() {
-		    	firstLocationReceived();
+		    	if(!firstLocationReceived) {
+		    		firstLocationReceived();
+		    		firstLocationReceived = true;
+		    	}
 		    }
 		});
 	}
 
+	
 	@Override
 	public void onFieldsUpdated() {
 		runOnUiThread(new Runnable() {

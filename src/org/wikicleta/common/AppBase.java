@@ -25,16 +25,11 @@ import android.view.Display;
 public class AppBase {
 	
 	public static Activity currentActivity;
-	protected static Typeface font;
+	protected static Typeface strong;
+	protected static Typeface light;
 	
 	public static Display getScreenSize() {
 		return currentActivity.getWindowManager().getDefaultDisplay();
-	}
-
-	public static Typeface getDefaultTypeface(String type) {
-		if(font == null)
-			font = Typeface.createFromAsset(currentActivity.getAssets(), "GothamRnd-"+type+".ttf");  
-		return font;
 	}
 	
 	public static String urlFor(String string) throws BadURLResourceException {
@@ -132,5 +127,25 @@ public class AppBase {
 
 		private static final long serialVersionUID = 1L;
 		
+	}
+	
+	public static Typeface getTypefaceStrong() {
+		if(currentActivity == null)
+			return null;
+		
+		if(strong == null) {
+			strong = Typeface.createFromAsset(currentActivity.getAssets(), "GothamRnd-Bold.ttf"); 
+		}
+		return strong;
+	}
+	
+	public static Typeface getTypefaceLight() {
+		if(currentActivity == null)
+			return null;
+		
+		if(light == null) {
+			light = Typeface.createFromAsset(currentActivity.getAssets(), "GothamRnd-Light.ttf"); 
+		}
+		return light;
 	}
 }

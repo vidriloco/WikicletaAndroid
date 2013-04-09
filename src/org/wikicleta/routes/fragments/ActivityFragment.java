@@ -157,7 +157,7 @@ public class ActivityFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				getUserProfileActivity().theService.uploadStagedRoutes();
+				((UserProfileActivity) getActivity()).theService.uploadStagedRoutes();
 			}
         	
         });

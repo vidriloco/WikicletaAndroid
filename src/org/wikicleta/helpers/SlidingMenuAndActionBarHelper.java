@@ -28,7 +28,7 @@ public class SlidingMenuAndActionBarHelper {
         menu.setMenu(R.layout.sliding_menu);        
         
         TextView profileTitle = (TextView) menu.getMenu().findViewById(R.id.profile_title);
-        profileTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+        profileTitle.setTypeface(AppBase.getTypefaceStrong());
         menu.getMenu().findViewById(R.id.profile_menu_group).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -40,7 +40,7 @@ public class SlidingMenuAndActionBarHelper {
         });
 
         TextView mapTitle = (TextView) menu.getMenu().findViewById(R.id.map_title);
-        mapTitle.setTypeface(AppBase.getDefaultTypeface("Bold")); 
+        mapTitle.setTypeface(AppBase.getTypefaceStrong()); 
         menu.getMenu().findViewById(R.id.map_menu_group).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -52,7 +52,7 @@ public class SlidingMenuAndActionBarHelper {
         });
         
         TextView nowTitle = (TextView) menu.getMenu().findViewById(R.id.now_title);
-        nowTitle.setTypeface(AppBase.getDefaultTypeface("Bold")); 
+        nowTitle.setTypeface(AppBase.getTypefaceStrong()); 
         menu.getMenu().findViewById(R.id.now_menu_group).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -63,14 +63,24 @@ public class SlidingMenuAndActionBarHelper {
         	
         });
         
-        TextView marketTitle = (TextView) menu.getMenu().findViewById(R.id.market_title);
-        marketTitle.setTypeface(AppBase.getDefaultTypeface("Bold")); 
+        /*TextView marketTitle = (TextView) menu.getMenu().findViewById(R.id.market_title);
+        marketTitle.setTypeface(AppBase.getTypefaceStrong()); 
         menu.getMenu().findViewById(R.id.market_menu_group).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				animate(v).alpha(0.9f).setDuration(100);
 				AppBase.launchActivity(MarketActivity.class);
+			}
+        	
+        });*/
+        
+        TextView cyclingTitle = (TextView) menu.getMenu().findViewById(R.id.citybiking_title);
+        cyclingTitle.setTypeface(AppBase.getTypefaceStrong()); 
+        menu.getMenu().findViewById(R.id.citybiking_menu_group).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
 			}
         	
         });
@@ -96,14 +106,21 @@ public class SlidingMenuAndActionBarHelper {
 			}
         	
         });
+        
+        setDefaultFontForActionBar(activity);
 	}
 	
 	public static void load(Activity activity) {
 		loadWithActionBarTitle(activity, null);
 	}
 	
-
-
+	public static void setDefaultFontForActionBar(Activity activity) {
+		ActionBar actionBar = (ActionBar) activity.findViewById(R.id.actionbar);
+    	
+    	TextView actionBarTitle = (TextView) actionBar.findViewById(R.id.actionbar_title);
+    	actionBarTitle.setTypeface(AppBase.getTypefaceStrong());
+    	actionBarTitle.setTextSize(18);
+	}
 
 }
 

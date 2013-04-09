@@ -16,6 +16,7 @@ import org.wikicleta.routes.activities.NewRouteActivity;
 import org.wikicleta.routes.services.RoutesService;
 import org.wikicleta.routes.services.ServiceConstructor;
 import org.wikicleta.routes.services.ServiceListener;
+import org.wikicleta.tips.activities.NewTipActivity;
 import org.wikicleta.views.RouteOverlay;
 
 import com.google.android.maps.ItemizedOverlay;
@@ -58,7 +59,7 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 	
 	@SuppressLint("UseSparseArrays")
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_routes_on_map);
 		setTheme(R.style.Theme_wikicleta);
 		
@@ -174,19 +175,22 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
         });
         
         TextView dialogTitle = (TextView) view.findViewById(R.id.dialog_menu_title);
-        dialogTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+        dialogTitle.setTypeface(AppBase.getTypefaceStrong());
         
         TextView routesTitle = (TextView) view.findViewById(R.id.route_title);
-        routesTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+        routesTitle.setTypeface(AppBase.getTypefaceStrong());
         
         TextView highlightTitle = (TextView) view.findViewById(R.id.highlight_title);
-        highlightTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+        highlightTitle.setTypeface(AppBase.getTypefaceStrong());
         
         TextView bikeparkingTitle = (TextView) view.findViewById(R.id.bike_parking_title);
-        bikeparkingTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+        bikeparkingTitle.setTypeface(AppBase.getTypefaceStrong());
         
         TextView bikeSharingTitle = (TextView) view.findViewById(R.id.bikesharing_title);
-        bikeSharingTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+        bikeSharingTitle.setTypeface(AppBase.getTypefaceStrong());
+        
+        TextView bikeRepairTitle = (TextView) view.findViewById(R.id.bike_repair_title);
+        bikeRepairTitle.setTypeface(AppBase.getTypefaceStrong());
         
         view.findViewById(R.id.route_dialog_group).setOnClickListener(new OnClickListener() {
 			@Override
@@ -223,6 +227,19 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 				} else {
 					v.setBackgroundResource(R.drawable.menu_item_background);
 					overlays.remove((Integer) Constants.BIKEPARKING_OVERLAY);
+				}
+			}
+        });
+        
+        view.findViewById(R.id.bike_repair_dialog_group).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(!overlays.contains(Constants.BIKE_REPAIR_OVERLAY)) {
+					overlays.add(Constants.BIKE_REPAIR_OVERLAY);
+					v.setBackgroundResource(R.drawable.menu_item_background_selected);
+				} else {
+					v.setBackgroundResource(R.drawable.menu_item_background);
+					overlays.remove((Integer) Constants.BIKE_REPAIR_OVERLAY);
 				}
 			}
         });
@@ -270,19 +287,22 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
         });
         
         TextView dialogTitle = (TextView) view.findViewById(R.id.dialog_menu_title);
-        dialogTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+        dialogTitle.setTypeface(AppBase.getTypefaceStrong());
         
         TextView routesTitle = (TextView) view.findViewById(R.id.route_title);
-        routesTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+        routesTitle.setTypeface(AppBase.getTypefaceStrong());
         
-        TextView highlightTitle = (TextView) view.findViewById(R.id.highlight_title);
-        highlightTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+        TextView highlightTitle = (TextView) view.findViewById(R.id.tips_title);
+        highlightTitle.setTypeface(AppBase.getTypefaceStrong());
         
         TextView bicibusTitle = (TextView) view.findViewById(R.id.bicibus_title);
-        bicibusTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+        bicibusTitle.setTypeface(AppBase.getTypefaceStrong());
         
         TextView bikeparkingTitle = (TextView) view.findViewById(R.id.bike_parking_title);
-        bikeparkingTitle.setTypeface(AppBase.getDefaultTypeface("Bold"));
+        bikeparkingTitle.setTypeface(AppBase.getTypefaceStrong());
+        
+        TextView bikeRepairTitle = (TextView) view.findViewById(R.id.bike_repair_title);
+        bikeRepairTitle.setTypeface(AppBase.getTypefaceStrong());
         
         view.findViewById(R.id.route_dialog_group).setOnClickListener(new OnClickListener() {
 			@Override
@@ -292,10 +312,11 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 			}
         });
         
-        view.findViewById(R.id.highlight_dialog_group).setOnClickListener(new OnClickListener() {
+        view.findViewById(R.id.tips_dialog_group).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				addMenu.dismiss();
+				animate(v).alpha(1).setDuration(100);
+				AppBase.launchActivity(NewTipActivity.class);
 			}
         });
         
@@ -307,6 +328,13 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
         });
         
         view.findViewById(R.id.bike_parking_dialog_group).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				addMenu.dismiss();
+			}
+        });
+        
+        view.findViewById(R.id.bike_repair_dialog_group).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				addMenu.dismiss();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.wikicleta.helpers.DouglasPeuckerLineSimplifier;
 import org.wikicleta.helpers.GeoHelpers;
 import android.location.Location;
 import android.util.Log;
@@ -13,6 +14,8 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
+import com.google.android.maps.GeoPoint;
+import com.vividsolutions.jts.geom.Coordinate;
 
 @Table(name = "Routes")
 public class Route extends Model {
@@ -135,6 +138,34 @@ public class Route extends Model {
 			instant.delete();
 		}
 	}
+	
+	public void attemptSimplification() {
+		Log.e("WIKICLETA", "Will attempt to: " + instants().size());
+		
+		Coordinate [] newPoints = this.coordinates();
+		
+    	Coordinate[] pointsSimplified = DouglasPeuckerLineSimplifier.simplify(newPoints, 100);
+    	Log.e("WIKICLETA", "Simplified to: " + pointsSimplified.length);
+	}
+	
+	
+	protected Coordinate[] coordinates() {
+		Coordinate[] coordinates = new Coordinate[instants().size()];
+		int idx = 0;
+    	for (Instant instant : instants()) {
+        	
+        	GeoPoint geoPoint1 = instant.geoPoint();
+        	Coordinate coord = new Coordinate();
+        	coord.x = geoPoint1.getLatitudeE6()/1E6;
+        	coord.y = geoPoint1.getLongitudeE6()/1E6;
+        	
+        	coordinates[idx] = coord;
+        	idx++;
+    	}
+    	Log.e("WIKICLETA", "built simplification points");
+
+    	return coordinates;
+    }
 	
 	public static void build() {
 		long date = new Date().getTime();
