@@ -56,7 +56,7 @@ public class NewTipActivity extends LocationAwareMapActivity {
 				bundleArgs.putInt("lat", pinOverlay.getLocation().getLatitudeE6());
 				bundleArgs.putInt("lon", pinOverlay.getLocation().getLongitudeE6());
 
-				AppBase.launchActivityWithBundle(SaveTipActivity.class, bundleArgs);
+				AppBase.launchActivityWithBundle(SavingTipActivity.class, bundleArgs);
 			}
     		
     	});
@@ -71,7 +71,7 @@ public class NewTipActivity extends LocationAwareMapActivity {
 		View layout = inflater.inflate(R.layout.message,
 		                               (ViewGroup) findViewById(R.id.toast_layout_root));
 
-		TextView text = (TextView) layout.findViewById(R.id.text);
+		TextView text = (TextView) layout.findViewById(R.id.message_text);
 		text.setTypeface(AppBase.getTypefaceLight());
 		text.setText(R.string.select_location_on_map);
 		Toast toast = new Toast(getApplicationContext());

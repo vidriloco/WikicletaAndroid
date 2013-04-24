@@ -14,4 +14,5 @@ public class Constants {
 	public static int PLACES_OVERLAY = 1;
 	public static int HIGHLIGHTS_OVERLAY = 0;
 
+	public static int CHARACTERS_LENGTH_MIN = 6;
 }

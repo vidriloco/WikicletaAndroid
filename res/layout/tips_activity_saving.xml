@@ -20,11 +20,26 @@
 		       android:layout_height="292dp"
 		       android:background="#fff"
 		       android:orientation="vertical" >
-
+		       
+			   <TextView
+			       android:id="@+id/tipCategoryInstructions"
+			       android:layout_width="match_parent"
+			       android:layout_height="wrap_content"
+			       android:textSize="16sp"
+			       android:text="@string/tips_category_select_instruction"
+        		   android:layout_marginLeft="10dp"></TextView>
+			   
+		       <Spinner
+        		android:id="@+id/tipCategorySelector"
+        		android:layout_width="match_parent"
+        		android:layout_height="wrap_content"
+        		android:layout_marginBottom="20dp" />
+		       
 		       <EditText
 		           android:id="@+id/tips_content"
 		           android:layout_width="match_parent"
 		           android:layout_height="wrap_content"
+		           android:maxLength="250"
 		           android:ems="10"
 		           android:hint="@string/tips_form_content_hint"
 		           android:inputType="textMultiLine" >
@@ -33,7 +48,7 @@
 		       </EditText>
             
             <Button
-                android:id="@+id/save_route"
+                android:id="@+id/save_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -41,7 +56,7 @@
                 android:paddingRight="32dp"
 				android:layout_marginTop="50dp"
 				android:layout_marginBottom="20dp"
-                android:text="@string/routes_saving_form_save" />
+                android:text="@string/save" />
         	</LinearLayout>
         	        
     </ScrollView>

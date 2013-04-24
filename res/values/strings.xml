@@ -3,6 +3,7 @@
     <string name="app_name">wikicleta</string>
 	<string name="nothing"></string>
 	<string name="dashes">--</string>
+	<string name="save">Guardar</string>
 	
 	<!-- Sliding Menu options -->
 	<string name="map_section">Mapa</string>
@@ -11,7 +12,7 @@
 	<string name="bikecity_section">Pasea</string>
 	<string name="profile_section">Perfil</string>
 	
-	<string name="select_location_on_map">Ubica el pin de Wikicleta debajo de la ubicación deseada</string>
+	<string name="select_location_on_map">Centra el pin de Wikicleta debajo de la ubicación deseada</string>
 	<string name="routes_dialog_section">Ruta</string>
 	<string name="tips_dialog_section">Tip</string>
 	<string name="bicibus_dialog_section">Bicibus</string>
@@ -37,7 +38,6 @@
 	
 	<string name="routes_syncing_title">Sincronizando rutas</string>
 	
-	<string name="routes_save">Guardar</string>
 	<string name="routes_saving_title">Guardar Ruta</string>
 	<string name="routes_recording_paused">Captura de ruta en pausa</string>
 	<string name="routes_recording_resumed">Capturando ruta</string>
@@ -79,11 +79,18 @@
 	<string name="route_not_uploaded">Sin subir</string>
 	<string name="route_uploading">Subiendo</string>
 	
+	<!-- Strings for Tips  -->
 	<string name="tips_new_title">Nuevo Tip</string>
 	<string name="tips_saving_title">Guardando Tip</string>
 	
 	<string name="tips_form_content_hint">Contenido del tip</string>
+	<string name="tips_category_select_instruction">¿Qué tipo de tip deseas compartir?</string>
+	<string name="tips_alert_min_input_length_not_reached">El contenido del tip debe ser de al menos 60 caracteres</string>
 	
+	<string name="tips.categories.danger">Peligro</string>
+	<string name="tips.categories.alert">Alerta</string>
+	<string name="tips.categories.sightseeing">Para ver</string>
+
 	<string name="waiting_for_gps">Esperando GPS &#8230;</string>
 	<!-- Strings for user profile -->
 	<string name="user_profile_title">Tu Perfil</string>
