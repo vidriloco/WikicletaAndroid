@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bike_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp" >
+    
+	<ImageView
+		android:id="@+id/bike_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/none" />
+	<LinearLayout 
+	    android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp">
+	    <TextView
+	      android:id="@+id/bike_name_text"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:textColor="@color/wikicleta_orange"
+		  android:textSize="15sp"
+		  android:textAllCaps="true"
+	      android:text="@string/none" />
+	    <TextView
+	      android:id="@+id/bike_brand_text"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:textColor="@color/wikicleta_blue"
+		  android:textSize="12sp"
+		  android:textAllCaps="true"
+	      android:text="@string/none" />
+	    <TextView
+	      android:id="@+id/bike_likes_count_text"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:textColor="@color/wikicleta_blue"
+	      android:drawablePadding="3dp"
+	      android:drawableLeft="@drawable/mini_heart_icon"
+		  android:textSize="15sp"
+		  android:layout_marginTop="20dp"
+		  android:background="@drawable/background_rounded"
+		  android:padding="5dp"
+	      android:text="@string/none" />
+	</LinearLayout>
+</LinearLayout>

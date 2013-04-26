@@ -1,21 +1,51 @@
 package org.wikicleta.routes.fragments;
 
-import org.wikicleta.R;
-import org.wikicleta.common.AppBase;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Iterator;
+import java.util.Vector;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.wikicleta.R;
+import org.wikicleta.access.activities.LandingActivity;
+import org.wikicleta.common.AppBase;
+import org.wikicleta.common.NetworkOperations;
+import org.wikicleta.helpers.Graphics;
+import org.wikicleta.models.Bike;
+import org.wikicleta.models.User;
+import com.nineoldandroids.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class ProfileFragment extends Fragment {
 	
 	protected AlertDialog.Builder alertDialog;
+	protected LinearLayout profileSyncer;
+	protected ObjectAnimator syncAnimator;
+	protected TextView syncingText;
+	protected UserProfileDataTask profileFetcher;
+	
+	protected ImageView userPicture;
+	protected TextView profileCity;
+	protected TextView profileBio;
 	
 	public static ProfileFragment newInstance(int index) {
 		ProfileFragment f = new ProfileFragment();
@@ -38,71 +68,47 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
 		View fragment =  inflater.inflate(R.layout.fragment_profile, container, false);
 		
+		userPicture = (ImageView) fragment.findViewById(R.id.avatar_pic);
+		
 		TextView profileUsername = (TextView) fragment.findViewById(R.id.profile_username);
+		profileUsername.setText(User.username());
 		profileUsername.setTypeface(AppBase.getTypefaceStrong());
 		
-		TextView profileCity = (TextView) fragment.findViewById(R.id.profile_city);
+		profileCity = (TextView) fragment.findViewById(R.id.profile_city);
 		profileCity.setTypeface(AppBase.getTypefaceLight());
 
-		TextView profileGearTitle = (TextView) fragment.findViewById(R.id.profile_road_gear_title);
-		profileGearTitle.setTypeface(AppBase.getTypefaceStrong());
-
-		TextView profileGearDescription = (TextView) fragment.findViewById(R.id.profile_road_gear_description);
-		profileGearDescription.setTypeface(AppBase.getTypefaceLight());
-
-		// Activity contents
-		TextView profileStats = (TextView) fragment.findViewById(R.id.profile_stats_title);
-		profileStats.setTypeface(AppBase.getTypefaceStrong());
-
-		TextView profilePlacesTitle = (TextView) fragment.findViewById(R.id.profile_places_total_title);
-		profilePlacesTitle.setTypeface(AppBase.getTypefaceStrong());
-
-		TextView profileRoutesTitle = (TextView) fragment.findViewById(R.id.profile_routes_total_title);
-		profileRoutesTitle.setTypeface(AppBase.getTypefaceStrong());
-
-		TextView profileHighlightsTitle = (TextView) fragment.findViewById(R.id.profile_highlights_total_title);
-		profileHighlightsTitle.setTypeface(AppBase.getTypefaceStrong());
-		
-		TextView profilePlacesCount = (TextView) fragment.findViewById(R.id.profile_places_total_count);
-		profilePlacesCount.setTypeface(AppBase.getTypefaceStrong());
-
-		TextView profileRoutesCount = (TextView) fragment.findViewById(R.id.profile_routes_total_count);
-		profileRoutesCount.setTypeface(AppBase.getTypefaceStrong());
-
-		TextView profileHighlightsCount = (TextView) fragment.findViewById(R.id.profile_highlights_total_count);
-		profileHighlightsCount.setTypeface(AppBase.getTypefaceStrong());
-		
-		// Stats contents
-		TextView profileDistanceTitle = (TextView) fragment.findViewById(R.id.profile_pedal_distance_title);
-		profileDistanceTitle.setTypeface(AppBase.getTypefaceStrong());
-
-		TextView profileDistanceCount = (TextView) fragment.findViewById(R.id.profile_pedal_distance_count);
-		profileDistanceCount.setTypeface(AppBase.getTypefaceStrong());
-
-		TextView profileTimeOnRoadTitle = (TextView) fragment.findViewById(R.id.profile_road_time_title);
-		profileTimeOnRoadTitle.setTypeface(AppBase.getTypefaceStrong());
-
-		TextView profileTimeOnRoadCount = (TextView) fragment.findViewById(R.id.profile_road_time_count);
-		profileTimeOnRoadCount.setTypeface(AppBase.getTypefaceStrong());
-		
-		//Badges contents
-		TextView profileBadgesTitle = (TextView) fragment.findViewById(R.id.profile_badges_title);
-		profileBadgesTitle.setTypeface(AppBase.getTypefaceStrong());
-		
-		TextView profileBadgeRunner = (TextView) fragment.findViewById(R.id.profile_badge_long_runner);
-		profileBadgeRunner.setTypeface(AppBase.getTypefaceStrong());
-		
-		TextView profileBadgeFasterThanACar = (TextView) fragment.findViewById(R.id.profile_badge_faster_than_acar);
-		profileBadgeFasterThanACar.setTypeface(AppBase.getTypefaceStrong());
-		
-		TextView profileBadgeBromton = (TextView) fragment.findViewById(R.id.profile_badge_brompton);
-		profileBadgeBromton.setTypeface(AppBase.getTypefaceStrong());
-
-		TextView profileBadgeSurvivor = (TextView) fragment.findViewById(R.id.profile_badge_survivor);
-		profileBadgeSurvivor.setTypeface(AppBase.getTypefaceStrong());
+		profileBio = (TextView) fragment.findViewById(R.id.profile_bio);
+		profileBio.setTypeface(AppBase.getTypefaceLight());
 		
 		TextView profileEraseAccountText = (TextView) fragment.findViewById(R.id.profile_erase_account_text);
 		profileEraseAccountText.setTypeface(AppBase.getTypefaceStrong());
+		
+		Button eraseButton = (Button) fragment.findViewById(R.id.profile_erase_acount_button);
+		eraseButton.setTypeface(AppBase.getTypefaceStrong());
+		
+		syncingText = (TextView) fragment.findViewById(R.id.syncing_text);
+		syncingText.setTypeface(AppBase.getTypefaceLight());
+
+		profileSyncer = (LinearLayout) fragment.findViewById(R.id.profile_sync_container);
+		
+		syncAnimator = ObjectAnimator.ofFloat(profileSyncer, "alpha", 1, 0.2f, 1);
+		syncAnimator.setDuration(2000);
+		syncAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+		
+        profileFetcher = new UserProfileDataTask();
+        profileFetcher.execute();
+        
+		profileSyncer.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if(profileFetcher == null) {
+			        profileFetcher = new UserProfileDataTask();
+			        profileFetcher.execute();
+				}
+			}
+			
+		});
 		
 		fragment.findViewById(R.id.profile_erase_acount_button).setOnClickListener(new OnClickListener() {
 
@@ -116,7 +122,9 @@ public class ProfileFragment extends Fragment {
 				setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						
+						User.destroy();
+						AppBase.launchActivity(LandingActivity.class);
+						getActivity().finish();
 					}
 				});
 				
@@ -127,4 +135,169 @@ public class ProfileFragment extends Fragment {
 		
 		return fragment;
     }
+	
+	public void updateWithProfileFragments(JSONObject object) throws IOException  {
+		final RelativeLayout replaceableView = (RelativeLayout) getActivity().findViewById(R.id.white_container);
+		
+		final String city = (String) object.get("city_name");
+		final String bio = (String) object.get("bio");
+
+		final JSONArray bikesArray = (JSONArray) object.get("bikes");
+		@SuppressWarnings("unchecked")
+		Iterator<JSONObject> bikesIterator = (Iterator<JSONObject>) bikesArray.iterator();
+		
+		final Vector<Bike> bikesList = new Vector<Bike>(bikesArray.size());
+		while(bikesIterator.hasNext()) {
+			JSONObject bikeObj = bikesIterator.next();
+			URL bikeURL = new URL(NetworkOperations.serverHost.concat((String) bikeObj.get("bike_photo_url")));
+			Bitmap bmp = BitmapFactory.decodeStream(bikeURL.openConnection().getInputStream());
+			/**
+			 * Registers or updates a bike from the fetched parameters
+			 */
+			Bike bike = Bike.find((Long) bikeObj.get("id"));
+			if(bike != null) {
+				bike.updateAttrsFromJSON(bikeObj, Graphics.getRoundedCornerBitmap(bmp, 10));
+			} else {
+				bike = Bike.newFormJSON(bikeObj, Graphics.getRoundedCornerBitmap(bmp, 10));
+			}
+			bikesList.add(bike);
+			bike.save();
+		}
+		String userPicURL = (String) object.get("user_pic"); 
+		
+		Bitmap tmp = null;
+		if(userPicURL != null) {
+			URL url = new URL(NetworkOperations.serverHost.concat(userPicURL));
+			tmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+		}
+		final Bitmap bmp = tmp;
+
+		this.getActivity().runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				replaceableView.removeAllViews();
+				if(bikesArray.size() == 0)
+					insertViewForNoBikesToShow(replaceableView);
+				else
+					insertViewsForBikes(replaceableView, bikesList);
+				if(city == null) 
+					profileCity.setText(getActivity().getResources().getString(R.string.profile_city_not_set));
+				 else 
+					profileCity.setText(city);
+				
+				if(bio != null) 
+					profileBio.setText(bio);
+
+				if(bmp != null)
+					userPicture.setImageBitmap(Graphics.getRoundedBitmap(bmp));
+			}
+
+
+		});
+	}
+	
+	private void insertViewsForBikes(RelativeLayout parentView, Vector<Bike> bikesList) {
+		LayoutInflater li = getActivity().getLayoutInflater();
+		
+		LinearLayout bikesLayout = (LinearLayout) li.inflate(R.layout.bikes_layout, null);
+		parentView.addView(bikesLayout.findViewById(R.id.bikes_layout));
+		LinearLayout listBikesView = (LinearLayout) parentView.findViewById(R.id.bike_list_container);
+		
+		TextView bikeListTitle = (TextView) bikesLayout.findViewById(R.id.bike_list_text);
+		bikeListTitle.setTypeface(AppBase.getTypefaceStrong());
+		
+		for(Bike bike : bikesList) {
+			View view = li.inflate(R.layout.bike_layout, null);
+
+			((ImageView) view.findViewById(R.id.bike_icon)).setImageBitmap(bike.image);
+			
+			TextView bikeName = (TextView) view.findViewById(R.id.bike_name_text);
+			bikeName.setTypeface(AppBase.getTypefaceLight());
+			bikeName.setText(bike.name);
+			
+			TextView bikeBrand = (TextView) view.findViewById(R.id.bike_brand_text);
+			bikeBrand.setTypeface(AppBase.getTypefaceLight());
+			bikeBrand.setText(bike.brand);
+			
+			TextView bikeLikes = (TextView) view.findViewById(R.id.bike_likes_count_text);
+			bikeLikes.setTypeface(AppBase.getTypefaceLight());
+			
+			if(bike.likesCount == 1) {
+				bikeLikes.setText(String.valueOf(bike.likesCount).concat(" ").concat(getActivity().getString(R.string.fav)));
+			} else {
+				bikeLikes.setText(String.valueOf(bike.likesCount).concat(" ").concat(getActivity().getString(R.string.favs)));
+			}
+			
+			listBikesView.addView(view.findViewById(R.id.bike_layout));
+		}
+	}
+	
+	public void insertViewForNoBikesToShow(RelativeLayout parentView) {
+		View view = getActivity().getLayoutInflater().inflate(R.layout.no_bikes_layout, null);
+		parentView.addView(view.findViewById(R.id.no_bikes_to_show_layout));
+		TextView noBikesTextView = (TextView) view.findViewById(R.id.no_bikes_text);
+		noBikesTextView.setTypeface(AppBase.getTypefaceLight());
+	}
+	
+	/**
+	 *  Fetch user profile data
+	 */
+	public class UserProfileDataTask extends AsyncTask<Void, Void, Boolean> {
+		
+		
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			String result = NetworkOperations.getJSONExpectingString("/api/profiles/".concat(User.username()), false);
+			Log.e("WIKICLETA", result);
+			if(result == null)
+				return false;
+			JSONObject responseObject = (JSONObject) JSONValue.parse(result);
+			
+			if(responseObject.containsKey("success") && !((Boolean) responseObject.get("success"))) {
+				
+				return false;
+			} else {
+				try {
+					updateWithProfileFragments(responseObject);
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return true;
+			}
+			
+			
+		}
+
+		@Override
+		protected void onPreExecute() {
+			syncAnimator.start();
+			syncingText.setText(getActivity().getResources().getString(R.string.syncing_profile_text_value));
+			syncingText.setTextColor(getActivity().getResources().getColor(R.color.wikicleta_blue));
+		}
+		
+		@Override
+		protected void onPostExecute(final Boolean success) {
+			syncAnimator.cancel();
+
+			if(!success) {
+				syncingText.setText(getActivity().getResources().getString(R.string.syncing_profile_failed_text_value));
+				syncingText.setTextColor(getActivity().getResources().getColor(R.color.wikicleta_orange));
+
+				ObjectAnimator animatorBack = ObjectAnimator.ofFloat(profileSyncer, "alpha", 1, 0.8f, 1);
+				animatorBack.setDuration(500);
+				animatorBack.start();
+			}
+			profileFetcher = null;
+		}
+
+		@Override
+		protected void onCancelled() {
+			
+		}
+	}
 }

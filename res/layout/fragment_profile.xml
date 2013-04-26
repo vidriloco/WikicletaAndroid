@@ -6,41 +6,33 @@
 	    android:layout_width="match_parent"
    		android:layout_height="wrap_content"
    		android:orientation="vertical"
-   		android:background="#fff">
-	            <!-- Profile & avatar -->
+   		android:background="@drawable/gradient">
+	    
+	    <!-- Profile & avatar -->
 	    <RelativeLayout
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_marginTop="10dp"
-	        android:padding="20dp" >
-	
-	        <RelativeLayout
-	            android:id="@+id/relativeLayout1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_centerHorizontal="true"
-	            android:background="@drawable/photo_box" >
-	
-	            <ImageView
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_centerHorizontal="true"
-	                android:layout_centerVertical="true"
-	                android:contentDescription="@string/none"
-	                android:src="@drawable/profile_placeholder_avatar" />
-	        </RelativeLayout>
-	
+	        android:padding="20dp"
+	        android:layout_marginTop="15dp">
+			<ImageView
+			    android:id="@+id/avatar_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/none"
+                android:src="@drawable/profile_placeholder_avatar" />
+
 	        <TextView
 	            android:id="@+id/profile_username"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_below="@+id/relativeLayout1"
-	            android:layout_centerHorizontal="true"
+	            android:layout_below="@+id/avatar_pic"
 	            android:layout_marginTop="10dp"
+	            android:layout_centerHorizontal="true"
 	            android:textSize="25sp"
 	            android:textColor="#F26100"
 	            android:textStyle="bold"
-	            android:text="spalatin" />
+	            android:text="@string/none" />
 	
 	        <TextView
 	            android:id="@+id/profile_city"
@@ -50,271 +42,60 @@
 	            android:textColor="#808282"
 				android:textSize="17sp"
 				android:layout_centerHorizontal="true"
-	            android:text="Mexico City" />
-	
+	            android:text="@string/none" />
+	        
+	        <TextView
+	            android:id="@+id/profile_bio"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@+id/profile_city"
+	            android:textColor="@color/wikicleta_blue"
+				android:textSize="14sp"
+				android:layout_marginTop="20dp"
+				android:layout_marginBottom="5dp"
+				android:layout_centerHorizontal="true"
+	            android:text="@string/none" />
+			
 	    </RelativeLayout>
-	    <!-- Road gear -->
-		<RelativeLayout 
-		    android:layout_width="fill_parent"
+	    
+	    <RelativeLayout
+	        android:id="@+id/white_container"
+	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:padding="10dp"
-	        android:layout_marginTop="10dp"
-	        android:background="#EAF6FF">
-		   	
-		    <TextView
-	            android:id="@+id/profile_road_gear_title"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-				android:textSize="15sp"
-	            android:text="@string/profile_road_gear_title_text" />
-	
-		    <TextView
-		        android:id="@+id/profile_road_gear_description"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_alignLeft="@+id/profile_road_gear_title"
-		        android:layout_below="@+id/profile_road_gear_title"
-		        android:layout_marginTop="5dp"
-		        android:text="Dahon MuP8 20&apos;&apos; / Nutcase helmet blue"
-		        android:textSize="12sp" />
-	
-		</RelativeLayout>
-		<!-- Stats block -->
-		<RelativeLayout 
-		    android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:padding="10dp"
-	        android:layout_marginTop="20dp"
-	        android:background="@drawable/gradient">
-		    <TextView
-	            android:id="@+id/profile_stats_title"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-				android:textSize="15sp"
-	            android:text="@string/profile_stats_title_text" />
-		    
-		   	<LinearLayout 
-		   	    android:id="@+id/profile_stats_container"
-		    	android:layout_width="wrap_content"
+	        android:padding="20dp"
+	        android:background="@drawable/landing_bar">
+			<LinearLayout android:id="@+id/profile_sync_container"
+			    android:layout_width="fill_parent"
 	        	android:layout_height="wrap_content"
-	        	android:layout_below="@+id/profile_stats_title"
-	        	android:padding="10dp"
 	        	android:orientation="vertical"
-	        	android:background="@drawable/gradient">
-	            <TextView
-	            		android:id="@+id/profile_pedal_distance_title"
-	            		android:layout_width="wrap_content"
-	            		android:layout_height="wrap_content"
-						android:textSize="12sp"
-						android:textColor="#6996D6"
-	            		android:text="@string/profile_pedal_distance_title_text" />
-	            <TextView
-	            		android:id="@+id/profile_pedal_distance_count"
-	            		android:layout_width="wrap_content"
-	            		android:layout_height="wrap_content"
-						android:textSize="22sp"
-	            		android:text="180km" />
-	            <TextView
-	            		android:id="@+id/profile_road_time_title"
-	            		android:layout_width="wrap_content"
-	            		android:layout_height="wrap_content"
-						android:textSize="12sp"
-						android:textColor="#6996D6"
-	            		android:text="@string/profile_road_time_title_text" />
-	            <TextView
-	            		android:id="@+id/profile_road_time_count"
-	            		android:layout_width="wrap_content"
-	            		android:layout_height="wrap_content"
-						android:textSize="22sp"
-	            		android:text="76Hrs" />
-			</LinearLayout>
-		    
-		    <LinearLayout 
-		        android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:orientation="horizontal"
-	            android:layout_below="@+id/profile_stats_title"
-	            android:layout_alignParentRight="true"
-	            android:layout_marginTop="20dp">
-		        <LinearLayout 
-		            android:layout_width="wrap_content"
-	            	android:layout_height="fill_parent"
-	            	android:orientation="vertical"
-	            	android:padding="5dp"
-	            	android:background="@drawable/gradient_border"
-	            	android:layout_marginRight="2dp"
-	            	android:gravity="center">
-					<TextView
-	            		android:id="@+id/profile_routes_total_title"
-	            		android:layout_width="wrap_content"
-	            		android:layout_height="wrap_content"
-						android:textSize="13sp"
-						android:textColor="#F26100"
-	            		android:text="@string/profile_routes_title_text" />
-					<TextView
-	            		android:id="@+id/profile_routes_total_count"
-	            		android:layout_width="wrap_content"
-	            		android:layout_height="wrap_content"
-						android:textSize="22sp"
-	            		android:text="8" />
-		        </LinearLayout>
-		        <LinearLayout 
-		            android:layout_width="wrap_content"
-	            	android:layout_height="fill_parent"
-	            	android:orientation="vertical"
-	            	android:padding="5dp"
-	            	android:background="@drawable/gradient_border"
-	            	android:layout_marginRight="2dp"
-	            	android:gravity="center">
-					<TextView
-	            		android:id="@+id/profile_places_total_title"
-	            		android:layout_width="wrap_content"
-	            		android:layout_height="wrap_content"
-						android:textSize="13sp"
-						android:textColor="#F26100"
-	            		android:text="@string/profile_places_title_text" />
-					<TextView
-	            		android:id="@+id/profile_places_total_count"
-	            		android:layout_width="wrap_content"
-	            		android:layout_height="wrap_content"
-						android:textSize="22sp"
-	            		android:text="1" />
-		        </LinearLayout>
-		        <LinearLayout 
-		            android:layout_width="wrap_content"
-	            	android:layout_height="fill_parent"
-	            	android:orientation="vertical"
-	            	android:padding="5dp"
-	            	android:background="@drawable/gradient_border"
-	            	android:gravity="center">
-					<TextView
-	            		android:id="@+id/profile_highlights_total_title"
-	            		android:layout_width="wrap_content"
-	            		android:layout_height="wrap_content"
-						android:textSize="13sp"
-						android:textColor="#F26100"
-	            		android:text="@string/profile_highlights_title_text" />
-					<TextView
-	            		android:id="@+id/profile_highlights_total_count"
-	            		android:layout_width="wrap_content"
-	            		android:layout_height="wrap_content"
-						android:textSize="22sp"
-	            		android:text="3" />
-		        </LinearLayout>
-		    </LinearLayout>
-		</RelativeLayout>
-		<!-- Earned badges -->
-		<RelativeLayout 
-		    android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:padding="10dp"
-	        android:layout_marginTop="10dp"
-	        android:background="#fff">
-		   	
-		    <TextView
-	            android:id="@+id/profile_badges_title"
+	        	android:layout_centerHorizontal="true">
+				<ImageView
+			    android:id="@+id/syncing_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/none"
+                android:src="@drawable/sync_icon"
+                android:layout_gravity="center" />
+	        	<TextView
+	            android:id="@+id/syncing_text"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-				android:textSize="15sp"
-	            android:text="@string/profile_badges_title_text" />
-	
-			<TableLayout 
-			    android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:layout_below="@+id/profile_badges_title"
-	        	android:layout_marginTop="10dp"
-	        	android:stretchColumns="1"
-	        	android:orientation="horizontal">
-			    
-			    <TableRow>
-				    <LinearLayout 
-		        		android:layout_height="wrap_content"
-		        		android:orientation="vertical"
-		        		android:layout_weight="1"
-		        		android:layout_width="0dip">
-						<ImageView
-		                	android:layout_width="wrap_content"
-		                	android:layout_height="wrap_content"
-		                	android:contentDescription="@string/none"
-			                android:layout_gravity="center"
-		                	android:src="@drawable/badge_faster_than_a_car" />
-				    	<TextView
-		            		android:id="@+id/profile_badge_faster_than_acar"
-		            		android:layout_width="wrap_content"
-		            		android:layout_height="wrap_content"
-							android:textSize="11sp"
-							android:gravity="center"
-							android:layout_gravity="center"
-		            		android:text="@string/profile_badge_faster_than_cars" />
-					</LinearLayout>
-					
-					<LinearLayout 
-					    android:layout_width="0dip"
-		        		android:layout_height="wrap_content"
-		        		android:orientation="vertical"
-		        		android:layout_weight="1">
-						<ImageView
-		                	android:layout_width="wrap_content"
-		                	android:layout_height="wrap_content"
-		                	android:contentDescription="@string/none"
-			                android:layout_gravity="center"
-		                	android:src="@drawable/badge_survivor" />
-				    	<TextView
-		            		android:id="@+id/profile_badge_survivor"
-		            		android:layout_width="wrap_content"
-		            		android:layout_height="wrap_content"
-							android:textSize="11sp"
-							android:layout_gravity="center"
-		            		android:text="@string/profile_badge_survivor" />
-					</LinearLayout>
-					<LinearLayout 
-				    	android:layout_width="0dip"
-		        		android:layout_height="wrap_content"
-		        		android:orientation="vertical"
-		        		android:layout_weight="1">
-						<ImageView
-		                	android:layout_width="wrap_content"
-		                	android:layout_height="wrap_content"
-		                	android:contentDescription="@string/none"
-			                android:layout_gravity="center"
-		                	android:src="@drawable/badge_brompton" />
-				    	<TextView
-		            		android:id="@+id/profile_badge_brompton"
-		            		android:layout_width="wrap_content"
-		            		android:layout_height="wrap_content"
-							android:textSize="11sp"
-							android:layout_gravity="center"
-		            		android:text="@string/profile_badge_brompton" />
-					</LinearLayout>
-					<LinearLayout 
-				    	android:layout_width="0dip"
-		        		android:layout_height="wrap_content"
-		        		android:orientation="vertical"
-		        		android:layout_weight="1">
-						<ImageView
-		                	android:layout_width="wrap_content"
-		                	android:layout_height="wrap_content"
-		                	android:contentDescription="@string/none"
-			                android:layout_gravity="center"
-		                	android:src="@drawable/badge_long_runner" />
-				    	<TextView
-		            		android:id="@+id/profile_badge_long_runner"
-		            		android:layout_width="wrap_content"
-		            		android:layout_height="wrap_content"
-							android:textSize="11sp"
-							android:layout_gravity="center"
-		            		android:text="@string/profile_badge_long_runner" />
-					</LinearLayout>
-				</TableRow>
-			</TableLayout>
-		</RelativeLayout>
+	            android:layout_marginTop="15dp"
+	            android:textColor="#fb4e15"
+				android:textSize="17sp"
+	            android:text="@string/syncing_profile_text_value"
+	            android:layout_gravity="center"
+	            android:gravity="center" />
+			</LinearLayout>
+
+
+	    </RelativeLayout>
 		<!-- Erasing account from phone -->
 		<RelativeLayout 
 		    android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:padding="10dp"
-	        android:layout_marginTop="10dp"
-	        android:background="#EAF6FF">
+	        android:layout_marginTop="10dp">
 
 		    <Button
 		        android:id="@+id/profile_erase_acount_button"

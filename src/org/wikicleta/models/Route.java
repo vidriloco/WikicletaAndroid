@@ -3,6 +3,7 @@ package org.wikicleta.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.wikicleta.helpers.DouglasPeuckerLineSimplifier;
 import org.wikicleta.helpers.GeoHelpers;
@@ -34,14 +35,7 @@ public class Route extends Model {
 	
 	@Column(name = "Kilometers")
 	public float kilometers;
-	
-	@Column(name = "CreatedAt")
-	public long createdAt;
-	
-	
-	@Column(name = "Json")
-	public String jsonRepresentation;
-	
+
 	@Column(name = "isPublic")
 	public boolean isPublic;
 	
@@ -53,6 +47,12 @@ public class Route extends Model {
 	
 	@Column(name = "Ranking")
 	public int ranking;
+
+	@Column(name = "Json")
+	public String jsonRepresentation;
+	
+	@Column(name = "CreatedAt")
+	public long createdAt;
 	
 	public boolean isBlocked;
 	public ArrayList<Instant> temporalInstants;
@@ -102,6 +102,12 @@ public class Route extends Model {
 		return StringEscapeUtils.unescapeJava(jsonRepresentation);
 	}
 	
+	public boolean isDraft() {
+		if(this.jsonRepresentation == null)
+			return false;
+		return !(this.jsonRepresentation.length() == 0);
+	}
+	
 	public static Route findById(Long id) {
 		if(id == null)
 			return null;
@@ -115,12 +121,6 @@ public class Route extends Model {
 	public static ArrayList<Route> uploaded() {
 		return new Select().from(Route.class).where("Json IS NULL").execute();
 	} 
-	
-	public boolean isDraft() {
-		if(this.jsonRepresentation == null)
-			return false;
-		return !(this.jsonRepresentation.length() == 0);
-	}
 	
 	public Location getStartingLocation() {
 		return this.instants().get(0).location();
@@ -246,6 +246,7 @@ public class Route extends Model {
 			instant.route = route;
 			instant.save();
 		}
+		
 		ActiveAndroid.setTransactionSuccessful();
 		ActiveAndroid.endTransaction();
 	}

@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Landing Activity strings -->
-    <string name="landing_join_button">Únete</string>
-    <string name="landing_explore_button">Explora</string>
+    <string name="landing_join_text">Únete</string>
+    <string name="landing_explore_text">Explora</string>
+    <string name="landing_login_text">Iniciar</string>
     
     <!-- Registration Activity strings -->
-    <string name="registration_title">Registro</string>
-    <string name="registration_prologue_text">Para registrarte, solo necesitamos los siguientes datos:</string>
+    <string name="registration_title">Únete a Wikicleta</string>
+    <string name="registration_prologue_text">Regálanos los siguientes datos para completar tu registro:</string>
+    <string name="sticker_prologue_text">Por ahora, para registrarte, es necesario haber capturado un sticker como el siguiente:</string>
+    
     <string name="registration_accept_button">Aceptar</string>
     <string name="registration_back_button">Regresar</string>
     
     
 	<!-- Login Activity strings -->
-	<string name="login_title">Únete a Wikicleta</string>
-	<string name="login_subtitle">¿Ya te registraste en Wikicleta? \nInicia sesión aquí:</string>
-	<string name="login_subtitle_social_nets">O mediante una red social</string>
-	<string name="login_subtitle_register">Registrate con tu correo electrónico</string>
+	<string name="login_title">Inicia Sesión</string>
+	<string name="login_prologue_text">Bienvenid@, llena los siguientes campos para usar Wikicleta en tu teléfono</string>
 	<string name="login_register">Registrarme</string>
 	
 	<string name="twitter">Twitter</string>
 	<string name="facebook">Facebook</string>
     
-    <string name="prompt_email">Correo electrónico</string>
+	<string name="prompt_sticker"># de Sticker</string>
+    <string name="prompt_login">Tu correo o nombre de usuario</string>
     <string name="prompt_password">Contraseña</string>
     <string name="prompt_password_confirmation">Confirma tu contraseña</string>
     <string name="prompt_name">Tu nombre</string>

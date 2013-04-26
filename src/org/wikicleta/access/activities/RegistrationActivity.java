@@ -1,43 +1,43 @@
-package org.wikicleta.activities;
+package org.wikicleta.access.activities;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
+import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.helpers.DialogBuilder;
+import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.User;
-
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
-
-
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
-public class RegistrationActivity extends Activity {
+public class RegistrationActivity extends AccessActivity {
 	
 	private String mEmail;
 	private String mPassword;
 	private String mPasswordConfirmation;
 	private String mName;
 	private String mUsername;
+	private String mStickerNumber;
 	
 	private EditText mEmailView;
 	private EditText mUsernameView;
 	private EditText mNameView;
 	private EditText mPasswordView;
 	private EditText mPasswordConfirmationView;
+	private EditText mStickerNumberView;
 	
 	protected AlertDialog alertDialog;
 	private UserRegistrationTask mRegAuthTask = null;
@@ -49,14 +49,31 @@ public class RegistrationActivity extends Activity {
 		
 		setContentView(R.layout.activity_registration);
 		
+		SlidingMenuAndActionBarHelper.setDefaultFontForActionBar(this);
+		
+		TextView registrationHint = (TextView) this.findViewById(R.id.registration_prologue);
+		registrationHint.setTypeface(AppBase.getTypefaceLight());
+    	
+		TextView stickerHint = (TextView) this.findViewById(R.id.sticker_prologue);
+		stickerHint.setTypeface(AppBase.getTypefaceLight());
+		
 		// Set up the login form
 		mNameView = (EditText) findViewById(R.id.name);
+		mNameView.setTypeface(AppBase.getTypefaceLight());
 		mEmailView = (EditText) findViewById(R.id.email);
+		mEmailView.setTypeface(AppBase.getTypefaceLight());
 		mUsernameView = (EditText) findViewById(R.id.username);
+		mUsernameView.setTypeface(AppBase.getTypefaceLight());
 		mPasswordView = (EditText) findViewById(R.id.password);
+		mPasswordView.setTypeface(AppBase.getTypefaceLight());
 		mPasswordConfirmationView = (EditText) findViewById(R.id.password_confirmation);
+		mPasswordConfirmationView.setTypeface(AppBase.getTypefaceLight());
+		mStickerNumberView = (EditText) findViewById(R.id.sticker_number);
+		mStickerNumberView.setTypeface(AppBase.getTypefaceLight());
 		
-		findViewById(R.id.registration_accept_button).setOnClickListener(
+		Button accept = (Button) findViewById(R.id.registration_accept_button);
+		accept.setTypeface(AppBase.getTypefaceStrong());
+		accept.setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -75,7 +92,7 @@ public class RegistrationActivity extends Activity {
 
 			@Override
 			public void performAction(View view) {
-				AppBase.launchActivity(LoginActivity.class);
+				AppBase.launchActivity(LandingActivity.class);
 			}
         	
         });
@@ -94,6 +111,7 @@ public class RegistrationActivity extends Activity {
 		mPasswordConfirmationView.setError(null);
 		mNameView.setError(null);
 		mUsernameView.setError(null);
+		mStickerNumberView.setError(null);
 		
 		// Populate registration fields
 		mEmail = mEmailView.getText().toString();
@@ -101,6 +119,12 @@ public class RegistrationActivity extends Activity {
 		mPassword = mPasswordView.getText().toString();
 		mName = mNameView.getText().toString();
 		mPasswordConfirmation = mPasswordConfirmationView.getText().toString();
+		mStickerNumber = mStickerNumberView.getText().toString();
+
+		if(FieldValidators.isFieldEmpty(mStickerNumber)) {
+			mStickerNumberView.setError(getString(R.string.error_field_required));
+			return;
+		}
 		
 		if(FieldValidators.isFieldEmpty(mName)) {
 			mNameView.setError(getString(R.string.error_field_required));
@@ -144,32 +168,34 @@ public class RegistrationActivity extends Activity {
 	 * the user.
 	 */
 	public class UserRegistrationTask extends AsyncTask<Void, Void, Boolean> {
+		JSONObject responseObject;
+		@SuppressWarnings("unchecked")
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
 
-			try {
-				Map<String, String> parameters = new LinkedHashMap<String, String>();
-				parameters.put("username", mUsername);
-				parameters.put("email", mEmail);
-				parameters.put("password", mPassword);
-				parameters.put("name", mName);
-				
-				Map<String, Map<String, String>> superParams = new LinkedHashMap<String, Map<String, String>>();
-				superParams.put("registration", parameters);
-				
-				String result = NetworkOperations.postJSONExpectingStringTo("/api/registrations", JSONValue.toJSONString(superParams));
-				Log.e("WIKICLETA", result);
-				Object obj = JSONValue.parse(result);
-				JSONObject object =(JSONObject) obj;
-				
-				User.storeWithParams(parameters, (String) object.get("token"));
-			} catch (Exception e) {
-				// Could not register
-				return false;
-			}
+			Map<String, String> parameters = new LinkedHashMap<String, String>();
+			parameters.put("username", mUsername);
+			parameters.put("email", mEmail);
+			parameters.put("password", mPassword);
+			parameters.put("password_confirmation", mPassword);
+			parameters.put("full_name", mName);
+			parameters.put("sticker_number", mStickerNumber);
+			
+			Map<String, Map<String, String>> user = new LinkedHashMap<String, Map<String, String>>();
+			user.put("registration", parameters);
 
-			return true;
+			String result = NetworkOperations.postJSONExpectingStringTo("/api/users.json", JSONValue.toJSONString(user));
+			if(result==null)
+				return false;
+			
+			responseObject = (JSONObject) JSONValue.parse(result);
+			if(responseObject.containsKey("errors")) {
+				return false;
+			} else {
+				User.storeWithParams(responseObject, (String) responseObject.get("auth_token"));
+				return true;
+			}
 		}
 
 		@Override
@@ -183,17 +209,35 @@ public class RegistrationActivity extends Activity {
 			alertDialog.hide();
 			
 			if (success) {
-				if(User.isSignedIn()) {
-					Intent intent = new Intent(AppBase.currentActivity, MainMapActivity.class);
-					AppBase.currentActivity.startActivity(intent);
+				if(User.isRegisteredLocally()) {
+					AppBase.launchActivity(UserProfileActivity.class);
 					finish();
-				} else {
-					Log.e("Wikicleta", "Something rare ocurred");
+					showGreetMessage();
 				}
 			} else {
-				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
-				mPasswordView.requestFocus();
+				if(responseObject == null) {
+					DialogBuilder.displayAlertWithTitleAndMessage(AppBase.currentActivity, R.string.neutral, R.string.connectivity_problems);
+				} else {
+					JSONObject errorsObject = (JSONObject) responseObject.get("errors");
+					JSONArray array;
+					if(errorsObject.containsKey("email")) {
+						array = (JSONArray) errorsObject.get("email");
+						mEmailView.setError((String) array.get(0));
+						mEmailView.requestFocus();
+					} else if(errorsObject.containsKey("username")) {
+						array = (JSONArray) errorsObject.get("username");
+						mUsernameView.setError((String) array.get(0));
+						mUsernameView.requestFocus();
+					} else if(errorsObject.containsKey("sticker")) {
+						array = (JSONArray) errorsObject.get("sticker");
+						mStickerNumberView.setError((String) array.get(0));
+						mStickerNumberView.requestFocus();
+					} else {
+						mPasswordView
+								.setError(getString(R.string.error_incorrect_password));
+						mPasswordView.requestFocus();
+					}
+				}
 			}
 		}
 

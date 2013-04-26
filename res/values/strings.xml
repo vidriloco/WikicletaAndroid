@@ -4,6 +4,11 @@
 	<string name="nothing"></string>
 	<string name="dashes">--</string>
 	<string name="save">Guardar</string>
+	<string name="notification">Notificación</string>
+	<string name="neutral">Aceptar</string>
+	<string name="fav">fav</string>
+	<string name="favs">favs</string>
+	<string name="connectivity_problems">No ha sido posible conectar con el servidor remoto, por favor, revisa tu conexión</string>
 	
 	<!-- Sliding Menu options -->
 	<string name="map_section">Mapa</string>
@@ -11,6 +16,7 @@
 	<string name="market_section">Bicis y Más</string>
 	<string name="bikecity_section">Pasea</string>
 	<string name="profile_section">Perfil</string>
+	<string name="no_profile_section">Ingresa</string>
 	
 	<string name="select_location_on_map">Centra el pin de Wikicleta debajo de la ubicación deseada</string>
 	<string name="routes_dialog_section">Ruta</string>
@@ -113,4 +119,11 @@
 	
 	<string name="profile_erase_account_text_text">Eliminar mi cuenta de este teléfono</string>
 	<string name="profile_erase_account_text_button_text">Eliminar</string>
+	<string name="profile_welcome">¡Bienvenid@ a Wikicleta para Android!</string>
+	<string name="profile_city_not_set">Ciudad sin seleccionar</string>
+	<string name="profile_no_bikes_text_value">No has registrado aún una bici, puedes hacerlo desde la web</string>
+	<string name="profile_bike_list_text_value">Tus Bicis</string>
+	<string name="syncing_profile_text_value">Sincronizando tu perfil &#8230;</string>
+	<string name="syncing_profile_failed_text_value">No pudimos sincronizar tu perfil, toca aquí para intentarlo de nuevo</string>
+	
 </resources>

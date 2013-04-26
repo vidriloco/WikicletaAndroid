@@ -1,14 +1,17 @@
 package org.wikicleta.helpers;
 
 import org.wikicleta.R;
+import org.wikicleta.common.AppBase;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 public class DialogBuilder {
+	protected static AlertDialog connectivityAlertDialog;
 
 	public static AlertDialog buildLoadingDialogWithMessage(Activity activity, String message) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -21,4 +24,28 @@ public class DialogBuilder {
         
         return builder.create();
 	}
+	
+	public static void displayAlertWithTitleAndMessage(Activity ctx, int title, int message) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctx);
+		View alertDialogView = ctx.getLayoutInflater().inflate(R.layout.alert_dialog, null);
+		
+		TextView titleView = (TextView) alertDialogView.findViewById(R.id.dialog_title);
+		titleView.setText(ctx.getResources().getString(R.string.notification));
+		titleView.setTypeface(AppBase.getTypefaceStrong());
+
+		TextView messageView = (TextView) alertDialogView.findViewById(R.id.dialog_message);
+		messageView.setText(ctx.getResources().getString(message));
+		messageView.setTypeface(AppBase.getTypefaceLight());
+		
+		alertDialogBuilder.setView(alertDialogView).
+		setNeutralButton(ctx.getResources().getString(R.string.neutral), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,int id) {
+				connectivityAlertDialog.dismiss();
+			}
+		});
+
+		connectivityAlertDialog = alertDialogBuilder.create();
+		connectivityAlertDialog.show();
+	}
+
 }

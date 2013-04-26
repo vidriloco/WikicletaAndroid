@@ -13,53 +13,41 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="53dp" >
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    		android:layout_width="fill_parent"
-    		android:layout_height="wrap_content"
-    		android:orientation="vertical">
-		    <RelativeLayout
-            style="@style/LoginFormContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff"
-            android:orientation="vertical" >
-
-             <TextView
-                android:id="@+id/subtitle"
+        <LinearLayout
+	        style="@style/LoginFormContainer"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/gradient"
+	        android:orientation="vertical" >
+			
+            <TextView
+                android:id="@+id/login_prologue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:shadowRadius="1.3"
-                android:layout_centerHorizontal="true"
-                android:text="@string/login_subtitle"
-                android:textColor="#111"
+                android:text="@string/login_prologue_text"
+                android:textColor="#fb4e15"
                 android:textSize="15sp" />
-
-            <EditText
-                android:id="@+id/email"
+	                    
+	        <EditText
+                android:id="@+id/login_input_field"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/subtitle"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"                
+                android:layout_marginTop="30dp"
                 android:ems="10"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
+                android:hint="@string/prompt_login"
                 android:maxLines="1"
                 android:singleLine="true" >
             </EditText>
             
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/password_input_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/email"
                 android:ems="10"
+                android:layout_marginTop="10dp"
                 android:hint="@string/prompt_password"
-                android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true" />
@@ -68,82 +56,11 @@
                 android:id="@+id/sign_in_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignRight="@+id/password"
-                android:layout_below="@+id/password"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
-                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
                 android:text="@string/action_sign_in_register" />
-
-        </RelativeLayout>
-        	<RelativeLayout
-	    		android:layout_width="fill_parent"
-	    		android:layout_height="110dp"
-	    		android:background="#F5F9FC"
-	    		android:paddingBottom="20dp" >
-		   		
-	        	 <TextView
-	                android:id="@+id/subtitle_social_nets"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_centerHorizontal="true"
-	                android:layout_marginTop="10dp"
-	                android:gravity="center"
-	                android:text="@string/login_subtitle_social_nets"
-	                android:textColor="#111"
-	                android:textSize="14sp" />
-	
-	            <Button
-	                android:id="@+id/twitter"
-	                style="?android:attr/buttonStyleSmall"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_alignLeft="@+id/subtitle_social_nets"
-	                android:layout_alignParentBottom="true"
-	                android:text="@string/twitter" />
-	
-	            <Button
-	                android:id="@+id/facebook"
-	                style="?android:attr/buttonStyleSmall"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_alignParentBottom="true"
-	                android:layout_alignRight="@+id/subtitle_social_nets"
-	                android:text="@string/facebook" />
-		
-			</RelativeLayout>
-        	<RelativeLayout
-	    		android:layout_width="fill_parent"
-	    		android:layout_height="200dp"
-	    		android:background="#FF792C" >
-		   		
-			    <TextView
-		            android:id="@+id/subtitle_register"
-		            android:layout_width="wrap_content"
-		           	android:layout_height="wrap_content"
-		           	android:gravity="center"
-		           	android:layout_centerHorizontal="true"
-		           	android:layout_marginTop="15dp"
-		           	android:text="@string/login_subtitle_register"
-		           	android:textColor="#FFF"
-		           	android:textStyle="bold"
-		           	android:textSize="18sp"/>
-		
-		    	<Button
-		    	    android:id="@+id/register_button"
-		    	    style="?android:attr/buttonStyleSmall"
-		    	    android:layout_width="wrap_content"
-		    	    android:layout_height="wrap_content"
-		    	    android:layout_alignParentBottom="true"
-		    	    android:layout_centerHorizontal="true"
-		    	    android:textSize="20sp"
-		    	    android:paddingRight="20dp"
-		    	   	android:paddingLeft="20dp"
-		    	    android:text="@string/login_register"
-		    	    android:layout_marginBottom="50dp" />
-		
-			</RelativeLayout>
-		</LinearLayout>
-        
+        </LinearLayout>
     </ScrollView>
 </merge>

@@ -18,9 +18,31 @@
 	        style="@style/LoginFormContainer"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:background="#fff"
+	        android:background="@drawable/gradient"
 	        android:orientation="vertical" >
-
+			
+	        <TextView
+                android:id="@+id/sticker_prologue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:shadowRadius="1.3"
+                android:text="@string/sticker_prologue_text"
+                android:textColor="#fb4e15"
+                android:textSize="15sp" />
+	                    
+	        <EditText
+                android:id="@+id/sticker_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:ems="10"
+                android:hint="@string/prompt_sticker"
+                android:maxLines="1"
+                android:singleLine="true" >
+            </EditText>
+	        
             <TextView
                 android:id="@+id/registration_prologue"
                 android:layout_width="wrap_content"
@@ -28,7 +50,7 @@
                 android:gravity="center"
                 android:shadowRadius="1.3"
                 android:text="@string/registration_prologue_text"
-                android:textColor="#111"
+                android:textColor="#fb4e15"
                 android:textSize="15sp" />
 
             <EditText
@@ -48,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:ems="10"
-                android:hint="@string/prompt_email"
+                android:hint="@string/prompt_login"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true" >

@@ -1,11 +1,13 @@
 package org.wikicleta.helpers;
 
 import org.wikicleta.R;
-import org.wikicleta.activities.MarketActivity;
+import org.wikicleta.access.activities.LoginActivity;
 import org.wikicleta.activities.NowActivity;
 import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.models.User;
+
 import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
@@ -29,12 +31,21 @@ public class SlidingMenuAndActionBarHelper {
         
         TextView profileTitle = (TextView) menu.getMenu().findViewById(R.id.profile_title);
         profileTitle.setTypeface(AppBase.getTypefaceStrong());
+        
+        if(!User.isRegisteredLocally()) {
+        	profileTitle.setText(activity.getResources().getString(R.string.no_profile_section));
+        	//ImageView profileIcon = (ImageView) menu.getMenu().findViewById(R.id.profile_img);
+        	//profileIcon.setImageDrawable(activity.getResources().getDrawable(id))
+        }
+        
         menu.getMenu().findViewById(R.id.profile_menu_group).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				animate(v).alpha(0.9f).setDuration(100);
-				AppBase.launchActivity(UserProfileActivity.class);
+				if(User.isRegisteredLocally())
+					AppBase.launchActivity(UserProfileActivity.class);
+				else
+					AppBase.launchActivity(LoginActivity.class);
 			}
         	
         });

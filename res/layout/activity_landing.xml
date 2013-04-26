@@ -3,18 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#3366FF"
+    android:background="@drawable/gradient"
     android:orientation="vertical" >
 	
     <ImageView
-        android:id="@+id/photo1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:contentDescription="@string/none"
-        android:src="@drawable/photo_1"
-        android:layout_gravity="center" 
-        android:scaleType="centerCrop" />
-    
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/menu_background"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/none" >
+    </ImageView>
+
     <ImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
@@ -28,40 +27,106 @@
 
     <RelativeLayout
         android:id="@+id/container"
-        android:layout_width="250dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
-		android:layout_alignParentBottom="true" >
-
-        <Button
-            android:id="@+id/join"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal"
+        android:background="@drawable/landing_bar" >
+		
+        <LinearLayout
+            android:id="@+id/container_into_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/container"
-            android:layout_alignParentRight="true"
-            android:paddingBottom="10dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="5dp"
-            android:text="@string/landing_join_button"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/explore"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal" >
+        	
+            <RelativeLayout 
+            android:id="@+id/explore_container"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:padding="10dp">
+        	<ImageView 
+        	    android:id="@+id/explore_icon"
+        	    android:contentDescription="@string/none"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:src="@drawable/explore_icon"
+            	android:layout_centerHorizontal="true"
+            	android:padding="10dp"
+            	android:alpha="0.7" />
+           <TextView
+            android:id="@+id/explore_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/join"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="40dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="5dp"
-            android:text="@string/landing_explore_button"
+            android:layout_below="@+id/explore_icon"
+            android:padding="10dp"
+            android:text="@string/landing_explore_text"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#fb4e15" />
+        	</RelativeLayout>
+
+        	<RelativeLayout 
+            android:id="@+id/login_container"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:paddingTop="10dp"
+        	android:paddingBottom="10dp"
+        	android:paddingRight="20dp"
+        	android:paddingLeft="20dp">
+        	<ImageView 
+        	    android:id="@+id/login_icon"
+        	    android:contentDescription="@string/none"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:src="@drawable/login_icon"
+            	android:layout_centerHorizontal="true"
+            	android:padding="10dp"
+            	android:alpha="0.7" />
+
+           <TextView
+               android:id="@+id/login_text"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@+id/login_icon"
+               android:padding="10dp"
+               android:text="@string/landing_login_text"
+               android:textColor="#fb4e15"
+               android:textSize="20sp"
+               android:textStyle="bold" />
+
+        	</RelativeLayout>
+        
+        	<RelativeLayout 
+            android:id="@+id/join_container"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:padding="10dp">
+        	<ImageView 
+        	    android:id="@+id/join_icon"
+        	    android:contentDescription="@string/none"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:src="@drawable/unite_icon"
+            	android:layout_centerHorizontal="true"
+            	android:padding="10dp"
+            	android:alpha="0.7" />
+
+           <TextView
+               android:id="@+id/join_text"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@+id/join_icon"
+               android:padding="10dp"
+               android:text="@string/landing_join_text"
+               android:textColor="#fb4e15"
+               android:textSize="20sp"
+               android:textStyle="bold" />
+
+        	</RelativeLayout>
+        </LinearLayout>
+        
     </RelativeLayout>
 
 </RelativeLayout>
