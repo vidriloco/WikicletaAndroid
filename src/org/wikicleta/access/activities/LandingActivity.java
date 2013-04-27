@@ -32,12 +32,13 @@ public class LandingActivity extends Activity {
     	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "scaleY", 1, 1.2f),
     	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "alpha", 0, 1, 1)
     	);
-		set.setDuration(1000).start();
+		set.setDuration(1500).start();
 		animate(actionsMenuContainer).setDuration(800).translationY(-150).start();
 
 		if(User.isRegisteredLocally()) {
 			
 			findViewById(R.id.container).setVisibility(View.GONE);
+			findViewById(R.id.cycle_the_city).setVisibility(View.VISIBLE);
 	    	set.addListener(new SimpleAnimatorListener() {
 	    		@Override
 	    		public void onAnimationEnd(Animator animation) {

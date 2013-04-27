@@ -17,6 +17,7 @@ import org.wikicleta.models.User;
 import org.wikicleta.views.PinOverlay;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -237,6 +238,7 @@ public class NewTipActivity extends LocationAwareMapActivity {
        
     	toggleBuilder.setView(view);
     	formView = toggleBuilder.create();
+    	formView.setCanceledOnTouchOutside(false);
     	formView.show();
 	}
 	
@@ -285,7 +287,7 @@ public class NewTipActivity extends LocationAwareMapActivity {
 	    				attemptCommit();
 	    			}
 	    		});
-	    		AlertDialog alert = builder.create();
+	    		final AlertDialog alert = builder.create();
 	    		alert.setOnDismissListener(new OnDismissListener() {
 
 					@Override
@@ -294,6 +296,25 @@ public class NewTipActivity extends LocationAwareMapActivity {
 					}
 	    			
 	    		});
+	    		
+	    		alert.setOnShowListener(new DialogInterface.OnShowListener() {
+	    		    @Override
+	    		    public void onShow(DialogInterface dialog) {
+	    		        Button btnPositive = alert.getButton(Dialog.BUTTON_POSITIVE);
+	    		        btnPositive.setTextSize(13);
+	    		        btnPositive.setTypeface(AppBase.getTypefaceStrong());
+	    		        
+	    		        Button btnNegative = alert.getButton(Dialog.BUTTON_NEGATIVE);
+	    		        btnNegative.setTextSize(13);
+	    		        btnNegative.setTypeface(AppBase.getTypefaceStrong());
+	    		        
+	    		        Button btnNeutral = alert.getButton(Dialog.BUTTON_NEUTRAL);
+	    		        btnNeutral.setTextSize(13);
+	    		        btnNeutral.setTypeface(AppBase.getTypefaceStrong());
+
+	    		    }
+	    		});
+	    		
 	    		alert.show();
 	    	}
 	    }

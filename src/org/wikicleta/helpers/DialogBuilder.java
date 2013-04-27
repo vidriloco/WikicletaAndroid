@@ -34,7 +34,8 @@ public class DialogBuilder {
 			}
 		});
 
-		alertDialogBuilder.create().show();
+		connectivityAlertDialog = alertDialogBuilder.create();
+		connectivityAlertDialog.show();
 	}
 	
 	public static AlertDialog.Builder buildAlertWithTitleAndMessage(Activity ctx, int title, int message) {
