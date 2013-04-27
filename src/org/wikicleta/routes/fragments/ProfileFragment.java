@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.Vector;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -24,7 +23,6 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -249,7 +247,6 @@ public class ProfileFragment extends Fragment {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			String result = NetworkOperations.getJSONExpectingString("/api/profiles/".concat(User.username()), false);
-			Log.e("WIKICLETA", result);
 			if(result == null)
 				return false;
 			JSONObject responseObject = (JSONObject) JSONValue.parse(result);

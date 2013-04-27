@@ -1,63 +1,87 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".LoginActivity" >
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+	android:background="@color/wikicleta_white" >
 	
-    <com.markupartist.android.widget.ActionBar
-    	xmlns:app="http://schemas.android.com/apk/res/org.wikicleta"
-    	android:id="@+id/actionbar"
-    	app:title="@string/tips_saving_title"
-    	style="@style/ActionBar"/>
-	
-	<ScrollView
-        android:id="@+id/tips_saving_form"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="53dp" >
+	<LinearLayout 
+	    android:id="@+id/titlebar"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:background="@drawable/gradient_orange">
+		    
+		    <ImageView android:id="@+id/dialog_close"
+		        android:contentDescription="@string/none"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:src="@drawable/dialog_close_icon"/>
+		    
+		    <TextView
+	           android:id="@+id/dialog_menu_title"
+	           android:layout_width="fill_parent"
+	           android:layout_height="wrap_content"
+	           android:gravity="right"
+	           android:layout_gravity="center_vertical"
+	           android:text="@string/tips_save_title"
+	           android:textColor="@color/wikicleta_orange"
+	           android:textSize="20sp"
+	           android:padding="10dp"
+	           android:layout_marginRight="20dp"
+	           android:textStyle="bold" />
+	</LinearLayout>
+	<LinearLayout
+	   android:id="@+id/separator"
+       android:layout_width="match_parent"
+       android:layout_height="1dp"
+       android:layout_below="@+id/titlebar"
+       android:background="@color/wikicleta_stronger_orange">
+    </LinearLayout>
 
-		   <LinearLayout
-		       style="@style/LoginFormContainer"
-		       android:layout_width="match_parent"
-		       android:layout_height="292dp"
-		       android:background="#fff"
-		       android:orientation="vertical" >
+	<LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:layout_below="@+id/separator"
+       android:layout_marginTop="20dp" >
 		       
-			   <TextView
-			       android:id="@+id/tipCategoryInstructions"
-			       android:layout_width="match_parent"
-			       android:layout_height="wrap_content"
-			       android:textSize="16sp"
-			       android:text="@string/tips_category_select_instruction"
-        		   android:layout_marginLeft="10dp"></TextView>
-			   
-		       <Spinner
-        		android:id="@+id/tipCategorySelector"
-        		android:layout_width="match_parent"
-        		android:layout_height="wrap_content"
-        		android:layout_marginBottom="20dp" />
-		       
-		       <EditText
-		           android:id="@+id/tips_content"
-		           android:layout_width="match_parent"
-		           android:layout_height="wrap_content"
-		           android:maxLength="250"
-		           android:ems="10"
-		           android:hint="@string/tips_form_content_hint"
-		           android:inputType="textMultiLine" >
+	   <TextView
+	       android:id="@+id/tip_category_instructions"
+	       android:layout_width="match_parent"
+	       android:layout_height="wrap_content"
+	       android:textSize="14sp"
+	       android:textColor="@color/wikicleta_blue"
+	       android:gravity="center"
+	       android:text="@string/tips_category_select_instruction"
+	       android:layout_marginBottom="15dp" />
+	   
+       <Spinner
+      		android:id="@+id/tipCategorySelector"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:layout_marginBottom="20dp" />
+       
+       <EditText
+           android:id="@+id/tips_content"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:maxLength="250"
+           android:ems="10"
+           android:hint="@string/tips_form_content_hint"
+           android:inputType="textMultiLine" >
 
-		           <requestFocus />
-		       </EditText>
+           <requestFocus />
+       </EditText>
             
-            <Button
-                android:id="@+id/save_tip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-				android:layout_marginTop="50dp"
-				android:layout_marginBottom="20dp"
-                android:text="@string/save" />
-        	</LinearLayout>
-        	        
-    </ScrollView>
-</merge>
+       <Button
+           	android:id="@+id/save_tip"
+           	android:layout_width="wrap_content"
+           	android:layout_height="wrap_content"
+           	android:layout_gravity="center"
+           	android:paddingLeft="32dp"
+           	android:paddingRight="32dp"
+			android:layout_marginTop="50dp"
+			android:layout_marginBottom="20dp"
+            android:text="@string/save" />
+	</LinearLayout>
+</RelativeLayout>

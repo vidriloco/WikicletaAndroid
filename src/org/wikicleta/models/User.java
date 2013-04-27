@@ -21,6 +21,7 @@ public class User {
 		editor.putString("email", params.get("email"));
 		editor.putString("username", params.get("username"));
 		editor.putString("token", token);
+		editor.putLong("id", Long.parseLong(params.get("identifier")));
 		editor.putLong("created-at", Long.parseLong(params.get("created_at_ms")));
 		editor.commit();
 	}
@@ -31,6 +32,10 @@ public class User {
 	
 	public static String username() {
 		return preferences.getString("username", "");
+	}
+	
+	public static Long id() {
+		return preferences.getLong("id", 0);
 	}
 	
 	public static boolean isRegisteredLocally() {

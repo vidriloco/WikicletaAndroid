@@ -9,17 +9,17 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.wikicleta.helpers.Strings;
 
 public class NetworkOperations {
-	public static String serverHost = "http://192.168.1.65:3000";
+	public static String serverHost = "http://192.168.1.71:3000";
 		
 	public static int postJSONTo(String path, String jsonValue) {
 		HttpResponse response = NetworkOperations.postJSON(path, jsonValue);
 		
 		if(response == null)
 			return 404;
-		
 		return response.getStatusLine().getStatusCode();
 	}
 	
@@ -87,7 +87,7 @@ public class NetworkOperations {
 	    
 	    StringEntity se;
 		try {
-			se = new StringEntity(jsonValue);
+			se = new StringEntity(jsonValue, HTTP.UTF_8);
 			request.setEntity(se);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block

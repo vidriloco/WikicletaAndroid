@@ -26,9 +26,21 @@ public class DialogBuilder {
 	}
 	
 	public static void displayAlertWithTitleAndMessage(Activity ctx, int title, int message) {
+		AlertDialog.Builder alertDialogBuilder = DialogBuilder.buildAlertWithTitleAndMessage(ctx, title, message);
+			
+		alertDialogBuilder.setNeutralButton(ctx.getResources().getString(R.string.neutral), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,int id) {
+				connectivityAlertDialog.dismiss();
+			}
+		});
+
+		alertDialogBuilder.create().show();
+	}
+	
+	public static AlertDialog.Builder buildAlertWithTitleAndMessage(Activity ctx, int title, int message) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctx);
 		View alertDialogView = ctx.getLayoutInflater().inflate(R.layout.alert_dialog, null);
-		
+		alertDialogBuilder.setView(alertDialogView);
 		TextView titleView = (TextView) alertDialogView.findViewById(R.id.dialog_title);
 		titleView.setText(ctx.getResources().getString(R.string.notification));
 		titleView.setTypeface(AppBase.getTypefaceStrong());
@@ -37,15 +49,9 @@ public class DialogBuilder {
 		messageView.setText(ctx.getResources().getString(message));
 		messageView.setTypeface(AppBase.getTypefaceLight());
 		
-		alertDialogBuilder.setView(alertDialogView).
-		setNeutralButton(ctx.getResources().getString(R.string.neutral), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog,int id) {
-				connectivityAlertDialog.dismiss();
-			}
-		});
-
-		connectivityAlertDialog = alertDialogBuilder.create();
-		connectivityAlertDialog.show();
+		return alertDialogBuilder;
 	}
+	
+	
 
 }

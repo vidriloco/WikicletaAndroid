@@ -11,7 +11,7 @@ public class BootApp extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		this.getDatabasePath("Wikicleta.db").delete();
+		//this.getDatabasePath("Wikicleta.db").delete();
 		ActiveAndroid.initialize(this);
 	}
 }
