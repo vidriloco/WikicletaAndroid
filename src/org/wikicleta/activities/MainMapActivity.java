@@ -4,14 +4,13 @@ import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 
 import java.util.ArrayList;
 import org.wikicleta.R;
+import org.wikicleta.adapters.MenuOptionsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.layers.BikeSharingOverlay;
 import org.wikicleta.layers.IdentifiableOverlay;
 import org.wikicleta.layers.OverlayReadyListener;
-import org.wikicleta.layers.RoutesOverlay;
-import org.wikicleta.models.Route;
 import org.wikicleta.routes.activities.NewRouteActivity;
 import org.wikicleta.routes.services.RoutesService;
 import org.wikicleta.routes.services.ServiceConstructor;
@@ -27,13 +26,18 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnShowListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainMapActivity extends LocationAwareMapActivity implements ServiceListener, OverlayReadyListener {
@@ -62,7 +66,8 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_routes_on_map);
 		setTheme(R.style.Theme_wikicleta);
-		
+		overlays = new ArrayList<Integer>();
+
 		AppBase.currentActivity = this;
 		startService(new Intent(this, RoutesService.class));
 
@@ -152,123 +157,47 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
     	});
 		
 		toggleLayersMenu = toggleBuilder.create();*/
-		overlays = new ArrayList<Integer>();
 	}
 	
 	protected void buildToggleMenu() {
 		AlertDialog.Builder toggleBuilder = new AlertDialog.Builder(this);
-
         LayoutInflater inflater = this.getLayoutInflater();
+        final View view = inflater.inflate(R.layout.dialog_toggle, null);
         
-        View view = inflater.inflate(R.layout.dialog_toggle, null);
-        view.findViewById(R.id.dialog_close).setOnClickListener(new OnClickListener() {
+        Integer[] layers = {
+        		Constants.ROUTES_OVERLAY, 
+        		Constants.BIKE_PARKING_OVERLAY, 
+        		Constants.BIKE_WORKSHOPS_AND_STORES_OVERLAY,
+        		Constants.BIKE_SHARING_OVERLAY,
+        		Constants.TIPS_OVERLAY};
+
+	    final ListView listview = (ListView) view.findViewById(R.id.layers_menu_list_view);
+		final MenuOptionsListAdapter adapter = new MenuOptionsListAdapter(this, layers);
+	    listview.setAdapter(adapter);
+	    listview.getCheckedItemPositions();
+	    listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+	    listview.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onClick(View v) {
-				toggleLayer(Constants.BIKESHARING_OVERLAY);
-				toggleLayer(Constants.ROUTES_OVERLAY);
+			public void onItemClick(AdapterView<?> adapterParent, View view, int position, long id) {
+				adapter.setSelectedPosition(position);
 				toggleLayersMenu.dismiss();
-				mapView.invalidate();
-				mapView.refreshDrawableState();
+				toggleLayers(adapter.getSelectedValuesForPositions());
 			}
-        	
-        });
-        
-        TextView dialogTitle = (TextView) view.findViewById(R.id.dialog_menu_title);
-        dialogTitle.setTypeface(AppBase.getTypefaceStrong());
-        
-        TextView routesTitle = (TextView) view.findViewById(R.id.route_title);
-        routesTitle.setTypeface(AppBase.getTypefaceStrong());
-        
-        TextView highlightTitle = (TextView) view.findViewById(R.id.highlight_title);
-        highlightTitle.setTypeface(AppBase.getTypefaceStrong());
-        
-        TextView bikeparkingTitle = (TextView) view.findViewById(R.id.bike_parking_title);
-        bikeparkingTitle.setTypeface(AppBase.getTypefaceStrong());
-        
-        TextView bikeSharingTitle = (TextView) view.findViewById(R.id.bikesharing_title);
-        bikeSharingTitle.setTypeface(AppBase.getTypefaceStrong());
-        
-        TextView bikeRepairTitle = (TextView) view.findViewById(R.id.bike_repair_title);
-        bikeRepairTitle.setTypeface(AppBase.getTypefaceStrong());
-        
-        view.findViewById(R.id.route_dialog_group).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(!overlays.contains(Constants.ROUTES_OVERLAY)) {
-					overlays.add(Constants.ROUTES_OVERLAY);
-					v.setBackgroundResource(R.drawable.menu_item_background_selected);
-				} else {
-					v.setBackgroundResource(R.drawable.menu_item_background);
-					overlays.remove((Integer) Constants.ROUTES_OVERLAY);
-				}
-			}
-        });
-        
-        view.findViewById(R.id.highlight_dialog_group).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(!overlays.contains(Constants.HIGHLIGHTS_OVERLAY)) {
-					overlays.add(Constants.HIGHLIGHTS_OVERLAY);
-					v.setBackgroundResource(R.drawable.menu_item_background_selected);
-				} else {
-					v.setBackgroundResource(R.drawable.menu_item_background);
-					overlays.remove((Integer) Constants.HIGHLIGHTS_OVERLAY);
-				}
-			}
-        });
-        
-        view.findViewById(R.id.bike_parking_dialog_group).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(!overlays.contains(Constants.BIKEPARKING_OVERLAY)) {
-					overlays.add(Constants.BIKEPARKING_OVERLAY);
-					v.setBackgroundResource(R.drawable.menu_item_background_selected);
-				} else {
-					v.setBackgroundResource(R.drawable.menu_item_background);
-					overlays.remove((Integer) Constants.BIKEPARKING_OVERLAY);
-				}
-			}
-        });
-        
-        view.findViewById(R.id.bike_repair_dialog_group).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(!overlays.contains(Constants.BIKE_REPAIR_OVERLAY)) {
-					overlays.add(Constants.BIKE_REPAIR_OVERLAY);
-					v.setBackgroundResource(R.drawable.menu_item_background_selected);
-				} else {
-					v.setBackgroundResource(R.drawable.menu_item_background);
-					overlays.remove((Integer) Constants.BIKE_REPAIR_OVERLAY);
-				}
-			}
-        });
-        
-        view.findViewById(R.id.bikesharing_dialog_group).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(!overlays.contains(Constants.BIKESHARING_OVERLAY)) {
-					overlays.add(Constants.BIKESHARING_OVERLAY);
-					v.setBackgroundResource(R.drawable.menu_item_background_selected);
-				} else {
-					v.setBackgroundResource(R.drawable.menu_item_background);
-					overlays.remove((Integer) Constants.BIKESHARING_OVERLAY);
-				}
-			}
-        });
-        
-        toggleBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+	    });
+
+    	toggleBuilder.setView(view);
+    	toggleLayersMenu = toggleBuilder.create();
+    	toggleLayersMenu.setOnShowListener(new OnShowListener() {
 
 			@Override
-			public void onCancel(DialogInterface arg0) {
-				toggleLayer(Constants.BIKESHARING_OVERLAY);
-				toggleLayer(Constants.ROUTES_OVERLAY);
+			public void onShow(DialogInterface dialog) {
+				Log.e("WIKICLETA", String.valueOf(overlays.contains(Constants.BIKE_SHARING_OVERLAY)));
 			}
     		
     	});
-		
-    	toggleBuilder.setView(view);
-    	toggleLayersMenu = toggleBuilder.create();
 	}
 	
 	protected void buildAddMenu() {
@@ -346,30 +275,13 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 	}
 	
 	
-	protected void toggleLayer(int layer) {
-		if(layer == Constants.BIKESHARING_OVERLAY) {
-			Overlay layerFound = findOverlayByIdentifier(Constants.BIKESHARING_OVERLAY);
-			
-			if(layerFound == null && overlays.contains(Constants.BIKESHARING_OVERLAY))
-				new BikeSharingOverlay(this.getResources().getDrawable(R.drawable.cycling), this);
-			else if(!overlays.contains(Constants.BIKESHARING_OVERLAY)) {
-				BikeSharingOverlay overlay = (BikeSharingOverlay) layerFound;
-				mapView.getOverlays().remove(overlay);
-			}
-				
-		} else if(layer == Constants.ROUTES_OVERLAY) {
-			boolean containedInOverlay = overlays.contains(Constants.ROUTES_OVERLAY);
-			for(Route route : Route.queued()) {
-				int routeId = Constants.ROUTES_OVERLAY+ (int) ((long) route.getId());
-				
-				Overlay layerFound = findOverlayByIdentifier(routeId);
-				if(layerFound == null && containedInOverlay) {
-					RoutesOverlay overlay = new RoutesOverlay(routeId, route);
-					mapView.getOverlays().add(overlay);
-				} else if(!containedInOverlay && layerFound != null) {
-					RoutesOverlay overlay = (RoutesOverlay) layerFound;
-					mapView.getOverlays().remove(overlay);
-				}
+	protected void toggleLayers(ArrayList<Integer> layers) {
+		mapView.getOverlays().clear();
+		for(Integer layer : layers) {
+			if(layer == Constants.BIKE_SHARING_OVERLAY)
+				mapView.getOverlays().add(new BikeSharingOverlay(this.getResources().getDrawable(R.drawable.cycling), this));
+			else if(layer == Constants.ROUTES_OVERLAY) {
+
 			}
 		}
 	}

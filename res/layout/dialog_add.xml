@@ -53,7 +53,7 @@
 	           android:layout_height="wrap_content"
 	           android:layout_marginLeft="50dp"
 	           android:contentDescription="@string/none"
-	           android:src="@drawable/routes_dialog_icon" />
+	           android:src="@drawable/toggle_menu_routes_icon" />
 	
 	       <TextView
 	           android:id="@+id/route_title"
@@ -85,7 +85,7 @@
 		        android:layout_height="wrap_content"
 	            android:layout_marginLeft="50dp"
 		        android:contentDescription="@string/none"
-		        android:src="@drawable/highlights_dialog_section" />
+		        android:src="@drawable/toggle_menu_tips_icon" />
 	
 		    <TextView
 		        android:id="@+id/tips_title"
@@ -117,7 +117,7 @@
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="50dp"
 		        android:contentDescription="@string/none"
-		        android:src="@drawable/bicibus_dialog_section" />
+		        android:src="@drawable/toogle_menu_bicibus_icon" />
 	
 		    <TextView
 		        android:id="@+id/bicibus_title"
@@ -148,7 +148,7 @@
 		        android:layout_height="wrap_content"
 	            android:layout_marginLeft="50dp"
 		        android:contentDescription="@string/none"
-		        android:src="@drawable/bike_repair_icon" />
+		        android:src="@drawable/toggle_menu_bike_repair_icon" />
 	
 		    <TextView
 		        android:id="@+id/bike_repair_title"
@@ -179,7 +179,7 @@
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="50dp"
 		        android:contentDescription="@string/none"
-		        android:src="@drawable/bikeparking_dialog_section" />
+		        android:src="@drawable/toggle_menu_bike_parking_icon" />
 	
 		    <TextView
 		        android:id="@+id/bike_parking_title"

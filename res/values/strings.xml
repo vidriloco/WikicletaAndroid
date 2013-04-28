@@ -29,11 +29,11 @@
 	<string name="bike_parking_dialog_section">Estacionamiento</string>
 	<string name="bike_repair_dialog_section">Taller/tienda</string>
 	
-	<string name="routes_dialog_layer_section">Rutas/Bicibuses</string>
-	<string name="tips_dialog_layer_section">Tips</string>
-	<string name="bike_parking_dialog_layer_section">Estacionamientos</string>
-	<string name="bikesharing_dialog_layer_section">Bicis públicas</string>
-	<string name="bikerepair_dialog_layer_section">Talleres y tiendas</string>
+	<string name="toggle_menu_routes">Rutas/Bicibuses</string>
+	<string name="toggle_menu_tips">Tips</string>
+	<string name="toggle_menu_bike_parking">Estacionamientos</string>
+	<string name="toggle_menu_bike_sharing">Bicis públicas</string>
+	<string name="toggle_menu_bike_workshops_and_stores">Talleres y tiendas</string>
 	<string name="dialog_add">Añadir</string>
 	<string name="dialog_toggle">Mostrar u Ocultar</string>
 	

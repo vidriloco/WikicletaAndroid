@@ -64,7 +64,7 @@ public class BikeSharingOverlay extends ItemizedOverlay<OverlayItem> implements 
     }
     
     public void notifyOverlayIsReady() {
-    	overlayListener.onOverlayPrepared(this, Constants.BIKESHARING_OVERLAY);
+    	overlayListener.onOverlayPrepared(this, Constants.BIKE_SHARING_OVERLAY);
     }
     
     public class EcobiciFetching extends AsyncTask<Void, Void, Boolean> {
@@ -73,7 +73,7 @@ public class BikeSharingOverlay extends ItemizedOverlay<OverlayItem> implements 
     	
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			String parsedValue = NetworkOperations.getJSONExpectingString(url, false);
+			String parsedValue = NetworkOperations.getJSONExpectingString(url, true);
 			JSONArray objectList = (JSONArray) JSONValue.parse(parsedValue);
 			
 			overlayItems.clear();
@@ -107,6 +107,6 @@ public class BikeSharingOverlay extends ItemizedOverlay<OverlayItem> implements 
 
 	@Override
 	public int getIdentifier() {
-		return Constants.BIKESHARING_OVERLAY;
+		return Constants.BIKE_SHARING_OVERLAY;
 	}
 }
