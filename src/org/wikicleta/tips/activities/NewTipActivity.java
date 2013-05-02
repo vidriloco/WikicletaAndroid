@@ -9,7 +9,6 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.NetworkOperations;
-import org.wikicleta.helpers.DataStructures;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.Tip;
@@ -48,7 +47,6 @@ public class NewTipActivity extends LocationAwareMapActivity {
 	protected AlertDialog  formView;
 	
 	protected Spinner categorySelector;
-	protected HashMap<String, Integer> categoryTipValues;
 	protected EditText content;
 	
 	protected Tip tip;
@@ -57,7 +55,6 @@ public class NewTipActivity extends LocationAwareMapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.tips_activity_new);
 		setTheme(R.style.Theme_wikicleta);
-		populateTipCategoryValues();
 		
 		AppBase.currentActivity = this;
     	
@@ -164,13 +161,6 @@ public class NewTipActivity extends LocationAwareMapActivity {
 		}
 		
 		new PostTipAsyncTask().execute();
-	}
-	
-	public void populateTipCategoryValues() {
-		categoryTipValues = new HashMap<String, Integer>();
-		categoryTipValues.put("danger", 1);
-		categoryTipValues.put("alert", 2);
-		categoryTipValues.put("sightseeing", 3);
 	}
 	
 	protected void displaySaveForm() {
@@ -375,7 +365,7 @@ public class NewTipActivity extends LocationAwareMapActivity {
         }
 
         public View getCustomView(int position, View convertView, ViewGroup parent) {
-        	HashMap<Integer, String> valuesTipCategories = DataStructures.invert(categoryTipValues);
+        	HashMap<Integer, String> valuesTipCategories = Tip.tipCategories();
             LayoutInflater inflater=getLayoutInflater();
             View row=inflater.inflate(R.layout.tip_row, parent, false);
             

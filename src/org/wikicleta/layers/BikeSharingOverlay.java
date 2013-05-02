@@ -21,14 +21,14 @@ public class BikeSharingOverlay extends ItemizedOverlay<OverlayItem> implements 
     private ArrayList<OverlayItem> overlayItems = new ArrayList<OverlayItem>();
 	protected String url = "http://api.citybik.es/ecobici.json";
 	
-	protected OverlayReadyListener overlayListener;
+	protected LayersConnectorListener overlayListener;
 	
     public BikeSharingOverlay(Drawable marker) {
         super(boundCenterBottom(marker));
         this.fetch();
     }
  
-    public BikeSharingOverlay(Drawable marker, OverlayReadyListener listener) {
+    public BikeSharingOverlay(Drawable marker, LayersConnectorListener listener) {
         this(marker);
         this.overlayListener = listener;
     }
@@ -64,7 +64,7 @@ public class BikeSharingOverlay extends ItemizedOverlay<OverlayItem> implements 
     }
     
     public void notifyOverlayIsReady() {
-    	overlayListener.onOverlayPrepared(this, Constants.BIKE_SHARING_OVERLAY);
+    	overlayListener.onOverlayReady();
     }
     
     public class EcobiciFetching extends AsyncTask<Void, Void, Boolean> {
@@ -74,6 +74,8 @@ public class BikeSharingOverlay extends ItemizedOverlay<OverlayItem> implements 
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			String parsedValue = NetworkOperations.getJSONExpectingString(url, true);
+			if(parsedValue == null)
+				return false;
 			JSONArray objectList = (JSONArray) JSONValue.parse(parsedValue);
 			
 			overlayItems.clear();

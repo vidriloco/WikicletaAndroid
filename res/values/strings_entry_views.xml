@@ -5,6 +5,11 @@
     <string name="landing_explore_text">Explora</string>
     <string name="landing_login_text">Iniciar</string>
     
+    <string name="created_by">creado por </string>
+    <string name="you">tí</string>
+    
+    <string name="actions.delete">Eliminar</string>
+    <string name="actions.modify">Modificar</string>
     <!-- Registration Activity strings -->
     <string name="registration_title">Únete a Wikicleta</string>
     <string name="registration_prologue_text">Regálanos los siguientes datos para completar tu registro:</string>
@@ -40,4 +45,12 @@
     <string name="error_field_required">Este campo es requerido</string>
     <string name="error_not_matching_password_confirmation">La contraseña y su confirmación deben ser iguales</string>
 	<string name="none"></string>
+	
+	<string name="timestamp_today">hoy</string>
+	<string name="timestamp_yesterday">ayer</string>
+	<string name="timestamp_hour_ago">hace %s hora</string>
+	<string name="timestamp_hours_ago">hace %s horas</string>
+	<string name="timestamp_minutes_ago">hace %s minutos</string>
+	<string name="timestamp_just_now">justo ahora</string>
+	<string name="timestamp_past_day">el %s pasado</string>
 </resources>

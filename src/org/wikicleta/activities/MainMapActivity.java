@@ -3,26 +3,31 @@ package org.wikicleta.activities;
 import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.wikicleta.R;
 import org.wikicleta.adapters.MenuOptionsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
-import org.wikicleta.layers.BikeSharingOverlay;
 import org.wikicleta.layers.IdentifiableOverlay;
-import org.wikicleta.layers.OverlayReadyListener;
+import org.wikicleta.layers.LayersConnector;
+import org.wikicleta.layers.LayersConnectorListener;
 import org.wikicleta.routes.activities.NewRouteActivity;
 import org.wikicleta.routes.services.RoutesService;
 import org.wikicleta.routes.services.ServiceConstructor;
 import org.wikicleta.routes.services.ServiceListener;
 import org.wikicleta.tips.activities.NewTipActivity;
+import org.wikicleta.views.PinchableMapView.OnPanChangeListener;
+import org.wikicleta.views.PinchableMapView.OnZoomChangeListener;
 import org.wikicleta.views.RouteOverlay;
 
-import com.google.android.maps.ItemizedOverlay;
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.DialogInterface;
@@ -40,14 +45,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MainMapActivity extends LocationAwareMapActivity implements ServiceListener, OverlayReadyListener {
+public class MainMapActivity extends LocationAwareMapActivity implements ServiceListener, LayersConnectorListener {
 	
 	protected static int ROUTE_ACTION=0;
 	protected static int PLACE_ACTION=1;
 	protected static int BIKE_FRIENDLY_ACTION=2;
 	protected static int BICIBUS_ACTION=3;
 	protected static int HIGHLIGHT_ACTION=4;
-
+	
+	protected LayersConnector layersConnector;
 	protected LinearLayout toolBarView;
 	
 	protected RouteOverlay routeOverlay;
@@ -60,6 +66,9 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 	ServiceConstructor serviceInitializator;
 	
 	protected ArrayList<Integer> overlays;
+	MenuOptionsListAdapter selectedLayersMenuAdapter;
+	
+	protected boolean userIsPanning;
 	
 	@SuppressLint("UseSparseArrays")
 	@Override
@@ -67,7 +76,8 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 		super.onCreate(savedInstanceState, R.layout.activity_routes_on_map);
 		setTheme(R.style.Theme_wikicleta);
 		overlays = new ArrayList<Integer>();
-
+		layersConnector = new LayersConnector(this);
+		
 		AppBase.currentActivity = this;
 		startService(new Intent(this, RoutesService.class));
 
@@ -114,49 +124,29 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 				
 		buildAddMenu();
 		buildToggleMenu();
-
-    	//addBuilder.setTitle("Agregar");
-    	/*addBuilder.setItems(addItems, new DialogInterface.OnClickListener() {
-		    public void onClick(DialogInterface dialog, int item) {
-		    	Log.i("WIKICLETA", String.valueOf(item));
-		    	if(item == ROUTE_ACTION) {
-		    		AppBase.launchActivity(NewRouteActivity.class);
-		    	} else if(item == 1){
-		    		
-		    	}
-		    	
-		    }
-		});*/
 		
-		/*final CharSequence[] layersItems = {"Rutas y bici-buses", "Lugares bici-amigables", "Bici-estacionamientos", "Puntos de riesgo", "Bicicletas Pœblicas"};
-		
-    	AlertDialog.Builder toggleBuilder = new AlertDialog.Builder(this);
-
-    	toggleBuilder.setTitle("Mostrar/Ocultar capas");
-    	toggleBuilder.setMultiChoiceItems(layersItems, null, new DialogInterface.OnMultiChoiceClickListener() {
-    		@Override
-            public void onClick(DialogInterface dialog, int item, boolean isChecked) {
-    			if(item == Constants.BIKESHARING_OVERLAY) {
-    				if(isChecked && !overlays.contains(Constants.BIKESHARING_OVERLAY))
-    					overlays.add(Constants.BIKESHARING_OVERLAY);
-    				else if(!isChecked) {
-    					overlays.remove((Integer) Constants.BIKESHARING_OVERLAY);
-    				}
-    			}
-    			
-    		}
-    	});
-    	
-    	toggleBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+		mapView.setOnZoomChangeListener(new OnZoomChangeListener() {
 
 			@Override
-			public void onCancel(DialogInterface arg0) {
-				toggleLayer(Constants.BIKESHARING_OVERLAY);
+			public void onZoomChange(MapView view, int newZoom, int oldZoom) {
+				reloadActiveLayers();
 			}
-    		
-    	});
+			
+		});
 		
-		toggleLayersMenu = toggleBuilder.create();*/
+		mapView.setOnPanChangeListener(new OnPanChangeListener() {
+
+			@Override
+			public void onPanChange(MapView view, GeoPoint newCenter,
+					GeoPoint oldCenter) {
+				reloadActiveLayers();
+			}			
+		});
+
+	}
+	
+	public void reloadActiveLayers() {
+		toggleLayers(selectedLayersMenuAdapter.getSelectedValuesForPositions());
 	}
 	
 	protected void buildToggleMenu() {
@@ -170,10 +160,22 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
         		Constants.BIKE_WORKSHOPS_AND_STORES_OVERLAY,
         		Constants.BIKE_SHARING_OVERLAY,
         		Constants.TIPS_OVERLAY};
+        
+        TextView menuTitle = (TextView) view.findViewById(R.id.dialog_menu_title);
+        menuTitle.setTypeface(AppBase.getTypefaceStrong());
+        
+        view.findViewById(R.id.dialog_close).setOnClickListener(new OnClickListener(){
 
+			@Override
+			public void onClick(View v) {
+				toggleLayersMenu.dismiss();
+			}
+        	
+        });
+        
 	    final ListView listview = (ListView) view.findViewById(R.id.layers_menu_list_view);
-		final MenuOptionsListAdapter adapter = new MenuOptionsListAdapter(this, layers);
-	    listview.setAdapter(adapter);
+	    selectedLayersMenuAdapter = new MenuOptionsListAdapter(this, layers);
+	    listview.setAdapter(selectedLayersMenuAdapter);
 	    listview.getCheckedItemPositions();
 	    listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
@@ -181,9 +183,9 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 
 			@Override
 			public void onItemClick(AdapterView<?> adapterParent, View view, int position, long id) {
-				adapter.setSelectedPosition(position);
+				selectedLayersMenuAdapter.setSelectedPosition(position);
 				toggleLayersMenu.dismiss();
-				toggleLayers(adapter.getSelectedValuesForPositions());
+				toggleLayers(selectedLayersMenuAdapter.getSelectedValuesForPositions());
 			}
 
 	    });
@@ -274,14 +276,13 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 		addMenu = addBuilder.create();
 	}
 	
-	
 	protected void toggleLayers(ArrayList<Integer> layers) {
 		mapView.getOverlays().clear();
 		for(Integer layer : layers) {
 			if(layer == Constants.BIKE_SHARING_OVERLAY)
-				mapView.getOverlays().add(new BikeSharingOverlay(this.getResources().getDrawable(R.drawable.cycling), this));
-			else if(layer == Constants.ROUTES_OVERLAY) {
-
+				mapView.getOverlays().add(layersConnector.getBikeSharingOverlay());
+			else if(layer == Constants.TIPS_OVERLAY) {
+				mapView.getOverlays().add(layersConnector.getTipsOverlay());
 			}
 		}
 	}
@@ -335,10 +336,27 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 	}
 	
 	@Override
-	public void onOverlayPrepared(ItemizedOverlay<OverlayItem> overlay, int kind) {
-		Overlay layerFound = findOverlayByIdentifier(kind);
-		if(layerFound != null)
-			this.mapView.getOverlays().remove(layerFound);
-		this.mapView.getOverlays().add(overlay);
+	public void onOverlayReady() {
+		this.mapView.invalidate();
+		this.mapView.refreshDrawableState();
 	}
+
+	@Override
+	public HashMap<String, String> getCurrentViewport() {
+		HashMap<String, String> viewport = new HashMap<String, String>();
+		
+		GeoPoint leftBottom = (GeoPoint) mapView.getProjection().fromPixels(0, mapView.getHeight());
+		GeoPoint rightTop = (GeoPoint) mapView.getProjection().fromPixels(mapView.getWidth(), 0);
+		viewport.put("sw", String.valueOf(leftBottom.getLatitudeE6()/1E6).concat(",").concat(String.valueOf(leftBottom.getLongitudeE6()/1E6)));
+		viewport.put("ne", String.valueOf(rightTop.getLatitudeE6()/1E6).concat(",").concat(String.valueOf(rightTop.getLongitudeE6()/1E6)));
+
+		return viewport;
+	}
+
+	@Override
+	public Activity getActivity() {
+		return this;
+	}
+	
+	
 }

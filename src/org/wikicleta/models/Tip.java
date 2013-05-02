@@ -4,21 +4,23 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.simple.JSONValue;
-
 import android.annotation.SuppressLint;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.google.android.maps.GeoPoint;
 
 @SuppressLint("SimpleDateFormat")
 @Table(name = "Tips")
 public class Tip extends Model {
 	
 	public String tipEndpoint;
+	
+	@Column(name = "RemoteId")
+	public long remoteId;
 	
 	@Column(name = "Category")
 	public int category;
@@ -41,13 +43,28 @@ public class Tip extends Model {
 	@Column(name = "UserId")
 	public long userId;
 	
-	public Tip(String content, Integer category, int lat, int lon, long userId) {
+	public int likesCount;
+	public String username;
+	public String userPicURL;
+	
+	@SuppressLint("UseSparseArrays")
+	protected static HashMap<Integer, String> categories = new HashMap<Integer, String>();
+	
+	public Tip(String content, int category, int lat, int lon, long userId) {
 		this.content = content;
 		this.category = category;
 		this.latitude = lat;
 		this.longitude = lon;
 		this.userId = userId;
 		this.createdAt = Calendar.getInstance().getTimeInMillis();
+	}
+	
+	public Tip(long remoteId, String content, int category, GeoPoint geopoint, long userId, int likes, long millis, String username) {
+		this(content, category, geopoint.getLatitudeE6(), geopoint.getLongitudeE6(), userId);
+		this.remoteId = remoteId;
+		this.likesCount = likes;
+		this.createdAt = millis;
+		this.username = username;
 	}
 	
 	public Tip() {
@@ -98,6 +115,18 @@ public class Tip extends Model {
 		return JSONValue.toJSONString(toHashMap());
 	}
 	
+	public String categoryString() {
+		return Tip.tipCategories().get(this.category);
+	}
+	
+	public boolean hasPic() {
+		return this.userPicURL != null;
+	}
+	
+	public boolean isOwnedByCurrentUser() {
+		return User.id() == this.userId;
+	}
+	
 	protected static void commitLocally(Tip tip) {
 		ActiveAndroid.beginTransaction();
 
@@ -105,5 +134,14 @@ public class Tip extends Model {
 		
 		ActiveAndroid.setTransactionSuccessful();
 		ActiveAndroid.endTransaction();
+	}
+	
+	public static HashMap<Integer, String> tipCategories() {
+		if(categories.isEmpty()) {
+			categories.put(1, "danger");
+			categories.put(2, "alert");
+			categories.put(3, "sightseeing");
+		}
+		return categories;
 	}
 }

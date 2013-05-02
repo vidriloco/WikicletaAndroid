@@ -1,8 +1,6 @@
 package org.wikicleta.routes.fragments;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.Vector;
 import org.json.simple.JSONArray;
@@ -12,14 +10,13 @@ import org.wikicleta.R;
 import org.wikicleta.access.activities.LandingActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.NetworkOperations;
-import org.wikicleta.helpers.Graphics;
+import org.wikicleta.common.Syncers;
+import org.wikicleta.common.Syncers.ImageUpdater;
 import org.wikicleta.models.Bike;
 import org.wikicleta.models.User;
 import com.nineoldandroids.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -147,52 +144,37 @@ public class ProfileFragment extends Fragment {
 		final Vector<Bike> bikesList = new Vector<Bike>(bikesArray.size());
 		while(bikesIterator.hasNext()) {
 			JSONObject bikeObj = bikesIterator.next();
-			URL bikeURL = new URL(NetworkOperations.serverHost.concat((String) bikeObj.get("bike_photo_url")));
-			Bitmap bmp = BitmapFactory.decodeStream(bikeURL.openConnection().getInputStream());
 			/**
 			 * Registers or updates a bike from the fetched parameters
 			 */
 			Bike bike = Bike.find((Long) bikeObj.get("id"));
 			if(bike != null) {
-				bike.updateAttrsFromJSON(bikeObj, Graphics.getRoundedCornerBitmap(bmp, 10));
+				bike.updateAttrsFromJSON(bikeObj);
 			} else {
-				bike = Bike.newFormJSON(bikeObj, Graphics.getRoundedCornerBitmap(bmp, 10));
+				bike = Bike.newFormJSON(bikeObj);
 			}
 			bikesList.add(bike);
 			bike.save();
 		}
-		String userPicURL = (String) object.get("user_pic"); 
 		
-		Bitmap tmp = null;
-		if(userPicURL != null) {
-			URL url = new URL(NetworkOperations.serverHost.concat(userPicURL));
-			tmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-		}
-		final Bitmap bmp = tmp;
+		replaceableView.removeAllViews();
+		if(bikesArray.size() == 0)
+			insertViewForNoBikesToShow(replaceableView);
+		else
+			insertViewsForBikes(replaceableView, bikesList);
+		if(city == null) 
+			profileCity.setText(getActivity().getResources().getString(R.string.profile_city_not_set));
+		 else 
+			profileCity.setText(city);
+		
+		if(bio != null) 
+			profileBio.setText(bio);
 
-		this.getActivity().runOnUiThread(new Runnable() {
-
-			@Override
-			public void run() {
-				replaceableView.removeAllViews();
-				if(bikesArray.size() == 0)
-					insertViewForNoBikesToShow(replaceableView);
-				else
-					insertViewsForBikes(replaceableView, bikesList);
-				if(city == null) 
-					profileCity.setText(getActivity().getResources().getString(R.string.profile_city_not_set));
-				 else 
-					profileCity.setText(city);
-				
-				if(bio != null) 
-					profileBio.setText(bio);
-
-				if(bmp != null)
-					userPicture.setImageBitmap(Graphics.getRoundedBitmap(bmp));
-			}
-
-
-		});
+		ImageUpdater picFetcher = Syncers.getImageFetcher();
+		picFetcher.setImageAndImageProcessor(userPicture, Syncers.ImageProcessor.ROUND_FOR_USER_PROFILE);
+		
+		String userPicURL = (String) object.get("user_pic"); 
+		picFetcher.execute(NetworkOperations.serverHost.concat(userPicURL));
 	}
 	
 	private void insertViewsForBikes(RelativeLayout parentView, Vector<Bike> bikesList) {
@@ -207,8 +189,12 @@ public class ProfileFragment extends Fragment {
 		
 		for(Bike bike : bikesList) {
 			View view = li.inflate(R.layout.bike_layout, null);
-
-			((ImageView) view.findViewById(R.id.bike_icon)).setImageBitmap(bike.image);
+			
+			ImageView bikePicPlaceholder = (ImageView) view.findViewById(R.id.bike_icon);
+			
+			ImageUpdater bikePicFetcher = Syncers.getImageFetcher();
+			bikePicFetcher.setImageAndImageProcessor(bikePicPlaceholder, Syncers.ImageProcessor.ROUND_AT_10);
+			bikePicFetcher.execute(NetworkOperations.serverHost.concat(bike.imageURL));
 			
 			TextView bikeName = (TextView) view.findViewById(R.id.bike_name_text);
 			bikeName.setTypeface(AppBase.getTypefaceLight());
@@ -242,32 +228,20 @@ public class ProfileFragment extends Fragment {
 	 *  Fetch user profile data
 	 */
 	public class UserProfileDataTask extends AsyncTask<Void, Void, Boolean> {
-		
+		JSONObject responseObject;
 		
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			String result = NetworkOperations.getJSONExpectingString("/api/profiles/".concat(User.username()), false);
 			if(result == null)
 				return false;
-			JSONObject responseObject = (JSONObject) JSONValue.parse(result);
 			
+			responseObject = (JSONObject) JSONValue.parse(result);
 			if(responseObject.containsKey("success") && !((Boolean) responseObject.get("success"))) {
-				
 				return false;
 			} else {
-				try {
-					updateWithProfileFragments(responseObject);
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				return true;
 			}
-			
-			
 		}
 
 		@Override
@@ -281,7 +255,14 @@ public class ProfileFragment extends Fragment {
 		protected void onPostExecute(final Boolean success) {
 			syncAnimator.cancel();
 
-			if(!success) {
+			if(success) {
+				try {
+					updateWithProfileFragments(responseObject);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
 				syncingText.setText(getActivity().getResources().getString(R.string.syncing_profile_failed_text_value));
 				syncingText.setTextColor(getActivity().getResources().getColor(R.color.wikicleta_orange));
 

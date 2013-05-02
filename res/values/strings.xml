@@ -9,7 +9,10 @@
 	<string name="save_as_draft">Guardar como borrador</string>
 	
 	<string name="notification">Notificación</string>
+	<string name="question">Pregunta</string>
 	<string name="neutral">Aceptar</string>
+	<string name="confirm_yes">Si</string>
+	<string name="confirm_no">No</string>
 	<string name="fav">fav</string>
 	<string name="favs">favs</string>
 	<string name="connectivity_problems">No ha sido posible conectar con el servidor remoto, por favor, revisa tu conexión</string>
@@ -90,10 +93,13 @@
 	<string name="route_uploading">Subiendo</string>
 	
 	<!-- Strings for Tips  -->
+	<string name="tip">Tip</string>
 	<string name="tips_new_title">Nuevo Tip</string>
 	<string name="tips_save_title">Guardar Tip</string>
 	<string name="tips_saving_title">Guardando Tip</string>
 	<string name="tips_uploaded_successfully">Tu tip ya está arriba</string>
+	<string name="tips_deleted_successfully">Tu tip ha sido eliminado</string>
+	<string name="tips_did_not_deleted">No fué posible eliminar el tip, intenta nuevamente</string>
 	<string name="tips_sent_to_drafts">Tu tip ha sido guardado como borrador</string>
 	<string name="tips_not_commited">No ha sido posible subir este tip. ¿Qué quieres hacer con él?</string>
 	<string name="tips_form_content_hint">Contenido del tip</string>
@@ -103,6 +109,8 @@
 	<string name="tips_input_empty">El contenido del tip no puede estar vacío</string>
 	
 	<string name="tips_uploading">Subiendo tu tip &#8230;</string>
+	
+	<string name="tips_question_delete">¿Deseas eliminar este tip?</string>
 	
 	<string name="tips.categories.danger">Peligro</string>
 	<string name="tips.categories.alert">Alerta</string>

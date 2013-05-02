@@ -6,7 +6,6 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
-import android.graphics.Bitmap;
 
 @Table(name = "Bikes")
 public class Bike extends Model {
@@ -23,8 +22,6 @@ public class Bike extends Model {
 	@Column(name = "ImageURL")
 	public String imageURL;
 	
-	public Bitmap image;
-	
 	@Column(name = "UpdatedAt")
 	public long updatedAt;
 	
@@ -35,9 +32,9 @@ public class Bike extends Model {
 		
 	}
 	
-	public Bike(long remoteId, String name, String brand, Bitmap image, Long updatedAt, String imageURL, Long likes) {
+	public Bike(long remoteId, String name, String brand, Long updatedAt, String imageURL, Long likes) {
 		this.remoteId = remoteId;
-		this.updateAttrs(name, brand, image, updatedAt, imageURL, likes);
+		this.updateAttrs(name, brand, updatedAt, imageURL, likes);
 	}
 	
 	public static Bike find(Long id) {
@@ -50,10 +47,9 @@ public class Bike extends Model {
 			return bikesFound.get(0);
 	}
 	
-	public static Bike newFormJSON(JSONObject object, Bitmap image) {
+	public static Bike newFormJSON(JSONObject object) {
 		return new Bike((Long) object.get("id"), (String) object.get("name"), 
 				(String) object.get("brand"), 
-				image,
 				Long.parseLong((String) object.get("updated_at_ms")), (String) object.get("bike_photo_url"),
 				(Long) object.get("likes_count"));
 	}
@@ -62,18 +58,16 @@ public class Bike extends Model {
 		Bike.delete(Bike.class);
 	}
 	
-	public void updateAttrsFromJSON(JSONObject object, Bitmap image) {
+	public void updateAttrsFromJSON(JSONObject object) {
 		updateAttrs((String) object.get("name"), 
 				(String) object.get("brand"), 
-				image,
 				Long.parseLong((String) object.get("updated_at_ms")), (String) object.get("bike_photo_url"),
 				(Long) object.get("likes_count"));
 	}
 	
-	public void updateAttrs(String name, String brand, Bitmap image, Long updatedAt, String imageURL, Long likesCount) {
+	public void updateAttrs(String name, String brand, Long updatedAt, String imageURL, Long likesCount) {
 		this.brand = brand;
 		this.name = name;
-		this.image = image;
 		this.updatedAt = updatedAt;
 		this.imageURL = imageURL;
 		this.likesCount = likesCount;

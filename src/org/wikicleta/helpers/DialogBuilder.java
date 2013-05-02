@@ -39,15 +39,19 @@ public class DialogBuilder {
 	}
 	
 	public static AlertDialog.Builder buildAlertWithTitleAndMessage(Activity ctx, int title, int message) {
+		return buildAlertWithTitleAndMessage(ctx, ctx.getResources().getString(title), ctx.getResources().getString(message));
+	}
+	
+	public static AlertDialog.Builder buildAlertWithTitleAndMessage(Activity ctx, String title, String message) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctx);
 		View alertDialogView = ctx.getLayoutInflater().inflate(R.layout.alert_dialog, null);
 		alertDialogBuilder.setView(alertDialogView);
 		TextView titleView = (TextView) alertDialogView.findViewById(R.id.dialog_title);
-		titleView.setText(ctx.getResources().getString(R.string.notification));
+		titleView.setText(title);
 		titleView.setTypeface(AppBase.getTypefaceStrong());
 
 		TextView messageView = (TextView) alertDialogView.findViewById(R.id.dialog_message);
-		messageView.setText(ctx.getResources().getString(message));
+		messageView.setText(message);
 		messageView.setTypeface(AppBase.getTypefaceLight());
 		
 		return alertDialogBuilder;
