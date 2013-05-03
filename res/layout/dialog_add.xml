@@ -32,7 +32,7 @@
 	           android:gravity="right"
 	           android:layout_gravity="center_vertical"
 	           android:text="@string/dialog_add"
-	           android:textColor="#203b50"
+	           android:textColor="@color/wikicleta_orange"
 	           android:textSize="20sp"
 	           android:padding="10dp"
 	           android:layout_marginRight="20dp"
@@ -41,11 +41,10 @@
 		    
 		<LinearLayout android:id="@+id/route_dialog_group"
 	        android:layout_width="fill_parent"
-	        android:background="@drawable/menu_item_background"
+	        android:background="@drawable/menu_item_selector"
 	        android:layout_height="wrap_content"
 	        android:paddingTop="15dp"
-	        android:paddingBottom="15dp"
-	        android:alpha="0.6" >
+	        android:paddingBottom="15dp" >
 	
 	       <ImageView
 	           android:id="@+id/route_img"
@@ -64,7 +63,8 @@
 	           android:gravity="left"
 	           android:padding="10dp"
 	           android:text="@string/routes_dialog_section"
-	           android:textColor="#000"
+	           android:textColor="@color/wikicleta_blue"
+	           android:alpha="0.8"
 	           android:textSize="15sp"
 	           android:textStyle="bold" />
 	
@@ -74,8 +74,7 @@
 		    android:id="@+id/tips_dialog_group"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:alpha="0.6"
-		    android:background="@drawable/menu_item_background"
+		    android:background="@drawable/menu_item_selector"
 		    android:paddingBottom="15dp"
 		    android:paddingTop="15dp" >
 	
@@ -96,7 +95,8 @@
 		        android:gravity="left"
 		        android:padding="10dp"
 		        android:text="@string/tips_dialog_section"
-		        android:textColor="#000"
+		        android:textColor="@color/wikicleta_blue"
+	           	android:alpha="0.8"
 		        android:textSize="15sp"
 		        android:textStyle="bold" />
 	
@@ -106,8 +106,7 @@
 		    android:id="@+id/bicibus_dialog_group"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:alpha="0.6"
-		    android:background="@drawable/menu_item_background"
+		    android:background="@drawable/menu_item_selector"
 		    android:paddingBottom="15dp"
 		    android:paddingTop="15dp" >
 	
@@ -128,7 +127,8 @@
 		        android:gravity="left"
 		        android:padding="10dp"
 		        android:text="@string/bicibus_dialog_section"
-		        android:textColor="#000"
+		        android:textColor="@color/wikicleta_blue"
+	            android:alpha="0.8"
 		        android:textSize="15sp"
 		        android:textStyle="bold" />
 	
@@ -137,8 +137,7 @@
 		    android:id="@+id/bike_repair_dialog_group"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:alpha="0.6"
-		    android:background="@drawable/menu_item_background"
+		    android:background="@drawable/menu_item_selector"
 		    android:paddingBottom="15dp"
 		    android:paddingTop="15dp" >
 	
@@ -159,7 +158,8 @@
 		        android:gravity="left"
 		        android:padding="10dp"
 		        android:text="@string/bike_repair_dialog_section"
-		        android:textColor="#000"
+		        android:textColor="@color/wikicleta_blue"
+	           	android:alpha="0.8"
 		        android:textSize="15sp"
 		        android:textStyle="bold" />
 	
@@ -168,8 +168,7 @@
 		    android:id="@+id/bike_parking_dialog_group"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:alpha="0.6"
-		    android:background="@drawable/menu_item_background"
+		    android:background="@drawable/menu_item_selector"
 		    android:paddingBottom="15dp"
 		    android:paddingTop="15dp" >
 	
@@ -190,7 +189,8 @@
 		        android:gravity="left"
 		        android:padding="10dp"
 		        android:text="@string/bike_parking_dialog_section"
-		        android:textColor="#000"
+		        android:textColor="@color/wikicleta_blue"
+	            android:alpha="0.8"
 		        android:textSize="15sp"
 		        android:textStyle="bold" />
 	

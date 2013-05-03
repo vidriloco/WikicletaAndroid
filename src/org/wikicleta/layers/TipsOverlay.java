@@ -1,6 +1,7 @@
 package org.wikicleta.layers;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.wikicleta.R;
 import org.wikicleta.activities.MainMapActivity;
@@ -10,15 +11,17 @@ import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.common.Syncers;
 import org.wikicleta.common.Syncers.ImageUpdater;
 import org.wikicleta.common.Syncers.TipsDelete;
-import org.wikicleta.helpers.DateTimeUtils;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.layers.components.TipOverlayItem;
 import org.wikicleta.models.Tip;
 import org.wikicleta.models.User;
+import org.wikicleta.tips.activities.NewTipActivity;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
+import com.ocpsoft.pretty.time.PrettyTime;
 
 public class TipsOverlay extends ItemizedOverlay<OverlayItem> implements IdentifiableOverlay {
     private ArrayList<OverlayItem> overlayItems = new ArrayList<OverlayItem>();
@@ -89,8 +93,9 @@ public class TipsOverlay extends ItemizedOverlay<OverlayItem> implements Identif
         content.setTypeface(AppBase.getTypefaceLight());
         
         TextView creationLegend = (TextView) view.findViewById(R.id.tip_created_date);
-        String friendlyDate = DateTimeUtils.getInstance(activity).getTimeDiffString(tip.createdAt);
-        creationLegend.setText(friendlyDate);
+        
+        PrettyTime ptime = new PrettyTime();
+        creationLegend.setText(activity.getResources().getString(R.string.updated_on).concat(" ").concat(ptime.format(new Date(tip.updatedAt))));
         creationLegend.setTypeface(AppBase.getTypefaceLight());
         
         LinearLayout modifyContainer = (LinearLayout) view.findViewById(R.id.modify_button_container);
@@ -133,7 +138,10 @@ public class TipsOverlay extends ItemizedOverlay<OverlayItem> implements Identif
 
     			@Override
     			public void onClick(View v) {
-    				
+    				tipDialog.dismiss();
+    				Bundle bundle = new Bundle();
+    				bundle.putSerializable("tip", tip);
+    				AppBase.launchActivityWithBundle(NewTipActivity.class, bundle);
     			}
             	
             });

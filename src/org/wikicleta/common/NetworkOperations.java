@@ -7,16 +7,25 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.wikicleta.helpers.Strings;
 
 public class NetworkOperations {
-	public static String serverHost = "http://192.168.1.70:3000";
+	public static String serverHost = "http://192.168.1.64:3000";
 		
 	public static int postJSONTo(String path, String jsonValue) {
 		HttpResponse response = NetworkOperations.postJSON(path, jsonValue);
+		
+		if(response == null)
+			return 404;
+		return response.getStatusLine().getStatusCode();
+	}
+	
+	public static int putJSONTo(String path, String jsonValue) {
+		HttpResponse response = NetworkOperations.putJSON(path, jsonValue);
 		
 		if(response == null)
 			return 404;
@@ -84,6 +93,37 @@ public class NetworkOperations {
 	protected static HttpResponse postJSON(String path, String jsonValue)  {
 	    HttpClient client = new DefaultHttpClient();
 	    HttpPost request = new HttpPost(serverHost.concat(path));	
+	    
+	    StringEntity se;
+		try {
+			se = new StringEntity(jsonValue, HTTP.UTF_8);
+			request.setEntity(se);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		request.setHeader("Accept", "application/json");
+		request.setHeader("Content-type", "application/json");
+	    //Handles what is returned from the page 
+	    
+    	HttpResponse response = null;
+		try {
+			response = client.execute(request);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+    	return response;
+	}
+	
+	protected static HttpResponse putJSON(String path, String jsonValue)  {
+	    HttpClient client = new DefaultHttpClient();
+	    HttpPut request = new HttpPut(serverHost.concat(path));	
 	    
 	    StringEntity se;
 		try {

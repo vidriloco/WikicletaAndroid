@@ -6,6 +6,8 @@
     <string name="landing_login_text">Iniciar</string>
     
     <string name="created_by">creado por </string>
+    <string name="updated_on">última actualización</string>
+    
     <string name="you">tí</string>
     
     <string name="actions.delete">Eliminar</string>

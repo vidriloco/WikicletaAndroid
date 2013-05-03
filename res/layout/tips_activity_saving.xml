@@ -24,7 +24,7 @@
 	           android:gravity="right"
 	           android:layout_gravity="center_vertical"
 	           android:text="@string/tips_save_title"
-	           android:textColor="@color/wikicleta_orange"
+	           android:textColor="@color/wikicleta_blue"
 	           android:textSize="20sp"
 	           android:padding="10dp"
 	           android:layout_marginRight="20dp"

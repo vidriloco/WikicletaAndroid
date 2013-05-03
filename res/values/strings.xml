@@ -7,7 +7,6 @@
 	<string name="discard">Descartar</string>
 	<string name="retry">Reintentar subir</string>
 	<string name="save_as_draft">Guardar como borrador</string>
-	
 	<string name="notification">Notificación</string>
 	<string name="question">Pregunta</string>
 	<string name="neutral">Aceptar</string>
@@ -95,7 +94,10 @@
 	<!-- Strings for Tips  -->
 	<string name="tip">Tip</string>
 	<string name="tips_new_title">Nuevo Tip</string>
+	<string name="tips_edit_title">Modificar Tip</string>
+	
 	<string name="tips_save_title">Guardar Tip</string>
+	<string name="tips_update_title">Actualizar Tip</string>
 	<string name="tips_saving_title">Guardando Tip</string>
 	<string name="tips_uploaded_successfully">Tu tip ya está arriba</string>
 	<string name="tips_deleted_successfully">Tu tip ha sido eliminado</string>

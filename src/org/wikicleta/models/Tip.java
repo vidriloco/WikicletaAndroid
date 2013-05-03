@@ -1,5 +1,6 @@
 package org.wikicleta.models;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.simple.JSONValue;
 import android.annotation.SuppressLint;
+
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -15,8 +17,13 @@ import com.google.android.maps.GeoPoint;
 
 @SuppressLint("SimpleDateFormat")
 @Table(name = "Tips")
-public class Tip extends Model {
+public class Tip extends Model implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public String tipEndpoint;
 	
 	@Column(name = "RemoteId")
@@ -39,6 +46,8 @@ public class Tip extends Model {
 	
 	@Column(name = "CreatedAt")
 	public long createdAt;
+	@Column(name = "UpdatedAt")
+	public long updatedAt;
 	
 	@Column(name = "UserId")
 	public long userId;
@@ -51,24 +60,27 @@ public class Tip extends Model {
 	protected static HashMap<Integer, String> categories = new HashMap<Integer, String>();
 	
 	public Tip(String content, int category, int lat, int lon, long userId) {
+		this();
 		this.content = content;
 		this.category = category;
 		this.latitude = lat;
 		this.longitude = lon;
 		this.userId = userId;
-		this.createdAt = Calendar.getInstance().getTimeInMillis();
 	}
 	
-	public Tip(long remoteId, String content, int category, GeoPoint geopoint, long userId, int likes, long millis, String username) {
+	public Tip(long remoteId, String content, int category, GeoPoint geopoint, long userId, int likes, long millisC, long millisU, String username) {
 		this(content, category, geopoint.getLatitudeE6(), geopoint.getLongitudeE6(), userId);
 		this.remoteId = remoteId;
 		this.likesCount = likes;
-		this.createdAt = millis;
+		this.createdAt = millisC;
+		this.updatedAt = millisU;
 		this.username = username;
 	}
 	
 	public Tip() {
-		
+		this.createdAt = Calendar.getInstance().getTimeInMillis();
+		this.updatedAt = Calendar.getInstance().getTimeInMillis();
+		this.remoteId = 0;
 	}
 	
 	public HashMap<String, Object> toHashMap() {
@@ -76,11 +88,10 @@ public class Tip extends Model {
 		params.put("category", this.category);
 		params.put("content", this.content);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		String formattedDate = sdf.format(new Date(this.createdAt));
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		params.put("created_at", sdf.format(new Date(this.createdAt)));
+		params.put("updated_at", sdf.format(new Date()));
 		
-		params.put("created_at", formattedDate);
-		params.put("updated_at", formattedDate);
 		params.put("user_id", this.userId);
 		HashMap<String, Float> coordinates = new HashMap<String, Float>();
 		coordinates.put("lat", (float) (latitude/1E6));
@@ -125,6 +136,10 @@ public class Tip extends Model {
 	
 	public boolean isOwnedByCurrentUser() {
 		return User.id() == this.userId;
+	}
+	
+	public boolean existsOnRemoteServer() {
+		return this.remoteId != 0;
 	}
 	
 	protected static void commitLocally(Tip tip) {

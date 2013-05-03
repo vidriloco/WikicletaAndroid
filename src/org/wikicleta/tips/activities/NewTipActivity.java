@@ -1,27 +1,21 @@
 package org.wikicleta.tips.activities;
 
 import java.util.HashMap;
-
 import org.wikicleta.R;
 import org.wikicleta.activities.LocationAwareMapActivity;
-import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
-import org.wikicleta.common.NetworkOperations;
-import org.wikicleta.helpers.DialogBuilder;
+import org.wikicleta.common.Syncers;
+import org.wikicleta.common.Syncers.Cruds;
+import org.wikicleta.common.Syncers.TipsChange;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.Tip;
 import org.wikicleta.models.User;
 import org.wikicleta.views.PinOverlay;
-
+import com.google.android.maps.GeoPoint;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -44,12 +38,12 @@ public class NewTipActivity extends LocationAwareMapActivity {
 	protected ImageView centerOnMapOff;
 	protected LinearLayout toolbar;
 	protected PinOverlay pinOverlay;
-	protected AlertDialog  formView;
+	public AlertDialog  formView;
 	
 	protected Spinner categorySelector;
 	protected EditText content;
 	
-	protected Tip tip;
+	public Tip tip;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,10 +51,22 @@ public class NewTipActivity extends LocationAwareMapActivity {
 		setTheme(R.style.Theme_wikicleta);
 		
 		AppBase.currentActivity = this;
-    	
-		tip = new Tip();
+    	assignToggleActionsForAutomapCenter();
+
+    	tip = (Tip) getIntent().getSerializableExtra("tip");
+		if(tip != null && tip.existsOnRemoteServer()) {
+			// We are on editing mode
+			turnOffLocation();
+			this.mapView.getController().animateTo(new GeoPoint(tip.latitude, tip.longitude));
+	    	SlidingMenuAndActionBarHelper.loadWithActionBarTitle(this, this.getResources().getString(R.string.tips_edit_title));
+		} else {
+			tip = new Tip();
+	    	// TODO: Move to cancelable alert
+	    	showToastMessage();
+	    	SlidingMenuAndActionBarHelper.setDefaultFontForActionBar(this);
+		}
 		
-    	SlidingMenuAndActionBarHelper.setDefaultFontForActionBar(this);
+    	
     	
     	this.findViewById(R.id.tips_back_button).setOnClickListener(new OnClickListener() {
 
@@ -73,12 +79,9 @@ public class NewTipActivity extends LocationAwareMapActivity {
     	
     	pinOverlay = new PinOverlay(this);
     	
-    	assignToggleActionsForAutomapCenter();
     	this.mapView.getOverlays().add(pinOverlay);
-    	
     	this.toolbar = (LinearLayout) this.findViewById(R.id.tips_toolbar);
-    	showToastMessage();
-    	
+
     	this.findViewById(R.id.tips_finish_button).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -99,10 +102,8 @@ public class NewTipActivity extends LocationAwareMapActivity {
 	
 	protected void showToastMessage() {
 		LayoutInflater inflater = getLayoutInflater();
-		View layout = inflater.inflate(R.layout.message,
-		                               (ViewGroup) findViewById(R.id.toast_layout_root));
+		View layout = inflater.inflate(R.layout.message, (ViewGroup) findViewById(R.id.toast_layout_root));
 		
-
 		TextView text = (TextView) layout.findViewById(R.id.message_text);
 		text.setTypeface(AppBase.getTypefaceLight());
 		text.setText(R.string.select_location_on_map);
@@ -120,20 +121,28 @@ public class NewTipActivity extends LocationAwareMapActivity {
     	centerOnMapOff.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				locationOverlay.enableMyLocation();
-				centerOnMapOff.setVisibility(View.GONE);
-				centerOnMapOn.setVisibility(View.VISIBLE);
+				turnOnLocation();
 			}
 		});
     	
     	centerOnMapOn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				locationOverlay.disableMyLocation();
-				centerOnMapOff.setVisibility(View.VISIBLE);
-				centerOnMapOn.setVisibility(View.GONE);
+				turnOffLocation();
 			}
 		});
+	}
+	
+	protected void turnOnLocation() {
+		locationOverlay.enableMyLocation();
+		centerOnMapOff.setVisibility(View.GONE);
+		centerOnMapOn.setVisibility(View.VISIBLE);
+	}
+	
+	protected void turnOffLocation() {
+		locationOverlay.disableMyLocation();
+		centerOnMapOff.setVisibility(View.VISIBLE);
+		centerOnMapOn.setVisibility(View.GONE);
 	}
 	
 	
@@ -160,7 +169,11 @@ public class NewTipActivity extends LocationAwareMapActivity {
 			return;
 		}
 		
-		new PostTipAsyncTask().execute();
+		TipsChange poster = Syncers.getTipsChange();
+		poster.activity = this;
+		if(tip.existsOnRemoteServer())
+			poster.mode = Cruds.MODIFY;
+		poster.execute(tip);
 	}
 	
 	protected void displaySaveForm() {
@@ -215,6 +228,13 @@ public class NewTipActivity extends LocationAwareMapActivity {
     		
     	});
     	
+    	// On editing mode if we are modifying the tip
+    	if(tip.existsOnRemoteServer()) {
+    		content.setText(tip.content);
+    		categorySelector.setSelection(tip.category-1);
+    		title.setText(this.getResources().getString(R.string.tips_update_title));
+    	}
+    	
     	Button saveButton = (Button) view.findViewById(R.id.save_tip);
     	saveButton.setTypeface(AppBase.getTypefaceStrong());
     	saveButton.setOnClickListener(new OnClickListener() {
@@ -230,122 +250,6 @@ public class NewTipActivity extends LocationAwareMapActivity {
     	formView = toggleBuilder.create();
     	formView.setCanceledOnTouchOutside(false);
     	formView.show();
-	}
-	
-	private class PostTipAsyncTask extends AsyncTask<Void, Void, Boolean> {
-		private ProgressDialog progressDialog;
-		
-		@Override
-		protected Boolean doInBackground(Void... args0) {
-			HashMap<String, Object> auth = new HashMap<String, Object>();
-			auth.put("auth_token", User.token());
-			int requestStatus = NetworkOperations.postJSONTo("/api/tips", tip.toJSON(auth));
-			return requestStatus == 200;
-		}
-		
-		@Override
-		protected void onPreExecute() {
-		    super.onPreExecute();
-		    progressDialog = ProgressDialog.show(AppBase.currentActivity, "", 
-		    		getResources().getString(R.string.tips_uploading), true);
-		}
-
-	    protected void onPostExecute(Boolean success) {
-	    	progressDialog.dismiss();
-	    	
-	    	if(success) {
-	    		showToastWithSuccessfulCommitMessage();
-	    		// Sends to the layers activity
-	    		finish();
-	    	} else {
-	    		formView.hide();
-	    		AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(AppBase.currentActivity, R.string.notification, R.string.tips_not_commited);
-	    		builder.setNeutralButton(getResources().getString(R.string.save_as_draft), new DialogInterface.OnClickListener() {
-	    			public void onClick(DialogInterface dialog,int id) {
-	    				tip.save();
-	    				AppBase.launchActivity(MainMapActivity.class);
-	    	    		showToastWithDraftSaveMessage();
-	    				finish();
-	    			}
-	    		}).setNegativeButton(getResources().getString(R.string.discard), new DialogInterface.OnClickListener() {
-	    			public void onClick(DialogInterface dialog,int id) {
-	    				AppBase.launchActivity(MainMapActivity.class);
-	    				finish();
-	    			}
-	    		}).setPositiveButton(getResources().getString(R.string.retry), new DialogInterface.OnClickListener() {
-	    			public void onClick(DialogInterface dialog,int id) {
-	    				attemptCommit();
-	    			}
-	    		});
-	    		final AlertDialog alert = builder.create();
-	    		alert.setOnDismissListener(new OnDismissListener() {
-
-					@Override
-					public void onDismiss(DialogInterface arg0) {
-						formView.show();
-					}
-	    			
-	    		});
-	    		
-	    		alert.setOnShowListener(new DialogInterface.OnShowListener() {
-	    		    @Override
-	    		    public void onShow(DialogInterface dialog) {
-	    		        Button btnPositive = alert.getButton(Dialog.BUTTON_POSITIVE);
-	    		        btnPositive.setTextSize(13);
-	    		        btnPositive.setTypeface(AppBase.getTypefaceStrong());
-	    		        
-	    		        Button btnNegative = alert.getButton(Dialog.BUTTON_NEGATIVE);
-	    		        btnNegative.setTextSize(13);
-	    		        btnNegative.setTypeface(AppBase.getTypefaceStrong());
-	    		        
-	    		        Button btnNeutral = alert.getButton(Dialog.BUTTON_NEUTRAL);
-	    		        btnNeutral.setTextSize(13);
-	    		        btnNeutral.setTypeface(AppBase.getTypefaceStrong());
-
-	    		    }
-	    		});
-	    		
-	    		alert.show();
-	    	}
-	    }
-
-	     
-	 }
-	
-	protected void showToastWithSuccessfulCommitMessage() {
-		LayoutInflater inflater = getLayoutInflater();
-		View layout = inflater.inflate(R.layout.message,
-		                               (ViewGroup) findViewById(R.id.toast_layout_root));
-		
-		ImageView icon = (ImageView) layout.findViewById(R.id.message_icon);
-		icon.setImageDrawable(getResources().getDrawable(R.drawable.success_icon));
-		
-		TextView text = (TextView) layout.findViewById(R.id.message_text);
-		text.setTypeface(AppBase.getTypefaceLight());
-		text.setText(R.string.tips_uploaded_successfully);
-		Toast toast = new Toast(getApplicationContext());
-		toast.setDuration(Toast.LENGTH_LONG);
-		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
-		toast.setView(layout);
-		toast.show();
-	}
-	
-	protected void showToastWithDraftSaveMessage() {
-		LayoutInflater inflater = getLayoutInflater();
-		View layout = inflater.inflate(R.layout.message,
-		                               (ViewGroup) findViewById(R.id.toast_layout_root));
-		
-		ImageView icon = (ImageView) layout.findViewById(R.id.message_icon);
-		icon.setImageDrawable(getResources().getDrawable(R.drawable.archive_icon));
-		
-		TextView text = (TextView) layout.findViewById(R.id.message_text);
-		text.setTypeface(AppBase.getTypefaceLight());
-		text.setText(R.string.tips_sent_to_drafts);
-		Toast toast = new Toast(getApplicationContext());
-		toast.setDuration(Toast.LENGTH_LONG);
-		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
-		toast.setView(layout);
-		toast.show();
 	}
 	
 	public class TipsCategoriesArrayAdapter extends ArrayAdapter<String>{

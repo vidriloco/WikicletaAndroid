@@ -1,10 +1,6 @@
 package org.wikicleta.activities;
-
-import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.wikicleta.R;
 import org.wikicleta.adapters.MenuOptionsListAdapter;
 import org.wikicleta.common.AppBase;
@@ -14,25 +10,17 @@ import org.wikicleta.layers.IdentifiableOverlay;
 import org.wikicleta.layers.LayersConnector;
 import org.wikicleta.layers.LayersConnectorListener;
 import org.wikicleta.routes.activities.NewRouteActivity;
-import org.wikicleta.routes.services.RoutesService;
-import org.wikicleta.routes.services.ServiceConstructor;
-import org.wikicleta.routes.services.ServiceListener;
 import org.wikicleta.tips.activities.NewTipActivity;
 import org.wikicleta.views.PinchableMapView.OnPanChangeListener;
 import org.wikicleta.views.PinchableMapView.OnZoomChangeListener;
-import org.wikicleta.views.RouteOverlay;
-
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Service;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,7 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MainMapActivity extends LocationAwareMapActivity implements ServiceListener, LayersConnectorListener {
+public class MainMapActivity extends LocationAwareMapActivity implements LayersConnectorListener {
 	
 	protected static int ROUTE_ACTION=0;
 	protected static int PLACE_ACTION=1;
@@ -56,14 +44,8 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 	protected LayersConnector layersConnector;
 	protected LinearLayout toolBarView;
 	
-	protected RouteOverlay routeOverlay;
-
 	protected AlertDialog addMenu;
 	protected AlertDialog toggleLayersMenu;
-	
-	//Service
-	protected RoutesService theService;
-	ServiceConstructor serviceInitializator;
 	
 	protected ArrayList<Integer> overlays;
 	MenuOptionsListAdapter selectedLayersMenuAdapter;
@@ -78,25 +60,9 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 		overlays = new ArrayList<Integer>();
 		layersConnector = new LayersConnector(this);
 		
-		AppBase.currentActivity = this;
-		startService(new Intent(this, RoutesService.class));
-
+		AppBase.currentActivity = this;		
         toolBarView = (LinearLayout) findViewById(R.id.toolbar);
                             	
-    	findViewById(R.id.map_add_button).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				addMenu.show();
-			}
-		});
-    	
-    	findViewById(R.id.map_layers_button).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				toggleLayersMenu.show();
-			}
-		});
-    	
     	final ImageView centerMapViewEnabled = (ImageView) findViewById(R.id.centermap_search_button);
     	final ImageView centerMapViewDisabled = (ImageView) findViewById(R.id.centermap_search_button_enabled);
 
@@ -118,12 +84,22 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 			}
 		});
     	
-    	
-    	
         SlidingMenuAndActionBarHelper.load(this);
 				
-		buildAddMenu();
 		buildToggleMenu();
+    	findViewById(R.id.map_add_button).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				addMenu.show();
+			}
+		});
+    	
+    	findViewById(R.id.map_layers_button).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				toggleLayersMenu.show();
+			}
+		});
 		
 		mapView.setOnZoomChangeListener(new OnZoomChangeListener() {
 
@@ -238,15 +214,16 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
         view.findViewById(R.id.route_dialog_group).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				animate(v).alpha(1).setDuration(100);
+				addMenu.dismiss();
 				AppBase.launchActivity(NewRouteActivity.class);
+				finish();
 			}
         });
         
         view.findViewById(R.id.tips_dialog_group).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				animate(v).alpha(1).setDuration(100);
+				addMenu.dismiss();
 				AppBase.launchActivity(NewTipActivity.class);
 			}
         });
@@ -278,6 +255,10 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 	
 	protected void toggleLayers(ArrayList<Integer> layers) {
 		mapView.getOverlays().clear();
+		
+		if(layers.isEmpty())
+			this.onOverlayReady();
+		
 		for(Integer layer : layers) {
 			if(layer == Constants.BIKE_SHARING_OVERLAY)
 				mapView.getOverlays().add(layersConnector.getBikeSharingOverlay());
@@ -296,30 +277,7 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 	@Override
 	protected void onStart() {
 		super.onStart();
-		serviceInitializator = new ServiceConstructor(this);
-        serviceInitializator.start(RoutesService.class);
-	}
-	
-	@Override
-	protected void onStop() {
-		super.onStop();
-        serviceInitializator.stop();
-	}
-	
-	@Override
-	protected void onPause() {		
-		super.onPause();
-	}
-	
-	@Override
-	public void afterServiceConnected(Service service) {
-		if(service instanceof RoutesService) {
-			this.theService = (RoutesService) service;
-			theService.notifyAboutStalledRoutes();
-			
-			routeOverlay = new RouteOverlay(theService.routeRecorder.coordinateVector);
-			mapView.getOverlays().add(routeOverlay);
-		}
+		this.buildAddMenu();
 	}
 
 	public Overlay findOverlayByIdentifier(int identifier) {
@@ -337,8 +295,16 @@ public class MainMapActivity extends LocationAwareMapActivity implements Service
 	
 	@Override
 	public void onOverlayReady() {
-		this.mapView.invalidate();
-		this.mapView.refreshDrawableState();
+		this.runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				mapView.invalidate();
+				mapView.refreshDrawableState();
+			}
+			
+		});
+
 	}
 
 	@Override
