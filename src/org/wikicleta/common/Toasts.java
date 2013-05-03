@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Toasts {
-	protected static void showToastWithMessage(Activity activity, int message, int icon) {
+	public static void showToastWithMessage(Activity activity, int message, int icon) {
 		LayoutInflater inflater = activity.getLayoutInflater();
 		View layout = inflater.inflate(R.layout.message,
 		                               (ViewGroup) activity.findViewById(R.id.toast_layout_root));

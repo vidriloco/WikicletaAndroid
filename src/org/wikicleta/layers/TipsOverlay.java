@@ -10,21 +10,23 @@ import org.wikicleta.common.Constants;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.common.Syncers;
 import org.wikicleta.common.Syncers.ImageUpdater;
-import org.wikicleta.common.Syncers.TipsDelete;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.layers.components.TipOverlayItem;
 import org.wikicleta.models.Tip;
 import org.wikicleta.models.User;
+import org.wikicleta.routing.Tips;
 import org.wikicleta.tips.activities.NewTipActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,7 +47,7 @@ public class TipsOverlay extends ItemizedOverlay<OverlayItem> implements Identif
     }
     
     public void fetch() {
-    	Syncers.TipsFetching tipsFetcher = Syncers.getTipsFetcher();
+    	Tips.Get tipsFetcher = new Tips().new Get();
     	tipsFetcher.execute(this);
     }
 
@@ -155,7 +157,7 @@ public class TipsOverlay extends ItemizedOverlay<OverlayItem> implements Identif
     			public void onClick(View v) {
     				AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.question, R.string.tips_question_delete);
     				
-    				builder.setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener() {
+    				final AlertDialog alert = builder.setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener() {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -169,14 +171,29 @@ public class TipsOverlay extends ItemizedOverlay<OverlayItem> implements Identif
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							dialog.dismiss();
-							TipsDelete tipsDelete = Syncers.getTipsDelete();
+							Tips.Delete tipsDelete = new Tips().new Delete();
 							tipsDelete.activity = (MainMapActivity) activity;
 							tipsDelete.execute(tip);
 							tipDialog.dismiss();
 						}
 
     					
-    				}).create().show();
+    				}).create();
+    				
+    				alert.setOnShowListener(new DialogInterface.OnShowListener() {
+    	    		    @Override
+    	    		    public void onShow(DialogInterface dialog) {
+    	    		        Button btnPositive = alert.getButton(Dialog.BUTTON_POSITIVE);
+    	    		        btnPositive.setTextSize(13);
+    	    		        btnPositive.setTypeface(AppBase.getTypefaceStrong());
+    	    		        
+    	    		        Button btnNegative = alert.getButton(Dialog.BUTTON_NEGATIVE);
+    	    		        btnNegative.setTextSize(13);
+    	    		        btnNegative.setTypeface(AppBase.getTypefaceStrong());
+    	    		    }
+    	    		});
+    				
+    				alert.show();
     				tipDialog.hide();
     			}
             });

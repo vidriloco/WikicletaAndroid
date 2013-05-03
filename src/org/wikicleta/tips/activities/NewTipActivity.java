@@ -6,12 +6,11 @@ import org.wikicleta.activities.LocationAwareMapActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
-import org.wikicleta.common.Syncers;
 import org.wikicleta.common.Syncers.Cruds;
-import org.wikicleta.common.Syncers.TipsChange;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.Tip;
 import org.wikicleta.models.User;
+import org.wikicleta.routing.Tips;
 import org.wikicleta.views.PinOverlay;
 import com.google.android.maps.GeoPoint;
 import android.app.AlertDialog;
@@ -169,7 +168,7 @@ public class NewTipActivity extends LocationAwareMapActivity {
 			return;
 		}
 		
-		TipsChange poster = Syncers.getTipsChange();
+		Tips.PostOrPut poster = new Tips().new PostOrPut();
 		poster.activity = this;
 		if(tip.existsOnRemoteServer())
 			poster.mode = Cruds.MODIFY;
