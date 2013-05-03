@@ -10,7 +10,7 @@ import org.wikicleta.layers.IdentifiableOverlay;
 import org.wikicleta.layers.LayersConnector;
 import org.wikicleta.layers.LayersConnectorListener;
 import org.wikicleta.routes.activities.NewRouteActivity;
-import org.wikicleta.tips.activities.NewTipActivity;
+import org.wikicleta.tips.activities.ModifyingTipActivity;
 import org.wikicleta.views.PinchableMapView.OnPanChangeListener;
 import org.wikicleta.views.PinchableMapView.OnZoomChangeListener;
 import com.google.android.maps.GeoPoint;
@@ -224,7 +224,7 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 			@Override
 			public void onClick(View v) {
 				addMenu.dismiss();
-				AppBase.launchActivity(NewTipActivity.class);
+				AppBase.launchActivity(ModifyingTipActivity.class);
 			}
         });
         

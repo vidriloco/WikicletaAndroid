@@ -117,9 +117,17 @@
 	<string name="tips_question_delete">¿Deseas eliminar este tip?</string>
 	
 	<string name="tips.categories.danger">Peligro</string>
-	<string name="tips.categories.alert">Alerta</string>
+	<string name="tips.categories.alert">Recomendación</string>
 	<string name="tips.categories.sightseeing">Para ver</string>
 
+	<!-- Strings for cycle stations and bike sharing -->
+	<string name="cycle_station">Cicloestación</string>
+	<string name="one_available_slot">espacio disponible</string>
+	<string name="many_available_slots">espacios disponibles</string>
+
+	<string name="one_available_bike">bici disponible</string>
+	<string name="many_available_bikes">bicis disponibles</string>
+	
 	<string name="waiting_for_gps">Esperando GPS &#8230;</string>
 	<!-- Strings for user profile -->
 	<string name="user_profile_title">Tu Perfil</string>

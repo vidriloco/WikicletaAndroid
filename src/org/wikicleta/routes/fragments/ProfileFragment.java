@@ -10,10 +10,11 @@ import org.wikicleta.R;
 import org.wikicleta.access.activities.LandingActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.NetworkOperations;
-import org.wikicleta.common.Syncers;
-import org.wikicleta.common.Syncers.ImageUpdater;
 import org.wikicleta.models.Bike;
 import org.wikicleta.models.User;
+import org.wikicleta.routing.Others;
+import org.wikicleta.routing.Others.ImageUpdater;
+
 import com.nineoldandroids.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -170,8 +171,8 @@ public class ProfileFragment extends Fragment {
 		if(bio != null) 
 			profileBio.setText(bio);
 
-		ImageUpdater picFetcher = Syncers.getImageFetcher();
-		picFetcher.setImageAndImageProcessor(userPicture, Syncers.ImageProcessor.ROUND_FOR_USER_PROFILE);
+		ImageUpdater picFetcher = Others.getImageFetcher();
+		picFetcher.setImageAndImageProcessor(userPicture, Others.ImageProcessor.ROUND_FOR_USER_PROFILE);
 		
 		String userPicURL = (String) object.get("user_pic"); 
 		picFetcher.execute(NetworkOperations.serverHost.concat(userPicURL));
@@ -192,8 +193,8 @@ public class ProfileFragment extends Fragment {
 			
 			ImageView bikePicPlaceholder = (ImageView) view.findViewById(R.id.bike_icon);
 			
-			ImageUpdater bikePicFetcher = Syncers.getImageFetcher();
-			bikePicFetcher.setImageAndImageProcessor(bikePicPlaceholder, Syncers.ImageProcessor.ROUND_AT_10);
+			ImageUpdater bikePicFetcher = Others.getImageFetcher();
+			bikePicFetcher.setImageAndImageProcessor(bikePicPlaceholder, Others.ImageProcessor.ROUND_AT_10);
 			bikePicFetcher.execute(NetworkOperations.serverHost.concat(bike.imageURL));
 			
 			TextView bikeName = (TextView) view.findViewById(R.id.bike_name_text);

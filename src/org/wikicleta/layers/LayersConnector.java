@@ -18,8 +18,7 @@ public class LayersConnector {
 		Date currentDate = new Date();
 		if(bikeSharingOverlayLastFetched == null ||
 				(currentDate.getTime()-bikeSharingOverlayLastFetched.getTime()) > Constants.MAX_AWAITING_TIME_BETWEEN_LAYER_RELOADING ) {
-			bikeSharingOverlay = new BikeSharingOverlay(activity.getResources().getDrawable(R.drawable.cycling),
-					(LayersConnectorListener) activity);
+			bikeSharingOverlay = new BikeSharingOverlay((LayersConnectorListener) activity);
 			bikeSharingOverlayLastFetched = currentDate;
 		}
 		

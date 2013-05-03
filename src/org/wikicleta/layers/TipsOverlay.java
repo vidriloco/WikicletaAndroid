@@ -8,14 +8,14 @@ import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.NetworkOperations;
-import org.wikicleta.common.Syncers;
-import org.wikicleta.common.Syncers.ImageUpdater;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.layers.components.TipOverlayItem;
 import org.wikicleta.models.Tip;
 import org.wikicleta.models.User;
+import org.wikicleta.routing.Others;
 import org.wikicleta.routing.Tips;
-import org.wikicleta.tips.activities.NewTipActivity;
+import org.wikicleta.routing.Others.ImageUpdater;
+import org.wikicleta.tips.activities.ModifyingTipActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -113,8 +113,8 @@ public class TipsOverlay extends ItemizedOverlay<OverlayItem> implements Identif
         if(tip.hasPic()) {
             ImageView ownerPic = (ImageView) view.findViewById(R.id.tip_creator_pic);
             
-            ImageUpdater updater = Syncers.getImageFetcher();
-            updater.setImageAndImageProcessor(ownerPic, Syncers.ImageProcessor.ROUND_FOR_MINI_USER_PROFILE);
+            ImageUpdater updater = Others.getImageFetcher();
+            updater.setImageAndImageProcessor(ownerPic, Others.ImageProcessor.ROUND_FOR_MINI_USER_PROFILE);
             updater.execute(NetworkOperations.serverHost.concat(tip.userPicURL));
         }
 
@@ -143,7 +143,7 @@ public class TipsOverlay extends ItemizedOverlay<OverlayItem> implements Identif
     				tipDialog.dismiss();
     				Bundle bundle = new Bundle();
     				bundle.putSerializable("tip", tip);
-    				AppBase.launchActivityWithBundle(NewTipActivity.class, bundle);
+    				AppBase.launchActivityWithBundle(ModifyingTipActivity.class, bundle);
     			}
             	
             });

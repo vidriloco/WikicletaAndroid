@@ -12,20 +12,19 @@ import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.common.Toasts;
-import org.wikicleta.common.Syncers.Cruds;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.layers.TipsOverlay;
 import org.wikicleta.layers.components.TipOverlayItem;
 import org.wikicleta.models.Tip;
 import org.wikicleta.models.User;
-import org.wikicleta.tips.activities.NewTipActivity;
+import org.wikicleta.routing.Others.Cruds;
+import org.wikicleta.tips.activities.ModifyingTipActivity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
-import android.content.DialogInterface.OnShowListener;
 import android.os.AsyncTask;
 import android.widget.Button;
 
@@ -127,7 +126,7 @@ public class Tips {
 	public class PostOrPut extends AsyncTask<Tip, Void, Boolean> {
 		private ProgressDialog progressDialog;
 		private Tip tip;
-		public NewTipActivity activity;
+		public ModifyingTipActivity activity;
 		public Cruds mode = Cruds.CREATE;
 		
 		@Override

@@ -1,4 +1,4 @@
-package org.wikicleta.common;
+package org.wikicleta.routing;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -9,7 +9,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
-public class Syncers {
+public class Others {
 
 	public enum ImageProcessor {
 		ROUND_FOR_USER_PROFILE,
@@ -22,14 +22,11 @@ public class Syncers {
 		CREATE
 	}
 	
-	protected static Syncers defaultSyncer;
-	protected String listingsPath="/api/tips?";
-	protected String postPath="/api/tips";
-	protected String changePath="/api/tips/:id";
+	protected static Others defaultSyncer;
 
 	public static ImageUpdater getImageFetcher() {
 		if(defaultSyncer == null)
-			defaultSyncer = new Syncers();
+			defaultSyncer = new Others();
 		return defaultSyncer.new ImageUpdater();
 	}
 	
