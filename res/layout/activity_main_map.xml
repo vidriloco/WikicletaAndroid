@@ -40,35 +40,18 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/nothing"
             android:src="@drawable/add"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:clickable="true" />
-        <ImageView
-            android:id="@+id/map_layers_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/nothing"
-            android:src="@drawable/layers"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:clickable="true" />
-        <ImageView
-            android:id="@+id/map_search_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/nothing"
-            android:src="@drawable/search"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:clickable="true" />
+        
 		<ImageView
             android:id="@+id/centermap_search_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/nothing"
             android:src="@drawable/centermap"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:clickable="true" />
 		<ImageView
             android:id="@+id/centermap_search_button_enabled"
@@ -76,9 +59,31 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/nothing"
             android:src="@drawable/centermap_enabled"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:clickable="true"
             android:visibility="gone" />
+		<ImageView
+            android:id="@+id/map_layers_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/nothing"
+            android:src="@drawable/layers"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:clickable="true" />
+
+
+		<ImageView
+            android:id="@+id/reloading_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/nothing"
+            android:src="@drawable/reloading_icon"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:clickable="true"
+            android:visibility="gone" />
+		
   </LinearLayout>
 </RelativeLayout>

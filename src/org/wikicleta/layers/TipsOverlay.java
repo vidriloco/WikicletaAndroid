@@ -204,9 +204,10 @@ public class TipsOverlay extends ItemizedOverlay<OverlayItem> implements Identif
         tipDialog.show();
     }
     
-    public void notifyOverlayIsReady() {
-    	this.populate();
-    	this.listener.onOverlayReady();
+    public void overlayFinishedFetching(boolean status) {
+    	if(status)
+    		this.populate();
+    	this.listener.overlayFinishedLoading(status);
     }
     
     public void clear() {

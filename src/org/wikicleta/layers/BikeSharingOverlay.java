@@ -114,10 +114,6 @@ public class BikeSharingOverlay extends ItemizedOverlay<OverlayItem> implements 
         return true;
     }
     
-    public void notifyOverlayIsReady() {
-    	listener.onOverlayReady();
-    }
-    
     public class EcobiciFetching extends AsyncTask<Void, Void, Boolean> {
     	JSONArray objectList;
     	Activity activity;
@@ -143,12 +139,12 @@ public class BikeSharingOverlay extends ItemizedOverlay<OverlayItem> implements 
 					addOverlay(CycleStationOverlayItem.buildFrom(activity, object));
 				}
 			}
-			notifyOverlayIsReady();
+			listener.overlayFinishedLoading(success);
 		}
 
 		@Override
 		protected void onCancelled() {
-			
+			listener.overlayFinishedLoading(false);
 		}
 	}
 

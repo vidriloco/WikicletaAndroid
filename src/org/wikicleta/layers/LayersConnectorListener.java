@@ -4,9 +4,10 @@ import java.util.HashMap;
 import android.app.Activity;
 
 public interface LayersConnectorListener {
-	public void onOverlayReady();
+	void overlayFinishedLoading(boolean status);
+	void hideLoadingState();
+	void showLoadingState();
+	HashMap<String, String> getCurrentViewport();
 	
-	public HashMap<String, String> getCurrentViewport();
-	
-	public Activity getActivity();
+	Activity getActivity();
 }

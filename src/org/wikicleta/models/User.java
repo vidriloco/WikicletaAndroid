@@ -11,12 +11,14 @@ import android.os.AsyncTask;
 
 public class User {
 	
-	static SharedPreferences preferences = AppBase.currentActivity.
-			getSharedPreferences("Wikicleta-User",Context.MODE_PRIVATE);
+	static SharedPreferences preferences;
 
+	static SharedPreferences getPreferences() {
+		return AppBase.currentActivity.getSharedPreferences("Wikicleta-User",Context.MODE_PRIVATE);
+	}
 	
 	public static void storeWithParams(Map<String,String> params, String token) {
-		SharedPreferences.Editor editor = preferences.edit();
+		SharedPreferences.Editor editor = getPreferences().edit();
 		editor.putString("full_name", params.get("full_name"));
 		editor.putString("email", params.get("email"));
 		editor.putString("username", params.get("username"));
@@ -27,15 +29,15 @@ public class User {
 	}
 	
 	public static String token() {
-		return preferences.getString("token", "");
+		return getPreferences().getString("token", "");
 	}
 	
 	public static String username() {
-		return preferences.getString("username", "");
+		return getPreferences().getString("username", "");
 	}
 	
 	public static Long id() {
-		return preferences.getLong("id", 0);
+		return getPreferences().getLong("id", 0);
 	}
 	
 	public static boolean isRegisteredLocally() {
@@ -43,7 +45,7 @@ public class User {
 	}
 	
 	public static void destroy() {
-		SharedPreferences.Editor editor = preferences.edit();
+		SharedPreferences.Editor editor = getPreferences().edit();
 		
 		new SessionDestroyTask().execute();
 		editor.clear();

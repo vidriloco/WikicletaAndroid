@@ -20,7 +20,6 @@
     <string name="registration_accept_button">Aceptar</string>
     <string name="registration_back_button">Regresar</string>
     
-    
 	<!-- Login Activity strings -->
 	<string name="login_title">Inicia Sesión</string>
 	<string name="login_prologue_text">Bienvenid@, llena los siguientes campos para usar Wikicleta en tu teléfono</string>
@@ -55,4 +54,7 @@
 	<string name="timestamp_minutes_ago">hace %s minutos</string>
 	<string name="timestamp_just_now">justo ahora</string>
 	<string name="timestamp_past_day">el %s pasado</string>
+	
+	<string name="loading_selected_layers">Cargando capas seleccionadas</string>
+	
 </resources>

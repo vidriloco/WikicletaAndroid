@@ -31,7 +31,7 @@
 	           android:layout_height="wrap_content"
 	           android:gravity="right"
 	           android:layout_gravity="center_vertical"
-	           android:text="@string/dialog_add"
+	           android:text="@string/dialog_share"
 	           android:textColor="@color/wikicleta_orange"
 	           android:textSize="20sp"
 	           android:padding="10dp"

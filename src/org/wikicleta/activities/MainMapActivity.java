@@ -1,12 +1,13 @@
 package org.wikicleta.activities;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.wikicleta.R;
 import org.wikicleta.adapters.MenuOptionsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
-import org.wikicleta.layers.IdentifiableOverlay;
 import org.wikicleta.layers.LayersConnector;
 import org.wikicleta.layers.LayersConnectorListener;
 import org.wikicleta.routes.activities.NewRouteActivity;
@@ -15,13 +16,14 @@ import org.wikicleta.views.PinchableMapView.OnPanChangeListener;
 import org.wikicleta.views.PinchableMapView.OnZoomChangeListener;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
+import com.nineoldandroids.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,10 +54,17 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 	
 	protected boolean userIsPanning;
 	
+	private ObjectAnimator uploaderAnimator;
+	protected ImageView loadingLayersIcon;
+	protected ImageView layersIcon;
+	
+	Handler handler = new Handler();
+	boolean handlerRunning = false;
+	
 	@SuppressLint("UseSparseArrays")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.activity_routes_on_map);
+		super.onCreate(savedInstanceState, R.layout.activity_main_map);
 		setTheme(R.style.Theme_wikicleta);
 		overlays = new ArrayList<Integer>();
 		layersConnector = new LayersConnector(this);
@@ -66,6 +75,8 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
     	final ImageView centerMapViewEnabled = (ImageView) findViewById(R.id.centermap_search_button);
     	final ImageView centerMapViewDisabled = (ImageView) findViewById(R.id.centermap_search_button_enabled);
 
+    	loadingLayersIcon = (ImageView) findViewById(R.id.reloading_icon);
+    	
     	centerMapViewEnabled.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -94,7 +105,9 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 			}
 		});
     	
-    	findViewById(R.id.map_layers_button).setOnClickListener(new View.OnClickListener() {
+    	
+    	layersIcon = (ImageView) findViewById(R.id.map_layers_button);
+    	layersIcon.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				toggleLayersMenu.show();
@@ -123,6 +136,41 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 	
 	public void reloadActiveLayers() {
 		toggleLayers(selectedLayersMenuAdapter.getSelectedValuesForPositions());
+	}
+	
+	Runnable cancelableDelayedLoadingAnimation = new Runnable() {
+		   @Override
+		   public void run() {
+			   if(!handlerRunning) {
+				   handlerRunning = true;
+				   uploaderAnimator = ObjectAnimator.ofFloat(loadingLayersIcon, "rotation", 0, 360);
+				   uploaderAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+				   uploaderAnimator.setDuration(1500);
+				   layersIcon.setVisibility(View.GONE);
+				   loadingLayersIcon.setVisibility(View.VISIBLE);
+			       uploaderAnimator.start();
+			   } 
+		   }
+	};
+	
+	@Override
+	public void showLoadingState() {
+		handler.postDelayed(cancelableDelayedLoadingAnimation, 10L);        
+	}
+	
+	@Override
+	public void hideLoadingState() {
+		this.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+		    	layersIcon.setVisibility(View.VISIBLE);
+		    	loadingLayersIcon.setVisibility(View.GONE);
+				if(uploaderAnimator != null)
+					uploaderAnimator.cancel();
+				handlerRunning = false;
+			}
+			
+		});
 	}
 	
 	protected void buildToggleMenu() {
@@ -254,11 +302,12 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 	}
 	
 	protected void toggleLayers(ArrayList<Integer> layers) {
+		
 		mapView.getOverlays().clear();
+		mapView.getOverlays().add(locationOverlay);
 		
 		if(layers.isEmpty())
-			this.onOverlayReady();
-		
+			this.overlayFinishedLoading(false);
 		for(Integer layer : layers) {
 			if(layer == Constants.BIKE_SHARING_OVERLAY)
 				mapView.getOverlays().add(layersConnector.getBikeSharingOverlay());
@@ -279,28 +328,17 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 		super.onStart();
 		this.buildAddMenu();
 	}
-
-	public Overlay findOverlayByIdentifier(int identifier) {
-		Overlay layerFound = null;
-		for(Overlay overlay : mapView.getOverlays()) {
-			if(overlay instanceof IdentifiableOverlay) {
-				IdentifiableOverlay idOverlay = (IdentifiableOverlay) overlay;
-				if(idOverlay.getIdentifier() == identifier) {
-					layerFound = overlay;
-				}
-			}
-		}
-		return layerFound;
-	}
 	
 	@Override
-	public void onOverlayReady() {
+	public void overlayFinishedLoading(final boolean status) {
+		Log.e("WIKICLETA", "Quitando capas");
 		this.runOnUiThread(new Runnable() {
 
 			@Override
 			public void run() {
 				mapView.invalidate();
 				mapView.refreshDrawableState();
+				hideLoadingState();
 			}
 			
 		});

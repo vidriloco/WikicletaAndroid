@@ -53,11 +53,6 @@ public class Tips {
 		}
 		
 		@Override
-		protected void onPreExecute() {
-			DialogBuilder.buildLoadingDialogWithMessage(activity, "Eliminando tip");
-		}
-		
-		@Override
 		protected void onPostExecute(final Boolean success) {
 			if(success) {
 				activity.reloadActiveLayers();
@@ -90,12 +85,7 @@ public class Tips {
 			} else {
 				return false;
 			}
-		}
-
-		@Override
-		protected void onPreExecute() {
-			
-		}
+		}	
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
@@ -112,14 +102,15 @@ public class Tips {
 						e.printStackTrace();
 					}
 				}
-				overlay.notifyOverlayIsReady();
 			}
+			overlay.listener.overlayFinishedLoading(success);
 		}
-
+		
 		@Override
 		protected void onCancelled() {
-			
+			overlay.listener.overlayFinishedLoading(false);
 		}
+
 	}
 	
 	
@@ -143,13 +134,6 @@ public class Tips {
 			return requestStatus == 200;
 		}
 		
-		@Override
-		protected void onPreExecute() {
-		    super.onPreExecute();
-		    progressDialog = ProgressDialog.show(activity, "", 
-		    		activity.getResources().getString(R.string.tips_uploading), true);
-		}
-
 	    protected void onPostExecute(Boolean success) {
 	    	progressDialog.dismiss();
 	    	

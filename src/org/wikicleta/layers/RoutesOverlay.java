@@ -5,27 +5,22 @@ import java.util.Random;
 
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
-import org.wikicleta.helpers.DouglasPeuckerLineSimplifier;
 import org.wikicleta.helpers.GeoHelpers;
 import org.wikicleta.models.Instant;
 import org.wikicleta.models.Route;
 import org.wikicleta.routes.activities.RouteDetailsActivity;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
-
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.Projection;
-import com.vividsolutions.jts.geom.Coordinate;
 
 public class RoutesOverlay extends Overlay implements IdentifiableOverlay {
 
