@@ -3,14 +3,14 @@ package org.wikicleta.activities;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.wikicleta.R;
+import org.wikicleta.activities.common.LocationAwareMapActivity;
+import org.wikicleta.activities.routes.NewRouteActivity;
 import org.wikicleta.adapters.MenuOptionsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
-import org.wikicleta.common.activities.LocationAwareMapActivity;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
-import org.wikicleta.layers.LayersConnector;
-import org.wikicleta.layers.LayersConnectorListener;
-import org.wikicleta.routes.activities.NewRouteActivity;
+import org.wikicleta.layers.common.LayersConnector;
+import org.wikicleta.layers.common.LayersConnectorListener;
 import org.wikicleta.views.PinchableMapView.OnPanChangeListener;
 import org.wikicleta.views.PinchableMapView.OnZoomChangeListener;
 import com.google.android.maps.GeoPoint;
@@ -271,7 +271,7 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 			@Override
 			public void onClick(View v) {
 				addMenu.dismiss();
-				AppBase.launchActivity(org.wikicleta.tips.activities.ModifyingActivity.class);
+				AppBase.launchActivity(org.wikicleta.activities.tips.ModifyingActivity.class);
 			}
         });
         
@@ -286,7 +286,7 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 			@Override
 			public void onClick(View v) {
 				addMenu.dismiss();
-				AppBase.launchActivity(org.wikicleta.bikeparkings.activities.ModifyingActivity.class);
+				AppBase.launchActivity(org.wikicleta.activities.parkings.ModifyingActivity.class);
 			}
         });
         

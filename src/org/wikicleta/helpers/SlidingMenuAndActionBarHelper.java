@@ -1,10 +1,10 @@
 package org.wikicleta.helpers;
 
 import org.wikicleta.R;
-import org.wikicleta.access.activities.LoginActivity;
 import org.wikicleta.activities.NowActivity;
 import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.activities.UserProfileActivity;
+import org.wikicleta.activities.access.LoginActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.User;
 
