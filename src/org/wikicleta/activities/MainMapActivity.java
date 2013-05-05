@@ -2,16 +2,15 @@ package org.wikicleta.activities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.wikicleta.R;
 import org.wikicleta.adapters.MenuOptionsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
+import org.wikicleta.common.activities.LocationAwareMapActivity;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.layers.LayersConnector;
 import org.wikicleta.layers.LayersConnectorListener;
 import org.wikicleta.routes.activities.NewRouteActivity;
-import org.wikicleta.tips.activities.ModifyingTipActivity;
 import org.wikicleta.views.PinchableMapView.OnPanChangeListener;
 import org.wikicleta.views.PinchableMapView.OnZoomChangeListener;
 import com.google.android.maps.GeoPoint;
@@ -272,7 +271,7 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 			@Override
 			public void onClick(View v) {
 				addMenu.dismiss();
-				AppBase.launchActivity(ModifyingTipActivity.class);
+				AppBase.launchActivity(org.wikicleta.tips.activities.ModifyingActivity.class);
 			}
         });
         
@@ -287,6 +286,7 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 			@Override
 			public void onClick(View v) {
 				addMenu.dismiss();
+				AppBase.launchActivity(org.wikicleta.bikeparkings.activities.ModifyingActivity.class);
 			}
         });
         
@@ -311,9 +311,10 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 		for(Integer layer : layers) {
 			if(layer == Constants.BIKE_SHARING_OVERLAY)
 				mapView.getOverlays().add(layersConnector.getBikeSharingOverlay());
-			else if(layer == Constants.TIPS_OVERLAY) {
+			else if(layer == Constants.TIPS_OVERLAY)
 				mapView.getOverlays().add(layersConnector.getTipsOverlay());
-			}
+			else if(layer == Constants.BIKE_PARKING_OVERLAY)
+				mapView.getOverlays().add(layersConnector.getParkingsOverlay());
 		}
 	}
 	
@@ -331,7 +332,6 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 	
 	@Override
 	public void overlayFinishedLoading(final boolean status) {
-		Log.e("WIKICLETA", "Quitando capas");
 		this.runOnUiThread(new Runnable() {
 
 			@Override

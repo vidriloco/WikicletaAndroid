@@ -29,7 +29,13 @@ public class LayersConnector {
 	public TipsOverlay getTipsOverlay() {
 		listener.showLoadingState();
 		Activity activity = listener.getActivity();
-		return new TipsOverlay(activity.getResources().getDrawable(R.drawable.cycling), (LayersConnectorListener) activity);
+		return new TipsOverlay(activity.getResources().getDrawable(R.drawable.cycling), listener);
+	}
+	
+	public ParkingsOverlay getParkingsOverlay() {
+		listener.showLoadingState();
+		Activity activity = listener.getActivity();
+		return new ParkingsOverlay(activity.getResources().getDrawable(R.drawable.parking_government_provided_icon), listener);
 	}
 	
 }

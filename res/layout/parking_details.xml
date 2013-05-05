@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
-
     <LinearLayout android:id="@+id/menu_layout_overlay"
 	    android:orientation="vertical"
 	    android:layout_height="wrap_content"
@@ -29,19 +28,19 @@
 		        android:gravity="right" >
 
 		        <TextView
-		            android:id="@+id/tip_category_title"
+		            android:id="@+id/parking_kind_title"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:gravity="right"
 		            android:text="@string/none"
 		            android:textColor="#203b50"
-		            android:textSize="20sp"
-		            android:layout_gravity="center_horizontal"
+		            android:textSize="16sp"
+		            android:layout_gravity="center_horizontal|center_vertical"
 		            android:layout_marginRight="15dp"
 		            android:textStyle="bold" />
 
 		        <ImageView
-		            android:id="@+id/tip_category_icon"
+		            android:id="@+id/parking_kind_icon"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:contentDescription="@string/none"
@@ -63,7 +62,7 @@
 		       android:id="@+id/model_named"
 	           android:layout_width="fill_parent"
 	           android:layout_height="wrap_content"
-	           android:text="@string/tip"
+	           android:text="@string/parking"
 	           android:textColor="@color/wikicleta_orange"
 	           android:textSize="16sp"
 	           android:paddingLeft="10dp"
@@ -71,7 +70,7 @@
 	           android:textAllCaps="true"
 	           android:textStyle="bold" />
 		    <TextView
-	           android:id="@+id/tip_contents"
+	           android:id="@+id/parking_details"
 	           android:layout_width="fill_parent"
 	           android:layout_height="wrap_content"
 	           android:text="@string/none"
@@ -90,7 +89,7 @@
 		    
 
 	    <LinearLayout 
-	        android:id="@+id/text_tip_container"
+	        android:id="@+id/text_parking_container"
 	        android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
@@ -98,7 +97,7 @@
 			android:paddingTop="10dp"
 			android:paddingRight="5dp">
 	          <TextView
-	           android:id="@+id/tip_creator"
+	           android:id="@+id/parking_creator"
 	           android:layout_width="fill_parent"
 	           android:layout_height="wrap_content"
 	           android:text="@string/none"
@@ -109,7 +108,7 @@
 	           android:gravity="right"
 	           android:textStyle="bold" />
 	          <TextView
-	           android:id="@+id/tip_created_date"
+	           android:id="@+id/parking_created_date"
 	           android:layout_width="fill_parent"
 	           android:layout_height="wrap_content"
 	           android:text="@string/none"
@@ -122,12 +121,12 @@
 	    </LinearLayout>
 
 	    <ImageView
-	        android:id="@+id/tip_creator_pic"
+	        android:id="@+id/parking_creator_pic"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_centerVertical="true"
 	        android:layout_marginRight="15dp"
-	        android:layout_toRightOf="@+id/text_tip_container"
+	        android:layout_toRightOf="@+id/text_parking_container"
 	        android:contentDescription="@string/none"
 	        android:src="@drawable/profile_placeholder_avatar_mini" />
 

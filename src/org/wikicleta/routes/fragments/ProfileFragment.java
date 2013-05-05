@@ -170,12 +170,15 @@ public class ProfileFragment extends Fragment {
 		
 		if(bio != null) 
 			profileBio.setText(bio);
-
-		ImageUpdater picFetcher = Others.getImageFetcher();
-		picFetcher.setImageAndImageProcessor(userPicture, Others.ImageProcessor.ROUND_FOR_USER_PROFILE);
 		
 		String userPicURL = (String) object.get("user_pic"); 
-		picFetcher.execute(NetworkOperations.serverHost.concat(userPicURL));
+
+		if(userPicURL != null) {
+			ImageUpdater picFetcher = Others.getImageFetcher();
+			picFetcher.setImageAndImageProcessor(userPicture, Others.ImageProcessor.ROUND_FOR_USER_PROFILE);
+			
+			picFetcher.execute(NetworkOperations.serverHost.concat(userPicURL));
+		}
 	}
 	
 	private void insertViewsForBikes(RelativeLayout parentView, Vector<Bike> bikesList) {

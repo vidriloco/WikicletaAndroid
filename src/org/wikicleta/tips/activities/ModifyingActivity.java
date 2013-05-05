@@ -2,10 +2,10 @@ package org.wikicleta.tips.activities;
 
 import java.util.HashMap;
 import org.wikicleta.R;
-import org.wikicleta.activities.LocationAwareMapActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
+import org.wikicleta.common.activities.LocationAwareMapWithControlsActivity;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.Tip;
 import org.wikicleta.models.User;
@@ -16,7 +16,6 @@ import com.google.android.maps.GeoPoint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,13 +28,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class ModifyingTipActivity extends LocationAwareMapActivity {
-	protected ImageView centerOnMapOn;
-	protected ImageView centerOnMapOff;
-	protected LinearLayout toolbar;
+public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
+
 	protected PinOverlay pinOverlay;
 	public AlertDialog  formView;
 	
@@ -46,7 +42,7 @@ public class ModifyingTipActivity extends LocationAwareMapActivity {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.tips_activity_new);
+		super.onCreate(savedInstanceState, R.layout.select_poi_on_map);
 		setTheme(R.style.Theme_wikicleta);
 		
 		AppBase.currentActivity = this;
@@ -57,7 +53,7 @@ public class ModifyingTipActivity extends LocationAwareMapActivity {
 			// We are on editing mode
 			turnOffLocation();
 			this.mapView.getController().animateTo(new GeoPoint(tip.latitude, tip.longitude));
-	    	SlidingMenuAndActionBarHelper.loadWithActionBarTitle(this, this.getResources().getString(R.string.tips_edit_title));
+			SlidingMenuAndActionBarHelper.setDefaultFontForActionBarWithTitle(this, R.string.tips_edit_title);
 		} else {
 			tip = new Tip();
 	    	// TODO: Move to cancelable alert
@@ -94,56 +90,6 @@ public class ModifyingTipActivity extends LocationAwareMapActivity {
     	});
     	
 	}
-	
-	protected boolean shouldEnableMyLocationOnResume() {
-		return this.centerOnMapOn.getVisibility() == View.VISIBLE;
-	}
-	
-	protected void showToastMessage() {
-		LayoutInflater inflater = getLayoutInflater();
-		View layout = inflater.inflate(R.layout.message, (ViewGroup) findViewById(R.id.toast_layout_root));
-		
-		TextView text = (TextView) layout.findViewById(R.id.message_text);
-		text.setTypeface(AppBase.getTypefaceLight());
-		text.setText(R.string.select_location_on_map);
-		Toast toast = new Toast(getApplicationContext());
-		toast.setDuration(Toast.LENGTH_LONG);
-		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
-		toast.setView(layout);
-		toast.show();
-	}
-	
-	protected void assignToggleActionsForAutomapCenter() {
-		centerOnMapOff = (ImageView) findViewById(R.id.centermap_search_button);
-    	centerOnMapOn = (ImageView) findViewById(R.id.centermap_search_button_enabled);
-
-    	centerOnMapOff.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				turnOnLocation();
-			}
-		});
-    	
-    	centerOnMapOn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				turnOffLocation();
-			}
-		});
-	}
-	
-	protected void turnOnLocation() {
-		locationOverlay.enableMyLocation();
-		centerOnMapOff.setVisibility(View.GONE);
-		centerOnMapOn.setVisibility(View.VISIBLE);
-	}
-	
-	protected void turnOffLocation() {
-		locationOverlay.disableMyLocation();
-		centerOnMapOff.setVisibility(View.VISIBLE);
-		centerOnMapOn.setVisibility(View.GONE);
-	}
-	
 	
 	/**
 	 * Methods for saving 
@@ -199,8 +145,8 @@ public class ModifyingTipActivity extends LocationAwareMapActivity {
         
         // Form Fields setup
     	categorySelector = (Spinner) view.findViewById(R.id.tipCategorySelector);
-    	String[] strings = {"danger","alert","sightseeing"};
-    	TipsCategoriesArrayAdapter adapter = new TipsCategoriesArrayAdapter(this, R.id.tip_category, strings);
+    	
+    	TipsCategoriesArrayAdapter adapter = new TipsCategoriesArrayAdapter(this, 0, Tip.getCategoriesValues());
     	categorySelector.setAdapter(adapter);
     	categorySelector.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -268,11 +214,11 @@ public class ModifyingTipActivity extends LocationAwareMapActivity {
         }
 
         public View getCustomView(int position, View convertView, ViewGroup parent) {
-        	HashMap<Integer, String> valuesTipCategories = Tip.tipCategories();
+        	HashMap<Integer, String> valuesTipCategories = Tip.getCategories();
             LayoutInflater inflater=getLayoutInflater();
-            View row=inflater.inflate(R.layout.tip_row, parent, false);
+            View row=inflater.inflate(R.layout.poi_category_row, parent, false);
             
-            TextView label=(TextView)row.findViewById(R.id.tip_category);
+            TextView label=(TextView)row.findViewById(R.id.category);
             
             String categoryCode = valuesTipCategories.get((Integer) position+1);
             String categoryText = getResources().getString(
@@ -280,7 +226,7 @@ public class ModifyingTipActivity extends LocationAwareMapActivity {
             label.setText(categoryText);
             label.setTypeface(AppBase.getTypefaceLight());
 
-            ImageView icon=(ImageView) row.findViewById(R.id.tip_category_icon);
+            ImageView icon=(ImageView) row.findViewById(R.id.icon);
             icon.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(
             		"tip_".concat(categoryCode).concat("_icon"), "drawable", getPackageName())));
             return row;

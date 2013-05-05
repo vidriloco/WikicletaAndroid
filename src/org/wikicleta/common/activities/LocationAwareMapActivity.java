@@ -1,4 +1,4 @@
-	package org.wikicleta.activities;
+	package org.wikicleta.common.activities;
 
 import org.wikicleta.R;
 import org.wikicleta.helpers.GeoHelpers;

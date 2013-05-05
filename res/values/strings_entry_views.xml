@@ -12,6 +12,8 @@
     
     <string name="actions.delete">Eliminar</string>
     <string name="actions.modify">Modificar</string>
+    <string name="actions.new">Nuevo</string>
+    <string name="actions.update">Actualizar</string>
     <!-- Registration Activity strings -->
     <string name="registration_title">Únete a Wikicleta</string>
     <string name="registration_prologue_text">Regálanos los siguientes datos para completar tu registro:</string>

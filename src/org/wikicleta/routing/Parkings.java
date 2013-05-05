@@ -9,45 +9,45 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
 import org.wikicleta.activities.MainMapActivity;
+import org.wikicleta.bikeparkings.activities.ModifyingActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.DialogBuilder;
-import org.wikicleta.layers.TipsOverlay;
-import org.wikicleta.layers.components.TipOverlayItem;
-import org.wikicleta.models.Tip;
+import org.wikicleta.layers.ParkingsOverlay;
+import org.wikicleta.layers.components.ParkingOverlayItem;
+import org.wikicleta.models.Parking;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others.Cruds;
-import org.wikicleta.tips.activities.ModifyingActivity;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Button;
 
-public class Tips {
-
-	protected String getPath="/api/tips?";
-	protected String postPath="/api/tips";
-	protected String putPath="/api/tips/:id";
-	protected String deletePath="/api/tips/:id";
-
-	public class Delete extends AsyncTask<Tip, Void, Boolean> {
+public class Parkings {
+	
+	protected String postPath="/api/parkings";
+	protected String putPath="/api/parkings/:id";
+	protected String getPath="/api/parkings?";
+	protected String deletePath="/api/parkings/:id";
+	
+	public class Delete extends AsyncTask<Parking, Void, Boolean> {
 		
-		Tip tip;
+		Parking parking;
 		public MainMapActivity activity;
 		
 		@Override
-		protected Boolean doInBackground(Tip... params) {
-			tip = params[0];
+		protected Boolean doInBackground(Parking... params) {
+			parking = params[0];
 			
 			HashMap<String, Object> auth = new HashMap<String, Object>();
 			auth.put("auth_token", User.token());
 			HashMap<String, Object> extras = new HashMap<String, Object>();
 			extras.put("extras", auth);
-			int requestStatus = NetworkOperations.postJSONTo(deletePath.replace(":id", String.valueOf(tip.remoteId)), JSONObject.toJSONString(extras));
+			int requestStatus = NetworkOperations.postJSONTo(deletePath.replace(":id", String.valueOf(parking.remoteId)), JSONObject.toJSONString(extras));
 			return requestStatus == 200;
 		}
 		
@@ -55,31 +55,30 @@ public class Tips {
 		protected void onPostExecute(final Boolean success) {
 			if(success) {
 				activity.reloadActiveLayers();
-				Toasts.showToastWithMessage(activity, R.string.tips_deleted_successfully, R.drawable.success_icon);
+				Toasts.showToastWithMessage(activity, R.string.parkings_deleted_successfully, R.drawable.success_icon);
 			} else {
-				Toasts.showToastWithMessage(activity, R.string.tips_did_not_deleted, R.drawable.failure_icon);
+				Toasts.showToastWithMessage(activity, R.string.parkings_did_not_deleted, R.drawable.failure_icon);
 			}
 		}
 		
 	}
+	public class Get extends AsyncTask<ParkingsOverlay, Void, Boolean> {
 	
-	public class Get extends AsyncTask<TipsOverlay, Void, Boolean> {
-    	
-	   TipsOverlay overlay;
+	   ParkingsOverlay overlay;
 	   JSONArray objectList;
 	   
 		@Override
-		protected Boolean doInBackground(TipsOverlay... args) {
+		protected Boolean doInBackground(ParkingsOverlay... args) {
 			overlay = args[0];
 			HashMap<String, String> viewport = overlay.listener.getCurrentViewport();
 			String params = "viewport[sw]=".concat(viewport.get("sw")).concat("&viewport[ne]=").concat(viewport.get("ne"));
 			String fetchedString = NetworkOperations.getJSONExpectingString(getPath.concat(params), false);
 			if(fetchedString == null)
 				return false;
-			
+			Log.e("WIKICLETA", fetchedString);
 			JSONObject object = (JSONObject) JSONValue.parse(fetchedString);
 			if((Boolean) object.get("success")) {
-				objectList = (JSONArray) object.get("tips");
+				objectList = (JSONArray) object.get("parkings");
 				return true;
 			} else {
 				return false;
@@ -93,9 +92,9 @@ public class Tips {
 				@SuppressWarnings("unchecked")
 				Iterator<JSONObject> iterator = (Iterator<JSONObject>) objectList.iterator();
 				while(iterator.hasNext()) {
-					JSONObject tip = iterator.next();
+					JSONObject parking = iterator.next();
 					try {
-						overlay.addItem(TipOverlayItem.buildFrom(overlay.listener.getActivity(), tip));
+						overlay.addItem(ParkingOverlayItem.buildFrom(overlay.listener.getActivity(), parking));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -112,40 +111,35 @@ public class Tips {
 
 	}
 	
-	
-	public class PostOrPut extends AsyncTask<Tip, Void, Boolean> {
-		private Tip tip;
+	public class PostOrPut extends AsyncTask<Parking, Void, Boolean> {
+		private Parking parking;
 		public ModifyingActivity activity;
 		public Cruds mode = Cruds.CREATE;
 		
-		@Override
-		protected Boolean doInBackground(Tip... args) {
-			tip = args[0];
+		protected Boolean doInBackground(Parking... args) {
+			parking = args[0];
 			HashMap<String, Object> auth = new HashMap<String, Object>();
 			auth.put("auth_token", User.token());
 			int requestStatus = 404;
 			if(mode == Cruds.CREATE)
-				requestStatus = NetworkOperations.postJSONTo(postPath, tip.toJSON(auth));
+				requestStatus = NetworkOperations.postJSONTo(postPath, parking.toJSON(auth));
 			else if(mode == Cruds.MODIFY)
-				requestStatus = NetworkOperations.putJSONTo(putPath.replace(":id", String.valueOf(tip.remoteId)), tip.toJSON(auth));
+				requestStatus = NetworkOperations.putJSONTo(putPath.replace(":id", String.valueOf(parking.remoteId)), parking.toJSON(auth));
 
 			return requestStatus == 200;
 		}
 		
-	    protected void onPostExecute(Boolean success) {
-	    	// TODO: Implement a dialog for saving 
-	    	//progressDialog.dismiss();
-	    	
+	    protected void onPostExecute(Boolean success) {	    	
 	    	if(success) {
 	    		if(mode == Cruds.CREATE)
-	    			Toasts.showToastWithMessage(activity, R.string.tips_uploaded_successfully, R.drawable.success_icon);
+	    			Toasts.showToastWithMessage(activity, R.string.parkings_uploaded_successfully, R.drawable.success_icon);
 				else if(mode == Cruds.MODIFY)
-					Toasts.showToastWithMessage(activity, R.string.tips_changes_uploaded_successfully, R.drawable.success_icon);
+					Toasts.showToastWithMessage(activity, R.string.parkings_changes_uploaded_successfully, R.drawable.success_icon);
 	    		// Sends to the layers activity
 	    		activity.finish();
 	    	} else {
 	    		activity.formView.hide();
-	    		int message = (mode == Cruds.CREATE) ? R.string.tips_not_commited : R.string.tips_changes_not_commited;
+	    		int message = (mode == Cruds.CREATE) ? R.string.parkings_not_commited : R.string.parkings_changes_not_commited;
 	    		
 	    		AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.notification, message);
 	    		
@@ -153,9 +147,9 @@ public class Tips {
 	    		if(mode == Cruds.CREATE) {
 	    			builder = builder.setNeutralButton(activity.getResources().getString(R.string.save_as_draft), new DialogInterface.OnClickListener() {
 	    				public void onClick(DialogInterface dialog,int id) {
-		    				tip.save();
+	    					parking.save();
 		    				AppBase.launchActivity(MainMapActivity.class);
-		    				Toasts.showToastWithMessage(activity, R.string.tips_sent_to_drafts, R.drawable.archive_icon);
+		    				Toasts.showToastWithMessage(activity, R.string.parkings_sent_to_drafts, R.drawable.archive_icon);
 		    	    		activity.finish();
 	    				}
 	    			});

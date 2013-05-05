@@ -96,31 +96,51 @@
 	<string name="tip">Tip</string>
 	<string name="tips_new_title">Nuevo Tip</string>
 	<string name="tips_edit_title">Modificar Tip</string>
-	
 	<string name="tips_save_title">Guardar Tip</string>
 	<string name="tips_update_title">Actualizar Tip</string>
 	<string name="tips_saving_title">Guardando Tip</string>
 	<string name="tips_changes_uploaded_successfully">Los cambios a tu tip se han guardado correctamente</string>
-	<string name="tips_changes_not_commited">Los cambios a tu tip no se pudieron subir. ¿Qué quieres hacer con él?</string>
+	<string name="tips_changes_not_commited">Los cambios a tu tip no se pudieron subir. ¿Qué quieres hacer?</string>
 	<string name="tips_uploaded_successfully">¡Gracias por compartir tu tip, ya está arriba!</string>
 	<string name="tips_deleted_successfully">Tu tip ha sido eliminado</string>
 	<string name="tips_did_not_deleted">No fué posible eliminar el tip, intenta nuevamente</string>
 	<string name="tips_sent_to_drafts">Tu tip ha sido guardado como borrador</string>
-	<string name="tips_not_commited">No ha sido posible subir este tip. ¿Qué quieres hacer con él?</string>
+	<string name="tips_not_commited">No fué posible subir este tip. ¿Qué quieres hacer con él?</string>
 	<string name="tips_form_content_hint">Contenido del tip</string>
 	<string name="tips_category_select_instruction">¿Qué tipo de tip deseas compartir?</string>
 	<string name="tips_input_length_min_error">El contenido del tip debe ser de al menos 60 caracteres</string>
 	<string name="tips_input_length_max_error">El contenido del tip debe ser a lo más de 250 caracteres</string>
 	<string name="tips_input_empty">El contenido del tip no puede estar vacío</string>
-	
 	<string name="tips_uploading">Subiendo tu tip &#8230;</string>
-	
 	<string name="tips_question_delete">¿Deseas eliminar este tip?</string>
-	
 	<string name="tips.categories.danger">Peligro</string>
 	<string name="tips.categories.alert">Recomendación</string>
 	<string name="tips.categories.sightseeing">Para ver</string>
 
+	<!-- String for parkings -->
+	
+	<string name="parking">Bici-estacionamiento</string>
+	<string name="parkings_new_title">Nuevo Bici-estacionamiento</string>
+	<string name="parkings_edit_title">Modificar Bici-estacionamiento</string>
+	<string name="parkings_save_title">Guardar Bici-est.</string>
+	<string name="parkings_saving_title">Guardando Bici-estacionamiento</string>
+	<string name="parkings_uploaded_successfully">¡Gracias por compartir este bici-estacionamiento, ya está arriba!</string>
+	<string name="parkings_changes_uploaded_successfully">Los cambios a este bici-estacionamiento se han guardado correctamente</string>
+	<string name="parkings_not_commited">No fué posible subir este bici-estacionamiento ¿Qué quieres hacer con él?</string>
+	<string name="parkings_changes_not_commited">Los cambios a este bici-estacionamiento no se pudieron guardar. ¿Qué quieres hacer?</string>
+	<string name="parkings_deleted_successfully">El bici-estacionamiento que compartiste ha sido eliminado</string>
+	<string name="parkings_did_not_deleted">El bici-estacionamiento que compartiste no pudo ser eliminado, intenta nuevamente</string>
+	<string name="parkings_sent_to_drafts">Este bici-estacionamiento ha sido guardado como borrador</string>
+	
+	<string name="parkings_kind_select_instruction">¿De qué tipo es el bici-estacionamiento que deseas compartir?</string>
+	<string name="parkings_form_details_hint">Detalles del bici-estacionamiento</string>
+	<string name="parkings_form_hasRoof">Tiene techo</string>
+	<string name="parkings_form_anyoneCanEdit">Otros pueden modificarlo</string>
+	<string name="parkings.kinds.government_provided">Oficial</string>
+	<string name="parkings.kinds.urban_mobiliary">Mobiliario urbano</string>
+	<string name="parkings.kinds.venue_provided">De un establecimiento</string>
+	
+	
 	<!-- Strings for cycle stations and bike sharing -->
 	<string name="cycle_station">Cicloestación</string>
 	<string name="one_available_slot">espacio disponible</string>

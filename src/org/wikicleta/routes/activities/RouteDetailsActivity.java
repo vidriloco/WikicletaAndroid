@@ -1,9 +1,9 @@
 package org.wikicleta.routes.activities;
 
 import org.wikicleta.R;
-import org.wikicleta.activities.LocationAwareMapActivity;
 import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.common.activities.LocationAwareMapActivity;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.Route;

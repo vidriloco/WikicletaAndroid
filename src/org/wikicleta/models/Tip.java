@@ -5,10 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.simple.JSONValue;
 import android.annotation.SuppressLint;
-
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -23,8 +21,6 @@ public class Tip extends Model implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	public String tipEndpoint;
 	
 	@Column(name = "RemoteId")
 	public long remoteId;
@@ -40,10 +36,7 @@ public class Tip extends Model implements Serializable {
 	
 	@Column(name = "Longitude")
 	public int longitude;
-	
-	@Column(name = "Json")
-	public String jsonRepresentation;
-	
+
 	@Column(name = "CreatedAt")
 	public long createdAt;
 	@Column(name = "UpdatedAt")
@@ -92,7 +85,7 @@ public class Tip extends Model implements Serializable {
 		params.put("created_at", sdf.format(new Date(this.createdAt)));
 		params.put("updated_at", sdf.format(new Date()));
 		
-		params.put("user_id", this.userId);
+		//params.put("user_id", this.userId);
 		HashMap<String, Float> coordinates = new HashMap<String, Float>();
 		coordinates.put("lat", (float) (latitude/1E6));
 		coordinates.put("lon", (float) (longitude/1E6));
@@ -100,20 +93,6 @@ public class Tip extends Model implements Serializable {
 		HashMap<String, Object> cover = new HashMap<String, Object>();
 		cover.put("tip", params);
 		return cover;
-	}
-	
-	public void setJsonRepresentation(String representation) {
-		jsonRepresentation = StringEscapeUtils.escapeJava(representation);
-	}
-	
-	public String getJsonRepresentation(String representation) {
-		return StringEscapeUtils.unescapeJava(jsonRepresentation);
-	}
-	
-	public boolean isDraft() {
-		if(this.jsonRepresentation == null)
-			return false;
-		return !(this.jsonRepresentation.length() == 0);
 	}
 	
 	public String toJSON(HashMap<String, Object> object) {
@@ -127,7 +106,7 @@ public class Tip extends Model implements Serializable {
 	}
 	
 	public String categoryString() {
-		return Tip.tipCategories().get(this.category);
+		return Tip.getCategories().get(this.category);
 	}
 	
 	public boolean hasPic() {
@@ -151,12 +130,20 @@ public class Tip extends Model implements Serializable {
 		ActiveAndroid.endTransaction();
 	}
 	
-	public static HashMap<Integer, String> tipCategories() {
+	public static HashMap<Integer, String> getCategories() {
 		if(categories.isEmpty()) {
 			categories.put(1, "danger");
 			categories.put(2, "alert");
 			categories.put(3, "sightseeing");
 		}
 		return categories;
+	}
+	
+	public static String[] getCategoriesValues() {
+		String[] categoriesStrs = new String[getCategories().size()];
+		for(int i=1; i< getCategories().size() ; i++) {
+			categoriesStrs[i-1] = getCategories().get(i);
+		}
+		return categoriesStrs;
 	}
 }

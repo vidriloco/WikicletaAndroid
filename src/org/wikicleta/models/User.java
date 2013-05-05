@@ -47,7 +47,7 @@ public class User {
 	public static void destroy() {
 		SharedPreferences.Editor editor = getPreferences().edit();
 		
-		new SessionDestroyTask().execute();
+		//new SessionDestroyTask().execute();
 		editor.clear();
 		editor.commit();
 		

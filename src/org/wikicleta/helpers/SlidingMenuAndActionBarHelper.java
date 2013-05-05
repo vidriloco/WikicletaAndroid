@@ -132,6 +132,15 @@ public class SlidingMenuAndActionBarHelper {
     	actionBarTitle.setTypeface(AppBase.getTypefaceStrong());
     	actionBarTitle.setTextSize(18);
 	}
+	
+	public static void setDefaultFontForActionBarWithTitle(Activity activity, int title) {
+		ActionBar actionBar = (ActionBar) activity.findViewById(R.id.actionbar);
+    	
+    	TextView actionBarTitle = (TextView) actionBar.findViewById(R.id.actionbar_title);
+    	actionBarTitle.setTypeface(AppBase.getTypefaceStrong());
+    	actionBarTitle.setTextSize(18);
+    	actionBar.setTitle(title);
+	}
 
 }
 

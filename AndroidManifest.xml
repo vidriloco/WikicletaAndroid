@@ -139,7 +139,19 @@
         </activity>
         
         <activity
-            android:name="org.wikicleta.tips.activities.ModifyingTipActivity"
+            android:name="org.wikicleta.tips.activities.ModifyingActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:screenOrientation="portrait"
+            android:alwaysRetainTaskState="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="org.wikicleta.bikeparkings.activities.ModifyingActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait"
