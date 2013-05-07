@@ -9,16 +9,17 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
 import org.wikicleta.activities.MainMapActivity;
-import org.wikicleta.activities.parkings.ModifyingActivity;
+import org.wikicleta.activities.workshops.ModifyingActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.DialogBuilder;
-import org.wikicleta.layers.parkings.ParkingOverlayItem;
-import org.wikicleta.layers.parkings.ParkingsOverlay;
-import org.wikicleta.models.Parking;
+import org.wikicleta.layers.workshops.WorkshopOverlayItem;
+import org.wikicleta.layers.workshops.WorkshopsOverlay;
 import org.wikicleta.models.User;
+import org.wikicleta.models.Workshop;
 import org.wikicleta.routing.Others.Cruds;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -26,27 +27,27 @@ import android.content.DialogInterface.OnDismissListener;
 import android.os.AsyncTask;
 import android.widget.Button;
 
-public class Parkings {
+public class Workshops {
 	
-	protected String postPath="/api/parkings";
-	protected String putPath="/api/parkings/:id";
-	protected String getPath="/api/parkings?";
-	protected String deletePath="/api/parkings/:id";
+	protected String getPath="/api/workshops?";
+	protected String postPath="/api/workshops";
+	protected String putPath="/api/workshops/:id";
+	protected String deletePath="/api/workshops/:id";
 	
-	public class Delete extends AsyncTask<Parking, Void, Boolean> {
+	public class Delete extends AsyncTask<Workshop, Void, Boolean> {
 		
-		Parking parking;
+		Workshop workshop;
 		public MainMapActivity activity;
 		
 		@Override
-		protected Boolean doInBackground(Parking... params) {
-			parking = params[0];
+		protected Boolean doInBackground(Workshop... params) {
+			workshop = params[0];
 			
 			HashMap<String, Object> auth = new HashMap<String, Object>();
 			auth.put("auth_token", User.token());
 			HashMap<String, Object> extras = new HashMap<String, Object>();
 			extras.put("extras", auth);
-			int requestStatus = NetworkOperations.postJSONTo(deletePath.replace(":id", String.valueOf(parking.remoteId)), JSONObject.toJSONString(extras));
+			int requestStatus = NetworkOperations.postJSONTo(deletePath.replace(":id", String.valueOf(workshop.remoteId)), JSONObject.toJSONString(extras));
 			return requestStatus == 200;
 		}
 		
@@ -54,21 +55,21 @@ public class Parkings {
 		protected void onPostExecute(final Boolean success) {
 			if(success) {
 				activity.reloadActiveLayers();
-				Toasts.showToastWithMessage(activity, R.string.parkings_deleted_successfully, R.drawable.success_icon);
+				Toasts.showToastWithMessage(activity, R.string.workshops_deleted_successfully, R.drawable.success_icon);
 			} else {
-				Toasts.showToastWithMessage(activity, R.string.parkings_did_not_deleted, R.drawable.failure_icon);
+				Toasts.showToastWithMessage(activity, R.string.workshops_did_not_deleted, R.drawable.failure_icon);
 			}
 		}
 		
 	}
+
+	public class Get extends AsyncTask<WorkshopsOverlay, Void, Boolean> {
 	
-	public class Get extends AsyncTask<ParkingsOverlay, Void, Boolean> {
-	
-	   ParkingsOverlay overlay;
+	   WorkshopsOverlay overlay;
 	   JSONArray objectList;
 	   
 		@Override
-		protected Boolean doInBackground(ParkingsOverlay... args) {
+		protected Boolean doInBackground(WorkshopsOverlay... args) {
 			overlay = args[0];
 			HashMap<String, String> viewport = overlay.listener.getCurrentViewport();
 			String params = "viewport[sw]=".concat(viewport.get("sw")).concat("&viewport[ne]=").concat(viewport.get("ne"));
@@ -77,7 +78,7 @@ public class Parkings {
 				return false;
 			JSONObject object = (JSONObject) JSONValue.parse(fetchedString);
 			if((Boolean) object.get("success")) {
-				objectList = (JSONArray) object.get("parkings");
+				objectList = (JSONArray) object.get("workshops");
 				return true;
 			} else {
 				return false;
@@ -91,9 +92,9 @@ public class Parkings {
 				@SuppressWarnings("unchecked")
 				Iterator<JSONObject> iterator = (Iterator<JSONObject>) objectList.iterator();
 				while(iterator.hasNext()) {
-					JSONObject parking = iterator.next();
+					JSONObject workshop = iterator.next();
 					try {
-						overlay.addItem(ParkingOverlayItem.buildFrom(overlay.listener.getActivity(), parking));
+						overlay.addItem(WorkshopOverlayItem.buildFrom(overlay.listener.getActivity(), workshop));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -110,35 +111,39 @@ public class Parkings {
 
 	}
 	
-	public class PostOrPut extends AsyncTask<Parking, Void, Boolean> {
-		private Parking parking;
+	public class PostOrPut extends AsyncTask<Workshop, Void, Boolean> {
+		private Workshop workshop;
 		public ModifyingActivity activity;
 		public Cruds mode = Cruds.CREATE;
 		
-		protected Boolean doInBackground(Parking... args) {
-			parking = args[0];
+		@Override
+		protected Boolean doInBackground(Workshop... args) {
+			workshop = args[0];
 			HashMap<String, Object> auth = new HashMap<String, Object>();
 			auth.put("auth_token", User.token());
 			int requestStatus = 404;
 			if(mode == Cruds.CREATE)
-				requestStatus = NetworkOperations.postJSONTo(postPath, parking.toJSON(auth));
+				requestStatus = NetworkOperations.postJSONTo(postPath, workshop.toJSON(auth));
 			else if(mode == Cruds.MODIFY)
-				requestStatus = NetworkOperations.putJSONTo(putPath.replace(":id", String.valueOf(parking.remoteId)), parking.toJSON(auth));
+				requestStatus = NetworkOperations.putJSONTo(putPath.replace(":id", String.valueOf(workshop.remoteId)), workshop.toJSON(auth));
 
 			return requestStatus == 200;
 		}
 		
-	    protected void onPostExecute(Boolean success) {	    	
+	    protected void onPostExecute(Boolean success) {
+	    	// TODO: Implement a dialog for saving 
+	    	//progressDialog.dismiss();
+	    	
 	    	if(success) {
 	    		if(mode == Cruds.CREATE)
-	    			Toasts.showToastWithMessage(activity, R.string.parkings_uploaded_successfully, R.drawable.success_icon);
+	    			Toasts.showToastWithMessage(activity, R.string.workshops_uploaded_successfully, R.drawable.success_icon);
 				else if(mode == Cruds.MODIFY)
-					Toasts.showToastWithMessage(activity, R.string.parkings_changes_uploaded_successfully, R.drawable.success_icon);
+					Toasts.showToastWithMessage(activity, R.string.workshops_changes_uploaded_successfully, R.drawable.success_icon);
 	    		// Sends to the layers activity
 	    		activity.finish();
 	    	} else {
 	    		activity.formView.hide();
-	    		int message = (mode == Cruds.CREATE) ? R.string.parkings_not_commited : R.string.parkings_changes_not_commited;
+	    		int message = (mode == Cruds.CREATE) ? R.string.workshops_not_commited : R.string.workshops_changes_not_commited;
 	    		
 	    		AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.notification, message);
 	    		
@@ -146,9 +151,9 @@ public class Parkings {
 	    		if(mode == Cruds.CREATE) {
 	    			builder = builder.setNeutralButton(activity.getResources().getString(R.string.save_as_draft), new DialogInterface.OnClickListener() {
 	    				public void onClick(DialogInterface dialog,int id) {
-	    					parking.save();
+	    					workshop.save();
 		    				AppBase.launchActivity(MainMapActivity.class);
-		    				Toasts.showToastWithMessage(activity, R.string.parkings_sent_to_drafts, R.drawable.archive_icon);
+		    				Toasts.showToastWithMessage(activity, R.string.workshops_sent_to_drafts, R.drawable.archive_icon);
 		    	    		activity.finish();
 	    				}
 	    			});

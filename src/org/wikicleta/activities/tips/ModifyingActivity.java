@@ -63,7 +63,7 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 		
     	
     	
-    	this.findViewById(R.id.tips_back_button).setOnClickListener(new OnClickListener() {
+    	this.findViewById(R.id.poi_back_button).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -75,9 +75,9 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
     	pinOverlay = new PinOverlay(this);
     	
     	this.mapView.getOverlays().add(pinOverlay);
-    	this.toolbar = (LinearLayout) this.findViewById(R.id.tips_toolbar);
+    	this.toolbar = (LinearLayout) this.findViewById(R.id.poi_toolbar);
 
-    	this.findViewById(R.id.tips_finish_button).setOnClickListener(new OnClickListener() {
+    	this.findViewById(R.id.poi_finish_button).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -177,7 +177,7 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
     	if(tip.existsOnRemoteServer()) {
     		content.setText(tip.content);
     		categorySelector.setSelection(tip.category-1);
-    		title.setText(this.getResources().getString(R.string.tips_update_title));
+    		title.setText(this.getResources().getString(R.string.actions_update));
     	}
     	
     	Button saveButton = (Button) view.findViewById(R.id.save_tip);

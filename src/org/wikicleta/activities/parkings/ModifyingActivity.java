@@ -7,7 +7,6 @@ import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.Parking;
-import org.wikicleta.models.User;
 import org.wikicleta.routing.Parkings;
 import org.wikicleta.routing.Others.Cruds;
 import org.wikicleta.views.PinOverlay;
@@ -66,7 +65,7 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 		
     	
     	
-    	this.findViewById(R.id.tips_back_button).setOnClickListener(new OnClickListener() {
+    	this.findViewById(R.id.poi_back_button).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -78,9 +77,9 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
     	pinOverlay = new PinOverlay(this);
     	
     	this.mapView.getOverlays().add(pinOverlay);
-    	this.toolbar = (LinearLayout) this.findViewById(R.id.tips_toolbar);
+    	this.toolbar = (LinearLayout) this.findViewById(R.id.poi_toolbar);
 
-    	this.findViewById(R.id.tips_finish_button).setOnClickListener(new OnClickListener() {
+    	this.findViewById(R.id.poi_finish_button).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -99,23 +98,23 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 	 */
 	
 	public void attemptCommit() {
-		String tipContents = details.getText().toString();
-		parking.userId = User.id();
-		parking.details = tipContents;
+		String parkingsContents = details.getText().toString();
+		parking.details = parkingsContents;
 		parking.anyoneCanEdit = anyoneCanEditCheckbox.isChecked(); 
 		parking.hasRoof = hasRoofCheckbox.isChecked(); 
-		if(FieldValidators.isFieldEmpty(tipContents)) {
-			details.setError(getResources().getString(R.string.tips_input_empty));
+		
+		if(FieldValidators.isFieldEmpty(parkingsContents)) {
+			details.setError(getResources().getString(R.string.parkings_input_empty));
 			return;
 		}
 		
-		if(FieldValidators.isFieldLongerThan(tipContents, Constants.CHARACTERS_LENGTH_MAX)) {
-			details.setError(getResources().getString(R.string.tips_input_length_max_error));
+		if(FieldValidators.isFieldLongerThan(parkingsContents, Constants.CHARACTERS_LENGTH_MAX)) {
+			details.setError(getResources().getString(R.string.parkings_input_length_max_error));
 			return;
 		}
 		
-		if(FieldValidators.isFieldShorterThan(tipContents, Constants.CHARACTERS_LENGTH_MIN)) {
-			details.setError(getResources().getString(R.string.tips_input_length_min_error));
+		if(FieldValidators.isFieldShorterThan(parkingsContents, Constants.CHARACTERS_LENGTH_MIN)) {
+			details.setError(getResources().getString(R.string.parkings_input_length_min_error));
 			return;
 		}
 		

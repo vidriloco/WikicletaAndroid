@@ -18,6 +18,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Display;
 
@@ -41,6 +42,25 @@ public class AppBase {
 	
 	public static void launchActivity(Class<?> activity) {
 		launchActivityWithBundle(activity, null);
+	}
+	
+	public static void launchTwitterActivityWithUsername(String username) {
+		launchBrowserActivityWithURL("https://twitter.com/"+username);
+	}
+	
+	public static void launchBrowserActivityWithURL(String url) {
+		if(!url.startsWith("http://") && !url.startsWith("https://"))
+			url = "http://"+url;
+		
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.setData(Uri.parse(url));
+		AppBase.currentActivity.startActivity(intent);
+	}
+	
+	public static void launchPhoneCallingActivity(String phone) {
+		Intent call = new Intent(Intent.ACTION_DIAL);
+		call.setData(Uri.parse("tel:" + phone));
+		AppBase.currentActivity.startActivity(call);
 	}
 	
 	public static void launchActivityWithBundle(Class<?> activity, Bundle bundle) {

@@ -6,6 +6,7 @@ import org.wikicleta.common.Constants;
 import org.wikicleta.layers.bikesharing.BikeSharingOverlay;
 import org.wikicleta.layers.parkings.ParkingsOverlay;
 import org.wikicleta.layers.tips.TipsOverlay;
+import org.wikicleta.layers.workshops.WorkshopsOverlay;
 
 import android.app.Activity;
 
@@ -42,4 +43,9 @@ public class LayersConnector {
 		return new ParkingsOverlay(activity.getResources().getDrawable(R.drawable.parking_government_provided_icon), listener);
 	}
 	
+	public WorkshopsOverlay getWorkshopsOverlay() {
+		listener.showLoadingState();
+		Activity activity = listener.getActivity();
+		return new WorkshopsOverlay(activity.getResources().getDrawable(R.drawable.workshop_icon), listener);
+	}
 }

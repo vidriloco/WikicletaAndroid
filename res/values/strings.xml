@@ -97,20 +97,18 @@
 	<string name="tips_new_title">Nuevo Tip</string>
 	<string name="tips_edit_title">Modificar Tip</string>
 	<string name="tips_save_title">Guardar Tip</string>
-	<string name="tips_update_title">Actualizar Tip</string>
-	<string name="tips_saving_title">Guardando Tip</string>
 	<string name="tips_changes_uploaded_successfully">Los cambios a tu tip se han guardado correctamente</string>
 	<string name="tips_changes_not_commited">Los cambios a tu tip no se pudieron subir. ¿Qué quieres hacer?</string>
-	<string name="tips_uploaded_successfully">¡Gracias por compartir tu tip, ya está arriba!</string>
+	<string name="tips_uploaded_successfully">Gracias por compartir tu tip. ¡Ya está arriba!</string>
 	<string name="tips_deleted_successfully">Tu tip ha sido eliminado</string>
 	<string name="tips_did_not_deleted">No fué posible eliminar el tip, intenta nuevamente</string>
 	<string name="tips_sent_to_drafts">Tu tip ha sido guardado como borrador</string>
 	<string name="tips_not_commited">No fué posible subir este tip. ¿Qué quieres hacer con él?</string>
 	<string name="tips_form_content_hint">Contenido del tip</string>
 	<string name="tips_category_select_instruction">¿Qué tipo de tip deseas compartir?</string>
-	<string name="tips_input_length_min_error">El contenido del tip debe ser de al menos 60 caracteres</string>
-	<string name="tips_input_length_max_error">El contenido del tip debe ser a lo más de 250 caracteres</string>
-	<string name="tips_input_empty">El contenido del tip no puede estar vacío</string>
+	<string name="tips_input_length_min_error">El contenido debe ser de al menos 60 caracteres</string>
+	<string name="tips_input_length_max_error">El contenido debe ser a lo más de 250 caracteres</string>
+	<string name="tips_input_empty">El contenido no puede estar vacío</string>
 	<string name="tips_uploading">Subiendo tu tip &#8230;</string>
 	<string name="tips_question_delete">¿Deseas eliminar este tip?</string>
 	<string name="tips.categories.danger">Peligro</string>
@@ -123,8 +121,7 @@
 	<string name="parkings_new_title">Nuevo Bici-estacionamiento</string>
 	<string name="parkings_edit_title">Modificar Bici-estacionamiento</string>
 	<string name="parkings_save_title">Guardar Bici-est.</string>
-	<string name="parkings_saving_title">Guardando Bici-estacionamiento</string>
-	<string name="parkings_uploaded_successfully">¡Gracias por compartir este bici-estacionamiento, ya está arriba!</string>
+	<string name="parkings_uploaded_successfully">Gracias por compartir este bici-estacionamiento. ¡Ya está arriba!</string>
 	<string name="parkings_changes_uploaded_successfully">Los cambios a este bici-estacionamiento se han guardado correctamente</string>
 	<string name="parkings_not_commited">No fué posible subir este bici-estacionamiento ¿Qué quieres hacer con él?</string>
 	<string name="parkings_changes_not_commited">Los cambios a este bici-estacionamiento no se pudieron guardar. ¿Qué quieres hacer?</string>
@@ -132,14 +129,49 @@
 	<string name="parkings_did_not_deleted">El bici-estacionamiento que compartiste no pudo ser eliminado, intenta nuevamente</string>
 	<string name="parkings_sent_to_drafts">Este bici-estacionamiento ha sido guardado como borrador</string>
 	
+	<string name="parkings_input_length_min_error">Los detalles deben de ser al menos de 60 caracteres</string>
+	<string name="parkings_input_length_max_error">Los detalles no deben tener más de 250 caracteres</string>
+	<string name="parkings_input_empty">Deja algún detalle sobre este bici-estacionamiento</string>
+	
 	<string name="parkings_kind_select_instruction">¿De qué tipo es el bici-estacionamiento que deseas compartir?</string>
 	<string name="parkings_form_details_hint">Detalles del bici-estacionamiento</string>
 	<string name="parkings_form_hasRoof">Tiene techo</string>
-	<string name="parkings_form_anyoneCanEdit">Otros pueden modificarlo</string>
 	<string name="parkings.kinds.government_provided">Oficial</string>
 	<string name="parkings.kinds.urban_mobiliary">Mobiliario urbano</string>
 	<string name="parkings.kinds.venue_provided">De un establecimiento</string>
 	
+	<!-- Strings for workshops and stores -->
+	
+	<string name="workshop">Taller</string>
+	<string name="workshop_store">Taller-tienda</string>
+	<string name="workshops_new_title">Nuevo taller/tienda</string>
+	<string name="workshops_edit_title">Modificar taller/tienda</string>
+	<string name="workshops_save_title">Guardar taller/tienda</string>
+	<string name="workshops_uploaded_successfully">Gracias por compartir este taller/tienda. ¡Ya está arriba!</string>
+	<string name="workshops_changes_uploaded_successfully">Los cambios a este taller/tienda se han guardado correctamente</string>
+	<string name="workshops_not_commited">No fué posible subir este taller/tienda ¿Qué quieres hacer con él?</string>
+	<string name="workshops_changes_not_commited">Los cambios a este taller/tienda no se pudieron guardar. ¿Qué quieres hacer?</string>
+	<string name="workshops_deleted_successfully">El taller/tienda que compartiste ha sido eliminado</string>
+	<string name="workshops_did_not_deleted">El taller/tienda que compartiste no pudo ser eliminado, intenta nuevamente</string>
+	<string name="workshops_sent_to_drafts">Este taller/tienda ha sido guardado como borrador</string>
+	<string name="workshops_form_name_hint">Escribe el nombre</string>
+	<string name="workshops_form_details_hint">Dá algunos detalles</string>
+	<string name="workshops_form_isStore">Es tienda también</string>
+	<string name="workshops_form_phone_hint">Teléfono</string>
+	<string name="workshops_form_cellPhone_hint">Celular</string>
+	<string name="workshops_form_webpage_hint">Sitio web</string>
+	<string name="workshops_form_twitter_hint">Twitter</string>
+	<string name="workshops_form_horary_hint">Horario</string>
+	<string name="workshops_form_extra_hint">Toca aquí para compartir información adicional sobre este taller/tienda</string>
+	<string name="workshops_bad_input_twitter_format">No debe llevar el símbolo "@"</string>
+	<string name="workshops_input_length_min_error">Los detalles deben de ser al menos de 60 caracteres</string>
+	<string name="workshops_input_length_max_error">Los detalles no deben tener más de 250 caracteres</string>
+	<string name="workshops_input_empty">Deja algún detalle sobre este taller/tienda</string>
+	<string name="workshops_input_empty_name">Es necesario un nombre para este taller/tienda</string>
+	<string name="workshops_input_length_min_error_name">Los detalles deben de ser al menos de 8 caracteres</string>
+	<string name="workshops_input_length_max_error_name">Los detalles no deben tener más de 30 caracteres</string>
+	<!-- Commons -->
+	<string name="form_anyoneCanEdit">Otros pueden modificarlo</string>
 	
 	<!-- Strings for cycle stations and bike sharing -->
 	<string name="cycle_station">Cicloestación</string>

@@ -9,7 +9,6 @@ import java.util.HashMap;
 import org.json.simple.JSONValue;
 
 import android.annotation.SuppressLint;
-
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -17,19 +16,43 @@ import com.activeandroid.annotation.Table;
 import com.google.android.maps.GeoPoint;
 
 @SuppressLint("SimpleDateFormat")
-@Table(name = "Parkings")
-public class Parking extends Model implements Serializable {
-
+@Table(name = "Workshops")
+public class Workshop extends Model implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "RemoteId")
 	public long remoteId;
 	
+	@Column(name = "Name")
+	public String name;
+	
 	@Column(name = "Details")
 	public String details;
 	
-	@Column(name = "Kind")
-	public int kind;
+	@Column(name = "IsStore")
+	public boolean isStore;
+	
+	@Column(name = "Phone")
+	public int phone;
+	
+	@Column(name = "CellPhone")
+	public int cellPhone;
+	
+	@Column(name = "Webpage")
+	public String webpage;
+	
+	@Column(name = "Twitter")
+	public String twitter;
+	
+	@Column(name = "Horary")
+	public String horary;
+	
+	@Column(name = "AnyoneCanEdit")
+	public boolean anyoneCanEdit;
+	
+	@Column(name = "UserId")
+	public long userId;
 	
 	@Column(name = "Latitude")
 	public int latitude;
@@ -39,57 +62,59 @@ public class Parking extends Model implements Serializable {
 
 	@Column(name = "CreatedAt")
 	public long createdAt;
+	
 	@Column(name = "UpdatedAt")
 	public long updatedAt;
-	
-	@Column(name = "HasRoof")
-	public boolean hasRoof;
-	
-	@Column(name = "AnyoneCanEdit")
-	public boolean anyoneCanEdit;
-	
-	@Column(name = "UserId")
-	public long userId;
 	
 	public int likesCount;
 	public String username;
 	public String userPicURL;
 	
-	@SuppressLint("UseSparseArrays")
-	protected static HashMap<Integer, String> kinds = new HashMap<Integer, String>();
-	
-	public Parking() {
+	public Workshop() {
 		this.createdAt = Calendar.getInstance().getTimeInMillis();
 		this.updatedAt = Calendar.getInstance().getTimeInMillis();
 		this.remoteId = 0;
 	}
 	
-	public Parking(long remoteId, String details, int kind, GeoPoint point, long userId, int likesCount, 
-			boolean hasRoof, boolean anyoneCanEdit, long createdAt, long updatedAt, String name) {
+	public Workshop(long remoteId, String name, String details,
+			GeoPoint point, long userId, int likesCount, boolean isStore,
+			boolean anyoneCanEdit, long createdAt, long updatedAt,
+			String username, int phone, int cellPhone, String webPage,
+			String twitter, String horary) {
 		this();
 		this.remoteId = remoteId;
+		this.userId = userId;
+		this.name = name;
 		this.details = details;
-		this.kind = kind;
 		this.latitude = point.getLatitudeE6();
 		this.longitude = point.getLongitudeE6();
-		this.hasRoof = hasRoof;
+		this.isStore = isStore;
+		this.username = username;
 		this.anyoneCanEdit = anyoneCanEdit;
-		this.userId = userId;
-		this.likesCount = likesCount;
+		this.phone = phone;
+		this.cellPhone = cellPhone;
+		this.webpage = webPage;
+		this.twitter = twitter;
+		this.horary = horary;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
-		this.username = name;
 	}
-	
+
 	public boolean existsOnRemoteServer() {
 		return this.remoteId != 0;
 	}
 	
 	public HashMap<String, Object> toHashMap() {
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("kind", this.kind);
+		params.put("name", this.name);
 		params.put("details", this.details);
-		params.put("has_roof", this.hasRoof);
+		params.put("store", this.isStore);
+		params.put("phone", this.phone);
+		params.put("cell_phone", this.cellPhone);
+		params.put("webpage", this.webpage);
+		params.put("twitter", this.twitter);
+		params.put("horary", this.horary);
+		params.put("store", this.isStore);
 		params.put("others_can_edit_it", this.anyoneCanEdit);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -102,7 +127,7 @@ public class Parking extends Model implements Serializable {
 		coordinates.put("lon", (float) (longitude/1E6));
 		params.put("coordinates", coordinates);
 		HashMap<String, Object> cover = new HashMap<String, Object>();
-		cover.put("parking", params);
+		cover.put("workshop", params);
 		return cover;
 	}
 	
@@ -124,33 +149,12 @@ public class Parking extends Model implements Serializable {
 		return JSONValue.toJSONString(toHashMap());
 	}
 	
-	protected static void commitLocally(Parking parking) {
+	protected static void commitLocally(Workshop workshop) {
 		ActiveAndroid.beginTransaction();
 
-		parking.save();
+		workshop.save();
 		
 		ActiveAndroid.setTransactionSuccessful();
 		ActiveAndroid.endTransaction();
-	}
-	
-	public String kindString() {
-		return Parking.getKinds().get(this.kind);
-	}
-	
-	public static HashMap<Integer, String> getKinds() {
-		if(kinds.isEmpty()) {
-			kinds.put(1, "government_provided");
-			kinds.put(2, "urban_mobiliary");
-			kinds.put(3, "venue_provided");
-		}
-		return kinds;
-	}
-	
-	public static String[] getKindsValues() {
-		String[] kindsStrs = new String[getKinds().size()];
-		for(int i=1; i< getKinds().size() ; i++) {
-			kindsStrs[i-1] = getKinds().get(i);
-		}
-		return kindsStrs;
 	}
 }

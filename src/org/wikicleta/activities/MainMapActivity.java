@@ -294,11 +294,14 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 			@Override
 			public void onClick(View v) {
 				addMenu.dismiss();
+				AppBase.launchActivity(org.wikicleta.activities.workshops.ModifyingActivity.class);
+
 			}
         });
         
     	addBuilder.setView(view);
 		addMenu = addBuilder.create();
+		getWindow().setBackgroundDrawableResource(android.R.color.transparent); 
 	}
 	
 	protected void toggleLayers(ArrayList<Integer> layers) {
@@ -315,6 +318,8 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 				mapView.getOverlays().add(layersConnector.getTipsOverlay());
 			else if(layer == Constants.BIKE_PARKING_OVERLAY)
 				mapView.getOverlays().add(layersConnector.getParkingsOverlay());
+			else if(layer == Constants.BIKE_WORKSHOPS_AND_STORES_OVERLAY)
+				mapView.getOverlays().add(layersConnector.getWorkshopsOverlay());
 		}
 	}
 	

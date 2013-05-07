@@ -90,7 +90,7 @@
            android:id="@+id/parkings_anyoneCanEdit"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="@string/parkings_form_anyoneCanEdit" />
+           android:text="@string/form_anyoneCanEdit" />
        </LinearLayout>
        
        

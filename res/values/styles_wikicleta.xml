@@ -18,6 +18,9 @@
 
 <resources>
 	
+    <style name="Theme" parent="android:Theme">
+	</style>
+
     <style name="Theme.wikicleta" parent="@android:style/Theme.Holo.Light.NoActionBar">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_wikicleta</item>
         <item name="android:popupMenuStyle">@style/wikicleta_PopupMenu</item>

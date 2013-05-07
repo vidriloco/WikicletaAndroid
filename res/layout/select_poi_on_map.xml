@@ -18,13 +18,13 @@
       android:layout_height="fill_parent"
       android:layout_alignParentLeft="true"
       android:layout_below="@+id/actionbar"
-      android:layout_above="@+id/tips_toolbar"
+      android:layout_above="@+id/poi_toolbar"
       android:apiKey="0Sp8gbE2A7huBHKWXFaSnv0zQ4sNzPzWzqj9zcQ"
       android:clickable="true" >
   </org.wikicleta.views.PinchableMapView>
   
    <LinearLayout
-       android:id="@+id/tips_toolbar"
+       android:id="@+id/poi_toolbar"
        android:layout_width="fill_parent"
        android:layout_height="wrap_content"
        android:orientation="horizontal"
@@ -33,7 +33,7 @@
        android:background="@drawable/toolbar"
        android:padding="5dp" >
          <ImageView
-            android:id="@+id/tips_back_button"
+            android:id="@+id/poi_back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/nothing"
@@ -43,7 +43,7 @@
             android:clickable="true" />
 
         <ImageView
-            android:id="@+id/tips_finish_button"
+            android:id="@+id/poi_finish_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/nothing"

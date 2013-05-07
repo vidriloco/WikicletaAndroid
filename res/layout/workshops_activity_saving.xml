@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="match_parent"
+   android:layout_height="wrap_content"
+   android:orientation="vertical"
+   android:background="@color/wikicleta_white" >
+   	<LinearLayout 
+		    android:id="@+id/titlebar"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:background="@drawable/gradient_orange">
+			    
+			    <ImageView android:id="@+id/dialog_close"
+			        android:contentDescription="@string/none"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:src="@drawable/dialog_close_icon"/>
+			    
+			    <TextView
+		           android:id="@+id/dialog_menu_title"
+		           android:layout_width="fill_parent"
+		           android:layout_height="wrap_content"
+		           android:gravity="right"
+		           android:layout_gravity="center_vertical"
+		           android:text="@string/save"
+		           android:textColor="@color/wikicleta_blue"
+		           android:textSize="20sp"
+		           android:padding="10dp"
+		           android:layout_marginRight="20dp"
+		           android:textStyle="bold" />
+	</LinearLayout>
+	<LinearLayout
+	   android:id="@+id/separator"
+	   android:layout_width="match_parent"
+	   android:layout_height="1dp"
+	   android:background="@color/wikicleta_stronger_orange">
+	</LinearLayout>
+	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent"
+ 		android:layout_height="0dp"
+ 		android:layout_weight="4">
+		<LinearLayout android:layout_width="match_parent"
+   			android:layout_height="wrap_content"
+   			android:orientation="vertical"
+   			android:background="@color/wikicleta_white">
+   			<LinearLayout 
+   				android:layout_width="match_parent"
+   				android:layout_height="wrap_content"
+   				android:orientation="vertical"
+   				android:padding="20dp">
+	   			<EditText
+		           android:id="@+id/workshops_name"
+		           android:layout_width="match_parent"
+		           android:layout_height="wrap_content"
+		           android:maxLength="250"
+		           android:ems="10"
+		           android:hint="@string/workshops_form_name_hint"
+		           android:inputType="textMultiLine" >
+		
+		           <requestFocus />
+		       	</EditText> 
+		       	<EditText
+		           android:id="@+id/workshops_details"
+		           android:layout_width="match_parent"
+		           android:layout_height="wrap_content"
+		           android:maxLength="250"
+		           android:ems="10"
+		           android:hint="@string/workshops_form_details_hint"
+		           android:inputType="textMultiLine" >
+		
+		           <requestFocus />
+		       	</EditText>
+		       
+		       	<LinearLayout 
+	           		android:layout_width="wrap_content"
+	           		android:layout_height="wrap_content"
+	           		android:orientation="vertical"
+	           		android:layout_marginTop="20dp">
+	           
+		           	<CheckBox
+		           		android:id="@+id/workshops_isStore"
+		           		android:layout_width="wrap_content"
+		           		android:layout_height="wrap_content"
+		           		android:text="@string/workshops_form_isStore" />
+		       
+		       		<CheckBox
+		           		android:id="@+id/workshops_anyoneCanEdit"
+		           		android:layout_width="wrap_content"
+		           		android:layout_height="wrap_content"
+		           		android:text="@string/form_anyoneCanEdit" />
+		       	</LinearLayout>
+   			</LinearLayout>
+	       <TextView
+				android:id="@+id/workshops_hint_extra_fields"
+		    	android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:gravity="left"
+		        android:drawablePadding="5dp"
+		        android:drawableLeft="@drawable/touch_icon"
+		        android:text="@string/workshops_form_extra_hint"
+		        android:textColor="@color/wikicleta_blue"
+		        android:textSize="14sp"
+		        android:textStyle="bold"
+		        android:background="@color/wikicleta_light_blue"
+		        android:padding="5dp" />
+	       
+	       <LinearLayout android:id="@+id/extra_fields_container"
+	           android:layout_width="fill_parent"
+		       android:layout_height="wrap_content"
+		       android:orientation="vertical"
+		       android:padding="20dp"
+		       android:visibility="gone">
+	           <EditText
+	           android:id="@+id/workshops_horary"
+	           android:layout_width="match_parent"
+	           android:layout_height="wrap_content"
+	           android:maxLength="250"
+	           android:ems="10"
+	           android:hint="@string/workshops_form_horary_hint"
+	           android:inputType="textMultiLine" >
+	           <requestFocus />
+	       		</EditText>
+	       		<EditText
+	           android:id="@+id/workshops_twitter"
+	           android:layout_width="match_parent"
+	           android:layout_height="wrap_content"
+	           android:maxLength="50"
+	           android:ems="10"
+	           android:hint="@string/workshops_form_twitter_hint"
+	           android:inputType="textMultiLine" >
+	           <requestFocus />
+	       		</EditText>
+
+	       		<EditText
+	           android:id="@+id/workshops_phone"
+	           android:layout_width="match_parent"
+	           android:layout_height="wrap_content"
+	           android:maxLength="8"
+	           android:ems="10"
+		       android:inputType="number" 
+	           android:hint="@string/workshops_form_phone_hint" >
+	           <requestFocus />
+	       		</EditText>
+		       <EditText
+		           android:id="@+id/workshops_cellphone"
+		           android:layout_width="match_parent"
+		           android:layout_height="wrap_content"
+		           android:maxLength="8"
+		           android:ems="10"
+		           android:inputType="number" 
+		           android:hint="@string/workshops_form_cellPhone_hint" >
+		           <requestFocus />
+		       </EditText>
+		       <EditText
+		           android:id="@+id/workshops_webpage"
+		           android:layout_width="match_parent"
+		           android:layout_height="wrap_content"
+		           android:maxLength="50"
+		           android:ems="10"
+		           android:hint="@string/workshops_form_webpage_hint"
+		           android:inputType="textMultiLine" >
+		           <requestFocus />
+		       </EditText>
+	       </LinearLayout>
+	       
+		
+		</LinearLayout>
+	</ScrollView>
+	<Button
+		android:id="@+id/save_workshop"
+      	android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:layout_marginTop="10dp"
+		android:padding="10dp"
+		android:text="@string/save" />
+
+</LinearLayout>
