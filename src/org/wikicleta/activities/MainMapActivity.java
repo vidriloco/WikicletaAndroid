@@ -3,7 +3,7 @@ package org.wikicleta.activities;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.wikicleta.R;
-import org.wikicleta.activities.common.LocationAwareMapActivity;
+import org.wikicleta.activities.common.LocationAwareMapWithControlsActivity;
 import org.wikicleta.activities.routes.NewRouteActivity;
 import org.wikicleta.adapters.MenuOptionsListAdapter;
 import org.wikicleta.common.AppBase;
@@ -34,7 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MainMapActivity extends LocationAwareMapActivity implements LayersConnectorListener {
+public class MainMapActivity extends LocationAwareMapWithControlsActivity implements LayersConnectorListener {
 	
 	protected static int ROUTE_ACTION=0;
 	protected static int PLACE_ACTION=1;
@@ -65,34 +65,16 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_main_map);
 		setTheme(R.style.Theme_wikicleta);
+
+		assignToggleActionsForAutomapCenter();
+		
 		overlays = new ArrayList<Integer>();
 		layersConnector = new LayersConnector(this);
-		
+
 		AppBase.currentActivity = this;		
         toolBarView = (LinearLayout) findViewById(R.id.toolbar);
-                            	
-    	final ImageView centerMapViewEnabled = (ImageView) findViewById(R.id.centermap_search_button);
-    	final ImageView centerMapViewDisabled = (ImageView) findViewById(R.id.centermap_search_button_enabled);
 
     	loadingLayersIcon = (ImageView) findViewById(R.id.reloading_icon);
-    	
-    	centerMapViewEnabled.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				locationOverlay.enableMyLocation();
-				centerMapViewEnabled.setVisibility(View.GONE);
-				centerMapViewDisabled.setVisibility(View.VISIBLE);
-			}
-		});
-    	
-    	centerMapViewDisabled.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				locationOverlay.disableMyLocation();
-				centerMapViewEnabled.setVisibility(View.VISIBLE);
-				centerMapViewDisabled.setVisibility(View.GONE);
-			}
-		});
     	
         SlidingMenuAndActionBarHelper.load(this);
 				
@@ -324,12 +306,6 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 	}
 	
 	@Override
-	protected void onResume() {
-		super.onResume();
-		locationOverlay.disableMyLocation();
-	}
-	
-	@Override
 	protected void onStart() {
 		super.onStart();
 		this.buildAddMenu();
@@ -365,6 +341,11 @@ public class MainMapActivity extends LocationAwareMapActivity implements LayersC
 	@Override
 	public Activity getActivity() {
 		return this;
+	}
+
+	@Override
+	public GeoPoint getLocation() {
+		return this.getCurrentOrDefaultLocation();
 	}
 	
 	

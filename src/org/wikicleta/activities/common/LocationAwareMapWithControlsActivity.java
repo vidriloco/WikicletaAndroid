@@ -2,7 +2,6 @@ package org.wikicleta.activities.common;
 
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ public class LocationAwareMapWithControlsActivity extends LocationAwareMapActivi
 	protected ImageView centerOnMapOn;
 	protected ImageView centerOnMapOff;
 	protected LinearLayout toolbar;
-
 	
 	protected void assignToggleActionsForAutomapCenter() {
 		centerOnMapOff = (ImageView) findViewById(R.id.centermap_search_button);

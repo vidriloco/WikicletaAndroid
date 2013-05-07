@@ -1,6 +1,9 @@
 package org.wikicleta.layers.common;
 
 import java.util.HashMap;
+
+import com.google.android.maps.GeoPoint;
+
 import android.app.Activity;
 
 public interface LayersConnectorListener {
@@ -10,4 +13,5 @@ public interface LayersConnectorListener {
 	HashMap<String, String> getCurrentViewport();
 	
 	Activity getActivity();
+	GeoPoint getLocation();
 }

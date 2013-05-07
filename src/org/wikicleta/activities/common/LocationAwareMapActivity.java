@@ -18,7 +18,7 @@ public class LocationAwareMapActivity extends MapActivity {
 	protected PinchableMapView mapView;
 	protected LocationManager locationManager;
 	protected CustomMyLocationOverlay locationOverlay;
-	
+	protected GeoPoint lastKnownLocation;
 	protected boolean centerMapOnCurrentLocationByDefault;
 	
 	public void onCreate(Bundle savedInstanceState, int layoutID) {
@@ -67,6 +67,13 @@ public class LocationAwareMapActivity extends MapActivity {
 	protected GeoPoint getDefaultLocation() {
 		return GeoHelpers.buildGeoPointFromLatLon(19.412423, -99.169207);
 	}
+	
+	protected GeoPoint getCurrentOrDefaultLocation() {
+		if(this.lastKnownLocation != null)
+			return this.lastKnownLocation;
+		else
+			return this.getDefaultLocation();
+	}
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -85,6 +92,7 @@ public class LocationAwareMapActivity extends MapActivity {
 		public void onLocationChanged(Location location) {
 			super.onLocationChanged(location);
 			setMapToLocation(location);
+			lastKnownLocation = GeoHelpers.buildGeoPointFromLongitude(location);
 		}
 
 		

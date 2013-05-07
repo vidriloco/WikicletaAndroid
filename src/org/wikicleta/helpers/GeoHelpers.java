@@ -22,4 +22,16 @@ public class GeoHelpers {
 		return location;
 	}
 
+	/**
+	 * Returns the distance in meters between two given GeoPoints
+	 * @param first GeoPoint 
+	 * @param second GeoPoint
+	 * @return a float with the distance given in meters
+	 */
+	public static float distanceBetweenGeoPoints(GeoPoint first, GeoPoint second) {
+		Location firstLocation = buildLocationFromLatLon(first.getLatitudeE6()/1E6, first.getLongitudeE6()/1E6);
+		Location secondLocation = buildLocationFromLatLon(second.getLatitudeE6()/1E6, second.getLongitudeE6()/1E6);
+		
+		return firstLocation.distanceTo(secondLocation)/1000;
+	}
 }

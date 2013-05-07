@@ -10,7 +10,8 @@
     
     <string name="you">tí</string>
     <string name="call_phone_number_confirmation">¿Deseas llamar al teléfono seleccionado?</string>
-    
+    <string name="distance_from_location">A %1$s kms de tu ubicación actual</string>
+    <string name="could_not_get_distance">No se ha podido determinar la distancia</string>
     <string name="actions.delete">Eliminar</string>
     <string name="actions.modify">Modificar</string>
     <string name="actions.new">Nuevo</string>

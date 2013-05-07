@@ -1,5 +1,6 @@
 package org.wikicleta.layers.bikesharing;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -10,6 +11,7 @@ import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.NetworkOperations;
+import org.wikicleta.helpers.GeoHelpers;
 import org.wikicleta.layers.common.IdentifiableOverlay;
 import org.wikicleta.layers.common.LayersConnectorListener;
 
@@ -23,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
 
@@ -76,6 +79,28 @@ public class BikeSharingOverlay extends ItemizedOverlay<OverlayItem> implements 
         
         TextView bikeSharingTitle = (TextView) view.findViewById(R.id.bike_sharing_title);
         bikeSharingTitle.setTypeface(AppBase.getTypefaceStrong());
+        
+        TextView cycleStationName = (TextView) view.findViewById(R.id.cycle_station_title);
+        cycleStationName.setTypeface(AppBase.getTypefaceLight());
+        cycleStationName.setText(item.associatedStation.name);
+        
+        TextView cycleStationDistance = (TextView) view.findViewById(R.id.cycle_station_distance);
+        cycleStationName.setTypeface(AppBase.getTypefaceLight());
+        
+        GeoPoint location = listener.getLocation();
+        if(location == null)
+        	cycleStationDistance.setText(R.string.could_not_get_distance);
+        else {
+        	DecimalFormat df = new DecimalFormat("##.##");
+			
+			String distanceFormat = activity.getResources().getString(R.string.distance_from_location);
+			String distanceFormatted = String.format(distanceFormat, df.format(
+					GeoHelpers.distanceBetweenGeoPoints(item.associatedStation.location, location)));  
+			cycleStationDistance.setText(distanceFormatted);
+        }
+        
+        cycleStationDistance.setTypeface(AppBase.getTypefaceStrong());
+        	
         
         TextView bikeCountTextView = (TextView) view.findViewById(R.id.bikes_text_for_number);
         bikeCountTextView.setTypeface(AppBase.getTypefaceLight());

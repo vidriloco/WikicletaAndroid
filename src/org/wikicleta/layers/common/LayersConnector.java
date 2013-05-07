@@ -7,7 +7,6 @@ import org.wikicleta.layers.bikesharing.BikeSharingOverlay;
 import org.wikicleta.layers.parkings.ParkingsOverlay;
 import org.wikicleta.layers.tips.TipsOverlay;
 import org.wikicleta.layers.workshops.WorkshopsOverlay;
-
 import android.app.Activity;
 
 public class LayersConnector {
