@@ -14,7 +14,8 @@ import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.User;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
-import android.app.ProgressDialog;
+
+import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -133,7 +134,7 @@ public class LoginActivity extends AccessActivity {
 	 */
 	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 		JSONObject responseObject;
-		private ProgressDialog progressDialog;
+		private AlertDialog progressDialog;
 		
 		@SuppressWarnings("unchecked")
 		@Override
@@ -164,8 +165,8 @@ public class LoginActivity extends AccessActivity {
 		@Override
 		protected void onPreExecute() {
 		    super.onPreExecute();
-		    progressDialog = ProgressDialog.show(AppBase.currentActivity, "", 
-		            "Attempting to log-in", true);
+		    progressDialog = DialogBuilder.buildLoadingDialogWithMessage(LoginActivity.this, R.string.signing_in).create();
+		    progressDialog.show();
 		}
 		
 		@Override

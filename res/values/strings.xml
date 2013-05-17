@@ -245,4 +245,7 @@
 	<string name="bar_select_poi_back">Regresar</string>
 	<string name="bar_select_poi_save">Guardar</string>
 	
+	<string name="registering_user">Registrando usuario</string>
+	<string name="signing_in">Iniciando sesión</string>
+	
 </resources>

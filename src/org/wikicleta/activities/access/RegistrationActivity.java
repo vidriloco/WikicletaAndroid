@@ -99,7 +99,7 @@ public class RegistrationActivity extends AccessActivity {
         	
         });
         
-        this.alertDialog = DialogBuilder.buildLoadingDialogWithMessage(this, "Cargando ...").create();
+        this.alertDialog = DialogBuilder.buildLoadingDialogWithMessage(this, R.string.registering_user).create();
 	}
 	
 	public void attemptSignup() {
@@ -187,7 +187,7 @@ public class RegistrationActivity extends AccessActivity {
 			Map<String, Map<String, String>> user = new LinkedHashMap<String, Map<String, String>>();
 			user.put("registration", parameters);
 
-			String result = NetworkOperations.postJSONExpectingStringTo("/api/users.json", JSONValue.toJSONString(user));
+			String result = NetworkOperations.postJSONExpectingStringTo("/api/users", JSONValue.toJSONString(user));
 			if(result==null)
 				return false;
 			
