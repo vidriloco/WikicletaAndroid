@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    android:id="@+id/trip"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/white_shadows"
+    android:orientation="vertical"
+    android:tag="@string/none" >
+    
+	<TextView
+         android:id="@+id/trip_name"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="30dp"
+         android:layout_marginRight="30dp"
+         android:paddingTop="5dp"
+         android:text="@string/none"
+         android:textColor="@color/wikicleta_orange"
+         android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/trip_daysToEvent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="3dp"
+        android:text="@string/none"
+        android:textColor="@color/wikicleta_blue"
+        android:textSize="13sp" />
+</LinearLayout>

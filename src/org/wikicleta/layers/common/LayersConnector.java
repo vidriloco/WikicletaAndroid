@@ -33,7 +33,7 @@ public class LayersConnector {
 	public TipsOverlay getTipsOverlay() {
 		listener.showLoadingState();
 		Activity activity = listener.getActivity();
-		return new TipsOverlay(activity.getResources().getDrawable(R.drawable.cycling), listener);
+		return new TipsOverlay(activity.getResources().getDrawable(R.drawable.tip_alert_icon), listener);
 	}
 	
 	public ParkingsOverlay getParkingsOverlay() {

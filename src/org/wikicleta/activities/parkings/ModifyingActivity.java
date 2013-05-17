@@ -62,9 +62,10 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 	    	showToastMessage();
 	    	SlidingMenuAndActionBarHelper.setDefaultFontForActionBarWithTitle(this, R.string.parkings_new_title);
 		}
-		
-    	
-    	
+
+    	((TextView) this.findViewById(R.id.poi_save_text)).setTypeface(AppBase.getTypefaceStrong());
+    	((TextView) this.findViewById(R.id.poi_back_text)).setTypeface(AppBase.getTypefaceStrong());
+
     	this.findViewById(R.id.poi_back_button).setOnClickListener(new OnClickListener() {
 
 			@Override

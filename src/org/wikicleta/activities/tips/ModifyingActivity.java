@@ -61,6 +61,8 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 	    	SlidingMenuAndActionBarHelper.setDefaultFontForActionBar(this);
 		}
 		
+    	((TextView) this.findViewById(R.id.poi_save_text)).setTypeface(AppBase.getTypefaceStrong());
+    	((TextView) this.findViewById(R.id.poi_back_text)).setTypeface(AppBase.getTypefaceStrong());
     	
     	
     	this.findViewById(R.id.poi_back_button).setOnClickListener(new OnClickListener() {

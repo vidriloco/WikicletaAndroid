@@ -34,44 +34,111 @@
        android:background="@drawable/toolbar"
        android:padding="5dp"
        android:clickable="true" >
-       <ImageView
+		<LinearLayout 
             android:id="@+id/map_add_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/nothing"
-            android:src="@drawable/add"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:clickable="true" />
+       		android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		android:orientation="vertical"
+           	android:layout_marginRight="20dp"
+           	android:layout_marginLeft="20dp"
+           	android:gravity="center"
+           	android:clickable="true" >
+           	<ImageView
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:contentDescription="@string/nothing"
+            	android:src="@drawable/add" />
+
+            <TextView 
+	            android:id="@+id/bar_maps_add_button_text"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textSize="12sp"
+	            android:layout_marginTop="5dp"
+	            android:textColor="@color/wikicleta_blue"
+	            android:text="@string/bar_maps_add_button_text_value"
+	            />
+        </LinearLayout>
         
-		<ImageView
+        <LinearLayout 
             android:id="@+id/centermap_search_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/nothing"
-            android:src="@drawable/centermap"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:clickable="true"
-            android:visibility="gone" />
-		<ImageView
+       		android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		android:orientation="vertical"
+           	android:layout_marginRight="20dp"
+           	android:layout_marginLeft="20dp"
+           	android:gravity="center"
+           	android:clickable="true">
+           	<ImageView
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:contentDescription="@string/nothing"
+            	android:src="@drawable/centermap" />
+            
+            <TextView 
+	            android:id="@+id/centermap_button_text"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textSize="12sp"
+	            android:layout_marginTop="5dp"
+	            android:textColor="@color/wikicleta_blue"
+	            android:text="@string/bar_center_map_text_value"
+	            />
+
+        </LinearLayout>
+		
+        <LinearLayout 
             android:id="@+id/centermap_search_button_enabled"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/nothing"
-            android:src="@drawable/centermap_enabled"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:clickable="true" />
-		<ImageView
+       		android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		android:orientation="vertical"
+           	android:layout_marginRight="20dp"
+           	android:layout_marginLeft="20dp"
+           	android:gravity="center"
+           	android:clickable="true"
+            android:visibility="gone" >
+           	<ImageView
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:contentDescription="@string/nothing"
+            	android:src="@drawable/centermap_enabled" />
+            
+            <TextView 
+	            android:id="@+id/centermap_button_enabled_text"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textSize="12sp"
+	            android:layout_marginTop="5dp"
+	            android:textColor="@color/wikicleta_blue"
+	            android:text="@string/bar_center_map_enabled_text_value"
+	            />
+
+        </LinearLayout>
+        <LinearLayout 
             android:id="@+id/map_layers_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/nothing"
-            android:src="@drawable/layers"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:clickable="true" />
+       		android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		android:orientation="vertical"
+           	android:layout_marginRight="20dp"
+           	android:layout_marginLeft="20dp"
+           	android:gravity="center"
+           	android:clickable="true" >
+           	<ImageView
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:contentDescription="@string/nothing"
+            	android:src="@drawable/layers" />
+
+            <TextView 
+	            android:id="@+id/bar_maps_layers_button_text"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textSize="12sp"
+	            android:layout_marginTop="5dp"
+	            android:textColor="@color/wikicleta_blue"
+	            android:text="@string/bar_maps_layers_button_text_value"/>
+
+        </LinearLayout>
 
 
 		<ImageView

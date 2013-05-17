@@ -2,7 +2,6 @@ package org.wikicleta.helpers;
 
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,16 +12,21 @@ import android.widget.TextView;
 public class DialogBuilder {
 	protected static AlertDialog connectivityAlertDialog;
 
-	public static AlertDialog buildLoadingDialogWithMessage(Activity activity, String message) {
+	public static AlertDialog.Builder buildLoadingDialogWithMessage(Activity activity, int id) {
+		return buildLoadingDialogWithMessage(activity, activity.getResources().getString(id));
+	}
+	
+	public static AlertDialog.Builder buildLoadingDialogWithMessage(Activity activity, String message) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
         
         View view = inflater.inflate(R.layout.loading_dialog, null);
         TextView loadingViewMsj = (TextView) view.findViewById(R.id.loading_message);
+        loadingViewMsj.setTypeface(AppBase.getTypefaceLight());
         loadingViewMsj.setText(message);
         builder.setView(view);
         
-        return builder.create();
+        return builder;
 	}
 	
 	public static void displayAlertWithTitleAndMessage(Activity ctx, int title, int message) {

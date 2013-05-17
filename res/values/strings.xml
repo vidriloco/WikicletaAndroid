@@ -170,6 +170,31 @@
 	<string name="workshops_input_empty_name">Es necesario un nombre para este taller/tienda</string>
 	<string name="workshops_input_length_min_error_name">Los detalles deben de ser al menos de 8 caracteres</string>
 	<string name="workshops_input_length_max_error_name">Los detalles no deben tener más de 30 caracteres</string>
+	
+	<string name="trips_updating_cities">Descargando paseos en ciudades</string>
+	<string name="trips_list_title">Pasea por tu ciudad</string>
+	<string name="trips_cities">Ciudades</string>
+	<string name="trips_on_city">%d paseos disponibles</string>
+	<string name="trip_on_city">1 paseo disponible</string>
+	<string name="trip_none">No hay paseos disponibles</string>
+	<string name="trips_city_not_fetched">No fué posible descargar los paseos en ciudades. Toca aquí para intentarlo de nuevo</string>
+	<string name="trip_fetching_details">Obteniendo detalles de este recorrido</string>
+	<string name="trips_bar_route_start_text_value">Inicio</string>
+	<string name="trips_bar_route_end_text_value">Fin</string>
+	
+	<string name="trip_pois.categories.service_station">Estación de Servicio</string>
+	<string name="trip_pois.categories.ambulance">Ambulancia</string>
+	<string name="trip_pois.categories.paramedic">Paramédico</string>
+	<string name="trip_pois.categories.bike_lending">Préstamo de bici</string>
+	<string name="trip_pois.categories.direction_mark">Dirección</string>
+	<string name="trip_pois.categories.km_mark">Kilómetro</string>
+	<string name="trip_pois.categories.transport_connection">Transporte Público</string>
+	<string name="trip_pois.categories.sightseeing">Para ver</string>
+	<string name="trip_pois.categories.start_flag">Inicio</string>
+	<string name="trip_pois.categories.finish_flag">Fin</string>
+	<string name="trip_pois.categories.grouped_services">Servicios</string>
+	<string name="trip_pois.categories.cycling_learning">Bici-escuela</string>
+	<string name="trip_pois.categories.free_grouped_services">Servicios gratuitos</string>
 	<!-- Commons -->
 	<string name="form_anyoneCanEdit">Otros pueden modificarlo</string>
 	
@@ -209,4 +234,14 @@
 	<string name="profile_bike_list_text_value">Tus Bicis</string>
 	<string name="syncing_profile_text_value">Sincronizando tu perfil &#8230;</string>
 	<string name="syncing_profile_failed_text_value">No pudimos sincronizar tu perfil, toca aquí para intentarlo de nuevo</string>
+	
+	<!-- Bar -->
+	<string name="bar_center_map_text_value">Encender GPS</string>
+	<string name="bar_center_map_enabled_text_value">Apagar GPS</string>
+	<string name="bar_maps_layers_button_text_value">Encuentra</string>
+	<string name="bar_maps_add_button_text_value">Comparte</string>
+	
+	<string name="bar_select_poi_back">Regresar</string>
+	<string name="bar_select_poi_save">Guardar</string>
+	
 </resources>

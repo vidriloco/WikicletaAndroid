@@ -5,6 +5,7 @@ import org.wikicleta.activities.NowActivity;
 import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.activities.access.LoginActivity;
+import org.wikicleta.activities.trips.TripsListActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.User;
 
@@ -92,6 +93,7 @@ public class SlidingMenuAndActionBarHelper {
 
 			@Override
 			public void onClick(View v) {
+				AppBase.launchActivity(TripsListActivity.class);
 			}
         	
         });
@@ -134,13 +136,20 @@ public class SlidingMenuAndActionBarHelper {
 	}
 	
 	public static void setDefaultFontForActionBarWithTitle(Activity activity, int title) {
+		getActionBarFor(activity).setTitle(title);
+	}
+	
+	public static void setDefaultFontForActionBarWithTitle(Activity activity, String title) {
+		getActionBarFor(activity).setTitle(title);
+	}
+
+	protected static ActionBar getActionBarFor(Activity activity) {
 		ActionBar actionBar = (ActionBar) activity.findViewById(R.id.actionbar);
     	
     	TextView actionBarTitle = (TextView) actionBar.findViewById(R.id.actionbar_title);
     	actionBarTitle.setTypeface(AppBase.getTypefaceStrong());
     	actionBarTitle.setTextSize(18);
-    	actionBar.setTitle(title);
+    	return actionBar;
 	}
-
 }
 

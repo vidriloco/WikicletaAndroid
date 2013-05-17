@@ -55,7 +55,7 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 	
 	private ObjectAnimator uploaderAnimator;
 	protected ImageView loadingLayersIcon;
-	protected ImageView layersIcon;
+	protected LinearLayout layersIcon;
 	
 	Handler handler = new Handler();
 	boolean handlerRunning = false;
@@ -87,7 +87,7 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 		});
     	
     	
-    	layersIcon = (ImageView) findViewById(R.id.map_layers_button);
+    	layersIcon = (LinearLayout) findViewById(R.id.map_layers_button);
     	layersIcon.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -112,6 +112,9 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 				reloadActiveLayers();
 			}			
 		});
+		
+		((TextView) this.findViewById(R.id.bar_maps_add_button_text)).setTypeface(AppBase.getTypefaceStrong());
+		((TextView) this.findViewById(R.id.bar_maps_layers_button_text)).setTypeface(AppBase.getTypefaceStrong());
 
 	}
 	

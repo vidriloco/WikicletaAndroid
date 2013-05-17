@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable;
 
 public class BaseOverlayItem extends OverlayItem {
 	
-	Context ctx;
+	protected Context ctx;
 	
 	public BaseOverlayItem(Context ctx, GeoPoint arg0, String arg1, String arg2) {
 		super(arg0, arg1, arg2);

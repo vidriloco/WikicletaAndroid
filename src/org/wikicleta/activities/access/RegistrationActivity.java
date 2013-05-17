@@ -97,7 +97,7 @@ public class RegistrationActivity extends AccessActivity {
         	
         });
         
-        this.alertDialog = DialogBuilder.buildLoadingDialogWithMessage(this, "Cargando ...");
+        this.alertDialog = DialogBuilder.buildLoadingDialogWithMessage(this, "Cargando ...").create();
 	}
 	
 	public void attemptSignup() {

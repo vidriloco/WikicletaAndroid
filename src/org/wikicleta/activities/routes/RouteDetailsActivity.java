@@ -11,7 +11,7 @@ import org.wikicleta.services.routes.RoutesService;
 import org.wikicleta.services.routes.ServiceConstructor;
 import org.wikicleta.services.routes.ServiceListener;
 import org.wikicleta.views.PinchableMapView;
-import org.wikicleta.layers.routes.RoutesOverlay;
+import org.wikicleta.layers.RouteOverlay;
 
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
@@ -35,7 +35,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 	private LinearLayout topToolBarView;
 	
 	protected NotificationBuilder notification;
-	protected RoutesOverlay routesOverlay;
+	protected RouteOverlay routesOverlay;
 	public Route currentRoute;
 	public AlertDialog.Builder alertDialog;
 	protected AlertDialog toggleLayersMenu;
@@ -216,7 +216,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 	
 	protected void drawRoutePath() {
 		if(currentRoute != null) {
-			routesOverlay = new RoutesOverlay(((int) (long) currentRoute.getId()), currentRoute);
+			routesOverlay = new RouteOverlay(((int) (long) currentRoute.getId()), null);
 			mapView.getOverlays().add(routesOverlay);
 			routesOverlay.detailedView = true;
 		}

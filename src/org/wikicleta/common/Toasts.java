@@ -29,4 +29,22 @@ public class Toasts {
 		toast.setView(layout);
 		toast.show();
 	}
+	
+	public static void showToastWithMessage(Activity activity, String message, int icon) {
+		LayoutInflater inflater = activity.getLayoutInflater();
+		View layout = inflater.inflate(R.layout.message,
+		                               (ViewGroup) activity.findViewById(R.id.toast_layout_root));
+		
+		ImageView iconPlaceholder = (ImageView) layout.findViewById(R.id.message_icon);
+		iconPlaceholder.setImageDrawable(activity.getResources().getDrawable(icon));
+		
+		TextView text = (TextView) layout.findViewById(R.id.message_text);
+		text.setTypeface(AppBase.getTypefaceLight());
+		text.setText(message);
+		Toast toast = new Toast(activity.getApplicationContext());
+		toast.setDuration(Toast.LENGTH_LONG);
+		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+		toast.setView(layout);
+		toast.show();
+	}
 }

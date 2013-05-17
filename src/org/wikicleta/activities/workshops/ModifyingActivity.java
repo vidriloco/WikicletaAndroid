@@ -53,6 +53,9 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 		AppBase.currentActivity = this;
     	assignToggleActionsForAutomapCenter();
 
+    	((TextView) this.findViewById(R.id.poi_save_text)).setTypeface(AppBase.getTypefaceStrong());
+    	((TextView) this.findViewById(R.id.poi_back_text)).setTypeface(AppBase.getTypefaceStrong());
+    	
     	workshop = (Workshop) getIntent().getSerializableExtra("workshop");
 		if(workshop != null && workshop.existsOnRemoteServer()) {
 			// We are on editing mode

@@ -6,20 +6,23 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class LocationAwareMapWithControlsActivity extends LocationAwareMapActivity {
-	protected ImageView centerOnMapOn;
-	protected ImageView centerOnMapOff;
+	protected LinearLayout centerOnMapOn;
+	protected LinearLayout centerOnMapOff;
 	protected LinearLayout toolbar;
 	
 	protected void assignToggleActionsForAutomapCenter() {
-		centerOnMapOff = (ImageView) findViewById(R.id.centermap_search_button);
-    	centerOnMapOn = (ImageView) findViewById(R.id.centermap_search_button_enabled);
+		centerOnMapOff = (LinearLayout) findViewById(R.id.centermap_search_button);
+    	centerOnMapOn = (LinearLayout) findViewById(R.id.centermap_search_button_enabled);
+    	
+    	((TextView) this.findViewById(R.id.centermap_button_text)).setTypeface(AppBase.getTypefaceStrong());
+    	((TextView) this.findViewById(R.id.centermap_button_enabled_text)).setTypeface(AppBase.getTypefaceStrong());
 
+    	
     	centerOnMapOff.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

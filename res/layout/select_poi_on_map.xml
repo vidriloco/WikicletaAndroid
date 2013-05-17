@@ -32,43 +32,112 @@
        android:gravity="center"
        android:background="@drawable/toolbar"
        android:padding="5dp" >
-         <ImageView
-            android:id="@+id/poi_back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/nothing"
-            android:src="@drawable/back_arrow"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:clickable="true" />
 
-        <ImageView
+        <LinearLayout 
+            android:id="@+id/poi_back_button"
+       		android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		android:orientation="vertical"
+           	android:layout_marginRight="20dp"
+           	android:layout_marginLeft="20dp"
+           	android:gravity="center"
+           	android:clickable="true">
+			<ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/nothing"
+            android:src="@drawable/back_arrow" />
+            
+            <TextView 
+	            android:id="@+id/poi_back_text"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textSize="12sp"
+	            android:layout_marginTop="5dp"
+	            android:textColor="@color/wikicleta_blue"
+	            android:text="@string/bar_select_poi_back" />
+
+        </LinearLayout>
+
+        <LinearLayout 
             android:id="@+id/poi_finish_button"
+       		android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		android:orientation="vertical"
+           	android:layout_marginRight="20dp"
+           	android:layout_marginLeft="20dp"
+           	android:gravity="center"
+           	android:clickable="true">
+			<ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/nothing"
-            android:src="@drawable/save"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:clickable="true" />
-        <ImageView
+            android:src="@drawable/save"/>
+            
+            <TextView 
+	            android:id="@+id/poi_save_text"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textSize="12sp"
+	            android:layout_marginTop="5dp"
+	            android:textColor="@color/wikicleta_blue"
+	            android:text="@string/bar_select_poi_save"
+	            />
+
+        </LinearLayout>
+        <LinearLayout 
             android:id="@+id/centermap_search_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/nothing"
-            android:src="@drawable/centermap"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:clickable="true"
-            android:visibility="gone" />
-		<ImageView
+       		android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		android:orientation="vertical"
+           	android:layout_marginRight="20dp"
+           	android:layout_marginLeft="20dp"
+           	android:gravity="center"
+           	android:clickable="true">
+           	<ImageView
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:contentDescription="@string/nothing"
+            	android:src="@drawable/centermap" />
+            
+            <TextView 
+	            android:id="@+id/centermap_button_text"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textSize="12sp"
+	            android:layout_marginTop="5dp"
+	            android:textColor="@color/wikicleta_blue"
+	            android:text="@string/bar_center_map_text_value"
+	            />
+
+        </LinearLayout>
+		
+        <LinearLayout 
             android:id="@+id/centermap_search_button_enabled"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/nothing"
-            android:src="@drawable/centermap_enabled"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:clickable="true" />
+       		android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		android:orientation="vertical"
+           	android:layout_marginRight="20dp"
+           	android:layout_marginLeft="20dp"
+           	android:gravity="center"
+           	android:clickable="true"
+            android:visibility="gone" >
+           	<ImageView
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:contentDescription="@string/nothing"
+            	android:src="@drawable/centermap_enabled" />
+            
+            <TextView 
+	            android:id="@+id/centermap_button_enabled_text"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textSize="12sp"
+	            android:layout_marginTop="5dp"
+	            android:textColor="@color/wikicleta_blue"
+	            android:text="@string/bar_center_map_enabled_text_value"
+	            />
+
+        </LinearLayout>
   </LinearLayout>
 </RelativeLayout>
