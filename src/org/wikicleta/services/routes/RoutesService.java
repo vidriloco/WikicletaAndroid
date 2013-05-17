@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import org.wikicleta.R;
 import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.Constants;
-import org.wikicleta.fragments.routes.ActivityFragment;
+import org.wikicleta.fragments.user_profile.ActivityFragment;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.helpers.NotificationBuilder.Ticker;
 import org.wikicleta.helpers.routes.RouteRecorder;

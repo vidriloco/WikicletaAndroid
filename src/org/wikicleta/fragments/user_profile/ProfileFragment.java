@@ -1,4 +1,4 @@
-package org.wikicleta.fragments.routes;
+package org.wikicleta.fragments.user_profile;
 
 import java.io.IOException;
 import java.util.Iterator;

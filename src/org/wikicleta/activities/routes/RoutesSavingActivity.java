@@ -4,7 +4,7 @@ import org.wikicleta.R;
 import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.AppBase;
-import org.wikicleta.fragments.routes.ActivityFragment;
+import org.wikicleta.fragments.user_profile.ActivityFragment;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.services.routes.RoutesService;

@@ -1,4 +1,4 @@
-package org.wikicleta.fragments.routes;
+package org.wikicleta.fragments.user_profile;
 
 import org.wikicleta.R;
 import org.wikicleta.activities.UserProfileActivity;
@@ -153,14 +153,6 @@ public class ActivityFragment extends Fragment {
 	
 	public void drawView() {
 		this.drawLists();
-        fragmentView.findViewById(R.id.route_resyncer).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				((UserProfileActivity) getActivity()).theService.uploadStagedRoutes();
-			}
-        	
-        });
         
         this.unsyncedRoutesLayout.setOnClickListener(new OnClickListener() {
 

@@ -5,17 +5,10 @@ import java.util.List;
 import java.util.Vector;
 import org.wikicleta.R;
 import org.wikicleta.adapters.PagerAdapter;
-import org.wikicleta.fragments.routes.ActivityFragment;
-import org.wikicleta.fragments.routes.NotificationsFragment;
-import org.wikicleta.fragments.routes.ProfileFragment;
+import org.wikicleta.fragments.user_profile.ActivityFragment;
+import org.wikicleta.fragments.user_profile.NotificationsFragment;
+import org.wikicleta.fragments.user_profile.ProfileFragment;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
-import org.wikicleta.models.Route;
-import org.wikicleta.services.routes.RoutesService;
-import org.wikicleta.services.routes.RoutesServiceListener;
-import org.wikicleta.services.routes.ServiceConstructor;
-import org.wikicleta.services.routes.ServiceListener;
-
-import android.app.Service;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,16 +18,12 @@ import android.view.View;
 import android.widget.TabHost;
 import android.widget.TabHost.TabContentFactory;
 
-public class UserProfileActivity extends FragmentActivity implements
-		ServiceListener, RoutesServiceListener, TabHost.OnTabChangeListener,
+public class UserProfileActivity extends FragmentActivity implements TabHost.OnTabChangeListener,
 		ViewPager.OnPageChangeListener {
 	private TabHost tabHost;
 	private ViewPager mViewPager;
 	private HashMap<String, TabInfo> mapTabInfo = new HashMap<String, UserProfileActivity.TabInfo>();
 	private PagerAdapter pagerAdapter;
-	// Service
-	public RoutesService theService;
-	ServiceConstructor serviceInitializator;
 	
 	List<String> fragmentsNames;
 
@@ -183,61 +172,6 @@ public class UserProfileActivity extends FragmentActivity implements
 	public void onPageScrollStateChanged(int state) {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-		serviceInitializator = new ServiceConstructor(this);
-		serviceInitializator.start(RoutesService.class);
-	}
-
-	@Override
-	public void onStop() {
-		super.onStop();
-		serviceInitializator.stop();
-	}
-
-	@Override
-	public void afterServiceConnected(Service service) {
-		if (service instanceof RoutesService) {
-			this.theService = (RoutesService) service;
-			theService.uploadStagedRoutes();
-		}
-	}
-
-	@Override
-	public void routeDidUpload(Route route) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void routeDidNotUpload(Route route) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void shouldBlockView() {
-
-		runOnUiThread(new Runnable() {
-			public void run() {
-				ActivityFragment fragment = (ActivityFragment) pagerAdapter.getItem(1);
-				if(fragment != null)
-					fragment.blockUI();
-			}
-		});
-	}
-
-	@Override
-	public void shouldUnblockView() {
-		runOnUiThread(new Runnable() {
-			public void run() {
-				ActivityFragment fragment = (ActivityFragment) pagerAdapter.getItem(1);
-				if(fragment != null)
-					fragment.unblockUI();
-			}
-		});
 	}
 
 	/**

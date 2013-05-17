@@ -1,4 +1,4 @@
-package org.wikicleta.fragments.routes;
+package org.wikicleta.fragments.user_profile;
 
 import org.wikicleta.R;
 
