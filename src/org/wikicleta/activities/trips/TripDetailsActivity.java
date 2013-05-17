@@ -23,10 +23,12 @@ import com.markupartist.android.widget.ActionBar.Action;
 import com.nineoldandroids.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TripDetailsActivity extends LocationAwareMapWithControlsActivity {
 	AlertDialog dialog;
@@ -47,7 +49,8 @@ public class TripDetailsActivity extends LocationAwareMapWithControlsActivity {
 
 			@Override
 			public void onClick(View v) {
-				Toasts.showToastWithMessage(TripDetailsActivity.this, trip.details, R.drawable.info_icon);
+				if(trip.details != null)
+					Toasts.showToastWithMessage(TripDetailsActivity.this, trip.details, R.drawable.info_icon);
 			}
         	
         });
@@ -150,6 +153,18 @@ public class TripDetailsActivity extends LocationAwareMapWithControlsActivity {
 	
 	public void onUnsuccessfulTripFetching() {
 		hideLoadingDialog();
+		
+		Toasts.showToastWithMessage(TripDetailsActivity.this, 
+				this.getResources().getString(R.string.trips_could_not_fetch), R.drawable.alert_icon, Toast.LENGTH_SHORT);
+		
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+
+		    public void run() {
+				finish();
+		    }
+
+		}, 2500);
 	}
 
 	public void onFetchingTripStarted() {

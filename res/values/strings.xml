@@ -181,6 +181,7 @@
 	<string name="trip_fetching_details">Obteniendo detalles de este recorrido</string>
 	<string name="trips_bar_route_start_text_value">Inicio</string>
 	<string name="trips_bar_route_end_text_value">Fin</string>
+	<string name="trips_could_not_fetch">No fué posible descargar los detalles de esta ruta</string>
 	
 	<string name="trip_pois.categories.service_station">Estación de Servicio</string>
 	<string name="trip_pois.categories.ambulance">Ambulancia</string>
