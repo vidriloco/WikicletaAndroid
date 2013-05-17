@@ -19,7 +19,7 @@
     <!-- Registration Activity strings -->
     <string name="registration_title">Únete a Wikicleta</string>
     <string name="registration_prologue_text">Regálanos los siguientes datos para completar tu registro:</string>
-    <string name="sticker_prologue_text">Por ahora, para registrarte, es necesario haber capturado un sticker como el siguiente:</string>
+    <string name="sticker_prologue_text">Por ahora sólo quienes tengan un código de invitación podrán registrarse en Wikicleta</string>
     
     <string name="registration_accept_button">Aceptar</string>
     <string name="registration_back_button">Regresar</string>
@@ -32,7 +32,7 @@
 	<string name="twitter">Twitter</string>
 	<string name="facebook">Facebook</string>
     
-	<string name="prompt_sticker"># de Sticker</string>
+	<string name="prompt_sticker">Código de Invitación</string>
     <string name="prompt_login">Tu correo o nombre de usuario</string>
     <string name="prompt_password">Contraseña</string>
     <string name="prompt_password_confirmation">Confirma tu contraseña</string>

@@ -44,7 +44,8 @@ public class LoginActivity extends AccessActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		setTheme(R.style.Theme_wikicleta);
+
 		setContentView(R.layout.activity_login);
 		AppBase.currentActivity = this;
 		

@@ -45,6 +45,8 @@ public class RegistrationActivity extends AccessActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTheme(R.style.Theme_wikicleta);
+
 		AppBase.currentActivity = this;
 		
 		setContentView(R.layout.activity_registration);
@@ -180,7 +182,7 @@ public class RegistrationActivity extends AccessActivity {
 			parameters.put("password", mPassword);
 			parameters.put("password_confirmation", mPassword);
 			parameters.put("full_name", mName);
-			parameters.put("sticker_number", mStickerNumber);
+			parameters.put("invitation_code", mStickerNumber);
 			
 			Map<String, Map<String, String>> user = new LinkedHashMap<String, Map<String, String>>();
 			user.put("registration", parameters);
@@ -228,8 +230,8 @@ public class RegistrationActivity extends AccessActivity {
 						array = (JSONArray) errorsObject.get("username");
 						mUsernameView.setError((String) array.get(0));
 						mUsernameView.requestFocus();
-					} else if(errorsObject.containsKey("sticker")) {
-						array = (JSONArray) errorsObject.get("sticker");
+					} else if(errorsObject.containsKey("invitation_code")) {
+						array = (JSONArray) errorsObject.get("invitation_code");
 						mStickerNumberView.setError((String) array.get(0));
 						mStickerNumberView.requestFocus();
 					} else {
