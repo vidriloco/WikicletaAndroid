@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import org.wikicleta.R;
 import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.Constants;
-import org.wikicleta.fragments.user_profile.ActivityFragment;
+import org.wikicleta.fragments.user_profile.DraftsFragment;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.helpers.NotificationBuilder.Ticker;
 import org.wikicleta.helpers.routes.RouteRecorder;
@@ -124,7 +124,7 @@ public class RoutesService extends LocationAwareService {
 				countString = this.getString(R.string.route_drafts_notification_total_many, queuedRoutesCount());			 
 			
 			Intent notificationIntent = new Intent(this, UserProfileActivity.class);  
-			notificationIntent.putExtra("fragment", ActivityFragment.class.getName());
+			notificationIntent.putExtra("fragment", DraftsFragment.class.getName());
 			notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
 					countString, "Seleccionar para revisarlas y subirlas", notificationIntent, Ticker.TITLE);
 		}		

@@ -15,6 +15,7 @@ import org.wikicleta.views.PinOverlay;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,13 +57,20 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
     	((TextView) this.findViewById(R.id.poi_save_text)).setTypeface(AppBase.getTypefaceStrong());
     	((TextView) this.findViewById(R.id.poi_back_text)).setTypeface(AppBase.getTypefaceStrong());
     	
+    	// Workshop from remote server which can be edit by me
     	workshop = (Workshop) getIntent().getSerializableExtra("workshop");
-		if(workshop != null && workshop.existsOnRemoteServer()) {
+    	
+    	// Workshop from a draft store on local db
+    	if(getIntent().getSerializableExtra("id") != null)
+    		workshop = Workshop.load(Workshop.class, Long.valueOf(getIntent().getSerializableExtra("id").toString()));
+    	
+		if(workshop != null) {
 			// We are on editing mode
 			turnOffLocation();
 			this.mapView.getController().animateTo(new GeoPoint(workshop.latitude, workshop.longitude));
 			SlidingMenuAndActionBarHelper.setDefaultFontForActionBarWithTitle(this, R.string.workshops_edit_title);
 		} else {
+			turnOnLocation();
 			workshop = new Workshop();
 	    	// TODO: Move to cancelable alert
 	    	showToastMessage();
@@ -240,7 +248,7 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
     	anyoneCanEditCheckbox = (CheckBox) view.findViewById(R.id.workshops_anyoneCanEdit);
     	
     	// On editing mode if we are modifying the tip
-    	if(workshop.existsOnRemoteServer()) {
+    	if(workshop != null) {
     		details.setText(workshop.details);
     		name.setText(workshop.name);
     		horary.setText(workshop.horary);

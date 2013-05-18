@@ -211,9 +211,8 @@
 	<!-- Strings for user profile -->
 	<string name="user_profile_title">Tu Perfil</string>
 	<string name="user_profile_tab">Tu</string>
-	<string name="user_activity_tab">Actividad</string>
-	<string name="user_notifications_tab">Notificaciones</string>
-	
+	<string name="user_drafts_tab">Borradores</string>
+	<string name="no_drafts_listed">No tienes borradores por ahora</string>
 	<string name="profile_road_gear_title_text">Equipo para rodar:</string>
 	<string name="profile_stats_title_text">Cifras:</string>
 	<string name="profile_pedal_distance_title_text">Distancia recorrida:</string>
@@ -249,4 +248,6 @@
 	<string name="signing_in">Iniciando sesión</string>
 	<string name="uploading">Subiendo</string>
 	<string name="destroying">Eliminando</string>
+	<string name="saved_as_draft_on">en borradores desde </string>
+	<string name="discard_draft">¿Quieres descartar este elemento guardado como borrador?</string>
 </resources>

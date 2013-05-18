@@ -148,6 +148,8 @@ public class Parkings {
 	    protected void onPostExecute(Boolean success) {	    
 	    	dialog.dismiss();
 	    	if(success) {
+	    		if(parking != null && parking.getId() != null)
+					parking.delete();
 	    		if(mode == Cruds.CREATE)
 	    			Toasts.showToastWithMessage(activity, R.string.parkings_uploaded_successfully, R.drawable.success_icon);
 				else if(mode == Cruds.MODIFY)

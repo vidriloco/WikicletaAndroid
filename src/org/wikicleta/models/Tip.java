@@ -15,7 +15,7 @@ import com.google.android.maps.GeoPoint;
 
 @SuppressLint("SimpleDateFormat")
 @Table(name = "Tips")
-public class Tip extends Model implements Serializable {
+public class Tip extends Model implements Serializable, DraftModel {
 	
 	/**
 	 * 
@@ -145,5 +145,25 @@ public class Tip extends Model implements Serializable {
 			categoriesStrs[i-1] = getCategories().get(i);
 		}
 		return categoriesStrs;
+	}
+
+	@Override
+	public String getContent() {
+		return this.content;
+	}
+
+	@Override
+	public String getCategoryName() {
+		return "tips.categories.".concat(this.categoryString());
+	}
+
+	@Override
+	public boolean requiresCategoryTranslation() {
+		return true;
+	}
+	
+	@Override
+	public Date getDate() {
+		return new Date(this.createdAt);
 	}
 }

@@ -139,7 +139,7 @@ public class Tips {
 				requestStatus = NetworkOperations.postJSONTo(postPath, tip.toJSON(auth));
 			else if(mode == Cruds.MODIFY)
 				requestStatus = NetworkOperations.putJSONTo(putPath.replace(":id", String.valueOf(tip.remoteId)), tip.toJSON(auth));
-
+			
 			return requestStatus == 200;
 		}
 		
@@ -152,6 +152,8 @@ public class Tips {
 	    protected void onPostExecute(Boolean success) {
 	    	dialog.dismiss();
 	    	if(success) {
+				if(tip != null && tip.getId() != null)
+					tip.delete();
 	    		if(mode == Cruds.CREATE)
 	    			Toasts.showToastWithMessage(activity, R.string.tips_uploaded_successfully, R.drawable.success_icon);
 				else if(mode == Cruds.MODIFY)

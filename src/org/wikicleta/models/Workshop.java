@@ -17,10 +17,10 @@ import com.google.android.maps.GeoPoint;
 
 @SuppressLint("SimpleDateFormat")
 @Table(name = "Workshops")
-public class Workshop extends Model implements Serializable {
+public class Workshop extends Model implements Serializable, DraftModel {
 	
 	private static final long serialVersionUID = 1L;
-
+	
 	@Column(name = "RemoteId")
 	public long remoteId;
 	
@@ -156,5 +156,28 @@ public class Workshop extends Model implements Serializable {
 		
 		ActiveAndroid.setTransactionSuccessful();
 		ActiveAndroid.endTransaction();
+	}
+
+	@Override
+	public String getContent() {
+		return this.details;
+	}
+
+	@Override
+	public String getCategoryName() {
+		if(this.isStore) {
+			return "workshop_store";
+		}
+		return "workshop";
+	}
+	
+	@Override
+	public boolean requiresCategoryTranslation() {
+		return false;
+	}
+	
+	@Override
+	public Date getDate() {
+		return new Date(this.createdAt);
 	}
 }

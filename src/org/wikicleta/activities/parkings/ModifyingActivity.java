@@ -7,6 +7,7 @@ import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.Parking;
+import org.wikicleta.models.Workshop;
 import org.wikicleta.routing.Parkings;
 import org.wikicleta.routing.Others.Cruds;
 import org.wikicleta.views.PinOverlay;
@@ -49,14 +50,21 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 		
 		AppBase.currentActivity = this;
     	assignToggleActionsForAutomapCenter();
-
+    	
+    	// Parking from remote server which can be edit by me
     	parking = (Parking) getIntent().getSerializableExtra("parking");
-		if(parking != null && parking.existsOnRemoteServer()) {
+    	
+    	// Parking from a draft store on local db
+    	if(getIntent().getSerializableExtra("id") != null)
+    		parking = Parking.load(Parking.class, Long.valueOf(getIntent().getSerializableExtra("id").toString()));
+    	
+		if(parking != null) {
 			// We are on editing mode
 			turnOffLocation();
 			this.mapView.getController().animateTo(new GeoPoint(parking.latitude, parking.longitude));
 	    	SlidingMenuAndActionBarHelper.setDefaultFontForActionBarWithTitle(this, R.string.parkings_edit_title);
 		} else {
+			turnOnLocation();
 			parking = new Parking();
 	    	// TODO: Move to cancelable alert
 	    	showToastMessage();
@@ -181,7 +189,7 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
     	anyoneCanEditCheckbox = (CheckBox) view.findViewById(R.id.parkings_anyoneCanEdit);
 
     	// On editing mode if we are modifying the parking
-    	if(parking.existsOnRemoteServer()) {
+    	if(parking != null) {
     		details.setText(parking.details);
     		kindSelector.setSelection(parking.kind-1);
     		title.setText(this.getResources().getString(R.string.actions_update));

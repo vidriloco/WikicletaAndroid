@@ -6,9 +6,6 @@ import java.util.Iterator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.wikicleta.helpers.GeoHelpers;
-
-import android.util.Log;
-
 import com.google.android.maps.GeoPoint;
 
 public class Trip implements Serializable {

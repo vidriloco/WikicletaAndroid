@@ -150,6 +150,8 @@ public class Workshops {
 	    	dialog.dismiss();
 	    	
 	    	if(success) {
+	    		if(workshop != null && workshop.getId() != null)
+					workshop.delete();
 	    		if(mode == Cruds.CREATE)
 	    			Toasts.showToastWithMessage(activity, R.string.workshops_uploaded_successfully, R.drawable.success_icon);
 				else if(mode == Cruds.MODIFY)

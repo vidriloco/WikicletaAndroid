@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Vector;
 import org.wikicleta.R;
 import org.wikicleta.adapters.PagerAdapter;
-import org.wikicleta.fragments.user_profile.ActivityFragment;
-import org.wikicleta.fragments.user_profile.NotificationsFragment;
+import org.wikicleta.fragments.user_profile.DraftsFragment;
 import org.wikicleta.fragments.user_profile.ProfileFragment;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import android.content.Context;
@@ -41,8 +40,7 @@ public class UserProfileActivity extends FragmentActivity implements TabHost.OnT
 
 		fragmentsNames = new Vector<String>();
 		fragmentsNames.add(ProfileFragment.class.getName());
-		fragmentsNames.add(ActivityFragment.class.getName());
-		fragmentsNames.add(NotificationsFragment.class.getName());
+		fragmentsNames.add(DraftsFragment.class.getName());
 		// Intialise ViewPager
 		this.intialiseViewPager();
 
@@ -84,16 +82,9 @@ public class UserProfileActivity extends FragmentActivity implements TabHost.OnT
 		this.mapTabInfo.put(tabInfo.tag, tabInfo);
 		addTab(this,
 				this.tabHost.newTabSpec("activity").setIndicator(
-						getString(R.string.user_activity_tab)),
-				(tabInfo = new TabInfo("activity", ActivityFragment.class, args)));
+						getString(R.string.user_drafts_tab)),
+				(tabInfo = new TabInfo("activity", DraftsFragment.class, args)));
 		this.mapTabInfo.put(tabInfo.tag, tabInfo);
-		addTab(this,
-				this.tabHost.newTabSpec("notifications").setIndicator(
-						getString(R.string.user_notifications_tab)),
-				(tabInfo = new TabInfo("notifications",
-						NotificationsFragment.class, args)));
-		this.mapTabInfo.put(tabInfo.tag, tabInfo);
-
 		tabHost.setOnTabChangedListener(this);
 	}
 
@@ -214,6 +205,7 @@ public class UserProfileActivity extends FragmentActivity implements TabHost.OnT
 		 */
 		public View createTabContent(String tag) {
 			View v = new View(mContext);
+			
 			v.setMinimumWidth(0);
 			v.setMinimumHeight(0);
 			return v;

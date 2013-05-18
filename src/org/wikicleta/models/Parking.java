@@ -18,7 +18,7 @@ import com.google.android.maps.GeoPoint;
 
 @SuppressLint("SimpleDateFormat")
 @Table(name = "Parkings")
-public class Parking extends Model implements Serializable {
+public class Parking extends Model implements Serializable, DraftModel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -152,5 +152,25 @@ public class Parking extends Model implements Serializable {
 			kindsStrs[i-1] = getKinds().get(i);
 		}
 		return kindsStrs;
+	}
+
+	@Override
+	public String getContent() {
+		return this.details;
+	}
+
+	@Override
+	public String getCategoryName() {
+		return "parkings.kinds.".concat(this.kindString());
+	}
+	
+	@Override
+	public boolean requiresCategoryTranslation() {
+		return true;
+	}
+
+	@Override
+	public Date getDate() {
+		return new Date(this.createdAt);
 	}
 }
