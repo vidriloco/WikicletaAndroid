@@ -37,6 +37,14 @@ public class Parkings {
 		
 		Parking parking;
 		public MainMapActivity activity;
+		AlertDialog dialog;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage(activity, R.string.destroying).create();
+			dialog.show();
+		}
 		
 		@Override
 		protected Boolean doInBackground(Parking... params) {
@@ -52,6 +60,7 @@ public class Parkings {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
+			dialog.dismiss();
 			if(success) {
 				activity.reloadActiveLayers();
 				Toasts.showToastWithMessage(activity, R.string.parkings_deleted_successfully, R.drawable.success_icon);
@@ -114,11 +123,19 @@ public class Parkings {
 		private Parking parking;
 		public ModifyingActivity activity;
 		public Cruds mode = Cruds.CREATE;
+		AlertDialog dialog;
+		
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage(activity, R.string.uploading).create();
+			dialog.show();
+		}
 		
 		protected Boolean doInBackground(Parking... args) {
 			parking = args[0];
 			HashMap<String, Object> auth = new HashMap<String, Object>();
 			auth.put("auth_token", User.token());
+			
 			int requestStatus = 404;
 			if(mode == Cruds.CREATE)
 				requestStatus = NetworkOperations.postJSONTo(postPath, parking.toJSON(auth));
@@ -128,7 +145,8 @@ public class Parkings {
 			return requestStatus == 200;
 		}
 		
-	    protected void onPostExecute(Boolean success) {	    	
+	    protected void onPostExecute(Boolean success) {	    
+	    	dialog.dismiss();
 	    	if(success) {
 	    		if(mode == Cruds.CREATE)
 	    			Toasts.showToastWithMessage(activity, R.string.parkings_uploaded_successfully, R.drawable.success_icon);

@@ -247,5 +247,6 @@
 	
 	<string name="registering_user">Registrando usuario</string>
 	<string name="signing_in">Iniciando sesión</string>
-	
+	<string name="uploading">Subiendo</string>
+	<string name="destroying">Eliminando</string>
 </resources>

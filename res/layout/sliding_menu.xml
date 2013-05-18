@@ -80,7 +80,8 @@
             android:alpha="0.5"
             android:background="@drawable/menu_item_background"
             android:paddingBottom="15dp"
-            android:paddingTop="15dp" >
+            android:paddingTop="15dp"
+            android:visibility="gone" >
 
             <ImageView
                 android:id="@+id/now_img"

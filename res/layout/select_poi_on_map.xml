@@ -93,7 +93,8 @@
            	android:layout_marginRight="20dp"
            	android:layout_marginLeft="20dp"
            	android:gravity="center"
-           	android:clickable="true">
+           	android:clickable="true"
+            android:visibility="gone">
            	<ImageView
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
@@ -111,7 +112,7 @@
 	            />
 
         </LinearLayout>
-		
+	
         <LinearLayout 
             android:id="@+id/centermap_search_button_enabled"
        		android:layout_width="wrap_content"
@@ -120,8 +121,7 @@
            	android:layout_marginRight="20dp"
            	android:layout_marginLeft="20dp"
            	android:gravity="center"
-           	android:clickable="true"
-            android:visibility="gone" >
+           	android:clickable="true" >
            	<ImageView
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"

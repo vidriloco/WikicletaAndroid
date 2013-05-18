@@ -38,6 +38,14 @@ public class Tips {
 		
 		Tip tip;
 		public MainMapActivity activity;
+		AlertDialog dialog;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage(activity, R.string.destroying).create();
+			dialog.show();
+		}
 		
 		@Override
 		protected Boolean doInBackground(Tip... params) {
@@ -53,6 +61,7 @@ public class Tips {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
+	    	dialog.dismiss();
 			if(success) {
 				activity.reloadActiveLayers();
 				Toasts.showToastWithMessage(activity, R.string.tips_deleted_successfully, R.drawable.success_icon);
@@ -88,6 +97,7 @@ public class Tips {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
+			
 			if(success) {
 				overlay.clear();
 				@SuppressWarnings("unchecked")
@@ -117,7 +127,8 @@ public class Tips {
 		private Tip tip;
 		public ModifyingActivity activity;
 		public Cruds mode = Cruds.CREATE;
-		
+		AlertDialog dialog;
+
 		@Override
 		protected Boolean doInBackground(Tip... args) {
 			tip = args[0];
@@ -132,10 +143,14 @@ public class Tips {
 			return requestStatus == 200;
 		}
 		
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage(activity, R.string.uploading).create();
+			dialog.show();
+		}
+		
 	    protected void onPostExecute(Boolean success) {
-	    	// TODO: Implement a dialog for saving 
-	    	//progressDialog.dismiss();
-	    	
+	    	dialog.dismiss();
 	    	if(success) {
 	    		if(mode == Cruds.CREATE)
 	    			Toasts.showToastWithMessage(activity, R.string.tips_uploaded_successfully, R.drawable.success_icon);
