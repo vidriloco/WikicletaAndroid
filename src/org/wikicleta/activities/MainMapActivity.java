@@ -322,7 +322,11 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 			public void run() {
 				mapView.invalidate();
 				mapView.refreshDrawableState();
-				hideLoadingState();
+				Handler handlerTimer = new Handler();
+		        handlerTimer.postDelayed(new Runnable(){
+		            public void run() {
+						hideLoadingState();
+		          }}, 2000);
 			}
 			
 		});
