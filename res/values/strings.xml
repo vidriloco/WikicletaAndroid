@@ -250,4 +250,6 @@
 	<string name="destroying">Eliminando</string>
 	<string name="saved_as_draft_on">en borradores desde </string>
 	<string name="discard_draft">¿Quieres descartar este elemento guardado como borrador?</string>
+	
+	<string name="not_implemented_yet">Lo sentimos, esta sección no está lista aún, por ahora, te invitamos a probar las demás secciones.</string>
 </resources>

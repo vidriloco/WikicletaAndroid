@@ -8,9 +8,11 @@ import org.wikicleta.activities.routes.NewRouteActivity;
 import org.wikicleta.adapters.MenuOptionsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
+import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.layers.common.LayersConnector;
 import org.wikicleta.layers.common.LayersConnectorListener;
+import org.wikicleta.models.User;
 import org.wikicleta.views.PinchableMapView.OnPanChangeListener;
 import org.wikicleta.views.PinchableMapView.OnZoomChangeListener;
 import com.google.android.maps.GeoPoint;
@@ -115,7 +117,9 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 		
 		((TextView) this.findViewById(R.id.bar_maps_add_button_text)).setTypeface(AppBase.getTypefaceStrong());
 		((TextView) this.findViewById(R.id.bar_maps_layers_button_text)).setTypeface(AppBase.getTypefaceStrong());
-
+		
+		if(!User.isRegisteredLocally())
+			findViewById(R.id.map_add_button).setVisibility(View.GONE);
 	}
 	
 	public void reloadActiveLayers() {
@@ -162,7 +166,7 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
         LayoutInflater inflater = this.getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_toggle, null);
         
-        Integer[] layers = {
+        final Integer[] layers = {
         		Constants.ROUTES_OVERLAY, 
         		Constants.BIKE_PARKING_OVERLAY, 
         		Constants.BIKE_WORKSHOPS_AND_STORES_OVERLAY,
@@ -191,9 +195,14 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 
 			@Override
 			public void onItemClick(AdapterView<?> adapterParent, View view, int position, long id) {
-				selectedLayersMenuAdapter.setSelectedPosition(position);
-				toggleLayersMenu.dismiss();
-				toggleLayers(selectedLayersMenuAdapter.getSelectedValuesForPositions());
+				if(layers[position] == Constants.ROUTES_OVERLAY) {
+					toggleLayersMenu.dismiss();
+					Toasts.showToastWithMessage(MainMapActivity.this, R.string.not_implemented_yet, R.drawable.hand_icon);
+				} else {
+					selectedLayersMenuAdapter.setSelectedPosition(position);
+					toggleLayersMenu.dismiss();
+					toggleLayers(selectedLayersMenuAdapter.getSelectedValuesForPositions());
+				}
 			}
 
 	    });
@@ -246,9 +255,11 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
         view.findViewById(R.id.route_dialog_group).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				//addMenu.dismiss();
+				//AppBase.launchActivity(NewRouteActivity.class);
+				//finish();
 				addMenu.dismiss();
-				AppBase.launchActivity(NewRouteActivity.class);
-				finish();
+				Toasts.showToastWithMessage(MainMapActivity.this, R.string.not_implemented_yet, R.drawable.hand_icon);
 			}
         });
         
@@ -264,6 +275,7 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 			@Override
 			public void onClick(View v) {
 				addMenu.dismiss();
+				Toasts.showToastWithMessage(MainMapActivity.this, R.string.not_implemented_yet, R.drawable.hand_icon);
 			}
         });
         
