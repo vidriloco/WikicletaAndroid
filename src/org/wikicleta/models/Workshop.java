@@ -1,23 +1,26 @@
 package org.wikicleta.models;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.wikicleta.R;
 
 import android.annotation.SuppressLint;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.google.android.maps.GeoPoint;
+import com.google.android.gms.maps.model.LatLng;
 
 @SuppressLint("SimpleDateFormat")
 @Table(name = "Workshops")
-public class Workshop extends Model implements Serializable, DraftModel {
+public class Workshop extends Model implements Serializable, DraftModel, MarkerInterface {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -34,10 +37,10 @@ public class Workshop extends Model implements Serializable, DraftModel {
 	public boolean isStore;
 	
 	@Column(name = "Phone")
-	public int phone;
+	public long phone;
 	
 	@Column(name = "CellPhone")
-	public int cellPhone;
+	public long cellPhone;
 	
 	@Column(name = "Webpage")
 	public String webpage;
@@ -55,10 +58,10 @@ public class Workshop extends Model implements Serializable, DraftModel {
 	public long userId;
 	
 	@Column(name = "Latitude")
-	public int latitude;
+	public double latitude;
 	
 	@Column(name = "Longitude")
-	public int longitude;
+	public double longitude;
 
 	@Column(name = "CreatedAt")
 	public long createdAt;
@@ -77,17 +80,17 @@ public class Workshop extends Model implements Serializable, DraftModel {
 	}
 	
 	public Workshop(long remoteId, String name, String details,
-			GeoPoint point, long userId, int likesCount, boolean isStore,
+			LatLng point, long userId, int likesCount, boolean isStore,
 			boolean anyoneCanEdit, long createdAt, long updatedAt,
-			String username, int phone, int cellPhone, String webPage,
+			String username, long phone, long cellPhone, String webPage,
 			String twitter, String horary) {
 		this();
 		this.remoteId = remoteId;
 		this.userId = userId;
 		this.name = name;
 		this.details = details;
-		this.latitude = point.getLatitudeE6();
-		this.longitude = point.getLongitudeE6();
+		this.latitude = point.latitude;
+		this.longitude = point.longitude;
 		this.isStore = isStore;
 		this.username = username;
 		this.anyoneCanEdit = anyoneCanEdit;
@@ -179,5 +182,64 @@ public class Workshop extends Model implements Serializable, DraftModel {
 	@Override
 	public Date getDate() {
 		return new Date(this.createdAt);
+	}
+
+	public static Workshop buildFrom(JSONObject object) {
+		long remoteId = (Long) object.get("id");
+		String name = (String) object.get("name");
+		String details = (String) object.get("details");
+		
+	    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date creationDate = null;
+		Date updateDate = null;
+		try {
+			creationDate = df.parse((String)  object.get("str_created_at"));
+			updateDate = df.parse((String)  object.get("str_updated_at"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		long createdAt = creationDate.getTime();
+		long updatedAt = updateDate.getTime();
+		long likesCountTmp = (Long) object.get("likes_count");
+		int likesCount = (int) likesCountTmp;
+		
+		JSONObject owner = (JSONObject) object.get("owner");
+		long userId = (Long) owner.get("id");
+		String username = (String) owner.get("username");
+				
+		boolean isStore = (Boolean) object.get("store");
+		boolean anyoneCanEdit = (Boolean) object.get("others_can_edit_it");
+
+		Object phoneB = object.get("phone");
+		Object cellPhoneB = object.get("cell_phone");
+		
+		long phone = 0;
+		long cellPhone = 0;
+		
+		if(phoneB != null)
+			phone = (Long) phoneB;
+		if(cellPhoneB != null)
+			cellPhone = (Long) cellPhoneB;
+		
+		String webPage = (String) object.get("webpage");
+		String twitter = (String) object.get("twitter");
+		String horary = (String) object.get("horary");
+		LatLng point = new LatLng((Double) object.get("lat"), (Double) object.get("lon"));
+		Workshop workshop = new Workshop(remoteId, name, details, point, userId, likesCount, isStore, 
+				anyoneCanEdit, createdAt, updatedAt, username, phone, cellPhone, webPage, twitter, horary);
+		if(owner.containsKey("pic"))
+			workshop.userPicURL = (String) owner.get("pic");
+		
+		return workshop;
+	}
+
+	@Override
+	public LatLng getLatLng() {
+		return new LatLng(this.latitude, this.longitude);
+	}
+
+	@Override
+	public int getDrawable() {
+		return R.drawable.workshop_icon;
 	}
 }

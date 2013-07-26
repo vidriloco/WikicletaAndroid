@@ -2,7 +2,7 @@ package org.wikicleta.activities.routes;
 
 import org.wikicleta.R;
 import org.wikicleta.activities.MainMapActivity;
-import org.wikicleta.activities.common.LocationAwareMapActivity;
+import org.wikicleta.activities.common.ActivityWithLocationAwareMap;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
@@ -10,7 +10,6 @@ import org.wikicleta.models.Route;
 import org.wikicleta.services.routes.RoutesService;
 import org.wikicleta.services.routes.ServiceConstructor;
 import org.wikicleta.services.routes.ServiceListener;
-import org.wikicleta.views.PinchableMapView;
 import org.wikicleta.layers.RouteOverlay;
 
 import com.markupartist.android.widget.ActionBar;
@@ -29,8 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class RouteDetailsActivity extends LocationAwareMapActivity implements ServiceListener {
-	private PinchableMapView mapView;
+public class RouteDetailsActivity extends ActivityWithLocationAwareMap implements ServiceListener {
 	private LinearLayout bottomToolBarView;
 	private LinearLayout topToolBarView;
 	
@@ -57,7 +55,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
         if(currentRoute == null)
         	AppBase.launchActivity(MainMapActivity.class);
                
-        this.mapView = (PinchableMapView) findViewById(R.id.mapview);
+        /*this.mapView = (PinchableMapView) findViewById(R.id.mapview);
         mapView.setBuiltInZoomControls(false);
         
         drawRoutePath();
@@ -65,7 +63,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
     	
         this.setMapToLocation(currentRoute.getStartingLocation());
         this.notification = new NotificationBuilder(this);
-        
+        */
         SlidingMenuAndActionBarHelper.loadWithActionBarTitle(this, "Detalles de ruta");
         
         ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
@@ -91,7 +89,7 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 	@Override
 	public void onResume() {
 		super.onResume();
-		this.locationOverlay.disableMyLocation();
+		//this.locationOverlay.disableMyLocation();
 	}
 	
 	public static int queuedRoutesCount() {
@@ -216,9 +214,10 @@ public class RouteDetailsActivity extends LocationAwareMapActivity implements Se
 	
 	protected void drawRoutePath() {
 		if(currentRoute != null) {
-			routesOverlay = new RouteOverlay(((int) (long) currentRoute.getId()), null);
-			mapView.getOverlays().add(routesOverlay);
-			routesOverlay.detailedView = true;
+			//routesOverlay = new RouteOverlay(((int) (long) currentRoute.getId()), null);
+			//mapView.getOverlays().add(routesOverlay);
+			
+			//routesOverlay.detailedView = true;
 		}
 	}
 	

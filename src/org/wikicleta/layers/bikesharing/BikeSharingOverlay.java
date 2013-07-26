@@ -25,12 +25,8 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.ItemizedOverlay;
-import com.google.android.maps.OverlayItem;
-
-public class BikeSharingOverlay extends ItemizedOverlay<OverlayItem> implements IdentifiableOverlay {
-    private ArrayList<OverlayItem> overlayItems = new ArrayList<OverlayItem>();
+public class BikeSharingOverlay  {
+   /* private ArrayList<OverlayItem> overlayItems = new ArrayList<OverlayItem>();
 	protected String url = "http://api.citybik.es/ecobici.json";
 	
 	protected LayersConnectorListener listener;
@@ -177,5 +173,5 @@ public class BikeSharingOverlay extends ItemizedOverlay<OverlayItem> implements 
 	@Override
 	public int getIdentifier() {
 		return Constants.BIKE_SHARING_OVERLAY;
-	}
+	}*/
 }

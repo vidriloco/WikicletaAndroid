@@ -1,9 +1,9 @@
 package org.wikicleta.routing;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -14,12 +14,10 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.DialogBuilder;
-import org.wikicleta.layers.tips.TipOverlayItem;
-import org.wikicleta.layers.tips.TipsOverlay;
+import org.wikicleta.layers.common.LayersConnectorListener;
 import org.wikicleta.models.Tip;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others.Cruds;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -72,15 +70,27 @@ public class Tips {
 		
 	}
 	
-	public class Get extends AsyncTask<TipsOverlay, Void, Boolean> {
+	public class Get extends AsyncTask<Void, Void, Boolean> {
     	
-	   TipsOverlay overlay;
-	   JSONArray objectList;
+		public LayersConnectorListener connector;
+		public ArrayList<Tip> items;
+
+	    JSONArray objectList;
+	    HashMap<String, String> viewport;
 	   
+	    public Get(LayersConnectorListener connector) {
+	    	this.connector = connector;
+	    }
+	   
+	    @Override
+	    protected void onPreExecute() {
+			viewport = connector.getCurrentViewport();
+			items = new ArrayList<Tip>();
+	    }
+	    
 		@Override
-		protected Boolean doInBackground(TipsOverlay... args) {
-			overlay = args[0];
-			HashMap<String, String> viewport = overlay.listener.getCurrentViewport();
+		protected Boolean doInBackground(Void... args) {
+			
 			String params = "viewport[sw]=".concat(viewport.get("sw")).concat("&viewport[ne]=").concat(viewport.get("ne"));
 			String fetchedString = NetworkOperations.getJSONExpectingString(getPath.concat(params), false);
 			if(fetchedString == null)
@@ -99,25 +109,25 @@ public class Tips {
 		protected void onPostExecute(final Boolean success) {
 			
 			if(success) {
-				overlay.clear();
+				items.clear();
 				@SuppressWarnings("unchecked")
 				Iterator<JSONObject> iterator = (Iterator<JSONObject>) objectList.iterator();
 				while(iterator.hasNext()) {
-					JSONObject tip = iterator.next();
+					JSONObject json = iterator.next();
 					try {
-						overlay.addItem(TipOverlayItem.buildFrom(overlay.listener.getActivity(), tip));
+						items.add(Tip.buildFrom(json));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 			}
-			overlay.listener.overlayFinishedLoading(success);
+			connector.overlayFinishedLoadingWithPayload(success, items);
 		}
 		
 		@Override
 		protected void onCancelled() {
-			overlay.listener.overlayFinishedLoading(false);
+			connector.overlayFinishedLoading(false);
 		}
 
 	}

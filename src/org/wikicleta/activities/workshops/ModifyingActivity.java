@@ -11,11 +11,14 @@ import org.wikicleta.models.Tip;
 import org.wikicleta.models.Workshop;
 import org.wikicleta.routing.Others.Cruds;
 import org.wikicleta.routing.Workshops;
-import org.wikicleta.views.PinOverlay;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +30,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.google.android.maps.GeoPoint;
 
 public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 
-	protected PinOverlay pinOverlay;
 	public AlertDialog  formView;
 	
 	protected EditText name;
@@ -43,12 +44,14 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 	protected EditText phone;
 	protected EditText cellPhone;
 	protected EditText webpage;
-
+	
+	protected Marker marker;
+	
 	public Workshop workshop;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.select_poi_on_map);
+		super.onCreate(savedInstanceState, R.layout.activity_select_poi_on_map);
 		setTheme(R.style.Theme_wikicleta);
 		
 		AppBase.currentActivity = this;
@@ -67,7 +70,7 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 		if(workshop != null) {
 			// We are on editing mode
 			turnOffLocation();
-			this.mapView.getController().animateTo(new GeoPoint(workshop.latitude, workshop.longitude));
+			this.map.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(workshop.latitude, workshop.longitude)));
 			SlidingMenuAndActionBarHelper.setDefaultFontForActionBarWithTitle(this, R.string.workshops_edit_title);
 		} else {
 			turnOnLocation();
@@ -86,18 +89,16 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
     		
     	});
     	
-    	pinOverlay = new PinOverlay(this);
-    	
-    	this.mapView.getOverlays().add(pinOverlay);
     	this.toolbar = (LinearLayout) this.findViewById(R.id.poi_toolbar);
 
     	this.findViewById(R.id.poi_finish_button).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
+				LatLng center = map.getCameraPosition().target;
 				// Setting tip coordinates
-				workshop.latitude = pinOverlay.getLocation().getLatitudeE6();
-				workshop.longitude = pinOverlay.getLocation().getLongitudeE6();
+				workshop.latitude = center.latitude;
+				workshop.longitude = center.longitude;
 				displaySaveForm();
 			}
     		

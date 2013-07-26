@@ -1,24 +1,26 @@
 package org.wikicleta.models;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-
+import org.wikicleta.R;
 import android.annotation.SuppressLint;
-
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.google.android.maps.GeoPoint;
+import com.google.android.gms.maps.model.LatLng;
 
 @SuppressLint("SimpleDateFormat")
 @Table(name = "Parkings")
-public class Parking extends Model implements Serializable, DraftModel {
+public class Parking extends Model implements Serializable, DraftModel, MarkerInterface {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,10 +34,10 @@ public class Parking extends Model implements Serializable, DraftModel {
 	public int kind;
 	
 	@Column(name = "Latitude")
-	public int latitude;
+	public double latitude;
 	
 	@Column(name = "Longitude")
-	public int longitude;
+	public double longitude;
 
 	@Column(name = "CreatedAt")
 	public long createdAt;
@@ -64,14 +66,14 @@ public class Parking extends Model implements Serializable, DraftModel {
 		this.remoteId = 0;
 	}
 	
-	public Parking(long remoteId, String details, int kind, GeoPoint point, long userId, int likesCount, 
+	public Parking(long remoteId, String details, int kind, LatLng point, long userId, int likesCount, 
 			boolean hasRoof, boolean anyoneCanEdit, long createdAt, long updatedAt, String name) {
 		this();
 		this.remoteId = remoteId;
 		this.details = details;
 		this.kind = kind;
-		this.latitude = point.getLatitudeE6();
-		this.longitude = point.getLongitudeE6();
+		this.latitude = point.latitude;
+		this.longitude = point.longitude;
 		this.hasRoof = hasRoof;
 		this.anyoneCanEdit = anyoneCanEdit;
 		this.userId = userId;
@@ -172,5 +174,56 @@ public class Parking extends Model implements Serializable, DraftModel {
 	@Override
 	public Date getDate() {
 		return new Date(this.createdAt);
+	}
+	
+	public static Parking buildFrom(JSONObject object) throws IOException {
+		long remoteId = (Long) object.get("id");
+		long kindTmp = (Long) object.get("kind");
+		int kind = (int) kindTmp;
+		String details = (String) object.get("details");
+		
+	    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date creationDate = null;
+		Date updateDate = null;
+		try {
+			creationDate = df.parse((String)  object.get("str_created_at"));
+			updateDate = df.parse((String)  object.get("str_updated_at"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		long createdAt = creationDate.getTime();
+		long updatedAt = updateDate.getTime();
+		long likesCountTmp = (Long) object.get("likes_count");
+		int likesCount = (int) likesCountTmp;
+		
+		JSONObject owner = (JSONObject) object.get("owner");
+		long userId = (Long) owner.get("id");
+		String name = (String) owner.get("username");
+				
+		boolean hasRoof = (Boolean) object.get("has_roof");
+		boolean anyoneCanEdit = (Boolean) object.get("others_can_edit_it");
+
+		LatLng point = new LatLng((Double) object.get("lat"), (Double) object.get("lon"));	
+		Parking parking = new Parking(remoteId, details, kind, point, userId, likesCount, hasRoof, anyoneCanEdit, createdAt, updatedAt, name);
+		if(owner.containsKey("pic"))
+			parking.userPicURL = (String) owner.get("pic");
+		return parking;
+	}
+	
+	@Override
+	public int getDrawable() {
+		if(this.kindString() == "government_provided") {
+			return R.drawable.parking_government_provided_icon;
+		} else if(this.kindString() == "urban_mobiliary") {
+			return R.drawable.parking_urban_mobiliary_icon;
+		} else if(this.kindString() == "venue_provided") {
+			return R.drawable.parking_venue_provided_icon;
+		}
+		return 0;
+	}
+
+	@Override
+	public LatLng getLatLng() {
+		return new LatLng(this.latitude, this.longitude);
 	}
 }

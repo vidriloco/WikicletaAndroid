@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LocationAwareMapWithControlsActivity extends LocationAwareMapActivity {
+public class LocationAwareMapWithControlsActivity extends ActivityWithLocationAwareMap {
 	protected LinearLayout centerOnMapOn;
 	protected LinearLayout centerOnMapOff;
 	protected LinearLayout toolbar;
@@ -43,13 +43,13 @@ public class LocationAwareMapWithControlsActivity extends LocationAwareMapActivi
 	}
 	
 	protected void turnOnLocation() {
-		locationOverlay.enableMyLocation();
+		map.setMyLocationEnabled(true);
 		centerOnMapOff.setVisibility(View.GONE);
 		centerOnMapOn.setVisibility(View.VISIBLE);
 	}
 	
 	protected void turnOffLocation() {
-		locationOverlay.disableMyLocation();
+		map.setMyLocationEnabled(false);
 		centerOnMapOff.setVisibility(View.VISIBLE);
 		centerOnMapOn.setVisibility(View.GONE);
 	}

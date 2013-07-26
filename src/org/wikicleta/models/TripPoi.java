@@ -3,18 +3,18 @@ package org.wikicleta.models;
 import java.io.Serializable;
 import java.util.HashMap;
 import org.wikicleta.helpers.GeoHelpers;
-import android.annotation.SuppressLint;
-import android.util.Log;
 
-import com.google.android.maps.GeoPoint;
+import com.google.android.gms.maps.model.LatLng;
+
+import android.annotation.SuppressLint;
 
 public class TripPoi implements Serializable {
 
 	public String name;
 	public String details;
 	public String iconName;
-	public int latitude;
-	public int longitude;
+	public double latitude;
+	public double longitude;
 	public int category;
 
 	@SuppressLint("UseSparseArrays")
@@ -25,13 +25,13 @@ public class TripPoi implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public TripPoi(String name, String details, int category, String iconName, GeoPoint point) {
+	public TripPoi(String name, String details, int category, String iconName, LatLng point) {
 		this.name = name;
 		this.details = details;
 		this.category = category;
 		this.iconName = iconName;
-		this.latitude = point.getLatitudeE6();
-		this.longitude = point.getLongitudeE6();
+		this.latitude = point.latitude;
+		this.longitude = point.longitude;
 	}
 	
 	public String details() {
@@ -41,8 +41,8 @@ public class TripPoi implements Serializable {
 		return details.replace("<p>", "").replace("</p>", "\n").concat("\n").replace("<ul><li>", "\n- ").replace("</li><li>", "\n- ").replace("</li></ul>", "");
 	}
 	
-	public GeoPoint location() {
-		return GeoHelpers.buildGeoPointFromLatLon(latitude/1E6, longitude/1E6);
+	public LatLng location() {
+		return GeoHelpers.buildGeoPointFromLatLon(latitude, longitude);
 	}
 	
 	public String categoryString() {

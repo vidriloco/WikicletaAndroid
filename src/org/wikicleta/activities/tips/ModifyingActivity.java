@@ -7,13 +7,15 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
-import org.wikicleta.models.Parking;
 import org.wikicleta.models.Tip;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Tips;
 import org.wikicleta.routing.Others.Cruds;
-import org.wikicleta.views.PinOverlay;
-import com.google.android.maps.GeoPoint;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -33,17 +35,18 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 
-	protected PinOverlay pinOverlay;
 	public AlertDialog  formView;
 	
 	protected Spinner categorySelector;
 	protected EditText content;
 	
+	protected Marker marker;
+	
 	public Tip tip;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.select_poi_on_map);
+		super.onCreate(savedInstanceState, R.layout.activity_select_poi_on_map);
 		setTheme(R.style.Theme_wikicleta);
 		
 		AppBase.currentActivity = this;
@@ -59,7 +62,7 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 		if(tip != null) {
 			// We are on editing mode
 			turnOffLocation();
-			this.mapView.getController().animateTo(new GeoPoint(tip.latitude, tip.longitude));
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(tip.latitude, tip.longitude), 18));
 			SlidingMenuAndActionBarHelper.setDefaultFontForActionBarWithTitle(this, R.string.tips_edit_title);
 		} else {
 			turnOnLocation();
@@ -81,19 +84,17 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 			}
     		
     	});
-    	
-    	pinOverlay = new PinOverlay(this);
-    	
-    	this.mapView.getOverlays().add(pinOverlay);
+
     	this.toolbar = (LinearLayout) this.findViewById(R.id.poi_toolbar);
 
     	this.findViewById(R.id.poi_finish_button).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
+				LatLng center = map.getCameraPosition().target;
 				// Setting tip coordinates
-				tip.latitude = pinOverlay.getLocation().getLatitudeE6();
-				tip.longitude = pinOverlay.getLocation().getLongitudeE6();
+				tip.latitude = center.latitude;
+				tip.longitude = center.longitude;
 				displaySaveForm();
 			}
     		

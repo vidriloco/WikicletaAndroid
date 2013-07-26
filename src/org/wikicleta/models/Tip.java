@@ -1,21 +1,27 @@
 package org.wikicleta.models;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.wikicleta.R;
 import android.annotation.SuppressLint;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.google.android.maps.GeoPoint;
+import com.google.android.gms.maps.model.LatLng;
 
 @SuppressLint("SimpleDateFormat")
 @Table(name = "Tips")
-public class Tip extends Model implements Serializable, DraftModel {
+public class Tip extends Model implements Serializable, DraftModel, MarkerInterface {
 	
 	/**
 	 * 
@@ -32,10 +38,10 @@ public class Tip extends Model implements Serializable, DraftModel {
 	public String content;
 	
 	@Column(name = "Latitude")
-	public int latitude;
+	public double latitude;
 	
 	@Column(name = "Longitude")
-	public int longitude;
+	public double longitude;
 
 	@Column(name = "CreatedAt")
 	public long createdAt;
@@ -52,7 +58,7 @@ public class Tip extends Model implements Serializable, DraftModel {
 	@SuppressLint("UseSparseArrays")
 	protected static HashMap<Integer, String> categories = new HashMap<Integer, String>();
 	
-	public Tip(String content, int category, int lat, int lon, long userId) {
+	public Tip(String content, int category, double lat, double lon, long userId) {
 		this();
 		this.content = content;
 		this.category = category;
@@ -61,8 +67,8 @@ public class Tip extends Model implements Serializable, DraftModel {
 		this.userId = userId;
 	}
 	
-	public Tip(long remoteId, String content, int category, GeoPoint geopoint, long userId, int likes, long millisC, long millisU, String username) {
-		this(content, category, geopoint.getLatitudeE6(), geopoint.getLongitudeE6(), userId);
+	public Tip(long remoteId, String content, int category, LatLng geopoint, long userId, int likes, long millisC, long millisU, String username) {
+		this(content, category, geopoint.latitude, geopoint.longitude, userId);
 		this.remoteId = remoteId;
 		this.likesCount = likes;
 		this.createdAt = millisC;
@@ -165,5 +171,56 @@ public class Tip extends Model implements Serializable, DraftModel {
 	@Override
 	public Date getDate() {
 		return new Date(this.createdAt);
+	}
+	
+	@SuppressLint("SimpleDateFormat")
+	public static Tip buildFrom(JSONObject object) throws IOException {
+		long id = (Long) object.get("id");
+		long categoryTmp = (Long) object.get("category");
+		int category = (int) categoryTmp;
+		String content = (String) object.get("content");
+		
+	    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date creationDate = null;
+		Date updateDate = null;
+		try {
+			creationDate = df.parse((String)  object.get("str_created_at"));
+			updateDate = df.parse((String)  object.get("str_updated_at"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		long createdAt = creationDate.getTime();
+		long updatedAt = updateDate.getTime();
+		long likesCountTmp = (Long) object.get("likes_count");
+		int likesCount = (int) likesCountTmp;
+		
+		JSONObject owner = (JSONObject) object.get("owner");
+		long userId = (Long) owner.get("id");
+		String name = (String) owner.get("username");
+				
+		LatLng point = new LatLng((Double) object.get("lat"), (Double) object.get("lon"));
+		Tip tip = new Tip(id, content, category, point, userId, likesCount, createdAt, updatedAt, name);
+		if(owner.containsKey("pic"))
+			tip.userPicURL = (String) owner.get("pic");
+		
+		return tip;
+	}
+
+	@Override
+	public LatLng getLatLng() {
+		return new LatLng(this.latitude, this.longitude);
+	}
+
+	@Override
+	public int getDrawable() {
+		if(categoryString().equalsIgnoreCase("danger"))
+			return R.drawable.tip_danger_icon;
+		else if(categoryString().equalsIgnoreCase("alert"))
+			return R.drawable.tip_alert_icon;
+		else if(categoryString().equalsIgnoreCase("sightseeing"))
+			return R.drawable.tip_sightseeing_icon;
+		else
+			return 0;
 	}
 }

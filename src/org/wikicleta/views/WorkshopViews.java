@@ -1,28 +1,24 @@
-package org.wikicleta.layers.workshops;
+package org.wikicleta.views;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import org.wikicleta.R;
 import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.activities.workshops.ModifyingActivity;
 import org.wikicleta.common.AppBase;
-import org.wikicleta.common.Constants;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.helpers.DialogBuilder;
-import org.wikicleta.layers.common.IdentifiableOverlay;
-import org.wikicleta.layers.common.LayersConnectorListener;
 import org.wikicleta.models.User;
 import org.wikicleta.models.Workshop;
 import org.wikicleta.routing.Others;
-import org.wikicleta.routing.Others.ImageUpdater;
 import org.wikicleta.routing.Workshops;
+import org.wikicleta.routing.Others.ImageUpdater;
+
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,57 +28,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.maps.ItemizedOverlay;
-import com.google.android.maps.OverlayItem;
 import com.ocpsoft.pretty.time.PrettyTime;
 
-public class WorkshopsOverlay extends ItemizedOverlay<OverlayItem> implements IdentifiableOverlay {
-	private ArrayList<OverlayItem> overlayItems = new ArrayList<OverlayItem>();
-
-	public LayersConnectorListener listener;
+public class WorkshopViews {
 	
-    public WorkshopsOverlay(Drawable marker, LayersConnectorListener overlayListener) {
-        super(boundCenterBottom(marker));
-        this.populate();
-        this.listener = overlayListener;
-        this.fetch();
-    }
-    
-    public void fetch() {
-    	Workshops.Get workshopsFetcher = new Workshops().new Get();
-    	workshopsFetcher.execute(this);
-    }
-
-    public void addItem(OverlayItem item) {
-    	overlayItems.add(item);
-        populate();
-    }
-    
-	@Override
-	public int getIdentifier() {
-		return Constants.BIKE_WORKSHOPS_AND_STORES_OVERLAY;
-	}
-
-	@Override
-	protected OverlayItem createItem(int i) {
-		return overlayItems.get(i);
-	}
-
-	@Override
-	public int size() {
-		return overlayItems.size();
-	}
-	
-    @Override
-    protected boolean onTap(int i) {
-        OverlayItem item = overlayItems.get(i);
-        this.buildViewForOverlayItem((WorkshopOverlayItem) item);
-        return true;
-    }
-    
-    public void buildViewForOverlayItem(WorkshopOverlayItem item) {
-    	final Workshop workshop = item.associatedWorkshop;
-    	final Activity activity = listener.getActivity();
+	public static void buildViewForWorkshop(final Activity activity, final Workshop workshop) {
     	
     	AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
@@ -283,7 +233,7 @@ public class WorkshopsOverlay extends ItemizedOverlay<OverlayItem> implements Id
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								AppBase.launchPhoneCallingActivity(String.valueOf(Integer.valueOf(workshop.cellPhone)));								
+								AppBase.launchPhoneCallingActivity(String.valueOf(Long.valueOf(workshop.cellPhone)));								
 							}
 							
 						});
@@ -333,7 +283,7 @@ public class WorkshopsOverlay extends ItemizedOverlay<OverlayItem> implements Id
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								AppBase.launchPhoneCallingActivity(String.valueOf(Integer.valueOf(workshop.phone)));								
+								AppBase.launchPhoneCallingActivity(String.valueOf(Long.valueOf(workshop.phone)));								
 							}
 							
 						});
@@ -368,15 +318,5 @@ public class WorkshopsOverlay extends ItemizedOverlay<OverlayItem> implements Id
         } else {
         	((LinearLayout) view.findViewById(R.id.contact_buttons_container)).setVisibility(View.GONE);
         }
-    }
-	
-    public void clear() {
-    	this.overlayItems.clear();
-    }
-
-    public void overlayFinishedFetching(boolean status) {
-    	if(status)
-    		this.populate();
-    	this.listener.overlayFinishedLoading(status);
     }
 }

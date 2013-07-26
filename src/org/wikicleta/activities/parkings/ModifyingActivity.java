@@ -5,12 +5,16 @@ import org.wikicleta.activities.common.LocationAwareMapWithControlsActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
+import org.wikicleta.helpers.GeoHelpers;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.Parking;
-import org.wikicleta.models.Workshop;
 import org.wikicleta.routing.Parkings;
 import org.wikicleta.routing.Others.Cruds;
-import org.wikicleta.views.PinOverlay;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -29,13 +33,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-import com.google.android.maps.GeoPoint;
-
 public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 
-	protected PinOverlay pinOverlay;
 	public AlertDialog  formView;
 	
+	protected Marker marker;
 	protected Spinner kindSelector;
 	protected EditText details;
 	protected CheckBox hasRoofCheckbox;
@@ -45,7 +47,7 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.select_poi_on_map);
+		super.onCreate(savedInstanceState, R.layout.activity_select_poi_on_map);
 		setTheme(R.style.Theme_wikicleta);
 		
 		AppBase.currentActivity = this;
@@ -61,7 +63,7 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 		if(parking != null) {
 			// We are on editing mode
 			turnOffLocation();
-			this.mapView.getController().animateTo(new GeoPoint(parking.latitude, parking.longitude));
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(GeoHelpers.buildGeoPointFromLatLon(parking.latitude, parking.longitude), 18.0f));
 	    	SlidingMenuAndActionBarHelper.setDefaultFontForActionBarWithTitle(this, R.string.parkings_edit_title);
 		} else {
 			turnOnLocation();
@@ -83,18 +85,17 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
     		
     	});
     	
-    	pinOverlay = new PinOverlay(this);
-    	
-    	this.mapView.getOverlays().add(pinOverlay);
     	this.toolbar = (LinearLayout) this.findViewById(R.id.poi_toolbar);
 
     	this.findViewById(R.id.poi_finish_button).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
+				LatLng center = map.getCameraPosition().target;
+
 				// Setting tip coordinates
-				parking.latitude = pinOverlay.getLocation().getLatitudeE6();
-				parking.longitude = pinOverlay.getLocation().getLongitudeE6();
+				parking.latitude = center.latitude;
+				parking.longitude = center.longitude;
 				displaySaveForm();
 			}
     		

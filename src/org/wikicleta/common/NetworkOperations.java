@@ -15,7 +15,7 @@ import org.wikicleta.helpers.Strings;
 
 public class NetworkOperations {
 	public static String serverHost = "http://wikicleta.com";
-		
+
 	public static int postJSONTo(String path, String jsonValue) {
 		HttpResponse response = NetworkOperations.postJSON(path, jsonValue);
 		

@@ -1,18 +1,18 @@
 package org.wikicleta.models;
 
+import org.json.simple.JSONObject;
 import org.wikicleta.R;
-
-import com.google.android.maps.GeoPoint;
+import com.google.android.gms.maps.model.LatLng;
 
 public class CycleStation {
 	
 	public String name;
-	public GeoPoint location;
+	public LatLng location;
 	public int availableSlots;
 	public int availableBikes;
 	public int id;
 
-	public CycleStation(int id, String name, GeoPoint location, int availableSlots, int availableBikes) {
+	public CycleStation(int id, String name, LatLng location, int availableSlots, int availableBikes) {
 		this.availableBikes = availableBikes;
 		this.availableSlots = availableSlots;
 		this.id = id;
@@ -35,5 +35,14 @@ public class CycleStation {
 		else if((availableSlots*100)/stationCapacity() < 30 || (availableBikes*100)/stationCapacity() < 30)
 			return R.drawable.bike_sharing_yellow;
 		return R.drawable.bike_sharing_green;
+	}
+	
+	public static CycleStation buildFrom(JSONObject object) {
+		long id = (Long) object.get("number");
+		String name = (String) object.get("name");
+		LatLng location = new LatLng((Double) object.get("lat") , (Double) object.get("lng"));
+		long freeParking = (Long) object.get("free");
+		long bikes = (Long) object.get("bikes");
+		return new CycleStation((int) id, name, location, (int) freeParking, (int) bikes);
 	}
 }

@@ -12,17 +12,23 @@
 	    style="@style/ActionBar"/>
       <!-- android:apiKey="0Sp8gbE2A7htK9pPiFzcliDPP5WT0D_TSkooX1w" -->
   
-  <org.wikicleta.views.PinchableMapView
-      android:id="@+id/mapview"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:layout_alignParentLeft="true"
-      android:layout_below="@+id/actionbar"
-      android:layout_above="@+id/toolbar"
-      android:apiKey="0Sp8gbE2A7huBHKWXFaSnv0zQ4sNzPzWzqj9zcQ"
-      android:clickable="true" >
+  <LinearLayout
+    android:id="@+id/map_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_below="@+id/actionbar"
+    android:layout_above="@+id/toolbar">
+  	<fragment
+  	    android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-  </org.wikicleta.views.PinchableMapView>
+      	android:clickable="true"
+        class="com.google.android.gms.maps.MapFragment" />
+  </LinearLayout>
+
     
   <LinearLayout
        android:id="@+id/toolbar"

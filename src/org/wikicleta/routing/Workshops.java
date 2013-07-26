@@ -1,9 +1,8 @@
 package org.wikicleta.routing;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -14,12 +13,10 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.DialogBuilder;
-import org.wikicleta.layers.workshops.WorkshopOverlayItem;
-import org.wikicleta.layers.workshops.WorkshopsOverlay;
+import org.wikicleta.layers.common.LayersConnectorListener;
 import org.wikicleta.models.User;
 import org.wikicleta.models.Workshop;
 import org.wikicleta.routing.Others.Cruds;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -33,7 +30,7 @@ public class Workshops {
 	protected String postPath="/api/workshops";
 	protected String putPath="/api/workshops/:id";
 	protected String deletePath="/api/workshops/:id";
-	
+
 	public class Delete extends AsyncTask<Workshop, Void, Boolean> {
 		
 		Workshop workshop;
@@ -72,15 +69,27 @@ public class Workshops {
 		
 	}
 
-	public class Get extends AsyncTask<WorkshopsOverlay, Void, Boolean> {
+	public class Get extends AsyncTask<Void, Void, Boolean> {
 	
-	   WorkshopsOverlay overlay;
-	   JSONArray objectList;
+		public LayersConnectorListener connector;
+		public ArrayList<Workshop> items;
+
+	    JSONArray objectList;
+	    HashMap<String, String> viewport;
+
+	    public Get(LayersConnectorListener connector) {
+	    	this.connector = connector;
+	    }
 	   
+	    @Override
+	    protected void onPreExecute() {
+			viewport = connector.getCurrentViewport();
+			items = new ArrayList<Workshop>();
+	    }
+	    
 		@Override
-		protected Boolean doInBackground(WorkshopsOverlay... args) {
-			overlay = args[0];
-			HashMap<String, String> viewport = overlay.listener.getCurrentViewport();
+		protected Boolean doInBackground(Void... args) {
+
 			String params = "viewport[sw]=".concat(viewport.get("sw")).concat("&viewport[ne]=").concat(viewport.get("ne"));
 			String fetchedString = NetworkOperations.getJSONExpectingString(getPath.concat(params), false);
 			if(fetchedString == null)
@@ -97,25 +106,20 @@ public class Workshops {
 		@Override
 		protected void onPostExecute(final Boolean success) {
 			if(success) {
-				overlay.clear();
+				items.clear();
 				@SuppressWarnings("unchecked")
 				Iterator<JSONObject> iterator = (Iterator<JSONObject>) objectList.iterator();
 				while(iterator.hasNext()) {
-					JSONObject workshop = iterator.next();
-					try {
-						overlay.addItem(WorkshopOverlayItem.buildFrom(overlay.listener.getActivity(), workshop));
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					JSONObject json = iterator.next();
+					items.add(Workshop.buildFrom(json));
 				}
 			}
-			overlay.listener.overlayFinishedLoading(success);
+			connector.overlayFinishedLoadingWithPayload(success, items);
 		}
 		
 		@Override
 		protected void onCancelled() {
-			overlay.listener.overlayFinishedLoading(false);
+			connector.overlayFinishedLoading(false);
 		}
 
 	}
@@ -222,4 +226,5 @@ public class Workshops {
 
 	     
 	 }
+
 }

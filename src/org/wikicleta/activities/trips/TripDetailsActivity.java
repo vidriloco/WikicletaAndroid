@@ -1,27 +1,25 @@
 package org.wikicleta.activities.trips;
 
-import java.util.List;
-
 import org.wikicleta.R;
 import org.wikicleta.activities.common.LocationAwareMapWithControlsActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
-import org.wikicleta.layers.RouteOverlay;
-import org.wikicleta.layers.trips.TripPoiOverlayItem;
 import org.wikicleta.layers.trips.TripPoisOverlay;
 import org.wikicleta.models.Segment;
 import org.wikicleta.models.Trip;
 import org.wikicleta.models.TripPoi;
 import org.wikicleta.routing.CityTrips;
 import org.wikicleta.routing.CityTrips.Details;
-
-import com.google.android.maps.Overlay;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
 import com.nineoldandroids.animation.ObjectAnimator;
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -97,13 +95,13 @@ public class TripDetailsActivity extends LocationAwareMapWithControlsActivity {
 	}
 	
 	public void loadPOIsForTrip(Trip trip) {
-		TripPoisOverlay overlay = new TripPoisOverlay(this.getResources().getDrawable(R.drawable.service_station_marker));
+		/*TripPoisOverlay overlay = new TripPoisOverlay(this.getResources().getDrawable(R.drawable.service_station_marker));
 		for(TripPoi tripPoi : trip.pois) {
 			overlay.addItem(new TripPoiOverlayItem(TripDetailsActivity.this, tripPoi));
 		}
 		
 		this.mapView.getOverlays().add(overlay);
-		this.mapView.refreshDrawableState();
+		this.mapView.refreshDrawableState();*/
 	}
 	
 	public void onSuccessfulTripFetching(final Trip trip) {
@@ -112,15 +110,14 @@ public class TripDetailsActivity extends LocationAwareMapWithControlsActivity {
         if(trip.start != null) {
         	((TextView) this.findViewById(R.id.route_start_text)).setTypeface(AppBase.getTypefaceStrong());
         	
-			mapView.getController().animateTo(trip.start.location());
-			mapView.getController().setZoom(19);
+        	map.animateCamera(CameraUpdateFactory.newLatLngZoom(trip.start.location(), 19));
 
         	this.findViewById(R.id.route_start_button).setVisibility(View.VISIBLE);
         	this.findViewById(R.id.route_start_button).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				mapView.getController().animateTo(trip.start.location());
+	        	map.animateCamera(CameraUpdateFactory.newLatLngZoom(trip.start.location(), 19));
 			}
         	
         	});
@@ -129,23 +126,24 @@ public class TripDetailsActivity extends LocationAwareMapWithControlsActivity {
         if(trip.end != null) {
         	((TextView) this.findViewById(R.id.route_end_text)).setTypeface(AppBase.getTypefaceStrong());
         	
-			mapView.getController().animateTo(trip.end.location());
-			mapView.getController().setZoom(19);
+        	map.animateCamera(CameraUpdateFactory.newLatLngZoom(trip.end.location(), 19));
 
         	this.findViewById(R.id.route_end_button).setVisibility(View.VISIBLE);
         	this.findViewById(R.id.route_end_button).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				mapView.getController().animateTo(trip.end.location());
+	        	map.animateCamera(CameraUpdateFactory.newLatLngZoom(trip.end.location(), 19));
 			}
         	
         	});
         }
         
-		List<Overlay> overlays = this.mapView.getOverlays();
 		for(Segment segment : trip.segments) {
-			overlays.add(new RouteOverlay((int) segment.id, segment.points, segment.color));
+			PolylineOptions options = new PolylineOptions();
+			for(LatLng point : segment.points)
+				options.add(point);
+			options.color(Color.parseColor(segment.color));
 		}
 		
 		this.loadPOIsForTrip(trip);

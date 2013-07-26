@@ -8,7 +8,7 @@ import android.location.LocationManager;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.google.android.maps.GeoPoint;
+import com.google.android.gms.maps.model.LatLng;
 
 @Table(name = "Instants")
 public class Instant extends Model {
@@ -16,10 +16,10 @@ public class Instant extends Model {
 	public float speed;
 	
 	@Column(name = "Latitude")
-	public int latitude;
+	public double latitude;
 	
 	@Column(name = "Longitude")
-	public int longitude;
+	public double longitude;
 	
 	@Column(name = "Time")
 	public long time;
@@ -28,9 +28,9 @@ public class Instant extends Model {
 		
 	}
 	
-	public Instant(GeoPoint coordinate, float speed, long time){
-		this.latitude = coordinate.getLatitudeE6();
-		this.longitude = coordinate.getLongitudeE6();
+	public Instant(LatLng coordinate, float speed, long time){
+		this.latitude = coordinate.latitude;
+		this.longitude = coordinate.longitude;
 		this.speed = speed;
 		this.time = time;
 	}
@@ -43,8 +43,8 @@ public class Instant extends Model {
 		return (float) (this.longitude/1E6);
 	}
 	
-	public GeoPoint geoPoint() {
-		return new GeoPoint(this.latitude, this.longitude);
+	public LatLng geoPoint() {
+		return new LatLng(this.latitude, this.longitude);
 	}
 	
 	public Location location() {

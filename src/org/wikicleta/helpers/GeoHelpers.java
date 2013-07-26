@@ -1,18 +1,18 @@
 package org.wikicleta.helpers;
 
-import com.google.android.maps.GeoPoint;
+import com.google.android.gms.maps.model.LatLng;
 
 import android.location.Location;
 import android.location.LocationManager;
 
 public class GeoHelpers {
 		
-	public static GeoPoint buildGeoPointFromLongitude(Location location) {
+	public static LatLng buildGeoPointFromLongitude(Location location) {
 		return buildGeoPointFromLatLon(location.getLatitude(), location.getLongitude());
 	}
 	
-	public static GeoPoint buildGeoPointFromLatLon(double lat, double lon) {
-		return new GeoPoint((int) (lat * 1E6), (int) (lon * 1E6));
+	public static LatLng buildGeoPointFromLatLon(double lat, double lon) {
+		return new LatLng((int) (lat * 1E6), (int) (lon * 1E6));
 	}
 	
 	public static Location buildLocationFromLatLon(double lat, double lon) {
@@ -28,9 +28,9 @@ public class GeoHelpers {
 	 * @param second GeoPoint
 	 * @return a float with the distance given in meters
 	 */
-	public static float distanceBetweenGeoPoints(GeoPoint first, GeoPoint second) {
-		Location firstLocation = buildLocationFromLatLon(first.getLatitudeE6()/1E6, first.getLongitudeE6()/1E6);
-		Location secondLocation = buildLocationFromLatLon(second.getLatitudeE6()/1E6, second.getLongitudeE6()/1E6);
+	public static float distanceBetweenGeoPoints(LatLng first, LatLng second) {
+		Location firstLocation = buildLocationFromLatLon(first.latitude, first.longitude);
+		Location secondLocation = buildLocationFromLatLon(second.latitude, second.longitude);
 		
 		return firstLocation.distanceTo(secondLocation)/1000;
 	}

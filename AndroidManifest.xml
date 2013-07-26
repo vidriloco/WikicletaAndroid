@@ -4,9 +4,22 @@
     android:versionCode="1"
     android:versionName="1.0" >
     
+    <permission
+        android:name="org.wikicleta.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+    <uses-feature
+		android:glEsVersion="0x00020000"
+		android:required="true"/>
+    
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="org.wikicleta.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <!-- Permission to write to external storage -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17" />
@@ -20,7 +33,6 @@
         <meta-data android:name="AA_DB_NAME" android:value="Wikicleta.db" />
 		<meta-data android:name="AA_DB_VERSION" android:value="1" />
 		
-        <uses-library android:name="com.google.android.maps" />
         <activity
             android:name="org.wikicleta.activities.access.LoginActivity"
             android:label="@string/app_name"
@@ -200,6 +212,10 @@
         
         <service android:name="org.wikicleta.services.routes.RoutesService"
             android:enabled="true" />
+        
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyAIL4aa2vp1CJhJz4N8yYFD1drRfQ4-hT4" />
     </application>
 
 </manifest>

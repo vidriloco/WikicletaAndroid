@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.LocationAwareMapWithControlsActivity;
-import org.wikicleta.activities.routes.NewRouteActivity;
 import org.wikicleta.adapters.MenuOptionsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
@@ -12,17 +11,31 @@ import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.layers.common.LayersConnector;
 import org.wikicleta.layers.common.LayersConnectorListener;
+import org.wikicleta.models.MarkerInterface;
+import org.wikicleta.models.Parking;
+import org.wikicleta.models.Tip;
 import org.wikicleta.models.User;
-import org.wikicleta.views.PinchableMapView.OnPanChangeListener;
-import org.wikicleta.views.PinchableMapView.OnZoomChangeListener;
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapView;
+import org.wikicleta.models.Workshop;
+import org.wikicleta.routing.Parkings;
+import org.wikicleta.routing.Tips;
+import org.wikicleta.routing.Workshops;
+import org.wikicleta.views.ParkingViews;
+import org.wikicleta.views.TipViews;
+import org.wikicleta.views.WorkshopViews;
+import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.nineoldandroids.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -36,7 +49,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MainMapActivity extends LocationAwareMapWithControlsActivity implements LayersConnectorListener {
+public class MainMapActivity extends LocationAwareMapWithControlsActivity implements LayersConnectorListener, OnMarkerClickListener {
 	
 	protected static int ROUTE_ACTION=0;
 	protected static int PLACE_ACTION=1;
@@ -50,7 +63,6 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 	protected AlertDialog addMenu;
 	protected AlertDialog toggleLayersMenu;
 	
-	protected ArrayList<Integer> overlays;
 	MenuOptionsListAdapter selectedLayersMenuAdapter;
 	
 	protected boolean userIsPanning;
@@ -61,16 +73,16 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 	
 	Handler handler = new Handler();
 	boolean handlerRunning = false;
+	protected HashMap<Marker, MarkerInterface> markers;
 	
 	@SuppressLint("UseSparseArrays")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_main_map);
 		setTheme(R.style.Theme_wikicleta);
-
+		
 		assignToggleActionsForAutomapCenter();
 		
-		overlays = new ArrayList<Integer>();
 		layersConnector = new LayersConnector(this);
 
 		AppBase.currentActivity = this;		
@@ -96,25 +108,17 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 				toggleLayersMenu.show();
 			}
 		});
-		
-		mapView.setOnZoomChangeListener(new OnZoomChangeListener() {
+		 
+    	map.setOnCameraChangeListener(new OnCameraChangeListener() {
 
 			@Override
-			public void onZoomChange(MapView view, int newZoom, int oldZoom) {
+			public void onCameraChange(CameraPosition position) {
 				reloadActiveLayers();
 			}
-			
-		});
-		
-		mapView.setOnPanChangeListener(new OnPanChangeListener() {
+    		
+    	});
+   	 	map.setOnMarkerClickListener(this);
 
-			@Override
-			public void onPanChange(MapView view, GeoPoint newCenter,
-					GeoPoint oldCenter) {
-				reloadActiveLayers();
-			}			
-		});
-		
 		((TextView) this.findViewById(R.id.bar_maps_add_button_text)).setTypeface(AppBase.getTypefaceStrong());
 		((TextView) this.findViewById(R.id.bar_maps_layers_button_text)).setTypeface(AppBase.getTypefaceStrong());
 		
@@ -213,7 +217,6 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 
 			@Override
 			public void onShow(DialogInterface dialog) {
-				Log.e("WIKICLETA", String.valueOf(overlays.contains(Constants.BIKE_SHARING_OVERLAY)));
 			}
     		
     	});
@@ -301,25 +304,6 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 		getWindow().setBackgroundDrawableResource(android.R.color.transparent); 
 	}
 	
-	protected void toggleLayers(ArrayList<Integer> layers) {
-		
-		mapView.getOverlays().clear();
-		mapView.getOverlays().add(locationOverlay);
-		
-		if(layers.isEmpty())
-			this.overlayFinishedLoading(false);
-		for(Integer layer : layers) {
-			if(layer == Constants.BIKE_SHARING_OVERLAY)
-				mapView.getOverlays().add(layersConnector.getBikeSharingOverlay());
-			else if(layer == Constants.TIPS_OVERLAY)
-				mapView.getOverlays().add(layersConnector.getTipsOverlay());
-			else if(layer == Constants.BIKE_PARKING_OVERLAY)
-				mapView.getOverlays().add(layersConnector.getParkingsOverlay());
-			else if(layer == Constants.BIKE_WORKSHOPS_AND_STORES_OVERLAY)
-				mapView.getOverlays().add(layersConnector.getWorkshopsOverlay());
-		}
-	}
-	
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -332,8 +316,6 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 
 			@Override
 			public void run() {
-				mapView.invalidate();
-				mapView.refreshDrawableState();
 				Handler handlerTimer = new Handler();
 		        handlerTimer.postDelayed(new Runnable(){
 		            public void run() {
@@ -349,11 +331,13 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 	public HashMap<String, String> getCurrentViewport() {
 		HashMap<String, String> viewport = new HashMap<String, String>();
 		
-		GeoPoint leftBottom = (GeoPoint) mapView.getProjection().fromPixels(0, mapView.getHeight());
-		GeoPoint rightTop = (GeoPoint) mapView.getProjection().fromPixels(mapView.getWidth(), 0);
-		viewport.put("sw", String.valueOf(leftBottom.getLatitudeE6()/1E6).concat(",").concat(String.valueOf(leftBottom.getLongitudeE6()/1E6)));
-		viewport.put("ne", String.valueOf(rightTop.getLatitudeE6()/1E6).concat(",").concat(String.valueOf(rightTop.getLongitudeE6()/1E6)));
-
+		LinearLayout mapContainer = (LinearLayout) findViewById(R.id.map_container);
+		
+		LatLng leftBottom = (LatLng) map.getProjection().fromScreenLocation(new Point(0, mapContainer.getHeight()));
+		LatLng rightTop = (LatLng) map.getProjection().fromScreenLocation(new Point(mapContainer.getWidth(), 0));
+		viewport.put("sw", String.valueOf(leftBottom.latitude).concat(",").concat(String.valueOf(leftBottom.longitude)));
+		viewport.put("ne", String.valueOf(rightTop.latitude).concat(",").concat(String.valueOf(rightTop.longitude)));
+		Log.i("WIKICLETA", viewport.get("sw"));
 		return viewport;
 	}
 
@@ -362,9 +346,56 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 		return this;
 	}
 
+	protected void toggleLayers(ArrayList<Integer> layers) {
+		markers = new HashMap<Marker, MarkerInterface>();
+		map.clear();
+		if(layers.isEmpty())
+			this.overlayFinishedLoading(false);
+		for(Integer layer : layers) {
+            if(layer == Constants.BIKE_SHARING_OVERLAY) {
+            	
+            } else if(layer == Constants.TIPS_OVERLAY) {
+            	this.showLoadingState();
+            	Tips tips = new Tips();
+            	Tips.Get tipsFetcher = tips.new Get(this);
+            	tipsFetcher.execute();
+            } else if(layer == Constants.BIKE_PARKING_OVERLAY) {
+            	this.showLoadingState();
+            	Parkings parkings = new Parkings();
+            	Parkings.Get parkingsFetcher = parkings.new Get(this);
+            	parkingsFetcher.execute();
+            } else if(layer == Constants.BIKE_WORKSHOPS_AND_STORES_OVERLAY) {
+            	this.showLoadingState();
+            	Workshops workshops = new Workshops();
+        		Workshops.Get workshopsFetcher = workshops.new Get(this);
+            	workshopsFetcher.execute();
+            }
+		}
+	}
+	
 	@Override
-	public GeoPoint getLocation() {
-		return this.getCurrentOrDefaultLocation();
+	public boolean onMarkerClick(Marker marker) {
+		MarkerInterface markerIn = (MarkerInterface) markers.get(marker);
+		if(markerIn instanceof Workshop)
+			WorkshopViews.buildViewForWorkshop(this, (Workshop) markerIn);
+		else if(markerIn instanceof Parking)
+			ParkingViews.buildViewForParking(this, (Parking) markerIn);
+		else if(markerIn instanceof Tip)
+			TipViews.buildViewForTip(this, (Tip) markerIn);
+		return true;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void overlayFinishedLoadingWithPayload(boolean status, Object payload) {
+		
+    	for(MarkerInterface markerInterfaced : (ArrayList<MarkerInterface>) payload) { 
+			Marker marker = map.addMarker(new MarkerOptions()
+            .position(markerInterfaced.getLatLng())
+            .icon(BitmapDescriptorFactory.fromResource(markerInterfaced.getDrawable())));
+    		markers.put(marker, markerInterfaced);
+    	}		
+    	this.overlayFinishedLoading(status);
 	}
 	
 	

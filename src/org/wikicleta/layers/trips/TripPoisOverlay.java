@@ -13,11 +13,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.google.android.maps.ItemizedOverlay;
-import com.google.android.maps.OverlayItem;
 
-public class TripPoisOverlay extends ItemizedOverlay<OverlayItem> {
-    private ArrayList<OverlayItem> overlayItems = new ArrayList<OverlayItem>();
+public class TripPoisOverlay  {
+ /*   private ArrayList<OverlayItem> overlayItems = new ArrayList<OverlayItem>();
 	
     public TripPoisOverlay(Drawable marker) {
         super(boundCenterBottom(marker));
@@ -93,5 +91,5 @@ public class TripPoisOverlay extends ItemizedOverlay<OverlayItem> {
     public void clear() {
     	this.overlayItems.clear();
     }
-    
+    */
 }

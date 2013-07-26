@@ -15,7 +15,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
-import com.google.android.maps.GeoPoint;
+import com.google.android.gms.maps.model.LatLng;
 import com.vividsolutions.jts.geom.Coordinate;
 
 @Table(name = "Routes")
@@ -154,10 +154,10 @@ public class Route extends Model {
 		int idx = 0;
     	for (Instant instant : instants()) {
         	
-        	GeoPoint geoPoint1 = instant.geoPoint();
+        	LatLng geoPoint1 = instant.geoPoint();
         	Coordinate coord = new Coordinate();
-        	coord.x = geoPoint1.getLatitudeE6()/1E6;
-        	coord.y = geoPoint1.getLongitudeE6()/1E6;
+        	coord.x = geoPoint1.latitude;
+        	coord.y = geoPoint1.longitude;
         	
         	coordinates[idx] = coord;
         	idx++;
