@@ -9,16 +9,18 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
-import org.wikicleta.layers.common.LayersConnector;
 import org.wikicleta.layers.common.LayersConnectorListener;
+import org.wikicleta.models.CycleStation;
 import org.wikicleta.models.MarkerInterface;
 import org.wikicleta.models.Parking;
 import org.wikicleta.models.Tip;
 import org.wikicleta.models.User;
 import org.wikicleta.models.Workshop;
+import org.wikicleta.routing.BikesSharing;
 import org.wikicleta.routing.Parkings;
 import org.wikicleta.routing.Tips;
 import org.wikicleta.routing.Workshops;
+import org.wikicleta.views.CycleStationViews;
 import org.wikicleta.views.ParkingViews;
 import org.wikicleta.views.TipViews;
 import org.wikicleta.views.WorkshopViews;
@@ -57,7 +59,6 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 	protected static int BICIBUS_ACTION=3;
 	protected static int HIGHLIGHT_ACTION=4;
 	
-	protected LayersConnector layersConnector;
 	protected LinearLayout toolBarView;
 	
 	protected AlertDialog addMenu;
@@ -83,8 +84,6 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 		
 		assignToggleActionsForAutomapCenter();
 		
-		layersConnector = new LayersConnector(this);
-
 		AppBase.currentActivity = this;		
         toolBarView = (LinearLayout) findViewById(R.id.toolbar);
 
@@ -353,9 +352,11 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 			this.overlayFinishedLoading(false);
 		for(Integer layer : layers) {
             if(layer == Constants.BIKE_SHARING_OVERLAY) {
-            	
-            } else if(layer == Constants.TIPS_OVERLAY) {
             	this.showLoadingState();
+            	BikesSharing bikesSharing = new BikesSharing();
+            	BikesSharing.GetEcobici bikesSharingFetcher = bikesSharing.new GetEcobici(this);
+            	bikesSharingFetcher.execute();
+            } else if(layer == Constants.TIPS_OVERLAY) {
             	Tips tips = new Tips();
             	Tips.Get tipsFetcher = tips.new Get(this);
             	tipsFetcher.execute();
@@ -382,6 +383,8 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 			ParkingViews.buildViewForParking(this, (Parking) markerIn);
 		else if(markerIn instanceof Tip)
 			TipViews.buildViewForTip(this, (Tip) markerIn);
+		else if(markerIn instanceof CycleStation)
+			CycleStationViews.buildViewForCycleStation(this, (CycleStation) markerIn);
 		return true;
 	}
 
@@ -390,12 +393,18 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 	public void overlayFinishedLoadingWithPayload(boolean status, Object payload) {
 		
     	for(MarkerInterface markerInterfaced : (ArrayList<MarkerInterface>) payload) { 
+    		Log.e("WIKICLETA", "Latitude = " + String.valueOf(markerInterfaced.getLatLng().latitude) + " : Longitude = " + String.valueOf(markerInterfaced.getLatLng().longitude));
 			Marker marker = map.addMarker(new MarkerOptions()
             .position(markerInterfaced.getLatLng())
             .icon(BitmapDescriptorFactory.fromResource(markerInterfaced.getDrawable())));
     		markers.put(marker, markerInterfaced);
     	}		
     	this.overlayFinishedLoading(status);
+	}
+
+	@Override
+	public LatLng getLastLocation() {
+		return this.lastKnownLocation;
 	}
 	
 	

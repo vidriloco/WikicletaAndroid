@@ -4,7 +4,7 @@ import org.json.simple.JSONObject;
 import org.wikicleta.R;
 import com.google.android.gms.maps.model.LatLng;
 
-public class CycleStation {
+public class CycleStation implements MarkerInterface {
 	
 	public String name;
 	public LatLng location;
@@ -40,9 +40,19 @@ public class CycleStation {
 	public static CycleStation buildFrom(JSONObject object) {
 		long id = (Long) object.get("number");
 		String name = (String) object.get("name");
-		LatLng location = new LatLng((Double) object.get("lat") , (Double) object.get("lng"));
+		LatLng location = new LatLng(((Long) object.get("lat"))/1E6 , ((Long) object.get("lng"))/1E6);
 		long freeParking = (Long) object.get("free");
 		long bikes = (Long) object.get("bikes");
 		return new CycleStation((int) id, name, location, (int) freeParking, (int) bikes);
+	}
+
+	@Override
+	public LatLng getLatLng() {
+		return this.location;
+	}
+
+	@Override
+	public int getDrawable() {
+		return this.status();
 	}
 }
