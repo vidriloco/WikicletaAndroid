@@ -86,6 +86,7 @@ public class CityTrips {
 			}
 		}	
 		
+		@SuppressWarnings("unchecked")
 		@Override
 		protected void onPostExecute(final Boolean success) {
 			if(success) {

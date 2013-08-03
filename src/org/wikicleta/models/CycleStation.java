@@ -55,4 +55,5 @@ public class CycleStation implements MarkerInterface {
 	public int getDrawable() {
 		return this.status();
 	}
+
 }

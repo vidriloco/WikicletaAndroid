@@ -3,9 +3,6 @@ package org.wikicleta.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
-
-import android.util.Log;
-
 import com.activeandroid.query.Select;
 
 public class Draft {

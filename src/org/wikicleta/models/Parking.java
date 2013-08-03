@@ -226,4 +226,5 @@ public class Parking extends Model implements Serializable, DraftModel, MarkerIn
 	public LatLng getLatLng() {
 		return new LatLng(this.latitude, this.longitude);
 	}
+
 }

@@ -393,7 +393,6 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 	public void overlayFinishedLoadingWithPayload(boolean status, Object payload) {
 		
     	for(MarkerInterface markerInterfaced : (ArrayList<MarkerInterface>) payload) { 
-    		Log.e("WIKICLETA", "Latitude = " + String.valueOf(markerInterfaced.getLatLng().latitude) + " : Longitude = " + String.valueOf(markerInterfaced.getLatLng().longitude));
 			Marker marker = map.addMarker(new MarkerOptions()
             .position(markerInterfaced.getLatLng())
             .icon(BitmapDescriptorFactory.fromResource(markerInterfaced.getDrawable())));

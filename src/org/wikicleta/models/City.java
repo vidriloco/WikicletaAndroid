@@ -29,6 +29,7 @@ public class City implements Serializable {
 		String name = (String) object.get("name");
 		//String cityURL = (String) object.get("city");
 		JSONArray trips = (JSONArray) object.get("trips");
+		@SuppressWarnings("unchecked")
 		Iterator<JSONObject> iterator = (Iterator<JSONObject>) trips.iterator();
 		
 		ArrayList<Trip> tripsList = new ArrayList<Trip>();

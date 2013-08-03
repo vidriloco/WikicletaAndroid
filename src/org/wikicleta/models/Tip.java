@@ -223,4 +223,5 @@ public class Tip extends Model implements Serializable, DraftModel, MarkerInterf
 		else
 			return 0;
 	}
+
 }

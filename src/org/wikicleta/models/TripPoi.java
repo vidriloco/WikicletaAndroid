@@ -2,13 +2,15 @@ package org.wikicleta.models;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import org.wikicleta.helpers.GeoHelpers;
+
+import org.wikicleta.common.AppBase;
 
 import com.google.android.gms.maps.model.LatLng;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 
-public class TripPoi implements Serializable {
+public class TripPoi implements Serializable, MarkerInterface {
 
 	public String name;
 	public String details;
@@ -16,7 +18,8 @@ public class TripPoi implements Serializable {
 	public double latitude;
 	public double longitude;
 	public int category;
-
+	private Context ctx = AppBase.currentActivity.getApplicationContext();
+	
 	@SuppressLint("UseSparseArrays")
 	protected static HashMap<Integer, String> categories = new HashMap<Integer, String>();
 	
@@ -39,10 +42,6 @@ public class TripPoi implements Serializable {
 			return "";
 		}
 		return details.replace("<p>", "").replace("</p>", "\n").concat("\n").replace("<ul><li>", "\n- ").replace("</li><li>", "\n- ").replace("</li></ul>", "");
-	}
-	
-	public LatLng location() {
-		return GeoHelpers.buildGeoPointFromLatLon(latitude, longitude);
 	}
 	
 	public String categoryString() {
@@ -80,4 +79,25 @@ public class TripPoi implements Serializable {
 		}
 		return categoriesStrs;
 	}
+
+	@Override
+	public LatLng getLatLng() {
+		return new LatLng(latitude, longitude);
+	}
+
+	@Override
+	public int getDrawable() {
+		int identifier = -1;
+
+		if(this.categoryString()=="transport_connection") {
+			String resourceName = this.iconName;
+			identifier=this.ctx.getResources().getIdentifier(resourceName, "drawable", ctx.getPackageName());
+		} else {
+			String resourceName = this.categoryString().concat("_marker");
+			identifier=this.ctx.getResources().getIdentifier(resourceName, "drawable", ctx.getPackageName());
+		}
+		
+		return identifier;
+	}
+
 }

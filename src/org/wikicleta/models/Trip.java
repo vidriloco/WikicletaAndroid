@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.wikicleta.helpers.GeoHelpers;
+
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -38,10 +39,11 @@ public class Trip implements Serializable {
 	public void mergeExtraInfo(JSONObject object) {
 		this.details = (String) object.get("details");
 		JSONArray tripPois = (JSONArray) object.get("trip_pois");
+		@SuppressWarnings("unchecked")
 		Iterator<JSONObject> tripPoisIterator = (Iterator<JSONObject>) tripPois.iterator();
 		while(tripPoisIterator.hasNext()) {
 			JSONObject tripPoi = tripPoisIterator.next();
-			LatLng point = GeoHelpers.buildGeoPointFromLatLon((Double) tripPoi.get("lat"), (Double) tripPoi.get("lon"));	
+			LatLng point = new LatLng((Double) tripPoi.get("lat"), (Double) tripPoi.get("lon"));
 			long category = (Long) tripPoi.get("category");
 			
 			TripPoi newTripPoi = new TripPoi(
@@ -61,16 +63,18 @@ public class Trip implements Serializable {
 		}
 		
 		JSONArray segments = (JSONArray) object.get("segments");
+		@SuppressWarnings("unchecked")
 		Iterator<JSONObject> segmentsIterator = (Iterator<JSONObject>) segments.iterator();
 		while(segmentsIterator.hasNext()) {
 			ArrayList<LatLng> points = new ArrayList<LatLng>();
 
 			JSONObject segment = segmentsIterator.next();
 			JSONArray pairsArray = (JSONArray) segment.get("points");
+			@SuppressWarnings("unchecked")
 			Iterator<JSONArray> pairIterator = (Iterator<JSONArray>) pairsArray.iterator();
 			while(pairIterator.hasNext()) {
 				JSONArray pointInArray = pairIterator.next();
-				LatLng point = GeoHelpers.buildGeoPointFromLatLon((Double) pointInArray.get(0),(Double) pointInArray.get(1));
+				LatLng point = new LatLng((Double) pointInArray.get(0),(Double) pointInArray.get(1));
 				points.add(point);
 			}
 			

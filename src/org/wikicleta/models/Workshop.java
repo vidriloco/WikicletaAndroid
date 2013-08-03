@@ -242,4 +242,5 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 	public int getDrawable() {
 		return R.drawable.workshop_icon;
 	}
+
 }
