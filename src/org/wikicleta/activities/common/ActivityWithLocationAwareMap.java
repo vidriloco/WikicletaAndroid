@@ -49,6 +49,7 @@ public class ActivityWithLocationAwareMap extends Activity {
 		map.getUiSettings().setZoomControlsEnabled(false);
 		map.getUiSettings().setZoomGesturesEnabled(true);
 		map.animateCamera(CameraUpdateFactory.newLatLngZoom(this.getDefaultLocation(), 18.0f));
+   	 	map.getUiSettings().setMyLocationButtonEnabled(false);
 	}
 	
 	protected void setMapToLocation(LatLng location) {
