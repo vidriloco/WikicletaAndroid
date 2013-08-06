@@ -8,14 +8,13 @@
         android:name="org.wikicleta.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
+    
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
-    <uses-feature
-		android:glEsVersion="0x00020000"
-		android:required="true"/>
     
     <uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="org.wikicleta.permission.MAPS_RECEIVE" />
@@ -213,9 +212,10 @@
         <service android:name="org.wikicleta.services.routes.RoutesService"
             android:enabled="true" />
         
+        <uses-library android:required="true" android:name="com.google.android.maps" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAIL4aa2vp1CJhJz4N8yYFD1drRfQ4-hT4" />
+            android:value="AIzaSyAFCIfWAED3nNX3pXqfN409Yp4L7jRFLxc" />
     </application>
 
 </manifest>

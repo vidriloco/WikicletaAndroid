@@ -10,7 +10,6 @@
 	    android:id="@+id/actionbar"
 	    app:title="@string/map_section"
 	    style="@style/ActionBar"/>
-      <!-- android:apiKey="0Sp8gbE2A7htK9pPiFzcliDPP5WT0D_TSkooX1w" -->
   
   <LinearLayout
     android:id="@+id/map_container"
