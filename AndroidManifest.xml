@@ -215,7 +215,7 @@
         <uses-library android:required="true" android:name="com.google.android.maps" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAFCIfWAED3nNX3pXqfN409Yp4L7jRFLxc" />
+            android:value="AIzaSyCYLVNyHlVZlU68kvnTS9gE2rWCJ9O9JtQ" />
     </application>
 
 </manifest>

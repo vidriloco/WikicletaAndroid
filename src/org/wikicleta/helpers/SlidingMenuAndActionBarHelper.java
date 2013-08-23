@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 public class SlidingMenuAndActionBarHelper {
 	
-	public static void loadWithActionBarTitle(Activity activity, String title) {
+	public static SlidingMenu loadWithActionBarTitle(Activity activity, String title) {
 
 		// customize the SlidingMenu
         final SlidingMenu menu = new SlidingMenu(activity);
@@ -121,10 +121,11 @@ public class SlidingMenuAndActionBarHelper {
         });
         
         setDefaultFontForActionBar(activity);
+        return menu;
 	}
 	
-	public static void load(Activity activity) {
-		loadWithActionBarTitle(activity, null);
+	public static SlidingMenu load(Activity activity) {
+		return loadWithActionBarTitle(activity, null);
 	}
 	
 	public static void setDefaultFontForActionBar(Activity activity) {

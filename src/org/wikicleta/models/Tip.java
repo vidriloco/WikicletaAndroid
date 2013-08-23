@@ -93,8 +93,8 @@ public class Tip extends Model implements Serializable, DraftModel, MarkerInterf
 		
 		//params.put("user_id", this.userId);
 		HashMap<String, Float> coordinates = new HashMap<String, Float>();
-		coordinates.put("lat", (float) (latitude/1E6));
-		coordinates.put("lon", (float) (longitude/1E6));
+		coordinates.put("lat", (float) latitude);
+		coordinates.put("lon", (float) longitude);
 		params.put("coordinates", coordinates);
 		HashMap<String, Object> cover = new HashMap<String, Object>();
 		cover.put("tip", params);

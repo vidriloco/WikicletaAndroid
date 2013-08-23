@@ -24,6 +24,8 @@ import org.wikicleta.views.CycleStationViews;
 import org.wikicleta.views.ParkingViews;
 import org.wikicleta.views.TipViews;
 import org.wikicleta.views.WorkshopViews;
+
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -32,6 +34,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nineoldandroids.animation.ObjectAnimator;
+import com.slidingmenu.lib.SlidingMenu;
+import com.slidingmenu.lib.SlidingMenu.OnClosedListener;
+import com.slidingmenu.lib.SlidingMenu.OnOpenedListener;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -89,8 +95,30 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 
     	loadingLayersIcon = (ImageView) findViewById(R.id.reloading_icon);
     	
-        SlidingMenuAndActionBarHelper.load(this);
-				
+    	SlidingMenu menu = SlidingMenuAndActionBarHelper.load(this);
+		final LinearLayout mapContainerView = (LinearLayout) this.findViewById(R.id.map_container);
+
+    	menu.setOnOpenedListener(new OnOpenedListener() {
+
+			@Override
+			public void onOpened() {
+				// TODO Auto-generated method stub
+				mapContainerView.setVisibility(View.GONE);
+			}
+    		
+    	});
+    	
+    	menu.setOnClosedListener(new OnClosedListener() {
+
+			@Override
+			public void onClosed() {
+				// TODO Auto-generated method stub
+				mapContainerView.setVisibility(View.VISIBLE);
+			}
+    		
+    	});
+    	
+    	
 		buildToggleMenu();
     	findViewById(R.id.map_add_button).setOnClickListener(new View.OnClickListener() {
 			@Override
