@@ -51,9 +51,6 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 	@Column(name = "Horary")
 	public String horary;
 	
-	@Column(name = "AnyoneCanEdit")
-	public boolean anyoneCanEdit;
-	
 	@Column(name = "UserId")
 	public long userId;
 	
@@ -80,8 +77,8 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 	}
 	
 	public Workshop(long remoteId, String name, String details,
-			LatLng point, long userId, int likesCount, boolean isStore,
-			boolean anyoneCanEdit, long createdAt, long updatedAt,
+			LatLng point, long userId, int likesCount, boolean isStore, 
+			long createdAt, long updatedAt,
 			String username, long phone, long cellPhone, String webPage,
 			String twitter, String horary) {
 		this();
@@ -93,7 +90,6 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 		this.longitude = point.longitude;
 		this.isStore = isStore;
 		this.username = username;
-		this.anyoneCanEdit = anyoneCanEdit;
 		this.phone = phone;
 		this.cellPhone = cellPhone;
 		this.webpage = webPage;
@@ -118,7 +114,6 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 		params.put("twitter", this.twitter);
 		params.put("horary", this.horary);
 		params.put("store", this.isStore);
-		params.put("others_can_edit_it", this.anyoneCanEdit);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		params.put("created_at", sdf.format(new Date(this.createdAt)));
@@ -128,9 +123,10 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 		HashMap<String, Float> coordinates = new HashMap<String, Float>();
 		coordinates.put("lat", (float) latitude);
 		coordinates.put("lon", (float) longitude);
-		params.put("coordinates", coordinates);
+		
 		HashMap<String, Object> cover = new HashMap<String, Object>();
 		cover.put("workshop", params);
+		cover.put("coordinates", coordinates);
 		return cover;
 	}
 	
@@ -208,7 +204,6 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 		String username = (String) owner.get("username");
 				
 		boolean isStore = (Boolean) object.get("store");
-		boolean anyoneCanEdit = (Boolean) object.get("others_can_edit_it");
 
 		Object phoneB = object.get("phone");
 		Object cellPhoneB = object.get("cell_phone");
@@ -226,7 +221,7 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 		String horary = (String) object.get("horary");
 		LatLng point = new LatLng((Double) object.get("lat"), (Double) object.get("lon"));
 		Workshop workshop = new Workshop(remoteId, name, details, point, userId, likesCount, isStore, 
-				anyoneCanEdit, createdAt, updatedAt, username, phone, cellPhone, webPage, twitter, horary);
+				createdAt, updatedAt, username, phone, cellPhone, webPage, twitter, horary);
 		if(owner.containsKey("pic"))
 			workshop.userPicURL = (String) owner.get("pic");
 		

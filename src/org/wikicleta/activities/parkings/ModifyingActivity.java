@@ -5,7 +5,6 @@ import org.wikicleta.activities.common.LocationAwareMapWithControlsActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
-import org.wikicleta.helpers.GeoHelpers;
 import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
 import org.wikicleta.models.Parking;
 import org.wikicleta.routing.Parkings;
@@ -41,7 +40,6 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 	protected Spinner kindSelector;
 	protected EditText details;
 	protected CheckBox hasRoofCheckbox;
-	protected CheckBox anyoneCanEditCheckbox;
 	public Parking parking;
 	
 	
@@ -63,7 +61,7 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 		if(parking != null) {
 			// We are on editing mode
 			turnOffLocation();
-			map.animateCamera(CameraUpdateFactory.newLatLngZoom(GeoHelpers.buildGeoPointFromLatLon(parking.latitude, parking.longitude), 18.0f));
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(parking.latitude, parking.longitude), 18));
 	    	SlidingMenuAndActionBarHelper.setDefaultFontForActionBarWithTitle(this, R.string.parkings_edit_title);
 		} else {
 			turnOnLocation();
@@ -110,7 +108,6 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 	public void attemptCommit() {
 		String parkingsContents = details.getText().toString();
 		parking.details = parkingsContents;
-		parking.anyoneCanEdit = anyoneCanEditCheckbox.isChecked(); 
 		parking.hasRoof = hasRoofCheckbox.isChecked(); 
 		
 		if(FieldValidators.isFieldEmpty(parkingsContents)) {
@@ -187,16 +184,13 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
     	});
     	
     	hasRoofCheckbox = (CheckBox) view.findViewById(R.id.parkings_hasRoof);
-    	anyoneCanEditCheckbox = (CheckBox) view.findViewById(R.id.parkings_anyoneCanEdit);
 
     	// On editing mode if we are modifying the parking
     	if(parking != null) {
     		details.setText(parking.details);
     		kindSelector.setSelection(parking.kind-1);
     		title.setText(this.getResources().getString(R.string.actions_update));
-    		anyoneCanEditCheckbox.setChecked(parking.anyoneCanEdit);
     		hasRoofCheckbox.setChecked(parking.hasRoof);
-    		anyoneCanEditCheckbox.setEnabled(parking.isOwnedByCurrentUser());
     	}
     	
     	Button saveButton = (Button) view.findViewById(R.id.save_parking);

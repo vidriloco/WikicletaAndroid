@@ -6,6 +6,7 @@
     <LinearLayout android:id="@+id/menu_layout_overlay"
 	    android:orientation="vertical"
 	    android:layout_height="wrap_content"
+	    android:background="@color/white"
 	    android:layout_width="match_parent">
 		<RelativeLayout 
 		    android:layout_width="fill_parent"
@@ -56,7 +57,7 @@
 		    android:orientation="vertical"
 		    android:layout_marginLeft="10dp"
 		    android:layout_marginTop="20dp"
-		    android:layout_marginBottom="20dp"
+		    android:layout_marginBottom="10dp"
 		    >
 		    <TextView
 		       android:id="@+id/model_named"
@@ -75,19 +76,19 @@
 	           android:layout_height="wrap_content"
 	           android:text="@string/none"
 	           android:textColor="#203b50"
-	           android:textSize="16sp"
+	           android:textSize="14sp"
 	           android:paddingLeft="10dp"
 	           android:paddingRight="10dp"
 	           android:textStyle="bold" />
 
 		</LinearLayout>
+
 			<RelativeLayout 
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:background="@color/wikicleta_lightest_orange"
 		android:gravity="right">
 		    
-
+		
 	    <LinearLayout 
 	        android:id="@+id/text_parking_container"
 	        android:layout_width="wrap_content"
@@ -132,10 +133,77 @@
 
 
 		</RelativeLayout>
-		<LinearLayout 
+				<LinearLayout 
 		    android:layout_height="1dp"
 		    android:layout_width="fill_parent"
+		    android:layout_marginLeft="10dp"
+		    android:layout_marginRight="10dp"
 		    android:background="@color/wikicleta_light_blue"></LinearLayout>
+		<LinearLayout 
+		    android:id="@+id/comments_and_rankings_buttons_container"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/wikicleta_white"
+			android:orientation="horizontal"
+			android:baselineAligned="false"
+			android:weightSum="3">
+		    <LinearLayout 
+		        android:id="@+id/negative_rankings_container"
+		        android:layout_width="0px"
+		        android:layout_weight="1"
+		        android:layout_height="match_parent"
+		        android:background="@drawable/menu_item_selector"
+		        android:gravity="center"
+		        android:padding="14dp">
+		        <TextView
+	           		android:id="@+id/negative_button_ranks_text"
+	           		android:layout_width="wrap_content"
+	           		android:layout_height="wrap_content"
+	           		android:textColor="@color/wikicleta_blue"
+	           		android:textSize="16sp"
+	           		android:gravity="center_horizontal"
+	           		android:drawableBottom="@drawable/dislike_icon"
+	           		android:textStyle="bold" />
+		    </LinearLayout>
+		    <LinearLayout 
+		        android:id="@+id/comments_listing_container"
+		        android:layout_width="0px"
+		        android:layout_weight="1"
+		        android:layout_height="match_parent"
+		        android:background="@drawable/menu_item_selector"
+		        android:gravity="center"
+		        android:padding="14dp">
+		        <TextView
+	           		android:id="@+id/comments_listing_text"
+	           		android:layout_width="wrap_content"
+	           		android:layout_height="wrap_content"
+	           		android:text="@string/see_comments"
+	           		android:textColor="@color/wikicleta_blue"
+	           		android:textSize="14sp"
+	           		android:gravity="center_horizontal"
+	           		android:textStyle="bold" />
+		    </LinearLayout>
+		    <LinearLayout 
+		        android:id="@+id/positive_rankings_container"
+		        android:layout_width="0px"
+		        android:layout_weight="1"
+		        android:layout_height="match_parent"
+		        android:gravity="center"
+		        android:background="@drawable/menu_item_selector"
+		        android:padding="14dp">
+		        <TextView
+	           		android:id="@+id/positive_button_ranks_text"
+	           		android:layout_width="wrap_content"
+	           		android:layout_height="wrap_content"
+	           		android:textColor="@color/wikicleta_orange"
+	           		android:textSize="16sp"
+	           		android:paddingLeft="10dp"
+	           		android:paddingRight="10dp"
+	           		android:gravity="center_horizontal"
+	           		android:drawableBottom="@drawable/like_icon"
+	           		android:textStyle="bold" />
+		    </LinearLayout>
+		</LinearLayout>
 		<LinearLayout 
 		    android:id="@+id/action_buttons_container"
 			android:layout_width="fill_parent"

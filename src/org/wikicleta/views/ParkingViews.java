@@ -90,7 +90,18 @@ public class ParkingViews {
         	
         });
         
-        if(parking.isOwnedByCurrentUser() || parking.anyoneCanEdit) {
+        TextView positiveRankingLegend = (TextView) view.findViewById(R.id.positive_button_ranks_text);
+        positiveRankingLegend.setText("100");
+        positiveRankingLegend.setTypeface(AppBase.getTypefaceStrong());
+
+        TextView negativeRankingLegend = (TextView) view.findViewById(R.id.negative_button_ranks_text);
+        negativeRankingLegend.setText("30");
+        negativeRankingLegend.setTypeface(AppBase.getTypefaceStrong());
+        
+        TextView commentsListingLegend = (TextView) view.findViewById(R.id.comments_listing_text);
+        commentsListingLegend.setTypeface(AppBase.getTypefaceLight());
+        
+        if(parking.isOwnedByCurrentUser()) {
         	TextView modifyButton = (TextView) view.findViewById(R.id.button_modify);
             modifyButton.setTypeface(AppBase.getTypefaceStrong());
             
@@ -162,7 +173,7 @@ public class ParkingViews {
         if(!parking.isOwnedByCurrentUser())
         	destroyContainer.setVisibility(View.GONE);
         
-        if(!parking.anyoneCanEdit && !parking.isOwnedByCurrentUser())
+        if(!parking.isOwnedByCurrentUser())
         	view.findViewById(R.id.action_buttons_container).setVisibility(View.GONE);
         
         parkingDialog.show();

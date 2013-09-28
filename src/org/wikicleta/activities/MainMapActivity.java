@@ -24,8 +24,6 @@ import org.wikicleta.views.CycleStationViews;
 import org.wikicleta.views.ParkingViews;
 import org.wikicleta.views.TipViews;
 import org.wikicleta.views.WorkshopViews;
-
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;

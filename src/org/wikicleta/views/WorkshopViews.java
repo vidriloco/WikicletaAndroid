@@ -137,7 +137,7 @@ public class WorkshopViews {
         	
         });
         
-        if(workshop.isOwnedByCurrentUser() || workshop.anyoneCanEdit) {
+        if(workshop.isOwnedByCurrentUser()) {
         	TextView modifyButton = (TextView) view.findViewById(R.id.button_modify);
             modifyButton.setTypeface(AppBase.getTypefaceStrong());
             
@@ -209,7 +209,7 @@ public class WorkshopViews {
         if(!workshop.isOwnedByCurrentUser())
         	destroyContainer.setVisibility(View.GONE);
         
-        if(!workshop.anyoneCanEdit && !workshop.isOwnedByCurrentUser())
+        if(!workshop.isOwnedByCurrentUser())
         	view.findViewById(R.id.action_buttons_container).setVisibility(View.GONE);
         
         workshopDialog.show();

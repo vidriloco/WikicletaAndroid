@@ -71,7 +71,7 @@
 		           <requestFocus />
 		       	</EditText>
 		       
-		       	<LinearLayout 
+		       <LinearLayout 
 	           		android:layout_width="wrap_content"
 	           		android:layout_height="wrap_content"
 	           		android:orientation="vertical"
@@ -82,12 +82,7 @@
 		           		android:layout_width="wrap_content"
 		           		android:layout_height="wrap_content"
 		           		android:text="@string/workshops_form_isStore" />
-		       
-		       		<CheckBox
-		           		android:id="@+id/workshops_anyoneCanEdit"
-		           		android:layout_width="wrap_content"
-		           		android:layout_height="wrap_content"
-		           		android:text="@string/form_anyoneCanEdit" />
+
 		       	</LinearLayout>
    			</LinearLayout>
 	       <TextView

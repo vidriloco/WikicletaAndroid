@@ -47,9 +47,6 @@ public class Parking extends Model implements Serializable, DraftModel, MarkerIn
 	@Column(name = "HasRoof")
 	public boolean hasRoof;
 	
-	@Column(name = "AnyoneCanEdit")
-	public boolean anyoneCanEdit;
-	
 	@Column(name = "UserId")
 	public long userId;
 	
@@ -67,7 +64,7 @@ public class Parking extends Model implements Serializable, DraftModel, MarkerIn
 	}
 	
 	public Parking(long remoteId, String details, int kind, LatLng point, long userId, int likesCount, 
-			boolean hasRoof, boolean anyoneCanEdit, long createdAt, long updatedAt, String name) {
+			boolean hasRoof, long createdAt, long updatedAt, String name) {
 		this();
 		this.remoteId = remoteId;
 		this.details = details;
@@ -75,7 +72,6 @@ public class Parking extends Model implements Serializable, DraftModel, MarkerIn
 		this.latitude = point.latitude;
 		this.longitude = point.longitude;
 		this.hasRoof = hasRoof;
-		this.anyoneCanEdit = anyoneCanEdit;
 		this.userId = userId;
 		this.likesCount = likesCount;
 		this.createdAt = createdAt;
@@ -92,7 +88,6 @@ public class Parking extends Model implements Serializable, DraftModel, MarkerIn
 		params.put("kind", this.kind);
 		params.put("details", this.details);
 		params.put("has_roof", this.hasRoof);
-		params.put("others_can_edit_it", this.anyoneCanEdit);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		params.put("created_at", sdf.format(new Date(this.createdAt)));
@@ -102,9 +97,10 @@ public class Parking extends Model implements Serializable, DraftModel, MarkerIn
 		HashMap<String, Float> coordinates = new HashMap<String, Float>();
 		coordinates.put("lat", (float) latitude);
 		coordinates.put("lon", (float) longitude);
-		params.put("coordinates", coordinates);
 		HashMap<String, Object> cover = new HashMap<String, Object>();
 		cover.put("parking", params);
+		cover.put("coordinates", coordinates);
+
 		return cover;
 	}
 	
@@ -201,10 +197,9 @@ public class Parking extends Model implements Serializable, DraftModel, MarkerIn
 		String name = (String) owner.get("username");
 				
 		boolean hasRoof = (Boolean) object.get("has_roof");
-		boolean anyoneCanEdit = (Boolean) object.get("others_can_edit_it");
 
 		LatLng point = new LatLng((Double) object.get("lat"), (Double) object.get("lon"));	
-		Parking parking = new Parking(remoteId, details, kind, point, userId, likesCount, hasRoof, anyoneCanEdit, createdAt, updatedAt, name);
+		Parking parking = new Parking(remoteId, details, kind, point, userId, likesCount, hasRoof, createdAt, updatedAt, name);
 		if(owner.containsKey("pic"))
 			parking.userPicURL = (String) owner.get("pic");
 		return parking;

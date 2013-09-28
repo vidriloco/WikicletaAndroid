@@ -38,7 +38,6 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 	protected EditText name;
 	protected EditText details;
 	protected CheckBox isStore;
-	protected CheckBox anyoneCanEditCheckbox;
 	protected EditText horary;
 	protected EditText twitter;
 	protected EditText phone;
@@ -70,7 +69,7 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 		if(workshop != null) {
 			// We are on editing mode
 			turnOffLocation();
-			this.map.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(workshop.latitude, workshop.longitude)));
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(workshop.latitude, workshop.longitude), 18));
 			SlidingMenuAndActionBarHelper.setDefaultFontForActionBarWithTitle(this, R.string.workshops_edit_title);
 		} else {
 			turnOnLocation();
@@ -130,7 +129,6 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 		workshop.webpage = webpage.getText().toString();
 		
 		workshop.isStore = isStore.isChecked();
-		workshop.anyoneCanEdit = anyoneCanEditCheckbox.isChecked();
 		
 		if(FieldValidators.isFieldEmpty(workshopName)) {
 			name.setError(getResources().getString(R.string.workshops_input_empty_name));
@@ -246,7 +244,6 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
         webpage.setTypeface(AppBase.getTypefaceLight());
 
     	isStore = (CheckBox) view.findViewById(R.id.workshops_isStore);
-    	anyoneCanEditCheckbox = (CheckBox) view.findViewById(R.id.workshops_anyoneCanEdit);
     	
     	// On editing mode if we are modifying the tip
     	if(workshop != null) {
@@ -261,7 +258,6 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
     		webpage.setText(workshop.webpage);
     		title.setText(this.getResources().getString(R.string.actions_update));
     		isStore.setChecked(workshop.isStore);
-    		anyoneCanEditCheckbox.setEnabled(workshop.isOwnedByCurrentUser());
     	}
     	
     	

@@ -16,6 +16,7 @@
 	<string name="favs">favs</string>
 	<string name="connectivity_problems">No ha sido posible conectar con el servidor remoto, por favor, revisa tu conexión</string>
 	
+	<string name="see_comments">Ver Opiniones</string>
 	<!-- Sliding Menu options -->
 	<string name="map_section">Mapa</string>
 	<string name="real_time_section">Ahora</string>
