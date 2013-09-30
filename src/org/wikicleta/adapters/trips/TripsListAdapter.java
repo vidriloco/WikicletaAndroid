@@ -17,7 +17,7 @@ public class TripsListAdapter extends ArrayAdapter<Trip> {
 	  private LayoutInflater inflater;
 	  	  
 	  public TripsListAdapter(Context context, ArrayList<Trip> trips) {
-	    super(context, R.layout.layer_item, trips);
+	    super(context, R.layout.layers_menu_list_item, trips);
 	    this.context = context;
 	    this.trips = trips;
 	    inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

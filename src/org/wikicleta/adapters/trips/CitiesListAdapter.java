@@ -24,7 +24,7 @@ public class CitiesListAdapter extends ArrayAdapter<City> {
 	  private LayoutInflater inflater;
 	  	  
 	  public CitiesListAdapter(Context context, ArrayList<City> cities) {
-	    super(context, R.layout.layer_item, cities);
+	    super(context, R.layout.layers_menu_list_item, cities);
 	    this.context = context;
 	    this.cities = cities;
 	    inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

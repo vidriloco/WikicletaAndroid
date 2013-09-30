@@ -1,161 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout 
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content">
 
-  <com.markupartist.android.widget.ActionBar
-	    xmlns:app="http://schemas.android.com/apk/res/org.wikicleta"
-	    android:id="@+id/actionbar"
-	    app:title="@string/map_section"
-	    style="@style/ActionBar"/>
-  
-  <LinearLayout
+  <RelativeLayout
     android:id="@+id/map_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_alignParentLeft="true"
-    android:layout_below="@+id/actionbar"
-    android:layout_above="@+id/toolbar">
+    android:layout_height="match_parent">
   	<fragment
   	    android:name="com.google.android.gms.maps.SupportMapFragment"
         android:id="@+id/map_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
       	android:clickable="true"
-        class="com.google.android.gms.maps.MapFragment" />
-  </LinearLayout>
+        class="com.google.android.gms.maps.SupportMapFragment" />
+  	 	<View
+	  android:layout_width="match_parent"
+	  android:layout_height="match_parent"
+	  android:background="@android:color/transparent" />
+  </RelativeLayout>
 
+  <RelativeLayout 
+	android:id="@+id/upper_control_group"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal">
+    <LinearLayout 
+        android:id="@+id/mutable_box_container"
+        android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:alpha="0"
+        android:background="@drawable/box_container_icon">
+        <ImageView
+          android:id="@+id/spinner_indicator"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="0dp"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/spinner_icon"
+          android:clickable="true" />
+    </LinearLayout>
+  </RelativeLayout>
     
-  <LinearLayout
-       android:id="@+id/toolbar"
+  <RelativeLayout
+       android:id="@+id/under_control_group"
        android:layout_width="fill_parent"
        android:layout_height="wrap_content"
        android:orientation="horizontal"
        android:layout_alignParentBottom="true"
-       android:gravity="center"
-       android:background="@drawable/toolbar"
-       android:padding="5dp"
-       android:clickable="true" >
-		<LinearLayout 
-            android:id="@+id/map_add_button"
-       		android:layout_width="wrap_content"
-       		android:layout_height="wrap_content"
-       		android:orientation="vertical"
-           	android:layout_marginRight="20dp"
-           	android:layout_marginLeft="20dp"
-           	android:gravity="center"
-           	android:clickable="true" >
-           	<ImageView
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:contentDescription="@string/nothing"
-            	android:src="@drawable/add" />
+       android:paddingBottom="30dp"
+       android:clickable="false" >
+	
+      <LinearLayout 
+		android:id="@+id/toggable_group"
+        android:layout_width="wrap_content"
+       	android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:layout_toRightOf="@+id/left_menu_toggler"
+		android:layout_marginLeft="15dp"
+		android:alpha="0">
+        <ImageView
+          android:id="@+id/search_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="0dp"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/search_button_icon"
+          android:clickable="true" />
+        <ImageView
+          android:id="@+id/share_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="0dp"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/new_button_icon"
+          android:clickable="true" />
+      </LinearLayout>
+      
+      <ImageView
+          android:id="@+id/left_menu_toggler"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="0dp"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/menu_button_icon"
+          android:clickable="true" />
 
-            <TextView 
-	            android:id="@+id/bar_maps_add_button_text"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textSize="12sp"
-	            android:layout_marginTop="5dp"
-	            android:textColor="@color/wikicleta_blue"
-	            android:text="@string/bar_maps_add_button_text_value"
-	            />
-        </LinearLayout>
-        
-        <LinearLayout 
-            android:id="@+id/centermap_search_button"
-       		android:layout_width="wrap_content"
-       		android:layout_height="wrap_content"
-       		android:orientation="vertical"
-           	android:layout_marginRight="20dp"
-           	android:layout_marginLeft="20dp"
-           	android:gravity="center"
-           	android:clickable="true">
-           	<ImageView
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:contentDescription="@string/nothing"
-            	android:src="@drawable/centermap" />
-            
-            <TextView 
-	            android:id="@+id/centermap_button_text"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textSize="12sp"
-	            android:layout_marginTop="5dp"
-	            android:textColor="@color/wikicleta_blue"
-	            android:text="@string/bar_center_map_text_value"
-	            />
-
-        </LinearLayout>
-		
-        <LinearLayout 
-            android:id="@+id/centermap_search_button_enabled"
-       		android:layout_width="wrap_content"
-       		android:layout_height="wrap_content"
-       		android:orientation="vertical"
-           	android:layout_marginRight="20dp"
-           	android:layout_marginLeft="20dp"
-           	android:gravity="center"
-           	android:clickable="true"
-            android:visibility="gone" >
-           	<ImageView
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:contentDescription="@string/nothing"
-            	android:src="@drawable/centermap_enabled" />
-            
-            <TextView 
-	            android:id="@+id/centermap_button_enabled_text"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textSize="12sp"
-	            android:layout_marginTop="5dp"
-	            android:textColor="@color/wikicleta_blue"
-	            android:text="@string/bar_center_map_enabled_text_value"
-	            />
-
-        </LinearLayout>
-        <LinearLayout 
-            android:id="@+id/map_layers_button"
-       		android:layout_width="wrap_content"
-       		android:layout_height="wrap_content"
-       		android:orientation="vertical"
-           	android:layout_marginRight="20dp"
-           	android:layout_marginLeft="20dp"
-           	android:gravity="center"
-           	android:clickable="true" >
-           	<ImageView
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:contentDescription="@string/nothing"
-            	android:src="@drawable/layers" />
-
-            <TextView 
-	            android:id="@+id/bar_maps_layers_button_text"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textSize="12sp"
-	            android:layout_marginTop="5dp"
-	            android:textColor="@color/wikicleta_blue"
-	            android:text="@string/bar_maps_layers_button_text_value"/>
-
-        </LinearLayout>
-
-
-		<ImageView
-            android:id="@+id/reloading_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/nothing"
-            android:src="@drawable/reloading_icon"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:clickable="true"
-            android:visibility="gone" />
-		
-  </LinearLayout>
+      <ImageView
+          android:id="@+id/centermap_search_button_enabled"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_marginRight="40dp"
+          android:clickable="true"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/locator_button_icon_enabled"
+          android:visibility="gone" />
+      <ImageView
+          android:id="@+id/centermap_search_button_disabled"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_marginRight="40dp"
+          android:clickable="true"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/locator_button_icon_disabled" />
+      <ImageView
+          android:id="@+id/right_menu_toggler"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:clickable="true"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/layers_button_icon" />
+  </RelativeLayout>
 </RelativeLayout>

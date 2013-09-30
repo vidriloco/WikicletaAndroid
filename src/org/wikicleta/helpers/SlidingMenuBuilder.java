@@ -10,17 +10,33 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.models.User;
 
 import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.Action;
 import com.slidingmenu.lib.SlidingMenu;
 import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-public class SlidingMenuAndActionBarHelper {
+public class SlidingMenuBuilder {
 	
-	public static SlidingMenu loadWithActionBarTitle(Activity activity, String title) {
+	public static SlidingMenu loadOnRight(Activity activity, String title) {
+		
+		// customize the SlidingMenu
+        final SlidingMenu menu = new SlidingMenu(activity);
+        menu.setMode(SlidingMenu.RIGHT);
+        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+        menu.setFadeDegree(0.35f);
+        menu.attachToActivity(activity, SlidingMenu.SLIDING_CONTENT);
+        menu.setMenu(R.layout.right_sliding_menu);  
+		menu.setShadowWidthRes(R.dimen.shadow_width);
+		menu.setShadowDrawable(R.drawable.shadow_right);
+		
+		menu.setBehindOffsetRes(R.dimen.right_menu_visible_area_width);
+		
+        return menu;
+	}
+
+	
+	public static SlidingMenu loadOnLeft(Activity activity, String title) {
 
 		// customize the SlidingMenu
         final SlidingMenu menu = new SlidingMenu(activity);
@@ -28,7 +44,7 @@ public class SlidingMenuAndActionBarHelper {
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         menu.setFadeDegree(0.35f);
         menu.attachToActivity(activity, SlidingMenu.SLIDING_CONTENT);
-        menu.setMenu(R.layout.sliding_menu);        
+        menu.setMenu(R.layout.left_sliding_menu);        
         
         TextView profileTitle = (TextView) menu.getMenu().findViewById(R.id.profile_title);
         profileTitle.setTypeface(AppBase.getTypefaceStrong());
@@ -99,58 +115,19 @@ public class SlidingMenuAndActionBarHelper {
         });
         
 		menu.setShadowWidthRes(R.dimen.shadow_width);
-		menu.setShadowDrawable(R.drawable.shadow);
-		menu.setBehindOffsetRes(R.dimen.actionbar_home_width);
-		
-		ActionBar actionBar = (ActionBar) activity.findViewById(R.id.actionbar);
-		
-		if(title != null)
-			actionBar.setTitle(title);
-        actionBar.setHomeAction(new Action() {
-
-			@Override
-			public int getDrawable() {
-				return R.drawable.list_menu;
-			}
-
-			@Override
-			public void performAction(View view) {
-				menu.toggle();
-			}
-        	
-        });
+		menu.setShadowDrawable(R.drawable.shadow_left);
+		menu.setBehindOffsetRes(R.dimen.left_menu_visible_area_width);
         
-        setDefaultFontForActionBar(activity);
         return menu;
 	}
 	
-	public static SlidingMenu load(Activity activity) {
-		return loadWithActionBarTitle(activity, null);
-	}
-	
-	public static void setDefaultFontForActionBar(Activity activity) {
-		ActionBar actionBar = (ActionBar) activity.findViewById(R.id.actionbar);
-    	
-    	TextView actionBarTitle = (TextView) actionBar.findViewById(R.id.actionbar_title);
-    	actionBarTitle.setTypeface(AppBase.getTypefaceStrong());
-    	actionBarTitle.setTextSize(18);
-	}
-	
-	public static void setDefaultFontForActionBarWithTitle(Activity activity, int title) {
-		getActionBarFor(activity).setTitle(title);
-	}
-	
-	public static void setDefaultFontForActionBarWithTitle(Activity activity, String title) {
-		getActionBarFor(activity).setTitle(title);
+	public static SlidingMenu loadOnLeft(Activity activity) {
+		return loadOnLeft(activity, null);
 	}
 
-	protected static ActionBar getActionBarFor(Activity activity) {
-		ActionBar actionBar = (ActionBar) activity.findViewById(R.id.actionbar);
-    	
-    	TextView actionBarTitle = (TextView) actionBar.findViewById(R.id.actionbar_title);
-    	actionBarTitle.setTypeface(AppBase.getTypefaceStrong());
-    	actionBarTitle.setTextSize(18);
-    	return actionBar;
+	public static SlidingMenu loadOnRight(Activity activity) {
+		return loadOnRight(activity, null);
 	}
+
 }
 

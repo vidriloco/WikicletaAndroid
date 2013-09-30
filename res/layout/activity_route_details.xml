@@ -5,11 +5,7 @@
   android:layout_width="wrap_content"
   android:layout_height="wrap_content">
 
-  <com.markupartist.android.widget.ActionBar
-	    xmlns:app="http://schemas.android.com/apk/res/org.wikicleta"
-	    android:id="@+id/actionbar"
-	    app:title="@string/none"
-	    style="@style/ActionBar"/>
+
   <org.wikicleta.views.PinchableMapView
       android:id="@+id/mapview"
       android:layout_width="fill_parent"

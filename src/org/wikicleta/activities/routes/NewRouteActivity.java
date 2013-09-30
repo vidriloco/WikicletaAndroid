@@ -3,14 +3,12 @@ package org.wikicleta.activities.routes;
 import org.wikicleta.R;
 import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.common.AppBase;
-import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
+import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.services.routes.NavigationListener;
 import org.wikicleta.services.routes.RoutesService;
 import org.wikicleta.services.routes.ServiceConstructor;
 import org.wikicleta.services.routes.ServiceListener;
 
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.Action;
 import com.nineoldandroids.animation.ObjectAnimator;
 
 import android.app.Activity;
@@ -52,9 +50,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 
 	protected boolean firstLocationReceived = false;
 	private ObjectAnimator uploaderAnimator;
-	
-	protected ActionBar actionBar;
-	
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
@@ -168,6 +164,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
     		
     	});
     	
+    	/*
     	actionBar = (ActionBar) this.findViewById(R.id.actionbar);
     	
     	SlidingMenuAndActionBarHelper.setDefaultFontForActionBar(this);
@@ -184,7 +181,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 				finish();
 			}
         	
-        });
+        });*/
 	}
 	
 	protected void cancelRecording() {
@@ -297,7 +294,6 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 		}
 		
 		this.findViewById(R.id.wikicleta_logo).setVisibility(View.VISIBLE);
-		actionBar.removeAllActions();
 		
 		TextView speedTitle = (TextView) findViewById(R.id.speed_title);
 		speedTitle.setTypeface(AppBase.getTypefaceStrong());

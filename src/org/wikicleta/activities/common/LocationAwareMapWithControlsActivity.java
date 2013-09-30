@@ -19,24 +19,21 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class LocationAwareMapWithControlsActivity extends ActivityWithLocationAwareMap implements GooglePlayServicesClient.ConnectionCallbacks,GooglePlayServicesClient.OnConnectionFailedListener,LocationListener {
-	protected LinearLayout centerOnMapOn;
-	protected LinearLayout centerOnMapOff;
+	protected ImageView centerOnMapOn;
+	protected ImageView centerOnMapOff;
 	protected LinearLayout toolbar;
 	protected LocationClient locationClient;
 	protected LocationRequest locationRequest;
 	 
 	protected void assignToggleActionsForAutomapCenter() {
-		centerOnMapOff = (LinearLayout) findViewById(R.id.centermap_search_button);
-    	centerOnMapOn = (LinearLayout) findViewById(R.id.centermap_search_button_enabled);
-    	
-    	((TextView) this.findViewById(R.id.centermap_button_text)).setTypeface(AppBase.getTypefaceStrong());
-    	((TextView) this.findViewById(R.id.centermap_button_enabled_text)).setTypeface(AppBase.getTypefaceStrong());
-
+		centerOnMapOff = (ImageView) findViewById(R.id.centermap_search_button_disabled);
+    	centerOnMapOn = (ImageView) findViewById(R.id.centermap_search_button_enabled);
     	
     	centerOnMapOff.setOnClickListener(new View.OnClickListener() {
 			@Override

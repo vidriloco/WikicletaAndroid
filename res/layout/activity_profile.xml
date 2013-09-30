@@ -4,11 +4,6 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-	<com.markupartist.android.widget.ActionBar
-	    xmlns:app="http://schemas.android.com/apk/res/org.wikicleta"
-	    android:id="@+id/actionbar"
-	    app:title="@string/user_profile_title"
-	    style="@style/ActionBar"/>
 	
 	<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
 	    xmlns:tools="http://schemas.android.com/tools"

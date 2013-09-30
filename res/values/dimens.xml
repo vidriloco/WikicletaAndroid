@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="actionbar_home_width">50dp</dimen>
-    <dimen name="shadow_width">15dp</dimen>
+    <dimen name="left_menu_visible_area_width">50dp</dimen>
+	<dimen name="right_menu_visible_area_width">160dp</dimen>
+    <dimen name="shadow_width">5dp</dimen>
+    <dimen name="corner_radius">5dp</dimen>
 </resources>

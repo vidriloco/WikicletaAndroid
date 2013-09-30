@@ -7,7 +7,7 @@ import org.wikicleta.activities.common.LocationAwareMapWithControlsActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.DialogBuilder;
-import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
+import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.models.MarkerInterface;
 import org.wikicleta.models.Segment;
 import org.wikicleta.models.Trip;
@@ -23,8 +23,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.Action;
 import com.nineoldandroids.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.graphics.Color;
@@ -71,23 +69,7 @@ public class TripDetailsActivity extends LocationAwareMapWithControlsActivity im
         cityName.setText(trip.city.name);
         daysToEvent.setText(trip.daysToEvent);
         
-        SlidingMenuAndActionBarHelper.setDefaultFontForActionBarWithTitle(this, trip.name);
-
-    	ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
-
-        actionBar.addAction(new Action() {
-
-			@Override
-			public int getDrawable() {
-				return R.drawable.close_icon;
-			}
-
-			@Override
-			public void performAction(View view) {
-				AppBase.launchActivity(TripsListActivity.class);
-			}
-        	
-        });
+        SlidingMenuBuilder.loadOnLeft(this);
         
 		dialog = DialogBuilder.buildLoadingDialogWithMessage(TripDetailsActivity.this, R.string.trip_fetching_details).create();
 		dialog.show();

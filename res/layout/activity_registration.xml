@@ -2,11 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".LoginActivity" >
     
-    <com.markupartist.android.widget.ActionBar
-	    xmlns:app="http://schemas.android.com/apk/res/org.wikicleta"
-	    android:id="@+id/actionbar"
-	    app:title="@string/registration_title"
-	    style="@style/ActionBar"/>
+
     
 	<ScrollView
         android:id="@+id/registration_form"

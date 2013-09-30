@@ -5,15 +5,12 @@ import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.activities.common.ActivityWithLocationAwareMap;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.NotificationBuilder;
-import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
+import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.models.Route;
 import org.wikicleta.services.routes.RoutesService;
 import org.wikicleta.services.routes.ServiceConstructor;
 import org.wikicleta.services.routes.ServiceListener;
 import org.wikicleta.layers.RouteOverlay;
-
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.Action;
 
 import android.app.AlertDialog;
 import android.app.Service;
@@ -64,9 +61,9 @@ public class RouteDetailsActivity extends ActivityWithLocationAwareMap implement
         this.setMapToLocation(currentRoute.getStartingLocation());
         this.notification = new NotificationBuilder(this);
         */
-        SlidingMenuAndActionBarHelper.loadWithActionBarTitle(this, "Detalles de ruta");
+        SlidingMenuBuilder.loadOnLeft(this, "Detalles de ruta");
         
-        ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
+        /*ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
 
         actionBar.addAction(new Action() {
 
@@ -80,7 +77,7 @@ public class RouteDetailsActivity extends ActivityWithLocationAwareMap implement
             	onBackPressed();
             }
                 
-        });
+        });*/
         
         TextView textView = (TextView) this.findViewById(R.id.route_name);
         textView.setText(currentRoute.name);

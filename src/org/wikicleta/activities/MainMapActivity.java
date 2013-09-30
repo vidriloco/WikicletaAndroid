@@ -8,13 +8,13 @@ import org.wikicleta.adapters.MenuOptionsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.Toasts;
-import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
+import org.wikicleta.helpers.SimpleAnimatorListener;
+import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.layers.common.LayersConnectorListener;
 import org.wikicleta.models.CycleStation;
 import org.wikicleta.models.MarkerInterface;
 import org.wikicleta.models.Parking;
 import org.wikicleta.models.Tip;
-import org.wikicleta.models.User;
 import org.wikicleta.models.Workshop;
 import org.wikicleta.routing.BikesSharing;
 import org.wikicleta.routing.Parkings;
@@ -25,26 +25,24 @@ import org.wikicleta.views.ParkingViews;
 import org.wikicleta.views.TipViews;
 import org.wikicleta.views.WorkshopViews;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.SlidingMenu.OnClosedListener;
 import com.slidingmenu.lib.SlidingMenu.OnOpenedListener;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnShowListener;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -53,6 +51,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainMapActivity extends LocationAwareMapWithControlsActivity implements LayersConnectorListener, OnMarkerClickListener {
@@ -63,18 +62,21 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 	protected static int BICIBUS_ACTION=3;
 	protected static int HIGHLIGHT_ACTION=4;
 	
-	protected LinearLayout toolBarView;
-	
 	protected AlertDialog addMenu;
-	protected AlertDialog toggleLayersMenu;
 	
 	MenuOptionsListAdapter selectedLayersMenuAdapter;
 	
 	protected boolean userIsPanning;
 	
 	private ObjectAnimator uploaderAnimator;
+	private ObjectAnimator uploaderContainerAnimator;
+	protected LinearLayout loadingLayersContainer;
 	protected ImageView loadingLayersIcon;
-	protected LinearLayout layersIcon;
+	protected ImageView rightMenuToggler;
+	
+	protected ImageView shareIcon;
+	
+	protected LinearLayout toggableGroup;
 	
 	Handler handler = new Handler();
 	boolean handlerRunning = false;
@@ -85,55 +87,74 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_main_map);
 		setTheme(R.style.Theme_wikicleta);
-		
+    	
 		assignToggleActionsForAutomapCenter();
 		
-		AppBase.currentActivity = this;		
-        toolBarView = (LinearLayout) findViewById(R.id.toolbar);
+		AppBase.currentActivity = this;
+		    	
+		// Assign icons
+		loadingLayersIcon = (ImageView) this.findViewById(R.id.spinner_indicator);
+		loadingLayersContainer = (LinearLayout) this.findViewById(R.id.mutable_box_container);
+		shareIcon = (ImageView) this.findViewById(R.id.share_button);
 
-    	loadingLayersIcon = (ImageView) findViewById(R.id.reloading_icon);
+		toggableGroup = (LinearLayout) this.findViewById(R.id.toggable_group);
+		
+    	final SlidingMenu leftMenu = SlidingMenuBuilder.loadOnLeft(this);
+    	final SlidingMenu rightMenu = SlidingMenuBuilder.loadOnRight(this);
+		rightMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+		leftMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+
+    	this.findViewById(R.id.left_menu_toggler).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				leftMenu.toggle();
+				rightMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+			}
+    		
+    	});
     	
-    	SlidingMenu menu = SlidingMenuAndActionBarHelper.load(this);
-		final LinearLayout mapContainerView = (LinearLayout) this.findViewById(R.id.map_container);
+    			
+		buildToggleMenu(rightMenu);
 
-    	menu.setOnOpenedListener(new OnOpenedListener() {
+    	rightMenuToggler = (ImageView) findViewById(R.id.right_menu_toggler);
+    	rightMenuToggler.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				rightMenu.toggle();
+				//leftMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+			}
+		});
+    	
+    	rightMenu.setOnOpenedListener(new OnOpenedListener() {
 
 			@Override
 			public void onOpened() {
-				// TODO Auto-generated method stub
-				mapContainerView.setVisibility(View.GONE);
+				//leftMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
 			}
     		
     	});
     	
-    	menu.setOnClosedListener(new OnClosedListener() {
+    	rightMenu.setOnClosedListener(new OnClosedListener() {
 
 			@Override
 			public void onClosed() {
-				// TODO Auto-generated method stub
-				mapContainerView.setVisibility(View.VISIBLE);
+				//leftMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+				toggleLayers(selectedLayersMenuAdapter.getSelectedValuesForPositions());
 			}
     		
     	});
-    	
-    	
-		buildToggleMenu();
-    	findViewById(R.id.map_add_button).setOnClickListener(new View.OnClickListener() {
+		
+    	shareIcon.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				addMenu.show();
 			}
-		});
+    		
+    	});
     	
-    	
-    	layersIcon = (LinearLayout) findViewById(R.id.map_layers_button);
-    	layersIcon.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				toggleLayersMenu.show();
-			}
-		});
-		 
+    	// Listeners for map
     	map.setOnCameraChangeListener(new OnCameraChangeListener() {
 
 			@Override
@@ -142,13 +163,34 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 			}
     		
     	});
-   	 	map.setOnMarkerClickListener(this);
-
-		((TextView) this.findViewById(R.id.bar_maps_add_button_text)).setTypeface(AppBase.getTypefaceStrong());
-		((TextView) this.findViewById(R.id.bar_maps_layers_button_text)).setTypeface(AppBase.getTypefaceStrong());
+   	 	map.setOnMarkerClickListener(this);    
 		
-		if(!User.isRegisteredLocally())
-			findViewById(R.id.map_add_button).setVisibility(View.GONE);
+		map.setOnMapClickListener(new OnMapClickListener() {
+
+			@Override
+			public void onMapClick(LatLng point) {
+				ObjectAnimator animator = null;
+				if(toggableGroup.getAlpha() == 0) {
+					animator = ObjectAnimator.ofFloat(toggableGroup, "alpha", 0, 1, 1).setDuration(1000);
+					animator.addListener(new SimpleAnimatorListener() {
+						@Override
+						public void onAnimationStart(Animator animation) {
+							toggableGroup.setVisibility(View.VISIBLE);
+						}
+					});
+				} else {
+					animator = ObjectAnimator.ofFloat(toggableGroup, "alpha", 1, 0, 0).setDuration(1000);
+					animator.addListener(new SimpleAnimatorListener() {
+						@Override
+						public void onAnimationEnd(Animator animation) {
+							toggableGroup.setVisibility(View.GONE);
+						}
+					});
+				}
+				animator.start();
+			}
+			
+		});
 	}
 	
 	public void reloadActiveLayers() {
@@ -160,12 +202,22 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 		   public void run() {
 			   if(!handlerRunning) {
 				   handlerRunning = true;
+				   uploaderContainerAnimator = ObjectAnimator.ofFloat(loadingLayersContainer, "alpha", 0, 1, 1);
+				   
 				   uploaderAnimator = ObjectAnimator.ofFloat(loadingLayersIcon, "rotation", 0, 360);
 				   uploaderAnimator.setRepeatCount(ObjectAnimator.INFINITE);
 				   uploaderAnimator.setDuration(1500);
-				   layersIcon.setVisibility(View.GONE);
-				   loadingLayersIcon.setVisibility(View.VISIBLE);
 			       uploaderAnimator.start();
+			       uploaderAnimator.addListener(new SimpleAnimatorListener() {
+
+						@Override
+						public void onAnimationCancel(Animator animation) {
+							ObjectAnimator.ofFloat(loadingLayersContainer, "alpha", 1, 0, 0).setDuration(1000).start();
+						}
+						
+					});
+				   uploaderContainerAnimator.setDuration(1500);
+			       uploaderContainerAnimator.start();
 			   } 
 		   }
 	};
@@ -180,39 +232,28 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 		this.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-		    	layersIcon.setVisibility(View.VISIBLE);
-		    	loadingLayersIcon.setVisibility(View.GONE);
-				if(uploaderAnimator != null)
+				if(uploaderAnimator != null) {
+					uploaderContainerAnimator.cancel();
 					uploaderAnimator.cancel();
+					
+				}
 				handlerRunning = false;
 			}
 			
 		});
 	}
 	
-	protected void buildToggleMenu() {
-		AlertDialog.Builder toggleBuilder = new AlertDialog.Builder(this);
+	protected void buildToggleMenu(SlidingMenu menu) {
         LayoutInflater inflater = this.getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_toggle, null);
+        final View view = inflater.inflate(R.layout.layers_menu_list, null);
         
         final Integer[] layers = {
         		Constants.ROUTES_OVERLAY, 
         		Constants.BIKE_PARKING_OVERLAY, 
         		Constants.BIKE_WORKSHOPS_AND_STORES_OVERLAY,
         		Constants.BIKE_SHARING_OVERLAY,
+        		Constants.CYCLEPATHS_OVERLAY,
         		Constants.TIPS_OVERLAY};
-        
-        TextView menuTitle = (TextView) view.findViewById(R.id.dialog_menu_title);
-        menuTitle.setTypeface(AppBase.getTypefaceStrong());
-        
-        view.findViewById(R.id.dialog_close).setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				toggleLayersMenu.dismiss();
-			}
-        	
-        });
         
 	    final ListView listview = (ListView) view.findViewById(R.id.layers_menu_list_view);
 	    selectedLayersMenuAdapter = new MenuOptionsListAdapter(this, layers);
@@ -225,26 +266,15 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 			@Override
 			public void onItemClick(AdapterView<?> adapterParent, View view, int position, long id) {
 				if(layers[position] == Constants.ROUTES_OVERLAY) {
-					toggleLayersMenu.dismiss();
 					Toasts.showToastWithMessage(MainMapActivity.this, R.string.not_implemented_yet, R.drawable.hand_icon);
 				} else {
 					selectedLayersMenuAdapter.setSelectedPosition(position);
-					toggleLayersMenu.dismiss();
-					toggleLayers(selectedLayersMenuAdapter.getSelectedValuesForPositions());
 				}
 			}
 
 	    });
 
-    	toggleBuilder.setView(view);
-    	toggleLayersMenu = toggleBuilder.create();
-    	toggleLayersMenu.setOnShowListener(new OnShowListener() {
-
-			@Override
-			public void onShow(DialogInterface dialog) {
-			}
-    		
-    	});
+	    menu.setMenu(view);
 	}
 	
 	protected void buildAddMenu() {
@@ -356,13 +386,12 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 	public HashMap<String, String> getCurrentViewport() {
 		HashMap<String, String> viewport = new HashMap<String, String>();
 		
-		LinearLayout mapContainer = (LinearLayout) findViewById(R.id.map_container);
+		RelativeLayout mapContainer = (RelativeLayout) findViewById(R.id.map_container);
 		
 		LatLng leftBottom = (LatLng) map.getProjection().fromScreenLocation(new Point(0, mapContainer.getHeight()));
 		LatLng rightTop = (LatLng) map.getProjection().fromScreenLocation(new Point(mapContainer.getWidth(), 0));
 		viewport.put("sw", String.valueOf(leftBottom.latitude).concat(",").concat(String.valueOf(leftBottom.longitude)));
 		viewport.put("ne", String.valueOf(rightTop.latitude).concat(",").concat(String.valueOf(rightTop.longitude)));
-		Log.i("WIKICLETA", viewport.get("sw"));
 		return viewport;
 	}
 
@@ -383,6 +412,7 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
             	BikesSharing.GetEcobici bikesSharingFetcher = bikesSharing.new GetEcobici(this);
             	bikesSharingFetcher.execute();
             } else if(layer == Constants.TIPS_OVERLAY) {
+            	this.showLoadingState();
             	Tips tips = new Tips();
             	Tips.Get tipsFetcher = tips.new Get(this);
             	tipsFetcher.execute();

@@ -47,7 +47,7 @@ public class NotificationBuilder {
     	initializeNotificationManager();
         // Add as notification  
         mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);  
-        mNotificationManager.notify(id, builder.build());   
+        //mNotificationManager.notify(id, builder.build());   
     }
 	
 	protected void initializeNotificationManager() {

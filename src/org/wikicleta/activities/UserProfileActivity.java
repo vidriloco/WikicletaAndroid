@@ -7,7 +7,7 @@ import org.wikicleta.R;
 import org.wikicleta.adapters.PagerAdapter;
 import org.wikicleta.fragments.user_profile.DraftsFragment;
 import org.wikicleta.fragments.user_profile.ProfileFragment;
-import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
+import org.wikicleta.helpers.SlidingMenuBuilder;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -44,7 +44,7 @@ public class UserProfileActivity extends FragmentActivity implements TabHost.OnT
 		// Intialise ViewPager
 		this.intialiseViewPager();
 
-		SlidingMenuAndActionBarHelper.load(this);
+		SlidingMenuBuilder.loadOnLeft(this);
 
 		String fragment = this.getIntent().getStringExtra("fragment");
 		if (fragment != null)

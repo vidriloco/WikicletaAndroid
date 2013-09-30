@@ -19,6 +19,7 @@
     <color name="actionbar_background_end">#B5C9D6</color>
     <color name="actionbar_background_item_pressed_start">#A2B4BF</color>
     <color name="actionbar_background_item_pressed_end">#A2B4BF</color>
+    <color name="pressed_wikicleta">#CC1f7cff</color>
     
     <color name="route_staged">#FFE0DB</color>
 </resources>

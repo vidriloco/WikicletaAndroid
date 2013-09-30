@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
-    <gradient
-        android:endColor="@color/wikicleta_strong_orange"
-        android:centerColor="@color/wikicleta_light_orange"
-        android:startColor="@color/wikicleta_white"
-        android:angle="-90" />
+    <solid
+        android:color="@color/wikicleta_lightest_orange" />
 </shape>

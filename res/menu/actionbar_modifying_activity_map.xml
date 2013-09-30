@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Theme.wikicleta">
+    
+	<item
+        android:id="@+id/save_button"
+        android:title="@string/none"
+        android:icon="@drawable/save_icon"
+        android:showAsAction="ifRoom"
+        style="@style/Theme.wikicleta"/>
+
+</menu>

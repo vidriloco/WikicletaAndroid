@@ -1,15 +1,14 @@
 package org.wikicleta.activities.parkings;
 
 import org.wikicleta.R;
-import org.wikicleta.activities.common.LocationAwareMapWithControlsActivity;
+import org.wikicleta.activities.common.ModifyingOnMapBaseActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
-import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
+import org.wikicleta.helpers.TypefaceSpan;
 import org.wikicleta.models.Parking;
 import org.wikicleta.routing.Parkings;
 import org.wikicleta.routing.Others.Cruds;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -17,6 +16,8 @@ import com.google.android.gms.maps.model.Marker;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +28,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
+public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 
 	public AlertDialog  formView;
 	
@@ -45,11 +45,10 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.activity_select_poi_on_map);
+		super.onCreate(savedInstanceState);
 		setTheme(R.style.Theme_wikicleta);
 		
 		AppBase.currentActivity = this;
-    	assignToggleActionsForAutomapCenter();
     	
     	// Parking from remote server which can be edit by me
     	parking = (Parking) getIntent().getSerializableExtra("parking");
@@ -58,49 +57,33 @@ public class ModifyingActivity extends LocationAwareMapWithControlsActivity {
     	if(getIntent().getSerializableExtra("id") != null)
     		parking = Parking.load(Parking.class, Long.valueOf(getIntent().getSerializableExtra("id").toString()));
     	
+    	SpannableString s = null;
 		if(parking != null) {
 			// We are on editing mode
 			turnOffLocation();
 			map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(parking.latitude, parking.longitude), 18));
-	    	SlidingMenuAndActionBarHelper.setDefaultFontForActionBarWithTitle(this, R.string.parkings_edit_title);
+	    	s = new SpannableString(this.getResources().getString(R.string.parkings_edit_title));
 		} else {
 			turnOnLocation();
 			parking = new Parking();
 	    	// TODO: Move to cancelable alert
 	    	showToastMessage();
-	    	SlidingMenuAndActionBarHelper.setDefaultFontForActionBarWithTitle(this, R.string.parkings_new_title);
+	    	s = new SpannableString(this.getResources().getString(R.string.parkings_new_title));
 		}
-
-    	((TextView) this.findViewById(R.id.poi_save_text)).setTypeface(AppBase.getTypefaceStrong());
-    	((TextView) this.findViewById(R.id.poi_back_text)).setTypeface(AppBase.getTypefaceStrong());
-
-    	this.findViewById(R.id.poi_back_button).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				finish();
-			}
-    		
-    	});
-    	
-    	this.toolbar = (LinearLayout) this.findViewById(R.id.poi_toolbar);
-
-    	this.findViewById(R.id.poi_finish_button).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				LatLng center = map.getCameraPosition().target;
-
-				// Setting tip coordinates
-				parking.latitude = center.latitude;
-				parking.longitude = center.longitude;
-				displaySaveForm();
-			}
-    		
-    	});
-    	
+		
+        s.setSpan(new TypefaceSpan("Gotham-Bold", AppBase.getTypefaceStrong()), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		getSherlock().getActionBar().setTitle(s);
 	}
 
+	protected void presentSaveForm() {
+		LatLng center = map.getCameraPosition().target;
+		// Setting parking coordinates
+		parking.latitude = center.latitude;
+		parking.longitude = center.longitude;
+		displaySaveForm();
+	}
+	
 	/**
 	 * Methods for saving 
 	 */

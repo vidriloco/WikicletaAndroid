@@ -11,10 +11,8 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.helpers.DialogBuilder;
-import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
+import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.models.User;
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.Action;
 import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -51,7 +49,7 @@ public class RegistrationActivity extends AccessActivity {
 		
 		setContentView(R.layout.activity_registration);
 		
-		SlidingMenuAndActionBarHelper.setDefaultFontForActionBar(this);
+		SlidingMenuBuilder.loadOnLeft(this);
 		
 		TextView registrationHint = (TextView) this.findViewById(R.id.registration_prologue);
 		registrationHint.setTypeface(AppBase.getTypefaceLight());
@@ -83,7 +81,7 @@ public class RegistrationActivity extends AccessActivity {
 					}
 		});
 		
-		ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
+		/*ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
 
         actionBar.addAction(new Action() {
 
@@ -97,7 +95,7 @@ public class RegistrationActivity extends AccessActivity {
 				AppBase.launchActivity(LandingActivity.class);
 			}
         	
-        });
+        });*/
         
         this.alertDialog = DialogBuilder.buildLoadingDialogWithMessage(this, R.string.registering_user).create();
 	}

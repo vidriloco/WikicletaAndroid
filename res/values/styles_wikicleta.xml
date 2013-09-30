@@ -16,12 +16,23 @@
      limitations under the License.
 -->
 
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 	
     <style name="Theme" parent="android:Theme">
 	</style>
 
-    <style name="Theme.wikicleta" parent="@android:style/Theme.Holo.Light.NoActionBar">
+    <style name="Theme.TranslucentActionBar" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/Widget.ActionBar</item>
+    </style>
+
+    <style name="Theme.TranslucentActionBar.ActionBar" />
+
+    <style name="Theme.TranslucentActionBar.ActionBar.Overlay">
+        <item name="android:actionBarStyle">@style/Widget.ActionBar.Transparent</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+    
+    <style name="Theme.wikicleta" parent="@style/Theme.Sherlock.Light">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_wikicleta</item>
         <item name="android:popupMenuStyle">@style/wikicleta_PopupMenu</item>
         <item name="android:dropDownListViewStyle">@style/wikicleta_DropDownListView</item>
@@ -31,11 +42,13 @@
         
     </style>
 
-
-
-    <style name="wikicleta_transparent_ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/ab_transparent_wikicleta</item>
-        <item name="android:progressBarStyle">@style/wikicleta_ProgressBar</item>
+        <item name="android:textColor">@color/wikicleta_blue</item>
+    </style>
+
+    <style name="Widget.ActionBar.Transparent">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="wikicleta_PopupMenu" parent="@android:style/Widget.Holo.Light.ListPopupWindow">

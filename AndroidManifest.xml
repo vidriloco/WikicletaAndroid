@@ -7,7 +7,6 @@
     <permission
         android:name="org.wikicleta.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
-
     
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -152,7 +151,7 @@
         <activity
             android:name="org.wikicleta.activities.tips.ModifyingActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar"
+            android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay"
             android:screenOrientation="portrait"
             android:alwaysRetainTaskState="true" >
             <intent-filter>
@@ -164,7 +163,7 @@
         <activity
             android:name="org.wikicleta.activities.parkings.ModifyingActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar"
+            android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay"
             android:screenOrientation="portrait"
             android:alwaysRetainTaskState="true" >
             <intent-filter>
@@ -176,7 +175,7 @@
         <activity
             android:name="org.wikicleta.activities.workshops.ModifyingActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar"
+            android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay"
             android:screenOrientation="portrait"
             android:alwaysRetainTaskState="true" >
             <intent-filter>

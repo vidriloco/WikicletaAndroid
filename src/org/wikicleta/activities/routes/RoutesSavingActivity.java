@@ -6,14 +6,10 @@ import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.fragments.user_profile.DraftsFragment;
 import org.wikicleta.helpers.NotificationBuilder;
-import org.wikicleta.helpers.SlidingMenuAndActionBarHelper;
+import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.services.routes.RoutesService;
 import org.wikicleta.services.routes.ServiceConstructor;
 import org.wikicleta.services.routes.ServiceListener;
-
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.Action;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Service;
@@ -52,7 +48,7 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
         
         this.notification = new NotificationBuilder(this);
         
-		ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
+		/*ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
 
         actionBar.addAction(new Action() {
 
@@ -78,7 +74,7 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
 				alertDialog.show();
 			}
         	
-        });
+        });*/
         
         findViewById(R.id.save_route).setOnClickListener(
     			new View.OnClickListener() {
@@ -90,7 +86,7 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
     					AppBase.launchActivityWithBundle(UserProfileActivity.class, bundle);
     				}
     	});
-    	SlidingMenuAndActionBarHelper.setDefaultFontForActionBar(this);
+        SlidingMenuBuilder.loadOnLeft(this);
 
 	}
 	

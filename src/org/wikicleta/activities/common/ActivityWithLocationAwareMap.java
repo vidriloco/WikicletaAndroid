@@ -1,17 +1,14 @@
 package org.wikicleta.activities.common;
 
 import org.wikicleta.R;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class ActivityWithLocationAwareMap extends Activity {
+public class ActivityWithLocationAwareMap extends SherlockFragmentActivity {
 	protected GoogleMap map;
 	protected LatLng lastKnownLocation;
 	protected boolean centerMapOnCurrentLocationByDefault;
@@ -24,7 +21,7 @@ public class ActivityWithLocationAwareMap extends Activity {
 	
 	protected void initialize() {
 		this.centerMapOnCurrentLocationByDefault = true;
-		MapFragment mapFragment = (MapFragment) this.getFragmentManager().findFragmentById(R.id.map_fragment);
+		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
 		map = mapFragment.getMap();
         this.setMapToDefaultValues();  
     }
