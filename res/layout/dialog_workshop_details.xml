@@ -111,15 +111,18 @@
 		    android:id="@+id/workshop_contact"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:orientation="vertical"
+		    android:orientation="horizontal"
+			android:baselineAligned="false"
 		    android:background="@color/wikicleta_white"
-		    android:layout_marginTop="5dp">
+		    android:weightSum="2">
 		    <LinearLayout 
 		        android:id="@+id/twitter_buttons_container"
-		        android:gravity="center"
-		        android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:layout_width="0dp"
 	            android:clickable="true"
+				android:padding="10dp"
+	            android:gravity="center"
 		        android:background="@drawable/contact_item_selector">
 		       <TextView
 	           android:id="@+id/workshop_twitter_text"
@@ -128,37 +131,39 @@
 	           android:text="juvenal"
 	           android:drawableLeft="@drawable/twitter_icon"
 	           android:drawablePadding="5dp"
-	           android:padding="10dp"
 	           android:textColor="#203b50"
-	           android:textSize="16sp"
-	            />
+	           android:textSize="16sp" />
 		    </LinearLayout>
 		    <LinearLayout 
 		        android:id="@+id/webpage_buttons_container"
-		        android:gravity="center"
-		        android:layout_width="fill_parent"
+		        android:layout_weight="1"
+		        android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:padding="10dp"
 	            android:clickable="true"
+	            android:gravity="center"
 		        android:background="@drawable/contact_item_selector">
 		       <TextView
 	           	android:id="@+id/workshop_webpage_text"
+	           	android:drawableLeft="@drawable/website_icon"
+	           	android:drawablePadding="5dp"
 	           	android:layout_width="wrap_content"
 	           	android:layout_height="wrap_content"
-	           	android:text="www.paso.com"
+	           	android:text="@string/webpage"
 	           	android:textColor="#203b50"
-	           	android:textSize="13sp" />
+	           	android:textSize="15sp" />
 		    </LinearLayout>
+		</LinearLayout>
 			<LinearLayout 
 		    android:id="@+id/contact_buttons_container"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:orientation="horizontal"
 			android:baselineAligned="false"
-			android:paddingTop="10dp">
+			android:background="@color/wikicleta_white">
 		    <LinearLayout 
 		        android:id="@+id/workshop_phone_container"
-		        android:layout_width="0px"
+		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:layout_height="wrap_content"
 		        android:gravity="center"
@@ -178,7 +183,7 @@
 		    </LinearLayout>
 		    <LinearLayout 
 		        android:id="@+id/workshop_cell_phone_container"
-		        android:layout_width="0px"
+		        android:layout_width="0dp"
 		        android:layout_weight="1"
 		        android:layout_height="wrap_content"
 		        android:gravity="center"
@@ -196,9 +201,6 @@
 		           android:textColor="#203b50"
 		           android:textSize="16sp" />
 		    </LinearLayout>
-		</LinearLayout>
-
-
 		</LinearLayout>
 		
 		<include layout="@layout/common_contributor_info" android:id="@+id/common_contributor_info" />

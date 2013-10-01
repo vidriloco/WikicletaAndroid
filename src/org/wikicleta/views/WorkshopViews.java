@@ -98,7 +98,6 @@ public class WorkshopViews {
         // Hide webpage buttons
         if(workshop.webpage.length() > 0) {
         	TextView webpageText = (TextView) dialog.findViewById(R.id.workshop_webpage_text);
-        	webpageText.setText(workshop.webpage);
         	webpageText.setTypeface(AppBase.getTypefaceLight());
         	
         	LinearLayout webpageButton = (LinearLayout) dialog.findViewById(R.id.webpage_buttons_container);
