@@ -36,7 +36,6 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.SlidingMenu.OnClosedListener;
-import com.slidingmenu.lib.SlidingMenu.OnOpenedListener;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -74,7 +73,7 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 	protected ImageView loadingLayersIcon;
 	protected ImageView rightMenuToggler;
 	
-	protected ImageView shareIcon;
+	protected ImageView returnIcon;
 	
 	protected LinearLayout toggableGroup;
 	
@@ -95,24 +94,12 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 		// Assign icons
 		loadingLayersIcon = (ImageView) this.findViewById(R.id.spinner_indicator);
 		loadingLayersContainer = (LinearLayout) this.findViewById(R.id.mutable_box_container);
-		shareIcon = (ImageView) this.findViewById(R.id.share_button);
+		returnIcon = (ImageView) this.findViewById(R.id.return_button);
 
 		toggableGroup = (LinearLayout) this.findViewById(R.id.toggable_group);
 		
-    	final SlidingMenu leftMenu = SlidingMenuBuilder.loadOnLeft(this);
     	final SlidingMenu rightMenu = SlidingMenuBuilder.loadOnRight(this);
-		rightMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-		leftMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-
-    	this.findViewById(R.id.left_menu_toggler).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				leftMenu.toggle();
-				rightMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-			}
-    		
-    	});
+		rightMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
     	
     			
 		buildToggleMenu(rightMenu);
@@ -122,34 +109,23 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 			@Override
 			public void onClick(View v) {
 				rightMenu.toggle();
-				//leftMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
 			}
 		});
-    	
-    	rightMenu.setOnOpenedListener(new OnOpenedListener() {
-
-			@Override
-			public void onOpened() {
-				//leftMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-			}
-    		
-    	});
     	
     	rightMenu.setOnClosedListener(new OnClosedListener() {
 
 			@Override
 			public void onClosed() {
-				//leftMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 				toggleLayers(selectedLayersMenuAdapter.getSelectedValuesForPositions());
 			}
     		
     	});
 		
-    	shareIcon.setOnClickListener(new OnClickListener() {
+    	returnIcon.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				addMenu.show();
+				finish();
 			}
     		
     	});

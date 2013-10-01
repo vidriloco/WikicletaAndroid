@@ -52,7 +52,7 @@
        android:layout_height="wrap_content"
        android:orientation="horizontal"
        android:layout_alignParentBottom="true"
-       android:paddingBottom="30dp"
+       android:paddingBottom="50dp"
        android:clickable="false" >
 	
       <LinearLayout 
@@ -64,6 +64,14 @@
 		android:layout_marginLeft="15dp"
 		android:alpha="0">
         <ImageView
+          android:id="@+id/return_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="0dp"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/return_button_icon"
+          android:clickable="true" />
+        <ImageView
           android:id="@+id/search_button"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -71,24 +79,7 @@
           android:contentDescription="@string/nothing"
           android:src="@drawable/search_button_icon"
           android:clickable="true" />
-        <ImageView
-          android:id="@+id/share_button"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="0dp"
-          android:contentDescription="@string/nothing"
-          android:src="@drawable/new_button_icon"
-          android:clickable="true" />
       </LinearLayout>
-      
-      <ImageView
-          android:id="@+id/left_menu_toggler"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="0dp"
-          android:contentDescription="@string/nothing"
-          android:src="@drawable/menu_button_icon"
-          android:clickable="true" />
 
       <ImageView
           android:id="@+id/centermap_search_button_enabled"
