@@ -1,0 +1,76 @@
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/comments_and_rankings_buttons_container"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/wikicleta_white"
+	android:orientation="horizontal"
+	android:baselineAligned="false"
+	android:weightSum="3">
+    <LinearLayout 
+        android:id="@+id/negative_rankings_container"
+        android:layout_width="0px"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:background="@drawable/background_selector"
+        android:padding="10dp">
+         	<ImageView 
+         	    android:id="@+id/negative_button_ranks_image"
+         	    android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:src="@drawable/dislike_icon" />
+        <TextView
+          		android:id="@+id/negative_button_ranks_text"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:textColor="@color/wikicleta_blue"
+          		android:textSize="16sp"
+          		android:layout_marginLeft="10dp"
+          		android:gravity="center_horizontal"
+          		android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout 
+        android:id="@+id/positive_rankings_container"
+        android:layout_width="0px"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:clickable="true"
+        android:background="@drawable/background_selector"
+        android:padding="10dp">
+         	<ImageView 
+         	    android:id="@+id/negative_button_ranks_image"
+         	    android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:src="@drawable/like_icon" />
+        <TextView
+          		android:id="@+id/positive_button_ranks_text"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:textColor="@color/wikicleta_orange"
+          		android:textSize="16sp"
+          		android:layout_marginLeft="10dp"
+          		android:gravity="center_horizontal"
+          		android:textStyle="bold" />
+    </LinearLayout>
+    <LinearLayout 
+        android:id="@+id/comments_button"
+        android:layout_width="0px"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:clickable="true"
+		android:background="@drawable/background_selector"
+        android:padding="10dp">
+        <ImageView
+            android:id="@+id/comments_image"
+            android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:padding="5dp"
+          		android:src="@drawable/comment_icon" />
+    </LinearLayout>
+</LinearLayout>

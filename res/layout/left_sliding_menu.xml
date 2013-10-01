@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/menu_title"
             android:alpha="0.5"
-            android:background="@drawable/menu_item_background"
+            android:background="@drawable/background_deselected"
             android:paddingBottom="15dp"
             android:paddingTop="15dp" >
 
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/map_menu_group"
             android:alpha="0.5"
-            android:background="@drawable/menu_item_background"
+            android:background="@drawable/background_deselected"
             android:paddingBottom="15dp"
             android:paddingTop="15dp"
             android:visibility="gone" >
@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/now_menu_group"
             android:alpha="0.5"
-            android:background="@drawable/menu_item_background"
+            android:background="@drawable/background_deselected"
             android:paddingBottom="15dp"
             android:paddingTop="15dp" >
 
@@ -184,7 +184,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/citybiking_menu_group"
             android:alpha="0.5"
-            android:background="@drawable/menu_item_background"
+            android:background="@drawable/background_deselected"
             android:paddingBottom="15dp"
             android:paddingTop="15dp" >
 

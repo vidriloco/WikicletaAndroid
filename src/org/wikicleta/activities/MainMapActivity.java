@@ -90,7 +90,7 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 		assignToggleActionsForAutomapCenter();
 		
 		AppBase.currentActivity = this;
-		    	
+		
 		// Assign icons
 		loadingLayersIcon = (ImageView) this.findViewById(R.id.spinner_indicator);
 		loadingLayersContainer = (LinearLayout) this.findViewById(R.id.mutable_box_container);

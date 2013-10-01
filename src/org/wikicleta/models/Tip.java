@@ -65,6 +65,7 @@ public class Tip extends Model implements Serializable, DraftModel, MarkerInterf
 		this.latitude = lat;
 		this.longitude = lon;
 		this.userId = userId;
+		this.userPicURL = new String();
 	}
 	
 	public Tip(long remoteId, String content, int category, LatLng geopoint, long userId, int likes, long millisC, long millisU, String username) {
@@ -116,7 +117,7 @@ public class Tip extends Model implements Serializable, DraftModel, MarkerInterf
 	}
 	
 	public boolean hasPic() {
-		return this.userPicURL != null;
+		return !this.userPicURL.isEmpty();
 	}
 	
 	public boolean isOwnedByCurrentUser() {

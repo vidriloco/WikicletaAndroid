@@ -7,6 +7,7 @@ import org.wikicleta.helpers.Graphics;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ImageView;
 
 public class Others {
@@ -81,6 +82,7 @@ public class Others {
 		protected void scaleAndRoundForMiniPic(Bitmap result) {
 			Bitmap ownerPicBitmap = Bitmap.createScaledBitmap(result, 70, 70, true);
         	imagePlaceHolder.setImageBitmap(Graphics.getRoundedCornerBitmap(ownerPicBitmap, 35));
+        	Log.e("WIKICLETA", "Image Proc");
 		}
 
 	}

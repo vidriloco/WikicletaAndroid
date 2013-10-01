@@ -74,6 +74,7 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 		this.createdAt = Calendar.getInstance().getTimeInMillis();
 		this.updatedAt = Calendar.getInstance().getTimeInMillis();
 		this.remoteId = 0;
+		this.userPicURL = new String();
 	}
 	
 	public Workshop(long remoteId, String name, String details,
@@ -131,7 +132,7 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 	}
 	
 	public boolean hasPic() {
-		return this.userPicURL != null;
+		return !this.userPicURL.isEmpty();
 	}
 	
 	public boolean isOwnedByCurrentUser() {

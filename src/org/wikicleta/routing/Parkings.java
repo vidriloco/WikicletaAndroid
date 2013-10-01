@@ -116,7 +116,6 @@ public class Parkings {
 					try {
 						items.add(Parking.buildFrom(json));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

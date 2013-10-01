@@ -41,7 +41,7 @@
 		    
 		<LinearLayout android:id="@+id/route_dialog_group"
 	        android:layout_width="fill_parent"
-	        android:background="@drawable/menu_item_selector"
+	        android:background="@drawable/background_selector"
 	        android:layout_height="wrap_content"
 	        android:paddingTop="15dp"
 	        android:paddingBottom="15dp"
@@ -75,7 +75,7 @@
 		    android:id="@+id/tips_dialog_group"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:background="@drawable/menu_item_selector"
+		    android:background="@drawable/background_selector"
 		    android:paddingBottom="15dp"
 		    android:paddingTop="15dp" >
 	
@@ -108,7 +108,7 @@
 		    android:id="@+id/bike_repair_dialog_group"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:background="@drawable/menu_item_selector"
+		    android:background="@drawable/background_selector"
 		    android:paddingBottom="15dp"
 		    android:paddingTop="15dp" >
 	
@@ -139,7 +139,7 @@
 		    android:id="@+id/bike_parking_dialog_group"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:background="@drawable/menu_item_selector"
+		    android:background="@drawable/background_selector"
 		    android:paddingBottom="15dp"
 		    android:paddingTop="15dp" >
 	
@@ -170,7 +170,7 @@
 		    android:id="@+id/bicibus_dialog_group"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:background="@drawable/menu_item_selector"
+		    android:background="@drawable/background_selector"
 		    android:paddingBottom="15dp"
 		    android:paddingTop="15dp"
 		    android:alpha="0.5" >

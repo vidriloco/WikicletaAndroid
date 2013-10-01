@@ -9,7 +9,7 @@
 	<RelativeLayout 
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:background="@drawable/menu_item_selector">
+	    android:background="@drawable/background_selector">
 	    
 	    <ImageView android:id="@+id/dialog_close"
 	        android:contentDescription="@string/none"

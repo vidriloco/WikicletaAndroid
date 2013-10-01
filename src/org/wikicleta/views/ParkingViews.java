@@ -1,29 +1,25 @@
 package org.wikicleta.views;
 
 import java.util.Date;
-
 import org.wikicleta.R;
 import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.activities.parkings.ModifyingActivity;
 import org.wikicleta.common.AppBase;
-import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.models.Parking;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others;
 import org.wikicleta.routing.Others.ImageUpdater;
 import org.wikicleta.routing.Parkings;
-
 import com.ocpsoft.pretty.time.PrettyTime;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,36 +28,35 @@ import android.widget.TextView;
 public class ParkingViews {
 
     public static void buildViewForParking(final Activity activity, final Parking parking) {
-    	
-    	AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        LayoutInflater inflater = activity.getLayoutInflater();
-        final View view = inflater.inflate(R.layout.parking_details, null);
-        
+    	final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.setContentView(R.layout.dialog_parking_details);
         String type = activity.getResources().getString(
         		activity.getResources().getIdentifier(
         				"parkings.kinds.".concat(parking.kindString()), "string", activity.getPackageName()));
         
-        TextView modelNamed = (TextView) view.findViewById(R.id.model_named);
+        TextView modelNamed = (TextView) dialog.findViewById(R.id.model_named);
         modelNamed.setTypeface(AppBase.getTypefaceStrong());
 
-        TextView title = (TextView) view.findViewById(R.id.parking_kind_title);
+        TextView title = (TextView) dialog.findViewById(R.id.parking_kind_title);
         title.setText(type);
         title.setTypeface(AppBase.getTypefaceStrong());
         
-        TextView details = (TextView) view.findViewById(R.id.parking_details);
+        TextView details = (TextView) dialog.findViewById(R.id.parking_details);
         details.setText(parking.details);
         details.setTypeface(AppBase.getTypefaceLight());
         
-        TextView creationLegend = (TextView) view.findViewById(R.id.parking_created_date);
+        TextView creationLegend = (TextView) dialog.findViewById(R.id.creation_date_text);
         
         PrettyTime ptime = new PrettyTime();
         creationLegend.setText(activity.getResources().getString(R.string.updated_on).concat(" ").concat(ptime.format(new Date(parking.updatedAt))));
         creationLegend.setTypeface(AppBase.getTypefaceLight());
         
-        LinearLayout modifyContainer = (LinearLayout) view.findViewById(R.id.modify_button_container);
-        LinearLayout destroyContainer = (LinearLayout) view.findViewById(R.id.delete_button_container);
+        LinearLayout modifyContainer = (LinearLayout) dialog.findViewById(R.id.modify_button_container);
+        LinearLayout destroyContainer = (LinearLayout) dialog.findViewById(R.id.delete_button_container);
         
-        TextView creatorName = (TextView) view.findViewById(R.id.parking_creator);
+        TextView creatorName = (TextView) dialog.findViewById(R.id.contributor_text);
         
         String username = parking.userId == User.id() ? activity.getResources().getString(R.string.you) : parking.username;
         
@@ -69,47 +64,42 @@ public class ParkingViews {
         creatorName.setTypeface(AppBase.getTypefaceStrong());
         
         if(parking.hasPic()) {
-            ImageView ownerPic = (ImageView) view.findViewById(R.id.parking_creator_pic);
-            
+            ImageView ownerPic = (ImageView) dialog.findViewById(R.id.contributor_pic);
             ImageUpdater updater = Others.getImageFetcher();
             updater.setImageAndImageProcessor(ownerPic, Others.ImageProcessor.ROUND_FOR_MINI_USER_PROFILE);
-            updater.execute(NetworkOperations.serverHost.concat(parking.userPicURL));
+            updater.execute(parking.userPicURL);
         }
 
-        ImageView iconImage = (ImageView) view.findViewById(R.id.parking_kind_icon);
+        ImageView iconImage = (ImageView) dialog.findViewById(R.id.parking_kind_icon);
         iconImage.setImageDrawable(activity.getResources().getDrawable(parking.getDrawable()));
         
-        builder.setView(view);
-        final AlertDialog parkingDialog = builder.create();
-        view.findViewById(R.id.dialog_close).setOnClickListener(new OnClickListener(){
+        dialog.findViewById(R.id.dialog_close).setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
-				parkingDialog.dismiss();
+				dialog.dismiss();
 			}
         	
         });
         
-        TextView positiveRankingLegend = (TextView) view.findViewById(R.id.positive_button_ranks_text);
+        // Common actions for POIs
+        TextView positiveRankingLegend = (TextView) dialog.findViewById(R.id.positive_button_ranks_text);
         positiveRankingLegend.setText("100");
         positiveRankingLegend.setTypeface(AppBase.getTypefaceStrong());
 
-        TextView negativeRankingLegend = (TextView) view.findViewById(R.id.negative_button_ranks_text);
+        TextView negativeRankingLegend = (TextView) dialog.findViewById(R.id.negative_button_ranks_text);
         negativeRankingLegend.setText("30");
         negativeRankingLegend.setTypeface(AppBase.getTypefaceStrong());
         
-        TextView commentsListingLegend = (TextView) view.findViewById(R.id.comments_listing_text);
-        commentsListingLegend.setTypeface(AppBase.getTypefaceLight());
-        
         if(parking.isOwnedByCurrentUser()) {
-        	TextView modifyButton = (TextView) view.findViewById(R.id.button_modify);
+        	TextView modifyButton = (TextView) dialog.findViewById(R.id.button_modify);
             modifyButton.setTypeface(AppBase.getTypefaceStrong());
             
             modifyContainer.setOnClickListener(new OnClickListener() {
 
     			@Override
     			public void onClick(View v) {
-    				parkingDialog.dismiss();
+    				dialog.dismiss();
     				Bundle bundle = new Bundle();
     				bundle.putSerializable("parking", parking);
     				AppBase.launchActivityWithBundle(ModifyingActivity.class, bundle);
@@ -119,7 +109,7 @@ public class ParkingViews {
         }
         
         if(parking.isOwnedByCurrentUser()) {
-            TextView destroyButton = (TextView) view.findViewById(R.id.button_delete);
+            TextView destroyButton = (TextView) dialog.findViewById(R.id.button_delete);
             destroyButton.setTypeface(AppBase.getTypefaceStrong());
             
             destroyContainer.setOnClickListener(new OnClickListener() {
@@ -131,9 +121,9 @@ public class ParkingViews {
     				final AlertDialog alert = builder.setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener() {
 
 						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-							parkingDialog.show();
+						public void onClick(DialogInterface dialogLocal, int which) {
+							dialogLocal.dismiss();
+							dialog.show();
 						}
 
     					
@@ -145,7 +135,7 @@ public class ParkingViews {
 							Parkings.Delete parkingDelete = new Parkings().new Delete();
 							parkingDelete.activity = (MainMapActivity) activity;
 							parkingDelete.execute(parking);
-							parkingDialog.dismiss();
+							dialog.dismiss();
 						}
 
     					
@@ -165,7 +155,7 @@ public class ParkingViews {
     	    		});
     				
     				alert.show();
-    				parkingDialog.hide();
+    				dialog.hide();
     			}
             });
         } 
@@ -174,8 +164,8 @@ public class ParkingViews {
         	destroyContainer.setVisibility(View.GONE);
         
         if(!parking.isOwnedByCurrentUser())
-        	view.findViewById(R.id.action_buttons_container).setVisibility(View.GONE);
+        	dialog.findViewById(R.id.action_buttons_container).setVisibility(View.GONE);
         
-        parkingDialog.show();
+        dialog.show();
     }
 }

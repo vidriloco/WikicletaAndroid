@@ -153,7 +153,7 @@ public class AppBase {
 		if(currentActivity == null)
 			return null;
 		
-		if(strong == null) {
+		if(strong == null) { 
 			strong = Typeface.createFromAsset(currentActivity.getAssets(), "GothamRnd-Bold.ttf"); 
 		}
 		return strong;

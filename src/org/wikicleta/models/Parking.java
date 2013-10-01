@@ -61,6 +61,7 @@ public class Parking extends Model implements Serializable, DraftModel, MarkerIn
 		this.createdAt = Calendar.getInstance().getTimeInMillis();
 		this.updatedAt = Calendar.getInstance().getTimeInMillis();
 		this.remoteId = 0;
+		this.userPicURL = new String();
 	}
 	
 	public Parking(long remoteId, String details, int kind, LatLng point, long userId, int likesCount, 
@@ -105,7 +106,7 @@ public class Parking extends Model implements Serializable, DraftModel, MarkerIn
 	}
 	
 	public boolean hasPic() {
-		return this.userPicURL != null;
+		return !this.userPicURL.isEmpty();
 	}
 	
 	public boolean isOwnedByCurrentUser() {
@@ -200,8 +201,9 @@ public class Parking extends Model implements Serializable, DraftModel, MarkerIn
 
 		LatLng point = new LatLng((Double) object.get("lat"), (Double) object.get("lon"));	
 		Parking parking = new Parking(remoteId, details, kind, point, userId, likesCount, hasRoof, createdAt, updatedAt, name);
-		if(owner.containsKey("pic"))
+		if(owner.containsKey("pic")) {
 			parking.userPicURL = (String) owner.get("pic");
+		}
 		return parking;
 	}
 	

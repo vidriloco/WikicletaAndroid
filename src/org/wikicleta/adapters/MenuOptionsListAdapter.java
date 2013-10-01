@@ -73,9 +73,9 @@ public class MenuOptionsListAdapter extends ArrayAdapter<Integer> {
 	    }
 	    
 	    if(selectedPos.contains(Integer.valueOf(position)))
-	    	rowView.setBackgroundResource(R.drawable.menu_item_background_selected);
+	    	rowView.setBackgroundResource(R.drawable.background_selected);
 	    else
-	    	rowView.setBackgroundResource(R.drawable.menu_item_background);
+	    	rowView.setBackgroundResource(R.drawable.background_deselected);
 
 	    return rowView;
 	  }

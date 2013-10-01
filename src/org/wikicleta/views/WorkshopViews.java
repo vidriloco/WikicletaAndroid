@@ -6,7 +6,6 @@ import org.wikicleta.R;
 import org.wikicleta.activities.MainMapActivity;
 import org.wikicleta.activities.workshops.ModifyingActivity;
 import org.wikicleta.common.AppBase;
-import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.models.User;
 import org.wikicleta.models.Workshop;
@@ -20,8 +19,8 @@ import android.app.Dialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -33,35 +32,35 @@ import com.ocpsoft.pretty.time.PrettyTime;
 public class WorkshopViews {
 	
 	public static void buildViewForWorkshop(final Activity activity, final Workshop workshop) {
-    	
-    	AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        LayoutInflater inflater = activity.getLayoutInflater();
-        final View view = inflater.inflate(R.layout.workshop_details, null);
-        
-        TextView modelNamed = (TextView) view.findViewById(R.id.workshop_name);
+    	final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.setContentView(R.layout.dialog_workshop_details);
+                
+        TextView modelNamed = (TextView) dialog.findViewById(R.id.workshop_name);
         modelNamed.setText(workshop.name);
         modelNamed.setTypeface(AppBase.getTypefaceStrong());
 
-        TextView title = (TextView) view.findViewById(R.id.workshop_category);
+        TextView title = (TextView) dialog.findViewById(R.id.workshop_category);
         int workshopCat = workshop.isStore ? R.string.workshop_store : R.string.workshop;
         
         title.setText(activity.getResources().getString(workshopCat));
         title.setTypeface(AppBase.getTypefaceStrong());
         
-        TextView details = (TextView) view.findViewById(R.id.workshop_details);
+        TextView details = (TextView) dialog.findViewById(R.id.workshop_details);
         details.setText(workshop.details);
         details.setTypeface(AppBase.getTypefaceLight());
         
-        TextView creationLegend = (TextView) view.findViewById(R.id.workshop_created_date);
+        TextView creationLegend = (TextView) dialog.findViewById(R.id.creation_date_text);
         
         PrettyTime ptime = new PrettyTime();
         creationLegend.setText(activity.getResources().getString(R.string.updated_on).concat(" ").concat(ptime.format(new Date(workshop.updatedAt))));
         creationLegend.setTypeface(AppBase.getTypefaceLight());
         
-        LinearLayout modifyContainer = (LinearLayout) view.findViewById(R.id.modify_button_container);
-        LinearLayout destroyContainer = (LinearLayout) view.findViewById(R.id.delete_button_container);
+        LinearLayout modifyContainer = (LinearLayout) dialog.findViewById(R.id.modify_button_container);
+        LinearLayout destroyContainer = (LinearLayout) dialog.findViewById(R.id.delete_button_container);
         
-        TextView creatorName = (TextView) view.findViewById(R.id.workshop_creator);
+        TextView creatorName = (TextView) dialog.findViewById(R.id.contributor_text);
         
         String username = workshop.userId == User.id() ? activity.getResources().getString(R.string.you) : workshop.username;
         
@@ -70,20 +69,20 @@ public class WorkshopViews {
         
         // Hide or fill and show open/closed days information
         if(workshop.horary.length() > 0) {
-        	((TextView) view.findViewById(R.id.workshop_horary_value)).setTypeface(AppBase.getTypefaceStrong());
-        	TextView horaryText = (TextView) view.findViewById(R.id.workshop_horary_text);
+        	((TextView) dialog.findViewById(R.id.workshop_horary_value)).setTypeface(AppBase.getTypefaceStrong());
+        	TextView horaryText = (TextView) dialog.findViewById(R.id.workshop_horary_text);
         	horaryText.setTypeface(AppBase.getTypefaceLight());
         	horaryText.setText(workshop.horary);
         } else 
-        	((LinearLayout) view.findViewById(R.id.workshop_horary_container)).setVisibility(View.GONE);
+        	((LinearLayout) dialog.findViewById(R.id.workshop_horary_container)).setVisibility(View.GONE);
         
         // Hide twitter buttons
         if(workshop.twitter.length() > 0) {
-        	TextView twitterText = (TextView) view.findViewById(R.id.workshop_twitter_text);
+        	TextView twitterText = (TextView) dialog.findViewById(R.id.workshop_twitter_text);
         	twitterText.setText(workshop.twitter);
         	twitterText.setTypeface(AppBase.getTypefaceLight());
         	
-        	LinearLayout twitterButton = (LinearLayout) view.findViewById(R.id.twitter_buttons_container);
+        	LinearLayout twitterButton = (LinearLayout) dialog.findViewById(R.id.twitter_buttons_container);
         	twitterButton.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -93,16 +92,16 @@ public class WorkshopViews {
         		
         	});
         } else {
-        	((LinearLayout) view.findViewById(R.id.twitter_buttons_container)).setVisibility(View.GONE);
+        	((LinearLayout) dialog.findViewById(R.id.twitter_buttons_container)).setVisibility(View.GONE);
         }
         
         // Hide webpage buttons
         if(workshop.webpage.length() > 0) {
-        	TextView webpageText = (TextView) view.findViewById(R.id.workshop_webpage_text);
+        	TextView webpageText = (TextView) dialog.findViewById(R.id.workshop_webpage_text);
         	webpageText.setText(workshop.webpage);
         	webpageText.setTypeface(AppBase.getTypefaceLight());
         	
-        	LinearLayout webpageButton = (LinearLayout) view.findViewById(R.id.webpage_buttons_container);
+        	LinearLayout webpageButton = (LinearLayout) dialog.findViewById(R.id.webpage_buttons_container);
         	webpageButton.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -113,39 +112,37 @@ public class WorkshopViews {
         	});
 
         } else {
-        	((LinearLayout) view.findViewById(R.id.webpage_buttons_container)).setVisibility(View.GONE);
+        	((LinearLayout) dialog.findViewById(R.id.webpage_buttons_container)).setVisibility(View.GONE);
         }
         
         
         
         if(workshop.hasPic()) {
-            ImageView ownerPic = (ImageView) view.findViewById(R.id.workshop_creator_pic);
+            ImageView ownerPic = (ImageView) dialog.findViewById(R.id.contributor_pic);
             
             ImageUpdater updater = Others.getImageFetcher();
             updater.setImageAndImageProcessor(ownerPic, Others.ImageProcessor.ROUND_FOR_MINI_USER_PROFILE);
-            updater.execute(NetworkOperations.serverHost.concat(workshop.userPicURL));
+            updater.execute(workshop.userPicURL);
         }
         
-        builder.setView(view);
-        final AlertDialog workshopDialog = builder.create();
-        view.findViewById(R.id.dialog_close).setOnClickListener(new OnClickListener(){
+        dialog.findViewById(R.id.dialog_close).setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
-				workshopDialog.dismiss();
+				dialog.dismiss();
 			}
         	
         });
         
         if(workshop.isOwnedByCurrentUser()) {
-        	TextView modifyButton = (TextView) view.findViewById(R.id.button_modify);
+        	TextView modifyButton = (TextView) dialog.findViewById(R.id.button_modify);
             modifyButton.setTypeface(AppBase.getTypefaceStrong());
             
             modifyContainer.setOnClickListener(new OnClickListener() {
 
     			@Override
     			public void onClick(View v) {
-    				workshopDialog.dismiss();
+    				dialog.dismiss();
     				Bundle bundle = new Bundle();
     				bundle.putSerializable("workshop", workshop);
     				AppBase.launchActivityWithBundle(ModifyingActivity.class, bundle);
@@ -155,7 +152,7 @@ public class WorkshopViews {
         }
         
         if(workshop.isOwnedByCurrentUser()) {
-            TextView destroyButton = (TextView) view.findViewById(R.id.button_delete);
+            TextView destroyButton = (TextView) dialog.findViewById(R.id.button_delete);
             destroyButton.setTypeface(AppBase.getTypefaceStrong());
             
             destroyContainer.setOnClickListener(new OnClickListener() {
@@ -167,9 +164,9 @@ public class WorkshopViews {
     				final AlertDialog alert = builder.setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener() {
 
 						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-							workshopDialog.show();
+						public void onClick(DialogInterface dialogLocal, int which) {
+							dialogLocal.dismiss();
+							dialog.show();
 						}
 
     					
@@ -181,7 +178,7 @@ public class WorkshopViews {
 							Workshops.Delete workshopDelete = new Workshops().new Delete();
 							workshopDelete.activity = (MainMapActivity) activity;
 							workshopDelete.execute(workshop);
-							workshopDialog.dismiss();
+							dialog.dismiss();
 						}
 
     					
@@ -201,7 +198,7 @@ public class WorkshopViews {
     	    		});
     				
     				alert.show();
-    				workshopDialog.hide();
+    				dialog.hide();
     			}
             });
         } 
@@ -210,23 +207,23 @@ public class WorkshopViews {
         	destroyContainer.setVisibility(View.GONE);
         
         if(!workshop.isOwnedByCurrentUser())
-        	view.findViewById(R.id.action_buttons_container).setVisibility(View.GONE);
+        	dialog.findViewById(R.id.action_buttons_container).setVisibility(View.GONE);
         
-        workshopDialog.show();
+        dialog.show();
         
         if(workshop.cellPhone > 0 || workshop.phone > 0) {
-        	TextView cellPhoneText = (TextView) view.findViewById(R.id.workshop_cellphone_text);
+        	TextView cellPhoneText = (TextView) dialog.findViewById(R.id.workshop_cellphone_text);
         	if(workshop.cellPhone == 0)
         		cellPhoneText.setText("---");
         	else {
         		cellPhoneText.setText(String.valueOf(workshop.cellPhone));
-        		LinearLayout buttonCellPhone = (LinearLayout) view.findViewById(R.id.workshop_cell_phone_container);
+        		LinearLayout buttonCellPhone = (LinearLayout) dialog.findViewById(R.id.workshop_cell_phone_container);
 
         		buttonCellPhone.setOnClickListener(new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
-						workshopDialog.hide();
+						dialog.hide();
 						Builder alertBuilder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.question, R.string.call_phone_number_confirmation);
 						alertBuilder.setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener(){
 
@@ -240,10 +237,10 @@ public class WorkshopViews {
 						alertBuilder.setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener(){
 
 							@Override
-							public void onClick(DialogInterface dialog,
+							public void onClick(DialogInterface dialogLocal,
 									int which) {
-								dialog.dismiss();
-								workshopDialog.show();
+								dialogLocal.dismiss();
+								dialog.show();
 							}
 							
 						});
@@ -266,17 +263,17 @@ public class WorkshopViews {
         	}
         	cellPhoneText.setTypeface(AppBase.getTypefaceLight());
         	
-        	TextView phoneText = (TextView) view.findViewById(R.id.workshop_phone_text);
+        	TextView phoneText = (TextView) dialog.findViewById(R.id.workshop_phone_text);
         	if(workshop.phone == 0)
         		phoneText.setText("---");
         	else {
         		phoneText.setText(String.valueOf(workshop.phone));
-        		LinearLayout buttonPhone = (LinearLayout) view.findViewById(R.id.workshop_phone_container);
+        		LinearLayout buttonPhone = (LinearLayout) dialog.findViewById(R.id.workshop_phone_container);
         		buttonPhone.setOnClickListener(new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
-						workshopDialog.hide();
+						dialog.hide();
 						Builder alertBuilder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.question, R.string.call_phone_number_confirmation);
 						alertBuilder.setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener(){
 
@@ -290,10 +287,10 @@ public class WorkshopViews {
 						alertBuilder.setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener(){
 
 							@Override
-							public void onClick(DialogInterface dialog,
+							public void onClick(DialogInterface dialogLocal,
 									int which) {
-								dialog.dismiss();
-								workshopDialog.show();
+								dialogLocal.dismiss();
+								dialog.show();
 							}
 							
 						});
@@ -316,7 +313,7 @@ public class WorkshopViews {
         	}
         	phoneText.setTypeface(AppBase.getTypefaceLight());
         } else {
-        	((LinearLayout) view.findViewById(R.id.contact_buttons_container)).setVisibility(View.GONE);
+        	((LinearLayout) dialog.findViewById(R.id.contact_buttons_container)).setVisibility(View.GONE);
         }
     }
 }
