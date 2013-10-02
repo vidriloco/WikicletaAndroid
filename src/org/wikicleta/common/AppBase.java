@@ -65,6 +65,7 @@ public class AppBase {
 	
 	public static void launchActivityWithBundle(Class<?> activity, Bundle bundle) {
 		Intent intentActivity = new Intent(AppBase.currentActivity, activity);
+		intentActivity.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		if(bundle != null)
 			intentActivity.putExtras(bundle);
 		AppBase.currentActivity.startActivity(intentActivity);
@@ -74,8 +75,6 @@ public class AppBase {
 		Intent intentActivity = new Intent(AppBase.currentActivity, activity);
 		//intentActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		AppBase.currentActivity.startActivity(intentActivity);
-    	AppBase.currentActivity.overridePendingTransition(R.anim.slide_up,
-                R.anim.slide_down);
 	}
 	
 	private static String fetchResource(String resource) {

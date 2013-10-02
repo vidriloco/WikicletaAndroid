@@ -57,4 +57,10 @@ public class RootActivity extends Activity {
         	
         });
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		overridePendingTransition(R.anim.right_to_left, R.anim.left_to_right);
+	}
 }

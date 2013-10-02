@@ -125,7 +125,7 @@ public class DiscoverActivity extends LocationAwareMapWithControlsActivity imple
 
 			@Override
 			public void onClick(View v) {
-				finish();
+				AppBase.launchActivity(RootActivity.class);
 			}
     		
     	});
@@ -167,6 +167,11 @@ public class DiscoverActivity extends LocationAwareMapWithControlsActivity imple
 			}
 			
 		});
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
 	}
 	
 	public void reloadActiveLayers() {
