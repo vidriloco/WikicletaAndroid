@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient_blue"
+    android:orientation="vertical" >
+    
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/menu_background"
+        android:layout_centerVertical="true"
+        android:alpha="0.3"
+        android:contentDescription="@string/none" >
+    </ImageView>
+    
+    <RelativeLayout android:id="@+id/user_info_container"
+		android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingBottom="10dp">
+        
+        <LinearLayout android:id="@+id/user_logged_in"
+            android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:orientation="vertical">
+            <ImageView android:id="@+id/user_pic" 
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_gravity="center"
+        	android:src="@drawable/profile_placeholder_avatar" />
+        	<TextView android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginTop="10dp"
+        	android:textColor="@color/wikicleta_blue"
+        	android:textSize="25sp" />
+        </LinearLayout>
+        
+       	<LinearLayout android:id="@+id/user_not_logged_in"
+       	    android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_centerHorizontal="true"
+        	android:visibility="gone">
+            
+        </LinearLayout>
+    </RelativeLayout>
+    
+    <LinearLayout 
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/main_actions_for_profile"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:baselineAligned="false"
+		android:layout_below="@id/user_info_container"
+		android:weightSum="3">
+	    <LinearLayout 
+	        android:id="@+id/activity_container"
+	        android:layout_width="0px"
+	        android:layout_weight="1"
+	        android:layout_height="match_parent"
+	        android:gravity="center"
+	        android:orientation="horizontal"
+	        android:clickable="true"
+	        android:padding="10dp"
+	        android:background="@drawable/contact_item_selector">
+
+	        <TextView
+          		android:id="@+id/activity_button_text"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:textColor="@color/wikicleta_orange"
+          		android:drawableTop="@drawable/activity_icon"
+          		android:text="@string/activities_in_root"
+          		android:drawablePadding="10dp"
+          		android:textAllCaps="true"
+          		android:textSize="13sp"
+          		android:layout_marginLeft="10dp"
+          		android:gravity="center_horizontal" />
+	    </LinearLayout>
+	
+	    <LinearLayout 
+	        android:id="@+id/achievements_container"
+	        android:layout_width="0px"
+	        android:layout_weight="1"
+	        android:layout_height="match_parent"
+	        android:gravity="center"
+	        android:orientation="horizontal"
+	        android:clickable="true"
+	        android:padding="10dp"
+	        android:background="@drawable/contact_item_selector">
+
+	        <TextView
+          		android:id="@+id/achievements_button_text"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:textColor="@color/wikicleta_orange"
+          		android:drawablePadding="10dp"
+          		android:drawableTop="@drawable/achievements_icon"
+          		android:textSize="13sp"
+          		android:layout_marginLeft="10dp"
+          		android:text="@string/achievements_in_root"
+          		android:gravity="center_horizontal"
+          		android:textAllCaps="true" />
+	    </LinearLayout>
+		<LinearLayout 
+	        android:id="@+id/friends_container"
+	        android:layout_width="0px"
+	        android:layout_weight="1"
+	        android:layout_height="match_parent"
+	        android:gravity="center"
+	        android:orientation="horizontal"
+	        android:clickable="true"
+	        android:padding="10dp"
+	        android:background="@drawable/contact_item_selector">
+
+	        <TextView
+          		android:id="@+id/friends_button_text"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:textColor="@color/wikicleta_orange"
+          		android:drawablePadding="10dp"
+          		android:drawableTop="@drawable/friends_icon"
+          		android:text="@string/friends_in_root"
+          		android:textSize="13sp"
+          		android:layout_marginLeft="10dp"
+          		android:gravity="center_horizontal"
+          		android:textAllCaps="true" />
+	    </LinearLayout>
+	</LinearLayout>
+    <LinearLayout android:id="@+id/white_space"
+       	android:layout_width="fill_parent"
+		android:layout_height="5dp"
+		android:layout_below="@id/main_actions_for_profile"></LinearLayout>
+    <LinearLayout 
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/extra_actions_for_profile"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:baselineAligned="false"
+		android:layout_below="@id/main_actions_for_profile"
+		android:weightSum="2">
+	    <LinearLayout 
+	        android:id="@+id/settings_container"
+	        android:layout_width="0px"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:orientation="horizontal"
+	        android:clickable="true"
+	        android:padding="5dp"
+	        android:background="@drawable/contact_item_selector">
+
+         	<ImageView 
+         	    android:id="@+id/settings_icon"
+         	    android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:src="@drawable/settings_icon" />
+        	<TextView
+          		android:id="@+id/settings_in_root_text"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:textColor="@color/wikicleta_blue"
+          		android:textSize="12sp"
+          		android:layout_marginLeft="10dp"
+          		android:gravity="center_horizontal"
+          		android:text="@string/settings_in_root"
+          		android:textAllCaps="true"
+          		android:textStyle="bold" />
+	    </LinearLayout>
+	
+	    <LinearLayout 
+	        android:id="@+id/messages_container"
+	        android:layout_width="0px"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:orientation="horizontal"
+	        android:clickable="true"
+	        android:padding="5dp"
+	        android:background="@drawable/contact_item_selector">
+
+         	<ImageView 
+         	    android:id="@+id/messages_icon"
+         	    android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:src="@drawable/messages_icon" />
+        	<TextView
+          		android:id="@+id/messages_in_root_text"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:textColor="@color/wikicleta_blue"
+          		android:textSize="12sp"
+          		android:layout_marginLeft="10dp"
+          		android:gravity="center_horizontal"
+          		android:text="@string/messages_in_root"
+          		android:textAllCaps="true"
+          		android:textStyle="bold" />
+	    </LinearLayout>
+	</LinearLayout>
+	<LinearLayout android:id="@+id/separator"
+	    android:layout_height="4dp"
+	    android:layout_width="fill_parent"
+	    android:background="@color/wikicleta_light_blue"
+	    android:layout_below="@id/extra_actions_for_profile"></LinearLayout>
+	<ScrollView 
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_below="@id/separator"
+    	android:layout_alignParentBottom="true">
+    	<include layout="@layout/root_actions_menu" />
+	</ScrollView>
+	
+</RelativeLayout>

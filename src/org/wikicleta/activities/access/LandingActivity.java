@@ -1,7 +1,7 @@
 package org.wikicleta.activities.access;
 
 import org.wikicleta.R;
-import org.wikicleta.activities.MainMapActivity;
+import org.wikicleta.activities.RootActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.SimpleAnimatorListener;
 import org.wikicleta.models.User;
@@ -43,7 +43,7 @@ public class LandingActivity extends Activity {
 	    		@Override
 	    		public void onAnimationEnd(Animator animation) {
 	    			// TODO Auto-generated method stub
-	    			AppBase.launchActivity(MainMapActivity.class);
+	    			AppBase.launchActivity(RootActivity.class);
 	    			finish();
 	    		}
 	    	});
@@ -63,7 +63,7 @@ public class LandingActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				AppBase.launchActivity(MainMapActivity.class);
+				AppBase.launchActivity(RootActivity.class);
 			}
 		});
 		

@@ -60,5 +60,21 @@
 	<string name="timestamp_past_day">el %s pasado</string>
 	
 	<string name="loading_selected_layers">Cargando capas seleccionadas</string>
+	<!-- Root activity -->
+	<string name="activities_in_root">Tu Actividad</string>
+	<string name="achievements_in_root">Tus Logros</string>
+	<string name="friends_in_root">Tus Amigos</string>
+	<string name="settings_in_root">Preferencias</string>
+	<string name="messages_in_root">Mensajes</string>
+	<string name="discover_in_root">Descubre</string>
+	<string name="share_in_root">Comparte</string>
+	<string name="challenges_in_root">Retos</string>
+	<string name="route_tracer_in_root">Trazador de Rutas</string>
+	<string name="events_in_root">Eventos Locales</string>
 	
+	<string name="discover_section_in_root_text">Descubre</string>
+	<string name="share_container_in_root_text">Comparte</string>
+	<string name="challenges_in_root_text">Retos</string>
+	<string name="routes_tracer_in_root_text">Trazador de rutas</string>
+	<string name="local_events_in_root_text">Eventos locales</string>
 </resources>
