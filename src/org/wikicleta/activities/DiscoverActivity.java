@@ -53,7 +53,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class MainMapActivity extends LocationAwareMapWithControlsActivity implements LayersConnectorListener, OnMarkerClickListener {
+public class DiscoverActivity extends LocationAwareMapWithControlsActivity implements LayersConnectorListener, OnMarkerClickListener {
 	
 	protected static int ROUTE_ACTION=0;
 	protected static int PLACE_ACTION=1;
@@ -242,7 +242,7 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 			@Override
 			public void onItemClick(AdapterView<?> adapterParent, View view, int position, long id) {
 				if(layers[position] == Constants.ROUTES_OVERLAY) {
-					Toasts.showToastWithMessage(MainMapActivity.this, R.string.not_implemented_yet, R.drawable.hand_icon);
+					Toasts.showToastWithMessage(DiscoverActivity.this, R.string.not_implemented_yet, R.drawable.hand_icon);
 				} else {
 					selectedLayersMenuAdapter.setSelectedPosition(position);
 				}
@@ -293,7 +293,7 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 				//AppBase.launchActivity(NewRouteActivity.class);
 				//finish();
 				addMenu.dismiss();
-				Toasts.showToastWithMessage(MainMapActivity.this, R.string.not_implemented_yet, R.drawable.hand_icon);
+				Toasts.showToastWithMessage(DiscoverActivity.this, R.string.not_implemented_yet, R.drawable.hand_icon);
 			}
         });
         
@@ -309,7 +309,7 @@ public class MainMapActivity extends LocationAwareMapWithControlsActivity implem
 			@Override
 			public void onClick(View v) {
 				addMenu.dismiss();
-				Toasts.showToastWithMessage(MainMapActivity.this, R.string.not_implemented_yet, R.drawable.hand_icon);
+				Toasts.showToastWithMessage(DiscoverActivity.this, R.string.not_implemented_yet, R.drawable.hand_icon);
 			}
         });
         

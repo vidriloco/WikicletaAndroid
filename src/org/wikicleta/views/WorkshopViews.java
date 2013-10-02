@@ -3,7 +3,7 @@ package org.wikicleta.views;
 import java.util.Date;
 
 import org.wikicleta.R;
-import org.wikicleta.activities.MainMapActivity;
+import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.workshops.ModifyingActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.DialogBuilder;
@@ -175,7 +175,7 @@ public class WorkshopViews {
 						public void onClick(DialogInterface dialog, int which) {
 							dialog.dismiss();
 							Workshops.Delete workshopDelete = new Workshops().new Delete();
-							workshopDelete.activity = (MainMapActivity) activity;
+							workshopDelete.activity = (DiscoverActivity) activity;
 							workshopDelete.execute(workshop);
 							dialog.dismiss();
 						}

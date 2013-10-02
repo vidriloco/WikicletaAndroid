@@ -164,7 +164,6 @@
               android:layout_marginRight="20dp"
               android:gravity="right"
               android:padding="10dp"
-              android:alpha="0.7"
               android:text="@string/local_events_in_root_text"
               android:textColor="@color/wikicleta_orange"
               android:textSize="18sp"

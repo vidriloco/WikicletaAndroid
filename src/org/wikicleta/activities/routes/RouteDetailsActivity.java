@@ -1,7 +1,7 @@
 package org.wikicleta.activities.routes;
 
 import org.wikicleta.R;
-import org.wikicleta.activities.MainMapActivity;
+import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.common.ActivityWithLocationAwareMap;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.NotificationBuilder;
@@ -50,7 +50,7 @@ public class RouteDetailsActivity extends ActivityWithLocationAwareMap implement
         currentRoute = Route.findById(bundle.getLong("routeId"));
         
         if(currentRoute == null)
-        	AppBase.launchActivity(MainMapActivity.class);
+        	AppBase.launchActivity(DiscoverActivity.class);
                
         /*this.mapView = (PinchableMapView) findViewById(R.id.mapview);
         mapView.setBuiltInZoomControls(false);

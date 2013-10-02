@@ -8,7 +8,10 @@ import org.wikicleta.routing.Others.ImageUpdater;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class RootActivity extends Activity {
@@ -44,6 +47,14 @@ public class RootActivity extends Activity {
         ((TextView) findViewById(R.id.local_events_container_text)).setTypeface(AppBase.getTypefaceStrong());
         ((TextView) findViewById(R.id.routes_tracer_container_text)).setTypeface(AppBase.getTypefaceStrong());
 
-        
+        LinearLayout discoverContainer = (LinearLayout) findViewById(R.id.discover_container);
+        discoverContainer.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				AppBase.launchActivity(DiscoverActivity.class);
+			}
+        	
+        });
 	}
 }

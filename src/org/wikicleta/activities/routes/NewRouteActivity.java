@@ -1,7 +1,7 @@
 package org.wikicleta.activities.routes;
 
 import org.wikicleta.R;
-import org.wikicleta.activities.MainMapActivity;
+import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.services.routes.NavigationListener;
@@ -186,7 +186,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 	
 	protected void cancelRecording() {
 		theService.routeRecorder.reset();
-		AppBase.launchActivity(MainMapActivity.class);
+		AppBase.launchActivity(DiscoverActivity.class);
 	}
 	
 	@Override

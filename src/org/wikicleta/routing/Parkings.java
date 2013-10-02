@@ -9,7 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
-import org.wikicleta.activities.MainMapActivity;
+import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.parkings.ModifyingActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.NetworkOperations;
@@ -36,7 +36,7 @@ public class Parkings {
 	public class Delete extends AsyncTask<Parking, Void, Boolean> {
 		
 		Parking parking;
-		public MainMapActivity activity;
+		public DiscoverActivity activity;
 		AlertDialog dialog;
 
 		@Override
@@ -178,7 +178,7 @@ public class Parkings {
 	    			builder = builder.setNeutralButton(activity.getResources().getString(R.string.save_as_draft), new DialogInterface.OnClickListener() {
 	    				public void onClick(DialogInterface dialog,int id) {
 	    					parking.save();
-		    				AppBase.launchActivity(MainMapActivity.class);
+		    				AppBase.launchActivity(DiscoverActivity.class);
 		    				Toasts.showToastWithMessage(activity, R.string.parkings_sent_to_drafts, R.drawable.archive_icon);
 		    	    		activity.finish();
 	    				}
@@ -187,7 +187,7 @@ public class Parkings {
 	    		
 	    		builder.setNegativeButton(activity.getResources().getString(R.string.discard), new DialogInterface.OnClickListener() {
 	    			public void onClick(DialogInterface dialog,int id) {
-	    				AppBase.launchActivity(MainMapActivity.class);
+	    				AppBase.launchActivity(DiscoverActivity.class);
 	    				activity.finish();
 	    			}
 	    		}).setPositiveButton(activity.getResources().getString(R.string.retry), new DialogInterface.OnClickListener() {

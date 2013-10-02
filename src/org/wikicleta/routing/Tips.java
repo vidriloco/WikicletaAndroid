@@ -8,7 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
-import org.wikicleta.activities.MainMapActivity;
+import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.tips.ModifyingActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.NetworkOperations;
@@ -35,7 +35,7 @@ public class Tips {
 	public class Delete extends AsyncTask<Tip, Void, Boolean> {
 		
 		Tip tip;
-		public MainMapActivity activity;
+		public DiscoverActivity activity;
 		AlertDialog dialog;
 
 		@Override
@@ -181,7 +181,7 @@ public class Tips {
 	    			builder = builder.setNeutralButton(activity.getResources().getString(R.string.save_as_draft), new DialogInterface.OnClickListener() {
 	    				public void onClick(DialogInterface dialog,int id) {
 		    				tip.save();
-		    				AppBase.launchActivity(MainMapActivity.class);
+		    				AppBase.launchActivity(DiscoverActivity.class);
 		    				Toasts.showToastWithMessage(activity, R.string.tips_sent_to_drafts, R.drawable.archive_icon);
 		    	    		activity.finish();
 	    				}
@@ -190,7 +190,7 @@ public class Tips {
 	    		
 	    		builder.setNegativeButton(activity.getResources().getString(R.string.discard), new DialogInterface.OnClickListener() {
 	    			public void onClick(DialogInterface dialog,int id) {
-	    				AppBase.launchActivity(MainMapActivity.class);
+	    				AppBase.launchActivity(DiscoverActivity.class);
 	    				activity.finish();
 	    			}
 	    		}).setPositiveButton(activity.getResources().getString(R.string.retry), new DialogInterface.OnClickListener() {

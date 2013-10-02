@@ -2,7 +2,7 @@ package org.wikicleta.helpers;
 
 import org.wikicleta.R;
 import org.wikicleta.activities.NowActivity;
-import org.wikicleta.activities.MainMapActivity;
+import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.activities.access.LoginActivity;
 import org.wikicleta.activities.trips.TripsListActivity;
@@ -74,7 +74,7 @@ public class SlidingMenuBuilder {
 			@Override
 			public void onClick(View v) {
 				animate(v).alpha(0.9f).setDuration(100);
-				AppBase.launchActivity(MainMapActivity.class);
+				AppBase.launchActivity(DiscoverActivity.class);
 			}
         	
         });

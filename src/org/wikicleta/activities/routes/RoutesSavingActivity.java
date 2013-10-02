@@ -1,7 +1,7 @@
 package org.wikicleta.activities.routes;
 
 import org.wikicleta.R;
-import org.wikicleta.activities.MainMapActivity;
+import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.fragments.user_profile.DraftsFragment;

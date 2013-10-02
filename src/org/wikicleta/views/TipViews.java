@@ -3,7 +3,7 @@ package org.wikicleta.views;
 import java.util.Date;
 
 import org.wikicleta.R;
-import org.wikicleta.activities.MainMapActivity;
+import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.tips.ModifyingActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.DialogBuilder;
@@ -135,7 +135,7 @@ public class TipViews {
 						public void onClick(DialogInterface dialog, int which) {
 							dialog.dismiss();
 							Tips.Delete tipsDelete = new Tips().new Delete();
-							tipsDelete.activity = (MainMapActivity) activity;
+							tipsDelete.activity = (DiscoverActivity) activity;
 							tipsDelete.execute(tip);
 							dialog.dismiss();
 						}

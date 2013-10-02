@@ -77,7 +77,7 @@
         
                 
         <activity
-            android:name="org.wikicleta.activities.MainMapActivity"
+            android:name="org.wikicleta.activities.DiscoverActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait"

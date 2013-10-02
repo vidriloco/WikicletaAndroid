@@ -2,7 +2,7 @@ package org.wikicleta.views;
 
 import java.util.Date;
 import org.wikicleta.R;
-import org.wikicleta.activities.MainMapActivity;
+import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.parkings.ModifyingActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.DialogBuilder;
@@ -133,7 +133,7 @@ public class ParkingViews {
 						public void onClick(DialogInterface dialog, int which) {
 							dialog.dismiss();
 							Parkings.Delete parkingDelete = new Parkings().new Delete();
-							parkingDelete.activity = (MainMapActivity) activity;
+							parkingDelete.activity = (DiscoverActivity) activity;
 							parkingDelete.execute(parking);
 							dialog.dismiss();
 						}
