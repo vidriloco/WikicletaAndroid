@@ -3,13 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
-    <ImageView   
-        android:contentDescription="@string/none" 
-        android:layout_width="wrap_content"
-    	android:layout_height="wrap_content" 
-    	android:layout_marginTop="26dp"
-        android:background="@drawable/dialog_background">
-    </ImageView>
+
     <LinearLayout android:id="@+id/menu_layout_overlay"
 	    android:orientation="vertical"
 	    android:layout_height="wrap_content"
@@ -37,38 +31,6 @@
 	           android:padding="10dp"
 	           android:layout_marginRight="20dp"
 	           android:textStyle="bold" />
-		</LinearLayout>
-		    
-		<LinearLayout android:id="@+id/route_dialog_group"
-	        android:layout_width="fill_parent"
-	        android:background="@drawable/background_selector"
-	        android:layout_height="wrap_content"
-	        android:paddingTop="15dp"
-	        android:paddingBottom="15dp"
-	        android:alpha="0.5" >
-	
-	       <ImageView
-	           android:id="@+id/route_img"
-	           android:layout_width="wrap_content"
-	           android:layout_height="wrap_content"
-	           android:layout_marginLeft="50dp"
-	           android:contentDescription="@string/none"
-	           android:src="@drawable/toggle_menu_routes_icon" />
-	
-	       <TextView
-	           android:id="@+id/route_title"
-	           android:layout_width="fill_parent"
-	           android:layout_height="wrap_content"
-	           android:layout_gravity="center_vertical|center_horizontal"
-	           android:layout_marginLeft="20dp"
-	           android:gravity="left"
-	           android:padding="10dp"
-	           android:text="@string/routes_dialog_section"
-	           android:textColor="@color/wikicleta_blue"
-	           android:alpha="0.8"
-	           android:textSize="15sp"
-	           android:textStyle="bold" />
-	
 		</LinearLayout>
 	
 		<LinearLayout
@@ -160,38 +122,6 @@
 		        android:gravity="left"
 		        android:padding="10dp"
 		        android:text="@string/bike_parking_dialog_section"
-		        android:textColor="@color/wikicleta_blue"
-	            android:alpha="0.8"
-		        android:textSize="15sp"
-		        android:textStyle="bold" />
-	
-		</LinearLayout>
-		<LinearLayout
-		    android:id="@+id/bicibus_dialog_group"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:background="@drawable/background_selector"
-		    android:paddingBottom="15dp"
-		    android:paddingTop="15dp"
-		    android:alpha="0.5" >
-	
-		    <ImageView
-		        android:id="@+id/bicibus_img"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_marginLeft="50dp"
-		        android:contentDescription="@string/none"
-		        android:src="@drawable/toogle_menu_bicibus_icon" />
-	
-		    <TextView
-		        android:id="@+id/bicibus_title"
-		        android:layout_width="166dp"
-		        android:layout_height="wrap_content"
-		        android:layout_gravity="center_vertical|center_horizontal"
-		        android:layout_marginLeft="20dp"
-		        android:gravity="left"
-		        android:padding="10dp"
-		        android:text="@string/bicibus_dialog_section"
 		        android:textColor="@color/wikicleta_blue"
 	            android:alpha="0.8"
 		        android:textSize="15sp"

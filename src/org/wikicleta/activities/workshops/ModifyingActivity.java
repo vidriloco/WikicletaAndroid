@@ -6,7 +6,6 @@ import org.wikicleta.activities.common.ModifyingOnMapBaseActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
-import org.wikicleta.helpers.TypefaceSpan;
 import org.wikicleta.models.Tip;
 import org.wikicleta.models.Workshop;
 import org.wikicleta.routing.Others.Cruds;
@@ -19,8 +18,6 @@ import com.google.android.gms.maps.model.Marker;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,23 +61,14 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
     	if(getIntent().getSerializableExtra("id") != null)
     		workshop = Workshop.load(Workshop.class, Long.valueOf(getIntent().getSerializableExtra("id").toString()));
     	
-    	SpannableString s = null;
 		if(workshop != null) {
 			// We are on editing mode
 			turnOffLocation();
 			map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(workshop.latitude, workshop.longitude), 18));
-	    	s = new SpannableString(this.getResources().getString(R.string.workshops_edit_title));
 		} else {
 			turnOnLocation();
 			workshop = new Workshop();
-	    	// TODO: Move to cancelable alert
-	    	showToastMessage();
-
-	    	s = new SpannableString(this.getResources().getString(R.string.workshops_new_title));
-		}    	
-        s.setSpan(new TypefaceSpan("Gotham-Bold", AppBase.getTypefaceStrong()), 0, s.length(),
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		getSherlock().getActionBar().setTitle(s);
+		}
 	}
 	
 	protected void presentSaveForm() {

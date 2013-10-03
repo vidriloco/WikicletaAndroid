@@ -56,6 +56,16 @@ public class RootActivity extends Activity {
 			}
         	
         });
+        
+        LinearLayout shareContainer = (LinearLayout) findViewById(R.id.share_container);
+        shareContainer.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				AppBase.launchActivity(ShareActivity.class);
+			}
+        	
+        });
 	}
 	
 	@Override

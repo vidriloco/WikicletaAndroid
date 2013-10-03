@@ -71,12 +71,12 @@
 	          android:src="@drawable/return_button_icon"
 	          android:clickable="true" />
 	        <ImageView
-	          android:id="@+id/search_button"
+	          android:id="@+id/add_button"
 	          android:layout_width="wrap_content"
 	          android:layout_height="wrap_content"
 	          android:layout_marginLeft="0dp"
 	          android:contentDescription="@string/nothing"
-	          android:src="@drawable/search_button_icon"
+	          android:src="@drawable/geopin_button_icon"
 	          android:clickable="true" />
 	      </LinearLayout>
 	
@@ -85,7 +85,7 @@
 	          android:layout_width="wrap_content"
 	          android:layout_height="wrap_content"
 	          android:layout_alignParentRight="true"
-	          android:layout_marginRight="40dp"
+	          android:layout_marginRight="20dp"
 	          android:clickable="true"
 	          android:contentDescription="@string/nothing"
 	          android:src="@drawable/locator_button_icon_enabled"
@@ -95,18 +95,10 @@
 	          android:layout_width="wrap_content"
 	          android:layout_height="wrap_content"
 	          android:layout_alignParentRight="true"
-	          android:layout_marginRight="40dp"
+	          android:layout_marginRight="20dp"
 	          android:clickable="true"
 	          android:contentDescription="@string/nothing"
 	          android:src="@drawable/locator_button_icon_disabled" />
-	      <ImageView
-	          android:id="@+id/right_menu_toggler"
-	          android:layout_width="wrap_content"
-	          android:layout_height="wrap_content"
-	          android:layout_alignParentRight="true"
-	          android:clickable="true"
-	          android:contentDescription="@string/nothing"
-	          android:src="@drawable/layers_button_icon" />
 	  </RelativeLayout>
 
 </RelativeLayout>

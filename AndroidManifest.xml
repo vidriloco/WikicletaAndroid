@@ -74,10 +74,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-                
+                     
         <activity
             android:name="org.wikicleta.activities.DiscoverActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:screenOrientation="portrait"
+            android:alwaysRetainTaskState="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+		<activity
+            android:name="org.wikicleta.activities.ShareActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait"
@@ -163,7 +174,7 @@
         <activity
             android:name="org.wikicleta.activities.tips.ModifyingActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay"
+            android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait"
             android:alwaysRetainTaskState="true" >
             <intent-filter>
@@ -175,7 +186,7 @@
         <activity
             android:name="org.wikicleta.activities.parkings.ModifyingActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay"
+            android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait"
             android:alwaysRetainTaskState="true" >
             <intent-filter>
@@ -187,7 +198,7 @@
         <activity
             android:name="org.wikicleta.activities.workshops.ModifyingActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay"
+            android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait"
             android:alwaysRetainTaskState="true" >
             <intent-filter>

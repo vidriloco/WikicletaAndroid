@@ -37,13 +37,38 @@
        android:layout_alignParentBottom="true"
        android:paddingBottom="30dp"
        android:clickable="false" >
-
+	
+	<LinearLayout 
+		android:id="@+id/toggable_group"
+        android:layout_width="wrap_content"
+       	android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:layout_toRightOf="@+id/left_menu_toggler"
+		android:layout_marginLeft="15dp">
+        <ImageView
+          android:id="@+id/return_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="0dp"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/return_button_icon"
+          android:clickable="true" />
+        <ImageView
+          android:id="@+id/add_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="0dp"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/geopin_button_icon"
+          android:clickable="true" />
+      </LinearLayout>
+      
       <ImageView
           android:id="@+id/centermap_search_button_enabled"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentRight="true"
-          android:layout_marginRight="10dp"
+          android:layout_marginRight="70dp"
           android:clickable="true"
           android:contentDescription="@string/nothing"
           android:src="@drawable/locator_button_icon_enabled"
@@ -53,10 +78,19 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentRight="true"
-		  android:layout_marginRight="10dp"
+		  android:layout_marginRight="70dp"
           android:clickable="true"
           android:contentDescription="@string/nothing"
           android:src="@drawable/locator_button_icon_disabled" />
+     <ImageView
+          android:id="@+id/save_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+		  android:layout_marginRight="10dp"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/save_button_icon"
+          android:clickable="true" />
   </RelativeLayout>
   
 </RelativeLayout>

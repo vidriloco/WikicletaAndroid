@@ -12,6 +12,7 @@ public class ActivityWithLocationAwareMap extends SherlockFragmentActivity {
 	protected GoogleMap map;
 	protected LatLng lastKnownLocation;
 	protected boolean centerMapOnCurrentLocationByDefault;
+	protected boolean shouldAnimateWithCustomTransition = false;
 	
 	public void onCreate(Bundle savedInstanceState, int layoutID) {
 		super.onCreate(savedInstanceState);
@@ -29,7 +30,8 @@ public class ActivityWithLocationAwareMap extends SherlockFragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		overridePendingTransition(R.anim.right_to_left, R.anim.fade_to_black);
+		if(shouldAnimateWithCustomTransition)
+			overridePendingTransition(R.anim.right_to_left, R.anim.fade_to_black);
 		this.map.setMyLocationEnabled(shouldEnableMyLocationOnResume());
 	}
 	

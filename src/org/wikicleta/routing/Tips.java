@@ -168,8 +168,7 @@ public class Tips {
 	    			Toasts.showToastWithMessage(activity, R.string.tips_uploaded_successfully, R.drawable.success_icon);
 				else if(mode == Cruds.MODIFY)
 					Toasts.showToastWithMessage(activity, R.string.tips_changes_uploaded_successfully, R.drawable.success_icon);
-	    		// Sends to the layers activity
-	    		activity.finish();
+	    		AppBase.launchActivity(DiscoverActivity.class);
 	    	} else {
 	    		activity.formView.hide();
 	    		int message = (mode == Cruds.CREATE) ? R.string.tips_not_commited : R.string.tips_changes_not_commited;

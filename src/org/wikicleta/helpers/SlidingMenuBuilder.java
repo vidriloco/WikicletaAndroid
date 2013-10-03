@@ -9,7 +9,7 @@ import org.wikicleta.activities.trips.TripsListActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.User;
 
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.slidingmenu.lib.SlidingMenu;
 
 import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 import android.app.Activity;
