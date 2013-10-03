@@ -15,7 +15,8 @@ public class Others {
 	public enum ImageProcessor {
 		ROUND_FOR_USER_PROFILE,
 		ROUND_FOR_MINI_USER_PROFILE,
-		ROUND_AT_10
+		ROUND_AT_10,
+		ROUND_AT_30
 	}
 	
 	public enum Cruds {
@@ -67,22 +68,24 @@ public class Others {
 				else if(processorMode == ImageProcessor.ROUND_FOR_USER_PROFILE)
 					this.roundAtDefaultNoScaling(result);
 				else if(processorMode == ImageProcessor.ROUND_AT_10)
-					this.roundAt10(result);
+					this.roundAt(10, result);
+				else if(processorMode == ImageProcessor.ROUND_AT_30)
+					this.roundAt(30, result);
 			}
 	    }
 		
-		protected void roundAt10(Bitmap result) {
-			imagePlaceHolder.setImageBitmap(Graphics.getRoundedCornerBitmap(result, 10));
+		protected void roundAt(int number, Bitmap result) {
+			imagePlaceHolder.setImageBitmap(Graphics.getRoundedCornerBitmap(result, number));
 		}
 		
 		protected void roundAtDefaultNoScaling(Bitmap result) {
-			imagePlaceHolder.setImageBitmap(Graphics.getRoundedBitmap(result));
+			Bitmap ownerPicBitmap = Bitmap.createScaledBitmap(result, 230, 230, true);
+        	imagePlaceHolder.setImageBitmap(Graphics.getRoundedCornerBitmap(ownerPicBitmap, 115));
 		}
 		
 		protected void scaleAndRoundForMiniPic(Bitmap result) {
 			Bitmap ownerPicBitmap = Bitmap.createScaledBitmap(result, 70, 70, true);
         	imagePlaceHolder.setImageBitmap(Graphics.getRoundedCornerBitmap(ownerPicBitmap, 35));
-        	Log.e("WIKICLETA", "Image Proc");
 		}
 
 	}

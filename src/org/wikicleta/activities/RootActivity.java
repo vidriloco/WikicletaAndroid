@@ -38,7 +38,7 @@ public class RootActivity extends Activity {
         ImageView ownerPic = (ImageView) findViewById(R.id.user_pic);
         ImageUpdater updater = Others.getImageFetcher();
         updater.setImageAndImageProcessor(ownerPic, Others.ImageProcessor.ROUND_FOR_USER_PROFILE);
-        updater.execute("https://si0.twimg.com/profile_images/378800000149808077/701cc6552a0c352a53b75a5aa4781c54.jpeg");
+        updater.execute("http://d3j5vwomefv46c.cloudfront.net/photos/large/812789987.png?1380818170");
         
         ((TextView) findViewById(R.id.discover_container_text)).setTypeface(AppBase.getTypefaceStrong());
         ((TextView) findViewById(R.id.share_container_text)).setTypeface(AppBase.getTypefaceStrong());
