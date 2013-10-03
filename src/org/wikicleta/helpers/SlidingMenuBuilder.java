@@ -9,8 +9,9 @@ import org.wikicleta.activities.trips.TripsListActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.User;
 
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+
 import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
-import com.slidingmenu.lib.SlidingMenu;
 import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;

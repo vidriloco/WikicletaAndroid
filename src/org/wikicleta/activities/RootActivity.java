@@ -46,7 +46,7 @@ public class RootActivity extends Activity {
 
         ((TextView) findViewById(R.id.local_events_container_text)).setTypeface(AppBase.getTypefaceStrong());
         ((TextView) findViewById(R.id.routes_tracer_container_text)).setTypeface(AppBase.getTypefaceStrong());
-
+        
         LinearLayout discoverContainer = (LinearLayout) findViewById(R.id.discover_container);
         discoverContainer.setOnClickListener(new OnClickListener() {
 
@@ -61,6 +61,7 @@ public class RootActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		overridePendingTransition(R.anim.right_to_left, R.anim.left_to_right);
+		overridePendingTransition(R.anim.left_to_right, R.anim.fade_to_black);
+
 	}
 }

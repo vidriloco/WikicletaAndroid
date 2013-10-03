@@ -15,8 +15,6 @@ public class ActivityWithLocationAwareMap extends SherlockFragmentActivity {
 	
 	public void onCreate(Bundle savedInstanceState, int layoutID) {
 		super.onCreate(savedInstanceState);
-		overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
-
 		this.setContentView(layoutID);
 		this.initialize();
 	}
@@ -31,6 +29,7 @@ public class ActivityWithLocationAwareMap extends SherlockFragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		overridePendingTransition(R.anim.right_to_left, R.anim.fade_to_black);
 		this.map.setMyLocationEnabled(shouldEnableMyLocationOnResume());
 	}
 	
