@@ -6,6 +6,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
+import org.wikicleta.activities.RootActivity;
 import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
@@ -80,22 +81,6 @@ public class RegistrationActivity extends AccessActivity {
 						attemptSignup();
 					}
 		});
-		
-		/*ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
-
-        actionBar.addAction(new Action() {
-
-			@Override
-			public int getDrawable() {
-				return R.drawable.close_icon;
-			}
-
-			@Override
-			public void performAction(View view) {
-				AppBase.launchActivity(LandingActivity.class);
-			}
-        	
-        });*/
         
         this.alertDialog = DialogBuilder.buildLoadingDialogWithMessage(this, R.string.registering_user).create();
 	}
@@ -210,8 +195,7 @@ public class RegistrationActivity extends AccessActivity {
 			
 			if (success) {
 				if(User.isRegisteredLocally()) {
-					AppBase.launchActivity(UserProfileActivity.class);
-					finish();
+					AppBase.launchActivity(RootActivity.class);
 					showGreetMessage();
 				}
 			} else {

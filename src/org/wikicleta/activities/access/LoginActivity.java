@@ -5,7 +5,7 @@ import java.util.Map;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
-import org.wikicleta.activities.UserProfileActivity;
+import org.wikicleta.activities.RootActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.NetworkOperations;
@@ -175,8 +175,7 @@ public class LoginActivity extends AccessActivity {
 			
 			if (success) {
 				if(User.isRegisteredLocally()) {
-					AppBase.launchActivity(UserProfileActivity.class);
-					finish();
+					AppBase.launchActivity(RootActivity.class);
 					showGreetMessage();
 				}
 			} else {
