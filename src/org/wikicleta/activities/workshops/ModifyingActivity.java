@@ -151,7 +151,7 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 
         LayoutInflater inflater = this.getLayoutInflater();
         
-        final View view = inflater.inflate(R.layout.workshops_activity_saving, null);
+        final View view = inflater.inflate(R.layout.dialog_workshop_save, null);
         
         TextView title = (TextView) view.findViewById(R.id.dialog_menu_title);
         title.setTypeface(AppBase.getTypefaceStrong());

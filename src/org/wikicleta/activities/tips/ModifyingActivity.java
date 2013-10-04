@@ -109,7 +109,7 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 
         LayoutInflater inflater = this.getLayoutInflater();
         
-        View view = inflater.inflate(R.layout.tips_activity_saving, null);
+        View view = inflater.inflate(R.layout.dialog_tip_save, null);
         
         TextView title = (TextView) view.findViewById(R.id.dialog_menu_title);
         title.setTypeface(AppBase.getTypefaceStrong());

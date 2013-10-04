@@ -7,8 +7,7 @@
    	<LinearLayout 
 		    android:id="@+id/titlebar"
 			    android:layout_width="fill_parent"
-			    android:layout_height="wrap_content"
-			    android:background="@drawable/gradient_orange">
+			    android:layout_height="wrap_content">
 			    
 			    <ImageView android:id="@+id/dialog_close"
 			        android:contentDescription="@string/none"
@@ -28,12 +27,6 @@
 		           android:padding="10dp"
 		           android:layout_marginRight="20dp"
 		           android:textStyle="bold" />
-	</LinearLayout>
-	<LinearLayout
-	   android:id="@+id/separator"
-	   android:layout_width="match_parent"
-	   android:layout_height="1dp"
-	   android:background="@color/wikicleta_stronger_orange">
 	</LinearLayout>
 	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="fill_parent"

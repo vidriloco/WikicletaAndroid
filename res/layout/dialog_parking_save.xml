@@ -8,8 +8,7 @@
 	<LinearLayout 
 	    android:id="@+id/titlebar"
 		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:background="@drawable/gradient_orange">
+		    android:layout_height="wrap_content">
 		    
 		    <ImageView android:id="@+id/dialog_close"
 		        android:contentDescription="@string/none"
@@ -30,19 +29,12 @@
 	           android:layout_marginRight="20dp"
 	           android:textStyle="bold" />
 	</LinearLayout>
-	<LinearLayout
-	   android:id="@+id/separator"
-       android:layout_width="match_parent"
-       android:layout_height="1dp"
-       android:layout_below="@+id/titlebar"
-       android:background="@color/wikicleta_stronger_orange">
-    </LinearLayout>
 
 	<LinearLayout
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:orientation="vertical"
-       android:layout_below="@+id/separator"
+       android:layout_below="@+id/titlebar"
        android:layout_marginTop="20dp"
        android:padding="10dp" >
 		       
