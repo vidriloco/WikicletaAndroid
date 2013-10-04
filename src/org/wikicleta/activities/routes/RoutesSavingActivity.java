@@ -38,7 +38,7 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
 		
         AppBase.currentActivity = this;
         
-        this.setContentView(R.layout.activity_routes_saving);
+        this.setContentView(R.layout.dialog_route_save);
         
         this.nameView = (EditText) findViewById(R.id.route_name);
         this.tagsView = (EditText) findViewById(R.id.route_tags);

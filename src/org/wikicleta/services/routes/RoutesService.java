@@ -72,7 +72,7 @@ public class RoutesService extends LocationAwareService {
 		super.onLocationChanged(location);
 		this.routeRecorder.addLocation(location);
 		this.notifyFieldsUpdated();
-		
+		Log.e("WIKICLETA", "Time from loc: " + String.valueOf(this.routeRecorder.seconds));
 		if(this.boundActivity instanceof NavigationListener)
 			((NavigationListener) this.boundActivity).locationUpdated();
 	}

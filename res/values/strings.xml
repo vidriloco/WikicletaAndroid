@@ -47,6 +47,7 @@
 			
 	<!-- Strings for routes -->
 	<string name="routes_title">Rutas</string>
+	<string name="save_route">Guardar ruta</string>
 	<string name="routes_unsynced_title">%d rutas sin sincronizar</string>
 	<string name="route_unsynced_title">1 ruta sin sincronizar</string>
 	<string name="empty_routes_title">No has compartido ninguna ruta aún</string>
@@ -54,8 +55,8 @@
 	<string name="routes_syncing_title">Sincronizando rutas</string>
 	
 	<string name="routes_saving_title">Guardar Ruta</string>
-	<string name="routes_recording_paused">Captura de ruta en pausa</string>
-	<string name="routes_recording_resumed">Capturando ruta</string>
+	<string name="routes_recording_paused">Trazado en pausa</string>
+	<string name="routes_recording_resumed">Trazando ruta</string>
 	<string name="routes_ready_for_recording">Puedes empezar a capturar tu ruta ahora</string>
 	<string name="routes_stats_speed">Velocidad</string>
 	<string name="routes_stats_time">Tiempo</string>

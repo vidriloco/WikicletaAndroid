@@ -21,8 +21,7 @@ public class RouteRecorder {
 	public ArrayList<Instant> coordinateVector;
 	protected boolean tracking;
 	
-	protected long startTime;
-	protected long endTime;
+	public int seconds;
 	protected Location lastLocation;
 	
 	protected float averageSpeed = 0;
@@ -51,7 +50,6 @@ public class RouteRecorder {
 	}
 	
 	public void addLocation(Location location) {
-		Log.i("Wikicleta", "Adding location");
 		if(tracking) {
 			// calculate average speed
 			float speed = (float) location.getSpeed()*3600 / 1000;
@@ -81,7 +79,7 @@ public class RouteRecorder {
 	}
 	
 	public void reset() {
-		startTime = 0;
+		seconds = 0;
 		this.coordinateVector.clear();
 		averageSpeed = 0;
 		accumulatedDistance = 0;
@@ -114,19 +112,19 @@ public class RouteRecorder {
 		timer.purge();
 		
 		if(tracking) {			
-			if(startTime == 0)
+			/*if(startTime == 0)
 				startTime = System.currentTimeMillis();
 			else
-				startTime += System.currentTimeMillis()-endTime;
+				startTime += System.currentTimeMillis()-endTime;*/
 			reScheduleTask();
 		} else {
-            endTime = System.currentTimeMillis();
+            //endTime = System.currentTimeMillis();
 		}
 	} 
 	
 	
 	private long overallElapsedTime() {
-		return System.currentTimeMillis() - startTime;
+		return seconds*1000;
 	}
 	
 	private void reScheduleTask() {
@@ -135,7 +133,7 @@ public class RouteRecorder {
 		this.timer = new Timer();
 		this.timeUpdater = new TimeUpdaterTask();
 		if(!isPaused()) {
-			timer.schedule(timeUpdater, 100);
+			timer.schedule(timeUpdater, 1000);
 		}
 	}
 	
@@ -143,10 +141,14 @@ public class RouteRecorder {
 
 		@Override
 		public void run() {
-		    timeTextValue = Formatters.millisecondsToTime(overallElapsedTime());
-		    
-		    routesService.updateTimingDisplay();
-		    reScheduleTask();
+			if(!isPaused()) {
+				seconds += 1;
+		    	timeTextValue = Formatters.millisecondsToTime(overallElapsedTime());
+				Log.i("Wikicleta","Tiempo: "+timeTextValue);
+				Log.i("Wikicleta", String.valueOf(coordinateVector.size()));
+		    	routesService.updateTimingDisplay();
+		    	reScheduleTask();
+			}
 		}
     }
 }

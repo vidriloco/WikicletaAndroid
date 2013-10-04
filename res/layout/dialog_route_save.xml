@@ -1,15 +1,40 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".LoginActivity" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
+    <LinearLayout 
+	    android:id="@+id/titlebar"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:background="@color/wikicleta_white">
+		    
+		    <ImageView android:id="@+id/dialog_close"
+		        android:contentDescription="@string/none"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:src="@drawable/dialog_close_icon"/>
+		    
+		    <TextView
+	           android:id="@+id/dialog_menu_title"
+	           android:layout_width="fill_parent"
+	           android:layout_height="wrap_content"
+	           android:gravity="right"
+	           android:layout_gravity="center_vertical"
+	           android:text="@string/save_route"
+	           android:textColor="@color/wikicleta_blue"
+	           android:textSize="20sp"
+	           android:padding="10dp"
+	           android:layout_marginRight="20dp"
+	           android:textStyle="bold" />
+	</LinearLayout>
+    
 	<ScrollView
         android:id="@+id/routes_saving_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="53dp" >
+        android:layout_height="match_parent" >
 
 		   <LinearLayout
-		       style="@style/LoginFormContainer"
 		       android:layout_width="match_parent"
 		       android:layout_height="292dp"
 		       android:background="#fff"
@@ -61,4 +86,4 @@
         	</LinearLayout>
         	        
     </ScrollView>
-</merge>
+</LinearLayout>

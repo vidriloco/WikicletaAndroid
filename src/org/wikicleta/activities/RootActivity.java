@@ -1,6 +1,7 @@
 package org.wikicleta.activities;
 
 import org.wikicleta.R;
+import org.wikicleta.activities.routes.NewRouteActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others;
@@ -63,6 +64,16 @@ public class RootActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				AppBase.launchActivity(ShareActivity.class);
+			}
+        	
+        });
+        
+        LinearLayout routesTracerContainer = (LinearLayout) findViewById(R.id.routes_tracer_container);
+        routesTracerContainer.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				AppBase.launchActivity(NewRouteActivity.class);
 			}
         	
         });
