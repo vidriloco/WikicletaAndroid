@@ -7,7 +7,6 @@ import org.wikicleta.helpers.Graphics;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.ImageView;
 
 public class Others {

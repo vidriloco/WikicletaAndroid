@@ -108,7 +108,7 @@
 	<string name="tips_not_commited">No fué posible subir este tip. ¿Qué quieres hacer con él?</string>
 	<string name="tips_form_content_hint">Contenido del tip</string>
 	<string name="tips_category_select_instruction">¿Qué tipo de tip deseas compartir?</string>
-	<string name="tips_input_length_min_error">El contenido debe ser de al menos 60 caracteres</string>
+	<string name="tips_input_length_min_error">El contenido debe ser de al menos 30 caracteres</string>
 	<string name="tips_input_length_max_error">El contenido debe ser a lo más de 250 caracteres</string>
 	<string name="tips_input_empty">El contenido no puede estar vacío</string>
 	<string name="tips_uploading">Subiendo tu tip &#8230;</string>
@@ -131,7 +131,7 @@
 	<string name="parkings_did_not_deleted">El bici-estacionamiento que compartiste no pudo ser eliminado, intenta nuevamente</string>
 	<string name="parkings_sent_to_drafts">Este bici-estacionamiento ha sido guardado como borrador</string>
 	
-	<string name="parkings_input_length_min_error">Los detalles deben de ser al menos de 60 caracteres</string>
+	<string name="parkings_input_length_min_error">Los detalles deben de ser al menos de 30 caracteres</string>
 	<string name="parkings_input_length_max_error">Los detalles no deben tener más de 250 caracteres</string>
 	<string name="parkings_input_empty">Deja algún detalle sobre este bici-estacionamiento</string>
 	
@@ -166,12 +166,12 @@
 	<string name="workshops_form_horary_hint">Horario</string>
 	<string name="workshops_form_extra_hint">Toca aquí para compartir información adicional sobre este taller/tienda</string>
 	<string name="workshops_bad_input_twitter_format">No debe llevar el símbolo "@"</string>
-	<string name="workshops_input_length_min_error">Los detalles deben de ser al menos de 60 caracteres</string>
+	<string name="workshops_input_length_min_error">Los detalles deben de ser al menos de 30 caracteres</string>
 	<string name="workshops_input_length_max_error">Los detalles no deben tener más de 250 caracteres</string>
 	<string name="workshops_input_empty">Deja algún detalle sobre este taller/tienda</string>
 	<string name="workshops_input_empty_name">Es necesario un nombre para este taller/tienda</string>
-	<string name="workshops_input_length_min_error_name">Los detalles deben de ser al menos de 8 caracteres</string>
-	<string name="workshops_input_length_max_error_name">Los detalles no deben tener más de 30 caracteres</string>
+	<string name="workshops_input_length_min_error_name">El nombre está muy corto</string>
+	<string name="workshops_input_length_max_error_name">El nombre no debe tener más de 30 caracteres</string>
 	
 	<string name="trips_updating_cities">Descargando paseos en ciudades</string>
 	<string name="trips_list_title">Pasea por tu ciudad</string>

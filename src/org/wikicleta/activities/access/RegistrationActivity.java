@@ -7,7 +7,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
 import org.wikicleta.activities.RootActivity;
-import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.NetworkOperations;
