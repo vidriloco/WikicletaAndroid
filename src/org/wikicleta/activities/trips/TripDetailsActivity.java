@@ -7,7 +7,6 @@ import org.wikicleta.activities.common.LocationAwareMapWithControlsActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.DialogBuilder;
-import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.models.MarkerInterface;
 import org.wikicleta.models.Segment;
 import org.wikicleta.models.Trip;
@@ -68,8 +67,6 @@ public class TripDetailsActivity extends LocationAwareMapWithControlsActivity im
 
         cityName.setText(trip.city.name);
         daysToEvent.setText(trip.daysToEvent);
-        
-        SlidingMenuBuilder.loadOnLeft(this);
         
 		dialog = DialogBuilder.buildLoadingDialogWithMessage(TripDetailsActivity.this, R.string.trip_fetching_details).create();
 		dialog.show();

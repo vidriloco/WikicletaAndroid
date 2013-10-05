@@ -10,7 +10,6 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.helpers.DialogBuilder;
-import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.models.User;
 
 import android.app.AlertDialog;
@@ -48,7 +47,6 @@ public class LoginActivity extends AccessActivity {
 		setContentView(R.layout.activity_login);
 		AppBase.currentActivity = this;
 		
-		SlidingMenuBuilder.loadOnLeft(this);
     	/*ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
 
         actionBar.addAction(new Action() {

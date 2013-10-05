@@ -1,19 +1,15 @@
 package org.wikicleta.activities.routes;
 
 import org.wikicleta.R;
-import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.fragments.user_profile.DraftsFragment;
 import org.wikicleta.helpers.NotificationBuilder;
-import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.services.routes.RoutesService;
 import org.wikicleta.services.routes.ServiceConstructor;
 import org.wikicleta.services.routes.ServiceListener;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Service;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -86,7 +82,6 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
     					AppBase.launchActivityWithBundle(UserProfileActivity.class, bundle);
     				}
     	});
-        SlidingMenuBuilder.loadOnLeft(this);
 
 	}
 	

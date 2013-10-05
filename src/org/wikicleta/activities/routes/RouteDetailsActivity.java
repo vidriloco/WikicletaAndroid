@@ -5,7 +5,6 @@ import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.common.ActivityWithLocationAwareMap;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.NotificationBuilder;
-import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.models.Route;
 import org.wikicleta.services.routes.RoutesService;
 import org.wikicleta.services.routes.ServiceConstructor;
@@ -51,33 +50,6 @@ public class RouteDetailsActivity extends ActivityWithLocationAwareMap implement
         
         if(currentRoute == null)
         	AppBase.launchActivity(DiscoverActivity.class);
-               
-        /*this.mapView = (PinchableMapView) findViewById(R.id.mapview);
-        mapView.setBuiltInZoomControls(false);
-        
-        drawRoutePath();
-        drawControls();
-    	
-        this.setMapToLocation(currentRoute.getStartingLocation());
-        this.notification = new NotificationBuilder(this);
-        */
-        SlidingMenuBuilder.loadOnLeft(this, "Detalles de ruta");
-        
-        /*ActionBar actionBar = (ActionBar) this.findViewById(R.id.actionbar);
-
-        actionBar.addAction(new Action() {
-
-            @Override
-            public int getDrawable() {
-            	return R.drawable.arrow_back_simple;
-            }
-
-            @Override
-            public void performAction(View view) {
-            	onBackPressed();
-            }
-                
-        });*/
         
         TextView textView = (TextView) this.findViewById(R.id.route_name);
         textView.setText(currentRoute.name);

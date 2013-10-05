@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import org.wikicleta.R;
 import org.wikicleta.adapters.trips.CitiesListAdapter;
 import org.wikicleta.common.AppBase;
-import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.models.City;
 import org.wikicleta.routing.CityTrips;
 import com.nineoldandroids.animation.ObjectAnimator;
@@ -30,7 +29,6 @@ public class TripsListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.trips_list_activity);
 		AppBase.currentActivity = this;
-    	SlidingMenuBuilder.loadOnLeft(this, this.getResources().getString(R.string.trips_list_title));
 
     	TextView citiesText = (TextView) this.findViewById(R.id.cities_text);
     	citiesText.setTypeface(AppBase.getTypefaceStrong());

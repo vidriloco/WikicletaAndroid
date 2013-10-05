@@ -11,7 +11,6 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.helpers.DialogBuilder;
-import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.models.User;
 import android.app.AlertDialog;
 import android.os.AsyncTask;
@@ -48,9 +47,7 @@ public class RegistrationActivity extends AccessActivity {
 		AppBase.currentActivity = this;
 		
 		setContentView(R.layout.activity_registration);
-		
-		SlidingMenuBuilder.loadOnLeft(this);
-		
+				
 		TextView registrationHint = (TextView) this.findViewById(R.id.registration_prologue);
 		registrationHint.setTypeface(AppBase.getTypefaceLight());
     	

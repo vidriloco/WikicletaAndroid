@@ -58,7 +58,6 @@ public class DiscoverActivity extends LocationAwareMapWithControlsActivity imple
 	protected static int BICIBUS_ACTION=3;
 	protected static int HIGHLIGHT_ACTION=4;
 	
-	
 	MenuOptionsListAdapter selectedLayersMenuAdapter;
 	
 	protected boolean userIsPanning;
