@@ -35,14 +35,13 @@ public class LocationAwareMapWithMarkersActivity extends LocationAwareMapWithCon
 	protected Handler handler = new Handler();
 	protected boolean handlerRunning = false;
 	protected HashMap<Marker, MarkerInterface> markers;
-	
+
 	@SuppressLint("UseSparseArrays")
 	@Override
 	public void onCreate(Bundle savedInstanceState, int layoutID) {
 		shouldAnimateWithCustomTransition = true;
 		super.onCreate(savedInstanceState, layoutID);
     	
-		assignToggleActionsForAutomapCenter();
 		AppBase.currentActivity = this;
 		
 		// Assign icons

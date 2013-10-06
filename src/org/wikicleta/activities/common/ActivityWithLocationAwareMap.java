@@ -48,7 +48,7 @@ public class ActivityWithLocationAwareMap extends SherlockFragmentActivity {
 	protected void setMapToDefaultValues() {
 		map.getUiSettings().setZoomControlsEnabled(false);
 		map.getUiSettings().setZoomGesturesEnabled(true);
-		map.animateCamera(CameraUpdateFactory.newLatLngZoom(this.getDefaultLocation(), 18.0f));
+		map.animateCamera(CameraUpdateFactory.newLatLngZoom(getCurrentOrDefaultLocation(), 18.0f));
    	 	map.getUiSettings().setMyLocationButtonEnabled(false);
 	}
 	

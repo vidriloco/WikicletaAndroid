@@ -48,7 +48,7 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 	protected ImageView rightMenuToggler;
 	protected ImageView returnIcon;
 	protected LinearLayout toggableGroup;
-	
+		
 	@SuppressLint("UseSparseArrays")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +82,7 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
     		
     	});
 		
+    	
     	returnIcon.setOnClickListener(new OnClickListener() {
 
 			@Override

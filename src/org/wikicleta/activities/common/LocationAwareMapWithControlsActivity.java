@@ -12,9 +12,9 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 
+import android.annotation.SuppressLint;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +30,16 @@ public class LocationAwareMapWithControlsActivity extends ActivityWithLocationAw
 	protected LinearLayout toolbar;
 	protected LocationClient locationClient;
 	protected LocationRequest locationRequest;
-	 
+	protected boolean firstLocationReceived;
+
+	@SuppressLint("UseSparseArrays")
+	@Override
+	public void onCreate(Bundle savedInstanceState, int layoutID) {
+		super.onCreate(savedInstanceState, layoutID);
+		assignToggleActionsForAutomapCenter();
+    	turnOnLocation();
+	}
+	
 	protected void assignToggleActionsForAutomapCenter() {
 		centerOnMapOff = (ImageView) findViewById(R.id.centermap_search_button_disabled);
     	centerOnMapOn = (ImageView) findViewById(R.id.centermap_search_button_enabled);
@@ -104,7 +113,12 @@ public class LocationAwareMapWithControlsActivity extends ActivityWithLocationAw
 	@Override
 	public void onLocationChanged(Location location) {
 		map.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
-		Log.e("WIKICLETA", "Updated");
+		lastKnownLocation = new LatLng(location.getLatitude(), location.getLongitude());
+		if(!this.firstLocationReceived) {
+			firstLocationReceived = true;
+			this.turnOffLocation();
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(getCurrentOrDefaultLocation(), 18.0f));
+		}
 	}
 
 	@Override

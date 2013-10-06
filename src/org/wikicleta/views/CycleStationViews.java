@@ -20,7 +20,7 @@ public class CycleStationViews  {
     	Activity activity = listener.getActivity();
         AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
-        final View view = inflater.inflate(R.layout.bike_sharing_station_details, null);
+        final View view = inflater.inflate(R.layout.dialog_cycle_station_details, null);
         
         TextView bikeSharingTitle = (TextView) view.findViewById(R.id.bike_sharing_title);
         bikeSharingTitle.setTypeface(AppBase.getTypefaceStrong());

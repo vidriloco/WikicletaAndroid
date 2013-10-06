@@ -21,7 +21,6 @@ public class ModifyingOnMapBaseActivity extends LocationAwareMapWithControlsActi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_select_poi_on_map);
-    	assignToggleActionsForAutomapCenter();
     	loadActionButtons();
     	
 		saveIcon = (ImageView) this.findViewById(R.id.save_button);
