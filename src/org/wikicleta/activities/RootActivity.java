@@ -77,6 +77,16 @@ public class RootActivity extends Activity {
 			}
         	
         });
+        
+        LinearLayout eventsContainer = (LinearLayout) findViewById(R.id.local_events_container);
+        eventsContainer.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				AppBase.launchActivity(EventsActivity.class);
+			}
+        	
+        });
 	}
 	
 	@Override

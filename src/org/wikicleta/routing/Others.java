@@ -15,7 +15,8 @@ public class Others {
 		ROUND_FOR_USER_PROFILE,
 		ROUND_FOR_MINI_USER_PROFILE,
 		ROUND_AT_10,
-		ROUND_AT_30
+		ROUND_AT_30,
+		NONE
 	}
 	
 	public enum Cruds {
@@ -70,6 +71,8 @@ public class Others {
 					this.roundAt(10, result);
 				else if(processorMode == ImageProcessor.ROUND_AT_30)
 					this.roundAt(30, result);
+				else
+					imagePlaceHolder.setImageBitmap(result);
 			}
 	    }
 		

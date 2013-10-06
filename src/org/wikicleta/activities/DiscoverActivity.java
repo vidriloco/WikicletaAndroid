@@ -3,14 +3,12 @@ package org.wikicleta.activities;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.wikicleta.R;
-import org.wikicleta.activities.common.LocationAwareMapWithControlsActivity;
+import org.wikicleta.activities.common.LocationAwareMapWithMarkersActivity;
 import org.wikicleta.adapters.MenuOptionsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.Toasts;
-import org.wikicleta.helpers.SimpleAnimatorListener;
 import org.wikicleta.helpers.SlidingMenuBuilder;
-import org.wikicleta.layers.common.LayersConnectorListener;
 import org.wikicleta.models.CycleStation;
 import org.wikicleta.models.MarkerInterface;
 import org.wikicleta.models.Parking;
@@ -24,22 +22,11 @@ import org.wikicleta.views.CycleStationViews;
 import org.wikicleta.views.ParkingViews;
 import org.wikicleta.views.TipViews;
 import org.wikicleta.views.WorkshopViews;
-import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.ObjectAnimator;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.SlidingMenu.OnClosedListener;
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -48,9 +35,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
-public class DiscoverActivity extends LocationAwareMapWithControlsActivity implements LayersConnectorListener, OnMarkerClickListener {
+public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 	
 	protected static int ROUTE_ACTION=0;
 	protected static int PLACE_ACTION=1;
@@ -59,37 +45,17 @@ public class DiscoverActivity extends LocationAwareMapWithControlsActivity imple
 	protected static int HIGHLIGHT_ACTION=4;
 	
 	MenuOptionsListAdapter selectedLayersMenuAdapter;
-	
-	protected boolean userIsPanning;
-	
-	private ObjectAnimator uploaderAnimator;
-	private ObjectAnimator uploaderContainerAnimator;
-	protected LinearLayout loadingLayersContainer;
-	protected ImageView loadingLayersIcon;
 	protected ImageView rightMenuToggler;
-	
 	protected ImageView returnIcon;
-	
 	protected LinearLayout toggableGroup;
-	
-	Handler handler = new Handler();
-	boolean handlerRunning = false;
-	protected HashMap<Marker, MarkerInterface> markers;
 	
 	@SuppressLint("UseSparseArrays")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		shouldAnimateWithCustomTransition = true;
 		super.onCreate(savedInstanceState, R.layout.activity_main_map);
 		setTheme(R.style.Theme_wikicleta);
-    	
-		assignToggleActionsForAutomapCenter();
-		
-		AppBase.currentActivity = this;
 		
 		// Assign icons
-		loadingLayersIcon = (ImageView) this.findViewById(R.id.spinner_indicator);
-		loadingLayersContainer = (LinearLayout) this.findViewById(R.id.mutable_box_container);
 		returnIcon = (ImageView) this.findViewById(R.id.return_button);
 
 		toggableGroup = (LinearLayout) this.findViewById(R.id.toggable_group);
@@ -97,7 +63,6 @@ public class DiscoverActivity extends LocationAwareMapWithControlsActivity imple
     	final SlidingMenu rightMenu = SlidingMenuBuilder.loadOnRight(this);
 		rightMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
     	
-    			
 		buildToggleMenu(rightMenu);
 
     	rightMenuToggler = (ImageView) findViewById(R.id.right_menu_toggler);
@@ -125,17 +90,6 @@ public class DiscoverActivity extends LocationAwareMapWithControlsActivity imple
 			}
     		
     	});
-    	
-    	// Listeners for map
-    	map.setOnCameraChangeListener(new OnCameraChangeListener() {
-
-			@Override
-			public void onCameraChange(CameraPosition position) {
-				reloadActiveLayers();
-			}
-    		
-    	});
-   	 	map.setOnMarkerClickListener(this);
 	}
 	
 	@Override
@@ -145,52 +99,6 @@ public class DiscoverActivity extends LocationAwareMapWithControlsActivity imple
 	
 	public void reloadActiveLayers() {
 		toggleLayers(selectedLayersMenuAdapter.getSelectedValuesForPositions());
-	}
-	
-	Runnable cancelableDelayedLoadingAnimation = new Runnable() {
-		   @Override
-		   public void run() {
-			   if(!handlerRunning) {
-				   handlerRunning = true;
-				   uploaderContainerAnimator = ObjectAnimator.ofFloat(loadingLayersContainer, "alpha", 0, 1, 1);
-				   
-				   uploaderAnimator = ObjectAnimator.ofFloat(loadingLayersIcon, "rotation", 0, 360);
-				   uploaderAnimator.setRepeatCount(ObjectAnimator.INFINITE);
-				   uploaderAnimator.setDuration(1500);
-			       uploaderAnimator.start();
-			       uploaderAnimator.addListener(new SimpleAnimatorListener() {
-
-						@Override
-						public void onAnimationCancel(Animator animation) {
-							ObjectAnimator.ofFloat(loadingLayersContainer, "alpha", 1, 0, 0).setDuration(1000).start();
-						}
-						
-					});
-				   uploaderContainerAnimator.setDuration(1500);
-			       uploaderContainerAnimator.start();
-			   } 
-		   }
-	};
-	
-	@Override
-	public void showLoadingState() {
-		handler.postDelayed(cancelableDelayedLoadingAnimation, 10L);        
-	}
-	
-	@Override
-	public void hideLoadingState() {
-		this.runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				if(uploaderAnimator != null) {
-					uploaderContainerAnimator.cancel();
-					uploaderAnimator.cancel();
-					
-				}
-				handlerRunning = false;
-			}
-			
-		});
 	}
 	
 	protected void buildToggleMenu(SlidingMenu menu) {
@@ -232,41 +140,6 @@ public class DiscoverActivity extends LocationAwareMapWithControlsActivity imple
 		super.onStart();
 	}
 	
-	@Override
-	public void overlayFinishedLoading(final boolean status) {
-		this.runOnUiThread(new Runnable() {
-
-			@Override
-			public void run() {
-				Handler handlerTimer = new Handler();
-		        handlerTimer.postDelayed(new Runnable(){
-		            public void run() {
-						hideLoadingState();
-		          }}, 2000);
-			}
-			
-		});
-
-	}
-
-	@Override
-	public HashMap<String, String> getCurrentViewport() {
-		HashMap<String, String> viewport = new HashMap<String, String>();
-		
-		RelativeLayout mapContainer = (RelativeLayout) findViewById(R.id.map_container);
-		
-		LatLng leftBottom = (LatLng) map.getProjection().fromScreenLocation(new Point(0, mapContainer.getHeight()));
-		LatLng rightTop = (LatLng) map.getProjection().fromScreenLocation(new Point(mapContainer.getWidth(), 0));
-		viewport.put("sw", String.valueOf(leftBottom.latitude).concat(",").concat(String.valueOf(leftBottom.longitude)));
-		viewport.put("ne", String.valueOf(rightTop.latitude).concat(",").concat(String.valueOf(rightTop.longitude)));
-		return viewport;
-	}
-
-	@Override
-	public Activity getActivity() {
-		return this;
-	}
-
 	protected void toggleLayers(ArrayList<Integer> layers) {
 		markers = new HashMap<Marker, MarkerInterface>();
 		map.clear();
@@ -309,24 +182,6 @@ public class DiscoverActivity extends LocationAwareMapWithControlsActivity imple
 		else if(markerIn instanceof CycleStation)
 			CycleStationViews.buildViewForCycleStation(this, (CycleStation) markerIn);
 		return true;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void overlayFinishedLoadingWithPayload(boolean status, Object payload) {
-		
-    	for(MarkerInterface markerInterfaced : (ArrayList<MarkerInterface>) payload) { 
-			Marker marker = map.addMarker(new MarkerOptions()
-            .position(markerInterfaced.getLatLng())
-            .icon(BitmapDescriptorFactory.fromResource(markerInterfaced.getDrawable())));
-    		markers.put(marker, markerInterfaced);
-    	}		
-    	this.overlayFinishedLoading(status);
-	}
-
-	@Override
-	public LatLng getLastLocation() {
-		return this.lastKnownLocation;
 	}
 	
 	

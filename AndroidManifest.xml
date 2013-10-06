@@ -99,6 +99,18 @@
             </intent-filter>
         </activity>
         
+		<activity
+            android:name="org.wikicleta.activities.EventsActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:screenOrientation="portrait"
+            android:alwaysRetainTaskState="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
         <activity
             android:name="org.wikicleta.activities.routes.RoutesSavingActivity"
             android:label="@string/app_name"

@@ -16,6 +16,11 @@
 	<string name="favs">favs</string>
 	<string name="connectivity_problems">No ha sido posible conectar con el servidor remoto, por favor, revisa tu conexión</string>
 	
+	<string name="event_today">Hoy</string>
+	<string name="event_tomorrow">Mañana</string>
+	<string name="event_unknown">No se sabe cuando</string>
+	<string name="event_other">En %d días</string>
+	
 	<string name="see_comments">Ver Comentarios</string>
 	<!-- Sliding Menu options -->
 	<string name="map_section">Mapa</string>
@@ -174,17 +179,15 @@
 	<string name="workshops_input_length_min_error_name">El nombre está muy corto</string>
 	<string name="workshops_input_length_max_error_name">El nombre no debe tener más de 30 caracteres</string>
 	
-	<string name="trips_updating_cities">Descargando paseos en ciudades</string>
-	<string name="trips_list_title">Pasea por tu ciudad</string>
-	<string name="trips_cities">Ciudades</string>
-	<string name="trips_on_city">%d paseos disponibles</string>
-	<string name="trip_on_city">1 paseo disponible</string>
-	<string name="trip_none">No hay paseos disponibles</string>
-	<string name="trips_city_not_fetched">No fué posible descargar los paseos en ciudades. Toca aquí para intentarlo de nuevo</string>
-	<string name="trip_fetching_details">Obteniendo detalles de este recorrido</string>
+	<!-- CyclingGroups strings -->
+	<string name="cycling_groups_meeting_time">Hora de Reunión</string>
+	<string name="cycling_groups_departing_time">Hora de Salida</string>
+	<string name="cycling_groups_hour">%s hrs</string>
+	<string name="cycling_group_unknown_remaining_days_for_ride">---</string>
+	
+	<string name="trip_details">Paseo a detalle</string>
 	<string name="trips_bar_route_start_text_value">Inicio</string>
 	<string name="trips_bar_route_end_text_value">Fin</string>
-	<string name="trips_could_not_fetch">No fué posible descargar los detalles de esta ruta</string>
 	
 	<string name="trip_pois.categories.service_station">Estación de Servicio</string>
 	<string name="trip_pois.categories.ambulance">Ambulancia</string>

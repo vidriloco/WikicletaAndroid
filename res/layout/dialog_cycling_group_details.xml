@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout android:id="@+id/cycling_group_container"
+	    android:orientation="vertical"
+	    android:layout_height="wrap_content"
+	    android:layout_width="match_parent"
+	    android:padding="20dp"
+	    android:background="@color/wikicleta_white">
+		
+        <ImageView 
+           android:id="@+id/pic_image"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:src="@drawable/cycling_group_logo" />
+        
+	    <TextView
+	       android:id="@+id/cycling_group_name_text"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:text="Bicitekas"
+           android:textColor="@color/wikicleta_orange"
+           android:textSize="18sp"
+           android:layout_marginTop="10dp"
+           android:textAlignment="center"
+           android:gravity="center" />
+	    <TextView
+           android:id="@+id/cycling_group_next_ride_text"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:text="@string/cycling_group_unknown_remaining_days_for_ride"
+           android:textColor="@color/wikicleta_blue"
+           android:textSize="14sp"
+           android:textAlignment="center"
+           android:gravity="center" />
+
+	</LinearLayout>
+	<include layout="@layout/thin_separator" android:id="@+id/separator_one" />
+    <LinearLayout
+        android:id="@+id/cycling_group_details"
+	    android:orientation="vertical"
+	    android:layout_height="wrap_content"
+	    android:layout_width="match_parent"
+	    android:padding="10dp">
+	    
+        <LinearLayout 
+		    android:id="@+id/cycling_group_timings"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+			android:baselineAligned="false"
+		    android:weightSum="2">
+		    <RelativeLayout 
+		        android:id="@+id/meeting_time"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:layout_width="0dp"
+	            android:orientation="vertical"
+				android:padding="10dp">
+
+		        <LinearLayout
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_centerHorizontal="true"
+		            android:layout_centerVertical="true"
+		            android:gravity="center_horizontal|center"
+		            android:orientation="vertical" >
+
+		            <TextView
+		                android:id="@+id/meeting_time_text"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:text="@string/cycling_groups_meeting_time"
+		                android:textColor="@color/wikicleta_orange"
+		                android:textSize="12sp" />
+
+		            <TextView
+		                android:id="@+id/meeting_time_value_text"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:text="7:00 hrs"
+		                android:textColor="@color/wikicleta_blue"
+		                android:textSize="15sp" />
+		        </LinearLayout>
+
+		    </RelativeLayout>
+			<RelativeLayout 
+		        android:id="@+id/departing_time"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:layout_width="0dp"
+				android:padding="10dp"
+				android:layout_gravity="center_horizontal">
+
+				<LinearLayout
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_centerHorizontal="true"
+				    android:layout_centerVertical="true"
+				    android:gravity="center_horizontal|center"
+				    android:orientation="vertical" >
+
+				    <TextView
+				        android:id="@+id/departing_time_text"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="@string/cycling_groups_departing_time"
+				        android:textColor="@color/wikicleta_orange"
+				        android:textSize="12sp" />
+
+				    <TextView
+				        android:id="@+id/departing_time_value_text"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="7:00 hrs"
+				        android:textColor="@color/wikicleta_blue"
+				        android:textSize="15sp" />
+				</LinearLayout>
+
+		    </RelativeLayout>
+		</LinearLayout>
+        
+       	<TextView
+           android:id="@+id/cycling_group_details_text"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:textColor="@color/wikicleta_blue"
+           android:textSize="13sp"
+           android:textAlignment="center"
+           android:gravity="center" />
+    </LinearLayout>
+    <include layout="@layout/thin_separator" android:id="@+id/separator_two" />
+       	
+    <LinearLayout 
+	    android:id="@+id/cycling_group_social"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+		android:baselineAligned="false"
+	    android:weightSum="3"
+	    android:background="@color/wikicleta_white">
+	    <LinearLayout 
+	        android:id="@+id/twitter_container"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:clickable="true"
+            android:background="@drawable/contact_item_selector"
+			android:padding="10dp"
+			android:gravity="center">
+	       <TextView
+           android:id="@+id/twitter_account_text"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/twitter"
+           android:drawableTop="@drawable/twitter_icon"
+           android:textColor="@color/wikicleta_blue"
+           android:textSize="12sp" />
+	    </LinearLayout>
+	    <LinearLayout 
+	        android:id="@+id/facebook_container"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:clickable="true"
+			android:background="@drawable/contact_item_selector"
+			android:padding="10dp"
+			android:gravity="center">
+	       <TextView
+	           android:id="@+id/facebook_account_text"
+	           android:layout_width="wrap_content"
+	           android:layout_height="wrap_content"
+	           android:text="@string/facebook"
+	           android:textColor="@color/wikicleta_blue"
+	           android:drawableTop="@drawable/facebook_icon"
+	           android:textSize="12sp" />
+		</LinearLayout>
+		<LinearLayout 
+	        android:id="@+id/website_container"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:clickable="true"
+			android:background="@drawable/contact_item_selector"
+			android:gravity="center"
+			android:padding="10dp">
+
+			<TextView
+			    android:id="@+id/website_container_text"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:drawableTop="@drawable/website_icon"
+			    android:text="@string/webpage"
+			    android:textColor="@color/wikicleta_blue"
+			    android:textSize="12sp" />
+
+	    </LinearLayout>
+	</LinearLayout>
+</LinearLayout>
