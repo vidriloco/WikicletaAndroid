@@ -123,7 +123,7 @@ public class Trip implements Serializable, DraftModel, MarkerInterface {
 
 	@Override
 	public int getDrawable() {
-		return R.drawable.cycling_learning_icon;
+		return R.drawable.trip_icon;
 	}
 
 	@Override

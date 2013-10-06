@@ -66,28 +66,27 @@
 	</LinearLayout> 
 	<include layout="@layout/thin_separator" android:id="@+id/separator_simple" />
 	<LinearLayout
-        android:id="@+id/trip_more_info_container_button"
 	    android:orientation="vertical"
 	    android:layout_height="wrap_content"
 	    android:layout_width="match_parent"
 	    android:background="@color/wikicleta_white">
 	    <LinearLayout
-        android:id="@+id/trip_more_info_container_button"
-	    android:orientation="vertical"
-	    android:layout_height="wrap_content"
-	    android:layout_width="match_parent"
-	    android:padding="10dp"
-	    android:clickable="true"
-	    android:background="@drawable/contact_item_selector">
-		<TextView
-           android:id="@+id/trip_more_info"
-           android:layout_width="fill_parent"
-           android:layout_height="wrap_content"
-           android:text="@string/trip_details"
-           android:textColor="@color/wikicleta_blue"
-           android:textSize="13sp"
-           android:textAlignment="center"
-           android:gravity="center" />
+	        android:id="@+id/trip_more_info_container_button"
+	    	android:orientation="vertical"
+	    	android:layout_height="wrap_content"
+	    	android:layout_width="match_parent"
+	    	android:padding="10dp"
+	    	android:clickable="true"
+	    	android:background="@drawable/contact_item_selector">
+			<TextView
+	           android:id="@+id/trip_more_info"
+	           android:layout_width="fill_parent"
+	           android:layout_height="wrap_content"
+	           android:text="@string/trip_details"
+	           android:textColor="@color/wikicleta_blue"
+	           android:textSize="13sp"
+	           android:textAlignment="center"
+	           android:gravity="center" />
         
 		</LinearLayout>
 	</LinearLayout>

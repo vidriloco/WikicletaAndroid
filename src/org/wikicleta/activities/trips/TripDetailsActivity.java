@@ -1,11 +1,9 @@
 package org.wikicleta.activities.trips;
 
 import java.util.HashMap;
-
 import org.wikicleta.R;
 import org.wikicleta.activities.common.LocationAwareMapWithControlsActivity;
 import org.wikicleta.common.AppBase;
-import org.wikicleta.common.Toasts;
 import org.wikicleta.models.MarkerInterface;
 import org.wikicleta.models.Segment;
 import org.wikicleta.models.Trip;
@@ -18,50 +16,52 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.nineoldandroids.animation.ObjectAnimator;
-import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class TripDetailsActivity extends LocationAwareMapWithControlsActivity implements OnMarkerClickListener {
-	AlertDialog dialog;
-	ObjectAnimator loadingAnimator;
 	HashMap<Marker, MarkerInterface> markers;
-
+	public static Trip selectedTrip;
+	ImageView returnIcon;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.trip_details_activity);
+		super.onCreate(savedInstanceState, R.layout.activity_trip_details);
 		setTheme(R.style.Theme_wikicleta);
 		AppBase.currentActivity = this;		
 		assignToggleActionsForAutomapCenter();
 			
-        final Trip trip = (Trip) getIntent().getSerializableExtra("trip");
-        if(trip == null)
+        if(selectedTrip == null)
         	finish();
         
-        loadTripMetadata(trip);
+        this.markers = new HashMap<Marker, MarkerInterface>();
+        loadTripMetadata(selectedTrip);
         
-        this.findViewById(R.id.info_button).setOnClickListener(new OnClickListener() {
+        TextView daysToEvent = (TextView) this.findViewById(R.id.trip_days_to_event_text);        
+        daysToEvent.setTypeface(AppBase.getTypefaceLight());
+        daysToEvent.setText(String.format(getResources().getString(selectedTrip.daysToRide()), selectedTrip.daysToEventFromNow));
+
+        TextView eventName = (TextView) this.findViewById(R.id.trip_name_text);        
+        eventName.setTypeface(AppBase.getTypefaceStrong());
+        eventName.setText(selectedTrip.name);
+
+        
+   	 	map.setOnMarkerClickListener(this);
+
+   	 	returnIcon = (ImageView) this.findViewById(R.id.return_button);
+		returnIcon.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				if(trip.details != null)
-					Toasts.showToastWithMessage(TripDetailsActivity.this, trip.details, R.drawable.info_icon);
+				overridePendingTransition(0, 0);
+				finish();
 			}
-        	
-        });
-        
-        TextView daysToEvent = (TextView) this.findViewById(R.id.trip_daysToEvent_text);        
-        daysToEvent.setTypeface(AppBase.getTypefaceLight());
-
-        //daysToEvent.setText(trip.daysToEvent);
-
-        this.markers = new HashMap<Marker, MarkerInterface>();
-   	 	map.setOnMarkerClickListener(this);
-
+ 		
+ 	});
 	}
 	
 	public void loadPOIsForTrip(Trip trip) {
@@ -76,36 +76,32 @@ public class TripDetailsActivity extends LocationAwareMapWithControlsActivity im
 	
 	public void loadTripMetadata(final Trip trip) {
 		
-        if(trip.start != null) {
-        	((TextView) this.findViewById(R.id.route_start_text)).setTypeface(AppBase.getTypefaceStrong());
-        	
+        if(trip.start != null) {        	
         	map.animateCamera(CameraUpdateFactory.newLatLngZoom(trip.start.getLatLng(), 19));
 
-        	this.findViewById(R.id.route_start_button).setVisibility(View.VISIBLE);
-        	this.findViewById(R.id.route_start_button).setOnClickListener(new OnClickListener() {
+        	this.findViewById(R.id.flag_start_button).setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-	        	map.animateCamera(CameraUpdateFactory.newLatLngZoom(trip.start.getLatLng(), 19));
-			}
+				@Override
+				public void onClick(View v) {
+		        	map.animateCamera(CameraUpdateFactory.newLatLngZoom(trip.start.getLatLng(), 19));
+				}
         	
         	});
         }
         
-        if(trip.end != null) {
-        	((TextView) this.findViewById(R.id.route_end_text)).setTypeface(AppBase.getTypefaceStrong());
-        	
+        if(trip.end != null) {        	
         	map.animateCamera(CameraUpdateFactory.newLatLngZoom(trip.end.getLatLng(), 19));
 
-        	this.findViewById(R.id.route_end_button).setVisibility(View.VISIBLE);
-        	this.findViewById(R.id.route_end_button).setOnClickListener(new OnClickListener() {
+        	this.findViewById(R.id.flag_finish_button).setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-	        	map.animateCamera(CameraUpdateFactory.newLatLngZoom(trip.end.getLatLng(), 19));
-			}
+				@Override
+				public void onClick(View v) {
+		        	map.animateCamera(CameraUpdateFactory.newLatLngZoom(trip.end.getLatLng(), 19));
+				}
         	
         	});
+        } else {
+        	this.findViewById(R.id.flag_finish_button).setVisibility(View.GONE);
         }
         
 		for(Segment segment : trip.segments) {

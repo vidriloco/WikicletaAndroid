@@ -7,10 +7,8 @@ import org.wikicleta.layers.common.LayersConnectorListener;
 import org.wikicleta.models.Trip;
 import org.wikicleta.routing.Others;
 import org.wikicleta.routing.Others.ImageUpdater;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,7 +18,7 @@ import android.widget.TextView;
 
 public class TripViews {
 
-	public static void buildViewForTrip(LayersConnectorListener listener, Trip trip) {
+	public static void buildViewForTrip(LayersConnectorListener listener, final Trip trip) {
 		Activity activity = listener.getActivity();
         AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
@@ -46,7 +44,7 @@ public class TripViews {
 
 			@Override
 			public void onClick(View v) {
-				
+				displayItem(trip);
 			}
         	
         });
@@ -65,8 +63,7 @@ public class TripViews {
 	}
 
 	public static void displayItem(Trip trip) {
-		Bundle bundle = new Bundle();
-		bundle.putSerializable("trip", trip);
-		AppBase.launchActivityWithBundle(TripDetailsActivity.class, bundle);
+		TripDetailsActivity.selectedTrip = trip;
+		AppBase.launchActivity(TripDetailsActivity.class);
 	}
 }
