@@ -188,7 +188,7 @@
 	<string name="listing_events">Eventos cercanos</string>
 	<string name="event_ride">Rodada</string>
 	<string name="event_trip">Paseo</string>
-	
+	<string name="no_events_nearby">No hay eventos en esta área</string>
 	<string name="trip_details">Paseo a detalle</string>
 	<string name="trips_bar_route_start_text_value">Inicio</string>
 	<string name="trips_bar_route_end_text_value">Fin</string>
