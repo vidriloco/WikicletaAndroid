@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+
+import org.interfaces.MarkerInterface;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
@@ -17,6 +19,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 @SuppressLint("SimpleDateFormat")
 @Table(name = "Workshops")
@@ -69,6 +72,7 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 	public int likesCount;
 	public String username;
 	public String userPicURL;
+	protected Marker marker;
 	
 	public Workshop() {
 		this.createdAt = Calendar.getInstance().getTimeInMillis();
@@ -237,6 +241,16 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 	@Override
 	public int getDrawable() {
 		return R.drawable.workshop_icon;
+	}
+
+	@Override
+	public Marker getAssociatedMarker() {
+		return marker;
+	}
+	
+	@Override
+	public void setMarker(Marker marker) {
+		this.marker = marker;
 	}
 
 }

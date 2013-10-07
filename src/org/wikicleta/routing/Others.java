@@ -14,6 +14,7 @@ public class Others {
 	public enum ImageProcessor {
 		ROUND_FOR_USER_PROFILE,
 		ROUND_FOR_MINI_USER_PROFILE,
+		SCALE_FOR_LIST,
 		ROUND_AT_10,
 		ROUND_AT_30,
 		NONE
@@ -67,6 +68,8 @@ public class Others {
 					this.scaleAndRoundForMiniPic(result);
 				else if(processorMode == ImageProcessor.ROUND_FOR_USER_PROFILE)
 					this.roundAtDefaultNoScaling(result);
+				else if(processorMode == ImageProcessor.SCALE_FOR_LIST)
+					this.scaleBitmap(result);
 				else if(processorMode == ImageProcessor.ROUND_AT_10)
 					this.roundAt(10, result);
 				else if(processorMode == ImageProcessor.ROUND_AT_30)
@@ -75,6 +78,11 @@ public class Others {
 					imagePlaceHolder.setImageBitmap(result);
 			}
 	    }
+		
+		protected void scaleBitmap(Bitmap result) {
+			Bitmap ownerPicBitmap = Bitmap.createScaledBitmap(result, 100, 100, true);
+        	imagePlaceHolder.setImageBitmap(ownerPicBitmap);
+		}
 		
 		protected void roundAt(int number, Bitmap result) {
 			imagePlaceHolder.setImageBitmap(Graphics.getRoundedCornerBitmap(result, number));

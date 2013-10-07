@@ -31,13 +31,15 @@ public class LocationAwareMapWithControlsActivity extends ActivityWithLocationAw
 	protected LocationClient locationClient;
 	protected LocationRequest locationRequest;
 	protected boolean firstLocationReceived;
-
+	protected boolean attemptCenterOnLocationAtStart=true;
+	
 	@SuppressLint("UseSparseArrays")
 	@Override
 	public void onCreate(Bundle savedInstanceState, int layoutID) {
 		super.onCreate(savedInstanceState, layoutID);
 		assignToggleActionsForAutomapCenter();
-    	turnOnLocation();
+		if(attemptCenterOnLocationAtStart)
+			turnOnLocation();
 	}
 	
 	protected void assignToggleActionsForAutomapCenter() {

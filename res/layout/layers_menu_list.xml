@@ -14,7 +14,7 @@
     		android:id="@+id/layers_menu_list_view"
     		android:layout_width="fill_parent"
     		android:layout_height="wrap_content"
-    		android:background="@drawable/list_item_background"
+    		android:background="@drawable/contact_item_selector"
     		android:fadeScrollbars="true"
     		android:fastScrollEnabled="true"
     		android:focusable="true"

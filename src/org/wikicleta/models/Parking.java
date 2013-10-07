@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+
+import org.interfaces.MarkerInterface;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
@@ -17,6 +19,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 @SuppressLint("SimpleDateFormat")
 @Table(name = "Parkings")
@@ -53,7 +56,8 @@ public class Parking extends Model implements Serializable, DraftModel, MarkerIn
 	public int likesCount;
 	public String username;
 	public String userPicURL;
-	
+	protected Marker marker;
+
 	@SuppressLint("UseSparseArrays")
 	protected static HashMap<Integer, String> kinds = new HashMap<Integer, String>();
 	
@@ -222,6 +226,16 @@ public class Parking extends Model implements Serializable, DraftModel, MarkerIn
 	@Override
 	public LatLng getLatLng() {
 		return new LatLng(this.latitude, this.longitude);
+	}
+
+	@Override
+	public Marker getAssociatedMarker() {
+		return marker;
+	}
+	
+	@Override
+	public void setMarker(Marker marker) {
+		this.marker = marker;
 	}
 
 }

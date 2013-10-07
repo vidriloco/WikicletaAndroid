@@ -12,8 +12,6 @@ public class ShareActivity extends ModifyingOnMapBaseActivity {
 		shouldAnimateWithCustomTransition = true;
 		super.onCreate(savedInstanceState, R.layout.activity_share);
 		setTheme(R.style.Theme_wikicleta);
-    	
-		assignToggleActionsForAutomapCenter();
 		
 		AppBase.currentActivity = this;
 		loadActionButtons();

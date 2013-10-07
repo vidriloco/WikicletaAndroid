@@ -185,6 +185,10 @@
 	<string name="cycling_groups_hour">%s hrs</string>
 	<string name="cycling_group_unknown_remaining_days_for_ride">---</string>
 	
+	<string name="listing_events">Eventos cercanos</string>
+	<string name="event_ride">Rodada</string>
+	<string name="event_trip">Paseo</string>
+	
 	<string name="trip_details">Paseo a detalle</string>
 	<string name="trips_bar_route_start_text_value">Inicio</string>
 	<string name="trips_bar_route_end_text_value">Fin</string>

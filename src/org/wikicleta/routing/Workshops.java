@@ -60,7 +60,7 @@ public class Workshops {
 		protected void onPostExecute(final Boolean success) {
 			dialog.dismiss();
 			if(success) {
-				activity.reloadActiveLayers();
+				activity.reloadActiveLayersWithMapClearing();
 				Toasts.showToastWithMessage(activity, R.string.workshops_deleted_successfully, R.drawable.success_icon);
 			} else {
 				Toasts.showToastWithMessage(activity, R.string.workshops_did_not_deleted, R.drawable.failure_icon);

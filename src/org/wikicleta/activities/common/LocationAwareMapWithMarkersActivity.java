@@ -2,16 +2,18 @@ package org.wikicleta.activities.common;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
+import org.interfaces.MarkerInterface;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.SimpleAnimatorListener;
 import org.wikicleta.layers.common.LayersConnectorListener;
-import org.wikicleta.models.MarkerInterface;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -34,7 +36,7 @@ public class LocationAwareMapWithMarkersActivity extends LocationAwareMapWithCon
 	
 	protected Handler handler = new Handler();
 	protected boolean handlerRunning = false;
-	protected HashMap<Marker, MarkerInterface> markers;
+	protected ConcurrentHashMap<LatLng, MarkerInterface> markers;
 
 	@SuppressLint("UseSparseArrays")
 	@Override
@@ -58,10 +60,23 @@ public class LocationAwareMapWithMarkersActivity extends LocationAwareMapWithCon
     		
     	});
    	 	map.setOnMarkerClickListener(this);
+		markers = new ConcurrentHashMap<LatLng, MarkerInterface>();
 	}
 
 	public void reloadActiveLayers() {
 		
+	}
+	
+	/*
+	 * Leave only visible markers on current zoom level
+	 */
+	protected void pruneMarkers() {
+		for(LatLng coordinate : this.markers.keySet()) {
+			if(!this.map.getProjection().getVisibleRegion().latLngBounds.contains(coordinate)) {
+				this.markers.remove(coordinate).getAssociatedMarker().remove();
+			}
+		}
+		Log.e("WIKICLETA", String.valueOf(this.markers.size()));
 	}
 	
 	@Override
@@ -111,13 +126,21 @@ public class LocationAwareMapWithMarkersActivity extends LocationAwareMapWithCon
 	@SuppressWarnings("unchecked")
 	@Override
 	public void overlayFinishedLoadingWithPayload(boolean status, Object payload) {
-		
+
     	for(MarkerInterface markerInterfaced : (ArrayList<MarkerInterface>) payload) { 
-			Marker marker = map.addMarker(new MarkerOptions()
+    		Marker marker = map.addMarker(new MarkerOptions()
             .position(markerInterfaced.getLatLng())
             .icon(BitmapDescriptorFactory.fromResource(markerInterfaced.getDrawable())));
-    		markers.put(marker, markerInterfaced);
+    		
+			if(markers.containsKey(marker.getPosition())) {
+				marker.remove();
+			} else {
+				markerInterfaced.setMarker(marker);
+	    		markers.put(marker.getPosition(), markerInterfaced);
+			}
     	}		
+    	
+		pruneMarkers();
     	this.overlayFinishedLoading(status);
 	}
 

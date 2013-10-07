@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+
+import org.interfaces.EventInterface;
+import org.interfaces.MarkerInterface;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.wikicleta.R;
@@ -11,8 +14,9 @@ import org.wikicleta.common.NetworkOperations;
 
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
-public class Trip implements Serializable, DraftModel, MarkerInterface {
+public class Trip implements Serializable, DraftModel, MarkerInterface, EventInterface {
 	/**
 	 * 
 	 */
@@ -30,6 +34,7 @@ public class Trip implements Serializable, DraftModel, MarkerInterface {
 	public TripPoi end;
 	public LatLng coordinate;
 	public String pic;
+	protected Marker marker;
 
 	public Trip(long remoteId, String name, int daysToEvent, LatLng point) {
 		this.remoteId = remoteId;
@@ -154,5 +159,20 @@ public class Trip implements Serializable, DraftModel, MarkerInterface {
 	@Override
 	public boolean requiresCategoryTranslation() {
 		return false;
+	}
+
+	@Override
+	public int daysAway() {
+		return this.daysToEventFromNow;
+	}
+
+	@Override
+	public Marker getAssociatedMarker() {
+		return marker;
+	}
+	
+	@Override
+	public void setMarker(Marker marker) {
+		this.marker = marker;
 	}
 }

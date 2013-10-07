@@ -1,7 +1,7 @@
 package org.wikicleta.activities;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import org.interfaces.MarkerInterface;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.LocationAwareMapWithMarkersActivity;
 import org.wikicleta.adapters.MenuOptionsListAdapter;
@@ -10,7 +10,6 @@ import org.wikicleta.common.Constants;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.models.CycleStation;
-import org.wikicleta.models.MarkerInterface;
 import org.wikicleta.models.Parking;
 import org.wikicleta.models.Tip;
 import org.wikicleta.models.Workshop;
@@ -77,7 +76,7 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 
 			@Override
 			public void onClosed() {
-				toggleLayers(selectedLayersMenuAdapter.getSelectedValuesForPositions());
+				reloadActiveLayersWithMapClearing();
 			}
     		
     	});
@@ -96,6 +95,12 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+	}
+	
+	public void reloadActiveLayersWithMapClearing() {
+		map.clear();
+		markers.clear();
+		this.reloadActiveLayers();
 	}
 	
 	public void reloadActiveLayers() {
@@ -142,8 +147,6 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 	}
 	
 	protected void toggleLayers(ArrayList<Integer> layers) {
-		markers = new HashMap<Marker, MarkerInterface>();
-		map.clear();
 		if(layers.isEmpty())
 			this.overlayFinishedLoading(false);
 		for(Integer layer : layers) {
@@ -173,7 +176,7 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 	
 	@Override
 	public boolean onMarkerClick(Marker marker) {
-		MarkerInterface markerIn = (MarkerInterface) markers.get(marker);
+		MarkerInterface markerIn = (MarkerInterface) markers.get(marker.getPosition());
 		if(markerIn instanceof Workshop)
 			WorkshopViews.buildViewForWorkshop(this, (Workshop) markerIn);
 		else if(markerIn instanceof Parking)

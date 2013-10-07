@@ -61,7 +61,7 @@ public class Tips {
 		protected void onPostExecute(final Boolean success) {
 	    	dialog.dismiss();
 			if(success) {
-				activity.reloadActiveLayers();
+				activity.reloadActiveLayersWithMapClearing();
 				Toasts.showToastWithMessage(activity, R.string.tips_deleted_successfully, R.drawable.success_icon);
 			} else {
 				Toasts.showToastWithMessage(activity, R.string.tips_did_not_deleted, R.drawable.failure_icon);

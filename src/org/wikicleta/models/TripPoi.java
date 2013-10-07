@@ -3,9 +3,11 @@ package org.wikicleta.models;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import org.interfaces.MarkerInterface;
 import org.wikicleta.common.AppBase;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -19,7 +21,8 @@ public class TripPoi implements Serializable, MarkerInterface {
 	public double longitude;
 	public int category;
 	private Context ctx = AppBase.currentActivity.getApplicationContext();
-	
+	protected Marker marker;
+
 	@SuppressLint("UseSparseArrays")
 	protected static HashMap<Integer, String> categories = new HashMap<Integer, String>();
 	
@@ -98,6 +101,16 @@ public class TripPoi implements Serializable, MarkerInterface {
 		}
 		
 		return identifier;
+	}
+
+	@Override
+	public Marker getAssociatedMarker() {
+		return marker;
+	}
+	
+	@Override
+	public void setMarker(Marker marker) {
+		this.marker = marker;
 	}
 
 }

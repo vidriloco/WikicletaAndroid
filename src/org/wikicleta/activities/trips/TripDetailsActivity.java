@@ -1,10 +1,11 @@
 package org.wikicleta.activities.trips;
 
 import java.util.HashMap;
+
+import org.interfaces.MarkerInterface;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.LocationAwareMapWithControlsActivity;
 import org.wikicleta.common.AppBase;
-import org.wikicleta.models.MarkerInterface;
 import org.wikicleta.models.Segment;
 import org.wikicleta.models.Trip;
 import org.wikicleta.models.TripPoi;
@@ -30,6 +31,7 @@ public class TripDetailsActivity extends LocationAwareMapWithControlsActivity im
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		attemptCenterOnLocationAtStart = false;
 		super.onCreate(savedInstanceState, R.layout.activity_trip_details);
 		setTheme(R.style.Theme_wikicleta);
 		AppBase.currentActivity = this;		
@@ -51,7 +53,7 @@ public class TripDetailsActivity extends LocationAwareMapWithControlsActivity im
 
         
    	 	map.setOnMarkerClickListener(this);
-
+   	 	//map.animateCamera(CameraUpdateFactory.zoomTo(18));
    	 	returnIcon = (ImageView) this.findViewById(R.id.return_button);
 		returnIcon.setOnClickListener(new OnClickListener() {
 

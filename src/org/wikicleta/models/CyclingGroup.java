@@ -7,6 +7,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.interfaces.EventInterface;
+import org.interfaces.MarkerInterface;
 import org.json.simple.JSONObject;
 import org.wikicleta.R;
 
@@ -15,8 +17,9 @@ import android.annotation.SuppressLint;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
-public class CyclingGroup extends Model implements Serializable, DraftModel, MarkerInterface {
+public class CyclingGroup extends Model implements Serializable, DraftModel, MarkerInterface, EventInterface {
 
 	private static final long serialVersionUID = 1L;
 	@Column(name = "RemoteId")
@@ -67,7 +70,8 @@ public class CyclingGroup extends Model implements Serializable, DraftModel, Mar
 	
 	public String username;
 	public String userPicURL;
-	
+	protected Marker marker;
+
 	public CyclingGroup(long id, String name, String meetingTime,
 			String departingTime, int daysToEventFromNow, String facebookURL,
 			String twitterAccount, String websiteURL, String details,
@@ -176,6 +180,21 @@ public class CyclingGroup extends Model implements Serializable, DraftModel, Mar
 	        return R.string.event_tomorrow;
 	    else 
 	        return R.string.event_other;
+	}
+	
+	@Override
+	public int daysAway() {
+		return this.daysToEventFromNow;
+	}
+
+	@Override
+	public Marker getAssociatedMarker() {
+		return marker;
+	}
+	
+	@Override
+	public void setMarker(Marker marker) {
+		this.marker = marker;
 	}
 
 }

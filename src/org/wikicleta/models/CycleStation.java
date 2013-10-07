@@ -1,8 +1,10 @@
 package org.wikicleta.models;
 
+import org.interfaces.MarkerInterface;
 import org.json.simple.JSONObject;
 import org.wikicleta.R;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 public class CycleStation implements MarkerInterface {
 	
@@ -11,6 +13,7 @@ public class CycleStation implements MarkerInterface {
 	public int availableSlots;
 	public int availableBikes;
 	public int id;
+	protected Marker marker;
 
 	public CycleStation(int id, String name, LatLng location, int availableSlots, int availableBikes) {
 		this.availableBikes = availableBikes;
@@ -54,6 +57,16 @@ public class CycleStation implements MarkerInterface {
 	@Override
 	public int getDrawable() {
 		return this.status();
+	}
+
+	@Override
+	public Marker getAssociatedMarker() {
+		return marker;
+	}
+
+	@Override
+	public void setMarker(Marker marker) {
+		this.marker = marker;
 	}
 
 }
