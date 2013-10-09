@@ -1,26 +1,19 @@
 package org.wikicleta.services.routes;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.wikicleta.R;
 import org.wikicleta.activities.routes.NewRouteActivity;
-import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.Formatters;
-import org.wikicleta.helpers.GeoHelpers;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.helpers.NotificationBuilder.Ticker;
-import org.wikicleta.helpers.routes.RouteUploader;
 import org.wikicleta.models.Instant;
-import org.wikicleta.models.Route;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -31,10 +24,8 @@ public class RouteTrackingService extends LocationAwareService {
 	public static final int NOTIFY_ABOUT_STALLED = 2;
 	
 	// Route uploading fields
-	protected RouteUploader routeUploader;
 	protected NotificationBuilder notification;
 	protected final IBinder localBinder = new RoutesServiceBinder();
-    private UploaderTask routeUploaderTask;
 
     // Route timing fields
 	protected Timer timer;
@@ -88,9 +79,6 @@ public class RouteTrackingService extends LocationAwareService {
 		seconds = 0;
 		averageSpeed = 0;
 		accumulatedDistance = 0;
-		if(this.routeUploader == null)
-			this.routeUploader = new RouteUploader();
-		
 	}
 	
 	public void pauseRecordingAndNotify() {
@@ -154,30 +142,7 @@ public class RouteTrackingService extends LocationAwareService {
 			((NavigationListener) this.boundActivity).onFieldsUpdated();
 		}
 	}
-	
-	/*
-	 * Methods for routes uploading
-	 */
-	
-	public void addRouteForUpload(Route route) {
-		notification.addNotification(Constants.ROUTES_MANAGEMENT_NOTIFICATION_ID, 
-				getString(R.string.app_name), getString(R.string.route_being_sent), null, Ticker.MESSAGE, false);		
-		this.routeUploader.addRoute(route);
-	}
-	
-	public void uploadStagedRoutes() {
-		this.routeUploaderTask = new UploaderTask();
-		routeUploaderTask.execute();
-	}
-	
-	public int queuedRoutesCount() {
-		return routesQueued().size();
-	}
-	
-	public LinkedList<Route> routesQueued() {
-		return this.routeUploader.routesWaitingToUpload();
-	}
-	
+
 	// Local binder implementation
 	public class RoutesServiceBinder extends Binder implements ServiceBinder {
 		public RouteTrackingService getService() {
@@ -187,30 +152,6 @@ public class RouteTrackingService extends LocationAwareService {
 		@Override
 		public void setBindingActivity(Activity activity) {
 			boundActivity = activity;
-		}
-    }
-	
-	private class UploaderTask extends AsyncTask<Void, Void, Void> {
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			
-			// Check if boundActivity is of the right type
-			RoutesServiceListener listener = null;
-			if(boundActivity instanceof RoutesServiceListener) {
-				listener = (RoutesServiceListener) boundActivity;
-				listener.shouldBlockView();
-			}
-				
-						
-			while(routeUploader.peekNext() != null) {
-				routeUploader.uploadNext();
-			}
-			
-			reset();
-			if(listener != null)
-				listener.shouldUnblockView();
-			return null;
 		}
     }
 	
@@ -273,15 +214,8 @@ public class RouteTrackingService extends LocationAwareService {
 			} 
 
 			this.lastLocationCatched = location;
-			this.coordinateVector.add(new Instant(GeoHelpers.buildGeoPointFromLongitude(lastLocationCatched), speed, Formatters.secondsFromMilliseconds(seconds)));
+			this.coordinateVector.add(new Instant(lastLocationCatched, speed, Formatters.secondsFromMilliseconds(seconds)));
 		}
-	}
-	
-	public Route buildRoute(String name, String tags) {
-		this.pauseRecording();		
-		Route route = new Route(name, tags, Formatters.secondsFromMilliseconds(seconds), averageSpeed, accumulatedDistance, new Date().getTime());
-		route.temporalInstants = coordinateVector;
-		return route;
 	}
 	
 	/*

@@ -66,7 +66,7 @@ public class RouteDetailsActivity extends ActivityWithLocationAwareMap implement
 	}
 	
 	public void drawControls() {
-		if(currentRoute != null && !currentRoute.isDraft()) {
+		if(currentRoute != null && !currentRoute.isDraft) {
 	        /*final ImageView closeMoreIcon = (ImageView) findViewById(R.id.close_button);
 	        closeMoreIcon.setOnClickListener(new OnClickListener() {
 

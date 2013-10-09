@@ -66,10 +66,10 @@ public class RoutesListAdapter extends BaseAdapter {
         mSimpleDateFormat.setTimeZone(mTimeZone);        
         
         ((TextView) view.findViewById(R.id.route_name)).setText(route.name);
-        ((TextView) view.findViewById(R.id.route_tags)).setText(route.tags);
+        ((TextView) view.findViewById(R.id.route_tags)).setText(route.details);
         ((TextView) view.findViewById(R.id.route_ranking)).setText(String.valueOf(route.ranking));
         
-        if(route.isDraft()) {
+        if(route.isDraft) {
         	view.findViewById(R.id.route_row).setBackgroundColor(view.getResources().getColor(R.color.route_staged));
         } else {
         	if(!todaySectionDraw) {

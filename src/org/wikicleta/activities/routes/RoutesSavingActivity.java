@@ -13,7 +13,6 @@ import android.app.Service;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 public class RoutesSavingActivity extends Activity implements ServiceListener {
 	
@@ -38,9 +37,6 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
         
         this.nameView = (EditText) findViewById(R.id.route_name);
         this.tagsView = (EditText) findViewById(R.id.route_tags);
-        
-        TextView subtitle = (TextView) findViewById(R.id.subtitle);
-        subtitle.setTypeface(AppBase.getTypefaceLight());
         
         this.notification = new NotificationBuilder(this);
         

@@ -71,10 +71,17 @@
 	<string name="routes_stats_distance">Distancia</string>
 	
 	<string name="routes_saving_form_name">Nombre</string>
-	<string name="routes_saving_form_tags">Tags</string>
+	<string name="routes_saving_form_details">Detalles</string>
 	<string name="routes_saving_form_save">Guardar</string>
 	<string name="routes_saving_form_decline">Descartar</string>
-	<string name="routes_saving_form_tags_instructions">Escribe uno o más tags que describan esta ruta, separándolos por comas. Puedes escribir nombres de lugares cercanos a esta ruta</string>
+	<string name="routes_is_private_text">¿Es privada?</string>	
+	<string name="route_saved_successfully">Ruta guardada con éxito</string>
+	<string name="route_not_saved">No fué posible guardar la ruta</string>
+	
+	<string name="route_updated_successfully">Ruta actualizada correctamente</string>
+	<string name="route_not_updated">No fué posible guardar los cambios en esta ruta</string>
+	
+	<string name="route_sent_to_drafts">Ruta guardada como borrador</string>
 	
 	<string name="routes_details_ranked">RANKING</string>
 	<string name="routes_details_checkin">CHECK-INS</string>
@@ -92,10 +99,7 @@
 	
 	<string name="route_being_sent">Subiendo ruta ..</string>
 	<string name="route_being_destroyed">Descartando ruta ..</string>
-	<string name="route_didnt_upload">No fue posible subir la ruta</string>
-	<string name="route_did_upload">Ruta subida correctamente</string>
 	
-	<string name="route_not_saved">Ruta sin guardar</string>
 	
 	<string name="route_rank_top_value">/10</string>
 	<string name="route_privacy_private">Privada</string>

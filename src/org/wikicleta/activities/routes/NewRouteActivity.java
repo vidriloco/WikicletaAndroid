@@ -2,11 +2,17 @@ package org.wikicleta.activities.routes;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Date;
 
 import org.wikicleta.R;
 import org.wikicleta.activities.RootActivity;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.common.FieldValidators;
 import org.wikicleta.helpers.Formatters;
+import org.wikicleta.models.Route;
+import org.wikicleta.models.User;
+import org.wikicleta.routing.Routes;
+import org.wikicleta.routing.Others.Cruds;
 import org.wikicleta.services.routes.NavigationListener;
 import org.wikicleta.services.routes.RouteTrackingService;
 import org.wikicleta.services.routes.ServiceConstructor;
@@ -23,6 +29,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -52,8 +59,8 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 	private ObjectAnimator uploaderAnimator;
 		
 	protected EditText nameView;
-	protected EditText tagsView;
-	
+	protected EditText detailsView;
+	protected CheckBox routeIsPrivate;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -170,11 +177,9 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 		final AlertDialog dialog = alertDialog.create();
 		
 		nameView = (EditText) view.findViewById(R.id.route_name);
-		tagsView = (EditText) view.findViewById(R.id.route_tags);
-        
-        TextView subtitle = (TextView) view.findViewById(R.id.subtitle);
-        subtitle.setTypeface(AppBase.getTypefaceLight());
-        
+		detailsView = (EditText) view.findViewById(R.id.route_details);
+		routeIsPrivate = (CheckBox) view.findViewById(R.id.route_is_private);
+		
         Button saveButton = (Button) view.findViewById(R.id.save_route);
         saveButton.setTypeface(AppBase.getTypefaceStrong());
         
@@ -182,7 +187,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
         
         ImageView closeImage = (ImageView) view.findViewById(R.id.dialog_close);
         closeImage.setOnClickListener(new OnClickListener () {
-
+        	
 			@Override
 			public void onClick(View v) {
 				dialog.dismiss();
@@ -194,7 +199,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 
 			@Override
 			public void onClick(View v) {
-				
+				attemptCommit();
 			}
         	
         });
@@ -210,6 +215,32 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
         	
         });
         dialog.show();
+	}
+	
+	public void attemptCommit() {
+		String routeName = nameView.getText().toString();
+		String routeDetails = detailsView.getText().toString();
+		
+		Route route = new Route(routeName, routeDetails, 
+				Formatters.secondsFromMilliseconds(theService.seconds), 
+				theService.averageSpeed, theService.accumulatedDistance, new Date().getTime(), theService.coordinateVector, User.id());
+		route.isPublic = !routeIsPrivate.isChecked();
+
+		if(FieldValidators.isFieldEmpty(routeName)) {
+			nameView.setError(getResources().getString(R.string.tips_input_empty));
+			return;
+		}
+		
+		if(FieldValidators.isFieldEmpty(routeDetails)) {
+			detailsView.setError(getResources().getString(R.string.tips_input_empty));
+			return;
+		}
+		
+		Routes.PostOrPut poster = new Routes().new PostOrPut();
+		poster.activity = this;
+		if(route.existsOnRemoteServer())
+			poster.mode = Cruds.MODIFY;
+		poster.execute(route);
 	}
 	
 	protected void cancelRecording() {

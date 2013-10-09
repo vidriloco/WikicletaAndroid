@@ -28,19 +28,11 @@ public class Instant extends Model {
 		
 	}
 	
-	public Instant(LatLng coordinate, float speed, long time){
-		this.latitude = coordinate.latitude;
-		this.longitude = coordinate.longitude;
+	public Instant(Location lastLocationCatched, float speed, long time){
+		this.latitude = lastLocationCatched.getLatitude();
+		this.longitude = lastLocationCatched.getLongitude();
 		this.speed = speed;
 		this.time = time;
-	}
-	
-	public float getLatitude() {
-		return (float) (this.latitude/ 1E6);
-	}
-	
-	public float getLongitude() {
-		return (float) (this.longitude/1E6);
 	}
 	
 	public LatLng geoPoint() {
@@ -49,16 +41,17 @@ public class Instant extends Model {
 	
 	public Location location() {
 		Location loc = new Location(LocationManager.GPS_PROVIDER);
-		loc.setLatitude(this.getLatitude());
-		loc.setLongitude(this.getLongitude());
+		loc.setLatitude(this.latitude);
+		loc.setLongitude(this.longitude);
 		return loc;
 	}
 	
 	public HashMap<String, Object> toHashMap() {
 		HashMap<String, Object> coord = new HashMap<String, Object>();
-		coord.put("lat", this.getLatitude());
-		coord.put("lon", this.getLongitude());
+		coord.put("lat", this.latitude);
+		coord.put("lon", this.longitude);
 		coord.put("speed", this.speed);
+		coord.put("time", this.time);
 		return coord;
 	}
 	
