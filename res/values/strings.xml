@@ -12,6 +12,7 @@
 	<string name="neutral">Aceptar</string>
 	<string name="confirm_yes">Si</string>
 	<string name="confirm_no">No</string>
+	<string name="question">Pregunta</string>
 	<string name="fav">fav</string>
 	<string name="favs">favs</string>
 	<string name="connectivity_problems">No ha sido posible conectar con el servidor remoto, por favor, revisa tu conexión</string>
@@ -58,10 +59,12 @@
 	<string name="empty_routes_title">No has compartido ninguna ruta aún</string>
 	
 	<string name="routes_syncing_title">Sincronizando rutas</string>
-	
+	<string name="routes_discard_route_question">¿Realmente quieres descartar esta ruta?</string>
 	<string name="routes_saving_title">Guardar Ruta</string>
-	<string name="routes_recording_paused">Trazado en pausa</string>
+	
+	<string name="routes_recording_paused">Trazo de ruta en pausa</string>
 	<string name="routes_recording_resumed">Trazando ruta</string>
+	<string name="routes_recording_service_start">Iniciado el trazador de rutas</string>
 	<string name="routes_ready_for_recording">Puedes empezar a capturar tu ruta ahora</string>
 	<string name="routes_stats_speed">Velocidad</string>
 	<string name="routes_stats_time">Tiempo</string>

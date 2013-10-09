@@ -23,4 +23,8 @@ public class Formatters {
     	   timeString += String.valueOf(seconds);
 	    return timeString;
 	}
+	
+	public static long secondsFromMilliseconds(int seconds) {
+		return seconds*1000;
+	}
 }

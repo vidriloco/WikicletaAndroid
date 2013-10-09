@@ -6,7 +6,7 @@ import org.wikicleta.activities.common.ActivityWithLocationAwareMap;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.models.Route;
-import org.wikicleta.services.routes.RoutesService;
+import org.wikicleta.services.routes.RouteTrackingService;
 import org.wikicleta.services.routes.ServiceConstructor;
 import org.wikicleta.services.routes.ServiceListener;
 import org.wikicleta.layers.RouteOverlay;
@@ -35,7 +35,7 @@ public class RouteDetailsActivity extends ActivityWithLocationAwareMap implement
 	protected AlertDialog toggleLayersMenu;
 	
 	//Service
-	protected RoutesService theService;
+	protected RouteTrackingService theService;
 	ServiceConstructor serviceInitializator;
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -194,7 +194,7 @@ public class RouteDetailsActivity extends ActivityWithLocationAwareMap implement
 	protected void onStart() {
 		super.onStart();
 		serviceInitializator = new ServiceConstructor(this);
-        serviceInitializator.start(RoutesService.class);
+        serviceInitializator.start(RouteTrackingService.class);
 	}
 	
 	@Override
@@ -205,7 +205,7 @@ public class RouteDetailsActivity extends ActivityWithLocationAwareMap implement
 	
 	@Override
 	public void afterServiceConnected(Service service) {
-		if(service instanceof RoutesService)
-			this.theService = (RoutesService) service;
+		if(service instanceof RouteTrackingService)
+			this.theService = (RouteTrackingService) service;
 	}
 }

@@ -1,21 +1,22 @@
 package org.wikicleta.activities.routes;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 import org.wikicleta.R;
 import org.wikicleta.activities.RootActivity;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.helpers.Formatters;
 import org.wikicleta.services.routes.NavigationListener;
-import org.wikicleta.services.routes.RoutesService;
+import org.wikicleta.services.routes.RouteTrackingService;
 import org.wikicleta.services.routes.ServiceConstructor;
 import org.wikicleta.services.routes.ServiceListener;
-
 import com.nineoldandroids.animation.ObjectAnimator;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -41,9 +42,10 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 	protected TextView timeTextValue;
 	protected TextView distanceTextValue;
 	protected TextView routesRecordingTitle;
+	protected DecimalFormat decimalFormat;
 	
 	//Service
-	protected RoutesService theService;
+	protected RouteTrackingService theService;
 	ServiceConstructor serviceInitializator;
 
 	protected boolean firstLocationReceived = false;
@@ -59,9 +61,9 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 		AppBase.currentActivity = this;
 		this.setContentView(R.layout.activity_new_route);
 		setTheme(R.style.Theme_wikicleta);
-		
-		startService(new Intent(this, RoutesService.class));
 
+		decimalFormat = new DecimalFormat("##.##");
+		decimalFormat.setRoundingMode(RoundingMode.DOWN);
         recordRouteToolbarView = (RelativeLayout) findViewById(R.id.toggable_group);
         statsView = (RelativeLayout) findViewById(R.id.stats_container);
         gpsWaitingView = (RelativeLayout) findViewById(R.id.waiting_for_gps_container);
@@ -96,6 +98,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
     	pauseButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				theService.pauseRecordingAndNotify();
 				pauseRecording(true);
 			}
 		});
@@ -103,10 +106,11 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
     	saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {				
-				if(!theService.routeRecorder.isEmpty()) {
-					if(theService.routeRecorder.isPaused())
+				if(!theService.pathIsEmpty()) {
+					if(!theService.isTracking)
 						resumeRecording(true);
 					pauseRecording(true);
+					theService.pauseRecording();
 					buildAndDisplaySaveDialog();
 				}
 			}
@@ -120,21 +124,22 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 					AppBase.launchActivity(RootActivity.class);
 				} else {
 					final boolean wasRecording;
-					if(!theService.routeRecorder.isEmpty()) {
-						wasRecording = !theService.routeRecorder.isPaused();
+					if(!theService.pathIsEmpty()) {
+						wasRecording = !theService.isTracking;
 						pauseRecording(true);
+						theService.pauseRecording();
 						AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewRouteActivity.this);
-						alertDialog.setTitle("Pregunta");
-						alertDialog.setMessage("ÀDeseas descartar esta ruta?");
+						alertDialog.setTitle(getResources().getString(R.string.question));
+						alertDialog.setMessage(getResources().getString(R.string.routes_discard_route_question));
 						// If the user chooses 'Yes', then
-						alertDialog.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+						alertDialog.setPositiveButton(getResources().getString(R.string.confirm_yes), new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								cancelRecording();
 							}
 						});
 						// If user chooses 'No', then the dialog closes
-						alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+						alertDialog.setNegativeButton(getResources().getString(R.string.confirm_no), new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								if(wasRecording) {
@@ -142,7 +147,8 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 									resumeRecording(true);
 								} 
 							}
-						});
+						});		
+						
 						alertDialog.setNeutralButton(null, null);
 						alertDialog.show();
 					} else {
@@ -197,7 +203,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 
 			@Override
 			public void onDismiss(DialogInterface dialog) {
-				if(theService.routeRecorder.isPaused()) {
+				if(!theService.isTracking) {
 					resumeRecording(true);
 				} 
 			}
@@ -207,15 +213,17 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 	}
 	
 	protected void cancelRecording() {
-		resetRouteRecorder();
+		theService.stopTracking();
+		serviceInitializator.stop();
+		resetUI();
 		AppBase.launchActivity(RootActivity.class);
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if(theService.routeRecorder.isPaused())
-			theService.disableLocationManager();
+		if(!theService.isTracking)
+			theService.pauseRecording();
 	}
 	
 	@Override
@@ -228,25 +236,23 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 	protected void onStart() {
 		super.onStart();
 		serviceInitializator = new ServiceConstructor(this);
-        serviceInitializator.start(RoutesService.class);
+        serviceInitializator.start(RouteTrackingService.class);
 	}
 	
 	@Override
 	protected void onStop() {
 		super.onStop();
-        serviceInitializator.stop();
+        //serviceInitializator.stop();
 	}
 	
 	@Override
 	public void afterServiceConnected(Service service) {
-		if(service instanceof RoutesService) {
-			this.theService = (RoutesService) service;
-			
-	        theService.enableLocationManager();
+		if(service instanceof RouteTrackingService) {
+			this.theService = (RouteTrackingService) service;
 		}
 	}
 	
-	protected void resetRouteRecorder() {
+	protected void resetUI() {
 		recButton.setVisibility(View.VISIBLE);
 		pauseButton.setVisibility(View.GONE);
 		saveButton.setVisibility(View.GONE);
@@ -254,7 +260,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 		this.timeTextValue.setText(getString(R.string.dashes));
 		this.distanceTextValue.setText(getString(R.string.dashes));
 		this.speedTextValue.setText(getString(R.string.dashes));
-		theService.routeRecorder.reset();
+		theService.reset();
 	}
 	
 	/*
@@ -262,7 +268,6 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 	 *  @param controlSwitch will change the buttons state if true
 	 */
 	protected void pauseRecording(boolean controlSwitch) {
-		theService.pauseRecording();
 		// Show rec button and hide pause button
 		if(controlSwitch) {
 			recButton.setVisibility(View.VISIBLE);
@@ -276,17 +281,17 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 	 *  @param controlSwitch will change the buttons state if true
 	 */
 	protected void resumeRecording(boolean controlSwitch) {
-		theService.resumeRecording();
 		// Show pause button and hide rec button
 		if(controlSwitch) {
 			pauseButton.setVisibility(View.VISIBLE);
 			recButton.setVisibility(View.GONE);
 		}
 		routesRecordingTitle.setText(R.string.routes_recording_resumed);
+		theService.resumeRecording();
 	}
 	
 	protected void toggleControls() {
-		if(theService.routeRecorder.isPaused()) {
+		if(!theService.isTracking) {
 			recButton.setVisibility(View.VISIBLE);
 			pauseButton.setVisibility(View.GONE);
 		} else {
@@ -353,18 +358,12 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 	public void onFieldsUpdated() {
 		runOnUiThread(new Runnable() {
 		    public void run() {
-				String speed = theService.routeRecorder.speedTextValue;
-				String time = theService.routeRecorder.timeTextValue;
-				String distance = theService.routeRecorder.distanceTextValue;			        
+				speedTextValue.setText(decimalFormat.format(theService.averageSpeed).concat(" km/h"));
+				timeTextValue.setText(Formatters.millisecondsToTime(theService.seconds*1000));
+				distanceTextValue.setText(decimalFormat.format(theService.accumulatedDistance).concat(" km"));
 				
-				if(speed != null)
-					speedTextValue.setText(speed);
-				if(time != null)
-					timeTextValue.setText(time);
-				if(distance != null) {
-					distanceTextValue.setText(distance);
+				if(!theService.coordinateVector.isEmpty())
 					showSaveButton();
-				}
 		    }
 		});
 

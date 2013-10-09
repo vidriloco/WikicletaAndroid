@@ -5,6 +5,7 @@ import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+
 import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
@@ -22,7 +23,7 @@ LocationListener {
 
 	protected static boolean locationManagerEnabled;
 	
-	public Location lastLocationCatched;
+	protected Location lastLocationCatched;
 
 	// Milliseconds per second
     private static final int MILLISECONDS_PER_SECOND = 1000;

@@ -1,6 +1,8 @@
 package org.wikicleta.helpers;
 
 import org.wikicleta.R;
+
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -24,7 +26,7 @@ public class NotificationBuilder {
     	mNotificationManager.cancel(id);
     }
 
-	public void addNotification(int id, String title, String message, Intent notificationIntent, Ticker ticker) {
+	public Notification addNotification(int id, String title, String message, Intent notificationIntent, Ticker ticker, boolean notify) {
 		clearNotification(id);
     	NotificationCompat.Builder builder =  
                 new NotificationCompat.Builder(context)  
@@ -38,16 +40,24 @@ public class NotificationBuilder {
     		builder.setTicker(title);
       
     	if(notificationIntent != null) {
+    		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|
+	                 Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    		
             PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,   
                     PendingIntent.FLAG_UPDATE_CURRENT);  
             builder.setContentIntent(contentIntent); 
     	} 
       
-    	// Only if needed, initialize the notification manager
-    	initializeNotificationManager();
-        // Add as notification  
-        mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);  
-        //mNotificationManager.notify(id, builder.build());   
+        Notification note = builder.build();
+        note.flags|=Notification.FLAG_NO_CLEAR;
+        
+        if(notify) {
+        	// Only if needed, initialize the notification manager
+        	initializeNotificationManager();  
+            mNotificationManager.notify(id, note);
+        }
+        
+        return note;
     }
 	
 	protected void initializeNotificationManager() {

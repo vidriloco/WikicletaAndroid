@@ -5,7 +5,7 @@ import org.wikicleta.activities.UserProfileActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.fragments.user_profile.DraftsFragment;
 import org.wikicleta.helpers.NotificationBuilder;
-import org.wikicleta.services.routes.RoutesService;
+import org.wikicleta.services.routes.RouteTrackingService;
 import org.wikicleta.services.routes.ServiceConstructor;
 import org.wikicleta.services.routes.ServiceListener;
 import android.app.Activity;
@@ -25,7 +25,7 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
 	NotificationBuilder notification;
 	
 	//Service
-	protected RoutesService theService;
+	protected RouteTrackingService theService;
 	ServiceConstructor serviceInitializator;
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
     				public void onClick(View view) {
     					Bundle bundle = new Bundle();
     					bundle.putString("fragment", DraftsFragment.class.getName());
-    					theService.addRecordedRouteToUploader(nameView.getText().toString(), tagsView.getText().toString());
+    					//theService.addRouteForUpload(emnameView.getText().toString(), tagsView.getText().toString());
     					AppBase.launchActivityWithBundle(UserProfileActivity.class, bundle);
     				}
     	});
@@ -89,7 +89,7 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
 	protected void onStart() {
 		super.onStart();
 		serviceInitializator = new ServiceConstructor(this);
-        serviceInitializator.start(RoutesService.class);
+        serviceInitializator.start(RouteTrackingService.class);
 	}
 	
 	@Override
@@ -100,8 +100,8 @@ public class RoutesSavingActivity extends Activity implements ServiceListener {
 	
 	@Override
 	public void afterServiceConnected(Service service) {
-		if(service instanceof RoutesService)
-			this.theService = (RoutesService) service;
+		if(service instanceof RouteTrackingService)
+			this.theService = (RouteTrackingService) service;
 	}
 	
 	// TODO: Decide whether it could be desirable that upon automatic return to activity 
