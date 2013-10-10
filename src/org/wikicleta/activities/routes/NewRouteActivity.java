@@ -223,7 +223,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 		
 		Route route = new Route(routeName, routeDetails, 
 				Formatters.secondsFromMilliseconds(theService.seconds), 
-				theService.averageSpeed, theService.accumulatedDistance, new Date().getTime(), theService.coordinateVector, User.id());
+				theService.averageSpeed, theService.accumulatedDistance, new Date().getTime(), theService.coordinateVector, User.id(), false);
 		route.isPublic = !routeIsPrivate.isChecked();
 
 		if(FieldValidators.isFieldEmpty(routeName)) {
@@ -240,7 +240,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 		poster.activity = this;
 		if(route.existsOnRemoteServer())
 			poster.mode = Cruds.MODIFY;
-		poster.execute(route);
+		poster.execute(Route.buildOne());
 	}
 	
 	protected void cancelRecording() {
