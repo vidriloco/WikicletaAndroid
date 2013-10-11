@@ -1,10 +1,17 @@
 package org.wikicleta.models;
 
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+
+import org.interfaces.MarkerInterface;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.wikicleta.R;
 import org.wikicleta.helpers.GeoHelpers;
 import android.location.Location;
 import android.util.Log;
@@ -13,10 +20,14 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 @Table(name = "Routes")
-public class Route extends Model {
-	
+public class Route extends Model implements MarkerInterface, Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "RemoteId")
 	public long remoteId;
 	
@@ -50,6 +61,12 @@ public class Route extends Model {
 	@Column(name = "UpdatedAt")
 	public long updatedAt;
 	
+	public LatLng originCoordinate;
+	public LatLng endCoordinate;
+	
+	public String username;
+	public String userPicURL;
+	
 	public int comfortIndex;
 	public int speedIndex;
 	public int safetyIndex;
@@ -57,6 +74,8 @@ public class Route extends Model {
 	public ArrayList<Instant> temporalInstants;
 	public ArrayList<RoutePerformance> temporalRoutePerformances;
 
+	protected Marker associatedMarker;
+	
 	protected RoutePerformance performanceTmp;
 	
 	public ArrayList<Instant> instants() {
@@ -69,6 +88,21 @@ public class Route extends Model {
 		if(temporalRoutePerformances == null)
 			return getMany(RoutePerformance.class, "RoutePerformance");
 		return temporalRoutePerformances;
+	}
+	
+	/*
+	 * Default Route constructor for json retrieved routes data
+	 */
+	public Route(long id, String name, String details, float kilometers, long createdAt, long updatedAt, Long userId, String username) {
+		this.name = name;
+		this.details = details;
+		this.kilometers = kilometers;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.remoteId = id;
+		this.userId = userId;
+		this.username = username;
+		this.userPicURL = new String();
 	}
 
 	public Route(String name, String details, long elapsedTime, float averageSpeed, float kilometers, long createdAt, ArrayList<Instant> coordinateVector, Long userId, boolean shouldAdd) {
@@ -338,6 +372,66 @@ public class Route extends Model {
 		
 		ActiveAndroid.setTransactionSuccessful();
 		ActiveAndroid.endTransaction();
+	}
+
+	public static Route buildFrom(JSONObject object) {
+		long id = (Long) object.get("id");
+		String routeName = (String) object.get("name");
+		String routeDetails = (String) object.get("details");
+		float kilometers = Float.parseFloat((String) object.get("kilometers"));
+		
+	    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date creationDate = null;
+		Date updateDate = null;
+		try {
+			creationDate = df.parse((String)  object.get("str_created_at"));
+			updateDate = df.parse((String)  object.get("str_updated_at"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		long createdAt = creationDate.getTime();
+		long updatedAt = updateDate.getTime();
+		
+		JSONObject owner = (JSONObject) object.get("owner");
+		long userId = (Long) owner.get("id");
+		String name = (String) owner.get("username");
+				
+		Route route = new Route(id, routeName, routeDetails, kilometers, createdAt, updatedAt, userId, name);
+		route.originCoordinate = new LatLng((Double) object.get("origin_lat"), (Double) object.get("origin_lon"));
+		route.endCoordinate = new LatLng((Double) object.get("end_lat"), (Double) object.get("end_lon"));
+
+		if(owner.containsKey("pic"))
+			route.userPicURL = (String) owner.get("pic");
+		
+		return route;
+	}
+
+	public boolean isOwnedByCurrentUser() {
+		return User.id() == this.userId;
+	}
+	
+	public boolean hasPic() {
+		return !this.userPicURL.isEmpty();
+	}
+	
+	@Override
+	public LatLng getLatLng() {
+		return this.originCoordinate;
+	}
+
+	@Override
+	public int getDrawable() {
+		return R.drawable.start_flag_marker;
+	}
+
+	@Override
+	public Marker getAssociatedMarker() {
+		return associatedMarker;
+	}
+
+	@Override
+	public void setMarker(Marker marker) {
+		associatedMarker = marker;		
 	}
 	
 }

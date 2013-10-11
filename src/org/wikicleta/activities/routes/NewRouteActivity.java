@@ -240,6 +240,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 		poster.activity = this;
 		if(route.existsOnRemoteServer())
 			poster.mode = Cruds.MODIFY;
+		//poster.execute(route);
 		poster.execute(Route.buildOne());
 	}
 	

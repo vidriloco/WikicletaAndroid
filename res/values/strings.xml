@@ -52,6 +52,8 @@
 	<string name="route_recording_section">Nueva ruta</string>
 			
 	<!-- Strings for routes -->
+	<string name="route">Ruta</string>
+	<string name="route_details">Ver ruta a detalle</string>
 	<string name="routes_title">Rutas</string>
 	<string name="save_route">Guardar ruta</string>
 	<string name="routes_unsynced_title">%d rutas sin sincronizar</string>

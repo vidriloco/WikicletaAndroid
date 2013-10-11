@@ -1,7 +1,11 @@
 package org.wikicleta.routing;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.Iterator;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.wikicleta.R;
 import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.routes.NewRouteActivity;
@@ -9,10 +13,10 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.DialogBuilder;
+import org.wikicleta.layers.common.LayersConnectorListener;
 import org.wikicleta.models.Route;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others.Cruds;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -24,6 +28,66 @@ public class Routes {
 	protected String postPath="/api/routes";
 	protected String putPath="/api/routes/:id";
 
+	protected String getPath="/api/routes?";
+	
+	public class Get extends AsyncTask<Void, Void, Boolean> {
+    	
+		public LayersConnectorListener connector;
+		public ArrayList<Route> items;
+
+	    JSONArray objectList;
+	    HashMap<String, String> viewport;
+	   
+	    public Get(LayersConnectorListener connector) {
+	    	this.connector = connector;
+	    }
+	   
+	    @Override
+	    protected void onPreExecute() {
+			viewport = connector.getCurrentViewport();
+			items = new ArrayList<Route>();
+	    }
+	    
+		@Override
+		protected Boolean doInBackground(Void... args) {
+			
+			String params = "viewport[sw]=".concat(viewport.get("sw")).concat("&viewport[ne]=").concat(viewport.get("ne"));
+			String fetchedString = NetworkOperations.getJSONExpectingString(getPath.concat(params), false);
+			if(fetchedString == null)
+				return false;
+			
+			JSONObject object = (JSONObject) JSONValue.parse(fetchedString);
+			if((Boolean) object.get("success")) {
+				objectList = (JSONArray) object.get("routes");
+				return true;
+			} else {
+				return false;
+			}
+		}	
+		
+		@Override
+		protected void onPostExecute(final Boolean success) {
+			
+			if(success) {
+				items.clear();
+				@SuppressWarnings("unchecked")
+				Iterator<JSONObject> iterator = (Iterator<JSONObject>) objectList.iterator();
+				while(iterator.hasNext()) {
+					JSONObject json = iterator.next();
+					items.add(Route.buildFrom(json));
+				}
+			}
+			connector.overlayFinishedLoadingWithPayload(success, items);
+		}
+		
+		@Override
+		protected void onCancelled() {
+			connector.overlayFinishedLoading(false);
+		}
+
+	}
+	
+	
 	public class PostOrPut extends AsyncTask<Route, Void, Boolean> {
 		private Route route;
 		public NewRouteActivity activity;

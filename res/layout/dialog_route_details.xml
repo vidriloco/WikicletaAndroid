@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout android:id="@+id/menu_layout_overlay"
+	    android:orientation="vertical"
+	    android:layout_height="wrap_content"
+	    android:layout_width="match_parent">
+		<RelativeLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content">
+		    
+		    <ImageView android:id="@+id/dialog_close"
+		        android:contentDescription="@string/none"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:src="@drawable/dialog_close_icon"/>
+
+		    <LinearLayout
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_toRightOf="@+id/dialog_close"
+		        android:layout_alignParentRight="true"
+		        android:layout_centerVertical="true"
+		        android:gravity="right" >
+
+		        <TextView
+		            android:id="@+id/route_name_text"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:gravity="right"
+		            android:text="@string/none"
+		            android:textColor="#203b50"
+		            android:textSize="17sp"
+		            android:paddingTop="5dp"
+		            android:layout_gravity="center_horizontal"
+		            android:layout_marginRight="15dp"
+		            android:textStyle="bold" />
+
+		        <ImageView
+		            android:id="@+id/route_icon"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:contentDescription="@string/none"
+		            android:gravity="right"
+		            android:layout_marginRight="10dp"
+		            android:src="@drawable/start_flag_marker" />
+		    </LinearLayout>
+
+		</RelativeLayout>
+		<LinearLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical"
+		    android:layout_marginLeft="10dp"
+		    android:layout_marginRight="10dp"
+		    android:layout_marginTop="20dp"
+		    android:layout_marginBottom="20dp">
+		    <TextView
+		       android:id="@+id/model_named"
+	           android:layout_width="fill_parent"
+	           android:layout_height="wrap_content"
+	           android:text="@string/route"
+	           android:textColor="@color/wikicleta_orange"
+	           android:textSize="16sp"
+	           android:paddingLeft="10dp"
+	           android:paddingRight="10dp"
+	           android:textAllCaps="true"
+	           android:textStyle="bold" />
+		    <TextView
+	           android:id="@+id/route_details_text"
+	           android:layout_width="fill_parent"
+	           android:layout_height="wrap_content"
+	           android:text="@string/none"
+	           android:textColor="#203b50"
+	           android:textSize="16sp"
+	           android:paddingLeft="10dp"
+	           android:paddingRight="10dp"
+	           android:textStyle="bold" />
+
+		</LinearLayout>
+		<include layout="@layout/thin_separator" android:id="@+id/separator_one" />
+		<LinearLayout
+	    	android:orientation="vertical"
+	    	android:layout_height="wrap_content"
+	    	android:layout_width="match_parent"
+	    	android:background="@color/wikicleta_white">
+		    
+		    <LinearLayout
+		        android:id="@+id/route_more_info_container_button"
+		    	android:orientation="vertical"
+		    	android:layout_height="wrap_content"
+		    	android:layout_width="match_parent"
+		    	android:padding="10dp"
+		    	android:clickable="true"
+		    	android:background="@drawable/contact_item_selector">
+				<TextView
+		           android:id="@+id/route_more_info_text"
+		           android:layout_width="fill_parent"
+		           android:layout_height="wrap_content"
+		           android:text="@string/route_details"
+		           android:textColor="@color/wikicleta_orange"
+		           android:textSize="16sp"
+		           android:textAlignment="center"
+		           android:gravity="center" />
+	        
+			</LinearLayout>
+		    
+		</LinearLayout>
+		<include layout="@layout/thin_separator" android:id="@+id/separator_one" />
+		
+		<include layout="@layout/common_contributor_info" android:id="@+id/common_contributor_info" />
+		<include layout="@layout/thin_separator" android:id="@+id/separator_one" />
+		<include layout="@layout/common_actions_for_poi" android:id="@+id/common_actions_for_poi" />
+
+		<LinearLayout 
+		    android:id="@+id/action_buttons_container"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/wikicleta_white"
+			android:orientation="horizontal"
+			android:baselineAligned="false">
+		    <LinearLayout 
+		        android:id="@+id/modify_button_container"
+		        android:layout_width="0px"
+		        android:layout_weight="1"
+		        android:layout_height="wrap_content"
+		        android:background="@drawable/background_selector"
+		        android:gravity="center"
+		        android:padding="14dp">
+		        <TextView
+	           		android:id="@+id/button_modify"
+	           		android:layout_width="wrap_content"
+	           		android:layout_height="wrap_content"
+	           		android:text="@string/actions.modify"
+	           		android:textColor="@color/wikicleta_orange"
+	           		android:textSize="16sp"
+	           		android:paddingLeft="10dp"
+	           		android:paddingRight="10dp"
+	           		android:textStyle="bold" />
+		    </LinearLayout>
+		    <LinearLayout 
+		        android:id="@+id/delete_button_container"
+		        android:layout_width="0px"
+		        android:layout_weight="1"
+		        android:layout_height="wrap_content"
+		        android:gravity="center"
+		        android:background="@drawable/background_selector"
+		        android:padding="14dp">
+		        <TextView
+	           		android:id="@+id/button_delete"
+	           		android:layout_width="wrap_content"
+	           		android:layout_height="wrap_content"
+	           		android:text="@string/actions.delete"
+	           		android:textColor="@color/wikicleta_orange"
+	           		android:textSize="16sp"
+	           		android:paddingLeft="10dp"
+	           		android:paddingRight="10dp"
+	           		android:textStyle="bold" />
+		    </LinearLayout>
+		</LinearLayout>
+	</LinearLayout>
+
+</RelativeLayout>

@@ -144,19 +144,7 @@ public class RouteDetailsActivity extends ActivityWithLocationAwareMap implement
 	    	});
 	    	
 			toggleLayersMenu = toggleBuilder.create();
-			
-	        topToolBarView = (LinearLayout) findViewById(R.id.top_panel_extra_route_info);
-	        bottomToolBarView = (LinearLayout) findViewById(R.id.bottom_panel_route_actions);
-	        
-	        // Buttons preparations
-	        final ImageView layersMenuButton = (ImageView) findViewById(R.id.map_layers_button);
-	        layersMenuButton.setOnClickListener(new OnClickListener() {
 
-				public void onClick(View arg0) {
-					toggleLayersMenu.show();
-				}
-		    	
-		    });
 		}
 		
         topToolBarView.setVisibility(View.VISIBLE);

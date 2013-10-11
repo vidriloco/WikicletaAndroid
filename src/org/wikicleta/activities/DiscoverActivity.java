@@ -7,18 +7,20 @@ import org.wikicleta.activities.common.LocationAwareMapWithMarkersActivity;
 import org.wikicleta.adapters.MenuOptionsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
-import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.models.CycleStation;
 import org.wikicleta.models.Parking;
+import org.wikicleta.models.Route;
 import org.wikicleta.models.Tip;
 import org.wikicleta.models.Workshop;
 import org.wikicleta.routing.BikesSharing;
 import org.wikicleta.routing.Parkings;
+import org.wikicleta.routing.Routes;
 import org.wikicleta.routing.Tips;
 import org.wikicleta.routing.Workshops;
 import org.wikicleta.views.CycleStationViews;
 import org.wikicleta.views.ParkingViews;
+import org.wikicleta.views.RouteViews;
 import org.wikicleta.views.TipViews;
 import org.wikicleta.views.WorkshopViews;
 import com.google.android.gms.maps.model.Marker;
@@ -129,11 +131,7 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 
 			@Override
 			public void onItemClick(AdapterView<?> adapterParent, View view, int position, long id) {
-				if(layers[position] == Constants.ROUTES_OVERLAY) {
-					Toasts.showToastWithMessage(DiscoverActivity.this, R.string.not_implemented_yet, R.drawable.hand_icon);
-				} else {
-					selectedLayersMenuAdapter.setSelectedPosition(position);
-				}
+				selectedLayersMenuAdapter.setSelectedPosition(position);
 			}
 
 	    });
@@ -170,7 +168,12 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
             	Workshops workshops = new Workshops();
         		Workshops.Get workshopsFetcher = workshops.new Get(this);
             	workshopsFetcher.execute();
-            }
+            } else if(layer == Constants.ROUTES_OVERLAY) {
+            	this.showLoadingState();
+            	Routes routes = new Routes();
+            	Routes.Get routesFetcher = routes.new Get(this);
+            	routesFetcher.execute();
+            } 
 		}
 	}
 	
@@ -185,6 +188,8 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 			TipViews.buildViewForTip(this, (Tip) markerIn);
 		else if(markerIn instanceof CycleStation)
 			CycleStationViews.buildViewForCycleStation(this, (CycleStation) markerIn);
+		else if(markerIn instanceof Route)
+			RouteViews.buildViewForRoute(this, (Route) markerIn);
 		return true;
 	}
 	
