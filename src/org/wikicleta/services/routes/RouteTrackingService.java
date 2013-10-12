@@ -128,11 +128,8 @@ public class RouteTrackingService extends LocationAwareService {
 	
 	@Override
 	public void onLocationChanged(Location location) {
-		super.onLocationChanged(location);
 		addLocation(location);
 		this.notifyFieldsUpdated();
-		Log.e("WIKICLETA", "Coords in vector: " + String.valueOf(coordinateVector.size()));
-		Log.e("WIKICLETA", "Time from loc: " + String.valueOf(seconds));
 		if(this.boundActivity instanceof NavigationListener)
 			((NavigationListener) this.boundActivity).locationUpdated();
 	}
@@ -173,7 +170,6 @@ public class RouteTrackingService extends LocationAwareService {
 		public void run() {
 			seconds += 1;
 			notifyFieldsUpdated();
-	    	Log.i("WIKICLETA", Formatters.millisecondsToTime(Formatters.secondsFromMilliseconds(seconds)));
 		}
     }
 	
@@ -202,17 +198,16 @@ public class RouteTrackingService extends LocationAwareService {
 		if(isTracking) {
 			// calculate average speed
 			float speed = (float) location.getSpeed()*3600 / 1000;
-			float distance = 0;
 
 			averageSpeed = (averageSpeed + speed)/2;
 			Log.i("Wikicleta", "Speed change " + speed);
 
 			// calculate accumulated distance
 			if(lastLocationCatched != null) {
-				distance = (float) location.distanceTo(lastLocationCatched)/1000;
+				float distance = (float) location.distanceTo(lastLocationCatched)/1000;
 				accumulatedDistance += distance;
 			} 
-
+			
 			this.lastLocationCatched = location;
 			this.coordinateVector.add(new Instant(lastLocationCatched, speed, Formatters.secondsFromMilliseconds(seconds)));
 		}
