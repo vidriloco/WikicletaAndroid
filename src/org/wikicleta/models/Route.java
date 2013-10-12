@@ -186,6 +186,13 @@ public class Route extends Model implements MarkerInterface, Serializable {
 		return this.instants().get(instants().size()-1).location();
 	}
 	
+	public String shortName() {
+		if(this.name.length() > 25) {
+			return this.name.substring(0, 12).concat("...");
+		}
+		return this.name;
+	}
+	
 	@Override
 	public void delete() {
 		super.delete();

@@ -28,7 +28,7 @@ LocationListener {
 	// Milliseconds per second
     private static final int MILLISECONDS_PER_SECOND = 1000;
     // Update frequency in seconds
-    public static final int UPDATE_INTERVAL_IN_SECONDS = 10;
+    public static final int UPDATE_INTERVAL_IN_SECONDS = 5;
     // The fastest update frequency, in seconds
     private static final int FASTEST_INTERVAL_IN_SECONDS = 1;
 

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout android:id="@+id/menu_layout_overlay"
+	    android:orientation="vertical"
+	    android:layout_height="wrap_content"
+	    android:layout_width="match_parent">
+		
+        <include layout="@layout/route_dialog_basic_info" android:id="@+id/route_dialog_basic_info"/>
+		<include layout="@layout/route_rankings" android:id="@+id/route_rankings" />
+		<include layout="@layout/thin_separator" android:id="@+id/separator_one" />
+		<include layout="@layout/common_actions_for_poi" android:id="@+id/common_actions_for_poi" />
+		<include layout="@layout/thin_separator" android:id="@+id/separator_two" />
+		<include layout="@layout/common_contributor_info" android:id="@+id/common_contributor_info" />
+		<include layout="@layout/thin_separator" android:id="@+id/separator_three" />
+		<LinearLayout 
+	    android:id="@+id/action_buttons_container"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/wikicleta_white"
+		android:orientation="horizontal"
+		android:baselineAligned="false">
+	    <LinearLayout 
+	        android:id="@+id/modify_button_container"
+	        android:layout_width="0px"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/background_selector"
+	        android:gravity="center"
+	        android:padding="14dp">
+	        <TextView
+           		android:id="@+id/button_modify"
+           		android:layout_width="wrap_content"
+           		android:layout_height="wrap_content"
+           		android:text="@string/actions.modify"
+           		android:textColor="@color/wikicleta_orange"
+           		android:textSize="16sp"
+           		android:paddingLeft="10dp"
+           		android:paddingRight="10dp"
+           		android:textStyle="bold" />
+	    </LinearLayout>
+	    <LinearLayout 
+	        android:id="@+id/delete_button_container"
+	        android:layout_width="0px"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:background="@drawable/background_selector"
+	        android:padding="14dp">
+	        <TextView
+           		android:id="@+id/button_delete"
+           		android:layout_width="wrap_content"
+           		android:layout_height="wrap_content"
+           		android:text="@string/actions.delete"
+           		android:textColor="@color/wikicleta_orange"
+           		android:textSize="16sp"
+           		android:paddingLeft="10dp"
+           		android:paddingRight="10dp"
+           		android:textStyle="bold" />
+	    </LinearLayout>
+	</LinearLayout>		
+	</LinearLayout>
+	
+</RelativeLayout>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/route_rankings_container"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:baselineAligned="false"
+	android:weightSum="3">
+    <LinearLayout 
+        android:id="@+id/route_security_container"
+        android:layout_width="0px"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+           	<ImageView 
+         	android:id="@+id/route_security_image"
+         	android:layout_marginLeft="10dp"
+         	android:layout_width="wrap_content"
+         	android:layout_height="wrap_content"
+          	android:src="@drawable/green_ranking_icon" />
+           	<TextView
+           	    android:layout_alignParentRight="true"
+            	android:id="@+id/route_security_text"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:text="9"
+            	android:textColor="@color/wikicleta_blue"
+            	android:textSize="20sp"
+         		android:layout_marginRight="10dp"
+         		android:layout_centerVertical="true"
+            	android:textStyle="bold" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/route_security_value_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/route_security_value"
+            android:textColor="@color/wikicleta_blue"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+    <LinearLayout 
+        android:id="@+id/route_fast_container"
+        android:layout_width="0px"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+           	<ImageView 
+         	android:id="@+id/route_fast_image"
+         	android:layout_marginLeft="10dp"
+         	android:layout_width="wrap_content"
+         	android:layout_height="wrap_content"
+          	android:src="@drawable/red_ranking_icon" />
+           	<TextView
+           	    android:layout_alignParentRight="true"
+            	android:id="@+id/route_fast_text"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:text="3"
+            	android:textColor="@color/wikicleta_blue"
+            	android:textSize="20sp"
+         		android:layout_marginRight="10dp"
+         		android:layout_centerVertical="true"
+            	android:textStyle="bold" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/route_fast_value_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/route_fast_value"
+            android:textColor="@color/wikicleta_blue"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+    <LinearLayout 
+        android:id="@+id/route_comfort_container"
+        android:layout_width="0px"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+           	<ImageView 
+         	android:id="@+id/route_comfort_image"
+         	android:layout_marginLeft="10dp"
+         	android:layout_width="wrap_content"
+         	android:layout_height="wrap_content"
+          	android:src="@drawable/yellow_ranking_icon" />
+           	<TextView
+           	    android:layout_alignParentRight="true"
+            	android:id="@+id/route_comfort_text"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:text="5"
+            	android:textColor="@color/wikicleta_blue"
+            	android:textSize="20sp"
+         		android:layout_marginRight="10dp"
+         		android:layout_centerVertical="true"
+            	android:textStyle="bold" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/route_comfort_value_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/route_comfort_value"
+            android:textColor="@color/wikicleta_blue"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</LinearLayout>

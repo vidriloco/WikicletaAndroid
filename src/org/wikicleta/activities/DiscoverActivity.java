@@ -189,7 +189,7 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 		else if(markerIn instanceof CycleStation)
 			CycleStationViews.buildViewForCycleStation(this, (CycleStation) markerIn);
 		else if(markerIn instanceof Route)
-			RouteViews.buildViewForRoute(this, (Route) markerIn);
+			RouteViews.buildViewDetails(this, (Route) markerIn);
 		return true;
 	}
 	

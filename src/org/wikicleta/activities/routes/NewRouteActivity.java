@@ -240,8 +240,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 		poster.activity = this;
 		if(route.existsOnRemoteServer())
 			poster.mode = Cruds.MODIFY;
-		//poster.execute(route);
-		poster.execute(Route.buildOne());
+		poster.execute(route);
 	}
 	
 	protected void cancelRecording() {
@@ -282,6 +281,11 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 		if(service instanceof RouteTrackingService) {
 			this.theService = (RouteTrackingService) service;
 		}
+	}
+	
+	public void resetAll() {
+		this.resetUI();
+		this.cancelRecording();
 	}
 	
 	protected void resetUI() {

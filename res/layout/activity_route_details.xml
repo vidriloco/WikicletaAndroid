@@ -5,7 +5,6 @@
   android:layout_width="wrap_content"
   android:layout_height="wrap_content">
 
-
   <RelativeLayout
     android:id="@+id/map_container"
     android:layout_width="match_parent"
@@ -17,17 +16,29 @@
         android:layout_height="match_parent"
       	android:clickable="true"
         class="com.google.android.gms.maps.SupportMapFragment" />
-  		<ImageView 
-        	android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-        	android:src="@drawable/wikicleta_pin"
-        	android:contentDescription="@string/none"
-        	android:layout_centerInParent="true" />
-  	 	<View
-	  android:layout_width="match_parent"
-	  android:layout_height="match_parent"
-	  android:background="@android:color/transparent" />
+  	 	<View android:layout_width="match_parent"
+	  		  android:layout_height="match_parent"
+	  		  android:background="@android:color/transparent" />
   </RelativeLayout>
+  <RelativeLayout
+       android:id="@+id/middle_control_group"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_alignParentBottom="true"
+       android:paddingBottom="110dp"
+       android:clickable="false" >
+        <ImageView
+          android:id="@+id/favorite_button_icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+		  android:layout_marginRight="20dp"
+          android:clickable="true"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/favorite_button_icon" />
+  </RelativeLayout>
+  
   
   <RelativeLayout
        android:id="@+id/under_control_group"
@@ -35,7 +46,7 @@
        android:layout_height="wrap_content"
        android:orientation="horizontal"
        android:layout_alignParentBottom="true"
-       android:paddingBottom="30dp"
+       android:paddingBottom="50dp"
        android:clickable="false" >
 	
 	<LinearLayout 
@@ -54,13 +65,23 @@
           android:src="@drawable/return_button_icon"
           android:clickable="true" />
         <ImageView
-          android:id="@+id/add_button"
+          android:id="@+id/more_info_button"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginLeft="0dp"
           android:contentDescription="@string/nothing"
-          android:src="@drawable/geopin_button_icon"
+          android:src="@drawable/info_button_icon"
           android:clickable="true" />
+
+        <ImageView
+            android:id="@+id/performances_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:clickable="true"
+            android:contentDescription="@string/nothing"
+            android:src="@drawable/performances_button_icon" />
+
       </LinearLayout>
       
       <ImageView
@@ -68,7 +89,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentRight="true"
-          android:layout_marginRight="70dp"
+          android:layout_marginRight="20dp"
           android:clickable="true"
           android:contentDescription="@string/nothing"
           android:src="@drawable/locator_button_icon_enabled"
@@ -78,19 +99,10 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentRight="true"
-		  android:layout_marginRight="70dp"
+		  android:layout_marginRight="20dp"
           android:clickable="true"
           android:contentDescription="@string/nothing"
           android:src="@drawable/locator_button_icon_disabled" />
-     <ImageView
-          android:id="@+id/save_button"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentRight="true"
-		  android:layout_marginRight="10dp"
-          android:contentDescription="@string/nothing"
-          android:src="@drawable/save_button_icon"
-          android:clickable="true" />
   </RelativeLayout>
   
 </RelativeLayout>

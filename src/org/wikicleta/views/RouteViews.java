@@ -3,6 +3,7 @@ package org.wikicleta.views;
 import java.util.Date;
 
 import org.wikicleta.R;
+import org.wikicleta.activities.routes.RouteDetailsActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.models.Route;
@@ -27,26 +28,62 @@ import android.widget.TextView;
 
 public class RouteViews {
 
-	public static void buildViewForRoute(final Activity activity, final Route route) {
+	public static void buildViewDetails(final Activity activity, final Route route) {
     	final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_route_details);
 
-        LinearLayout modifyContainer = (LinearLayout) dialog.findViewById(R.id.modify_button_container);
-        LinearLayout destroyContainer = (LinearLayout) dialog.findViewById(R.id.delete_button_container);
+        buildRouteBasicInfoView(activity, dialog, route);
+        buildContributorDetailsViewFor(activity, dialog, route);
+        buildRouteRankingViewFor(activity, dialog, route);
 
-        TextView title = (TextView) dialog.findViewById(R.id.route_name_text);
-        title.setText(route.name);
-        title.setTypeface(AppBase.getTypefaceStrong());
+        TextView moreInfoText = (TextView) dialog.findViewById(R.id.route_more_info_text);
+        moreInfoText.setTypeface(AppBase.getTypefaceStrong());
         
-        TextView modelNamed = (TextView) dialog.findViewById(R.id.model_named);
-        modelNamed.setTypeface(AppBase.getTypefaceStrong());
+        dialog.findViewById(R.id.route_more_info_container_button).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				RouteDetailsActivity.currentRoute = route;
+				AppBase.launchActivity(RouteDetailsActivity.class);
+			}
+        	
+        });
+        
+        dialog.show();
+	}
+
+	public static void buildViewDetailsExtra(final Activity activity,Route route) {
+    	final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_route_extra_details);
+
+        buildRouteBasicInfoView(activity, dialog, route);
+        buildDestructiveControlsViewFor(activity, dialog, route);
+        buildRouteRankingViewFor(activity, dialog, route);
+        buildContributorDetailsViewFor(activity, dialog, route);
+        buildRouteRankingControlsViewFor(activity, dialog);
+        
+        dialog.show();
+	}
+
+	private static void buildRouteBasicInfoView(Activity activity, Dialog dialog, Route route) {
+        TextView title = (TextView) dialog.findViewById(R.id.route_name_text);
+        title.setText(route.shortName());
+        title.setTypeface(AppBase.getTypefaceStrong());
         
         TextView content = (TextView) dialog.findViewById(R.id.route_details_text);
         content.setText(route.details);
         content.setTypeface(AppBase.getTypefaceLight());
         
-        TextView creationLegend = (TextView) dialog.findViewById(R.id.creation_date_text);
+        TextView kilometers = (TextView) dialog.findViewById(R.id.route_kms_text);
+        kilometers.setText("30 kms");
+        kilometers.setTypeface(AppBase.getTypefaceStrong());
+
+	}
+	
+	private static void buildContributorDetailsViewFor(Activity activity, Dialog dialog, Route route) {
+		TextView creationLegend = (TextView) dialog.findViewById(R.id.creation_date_text);
         
         PrettyTime ptime = new PrettyTime();
         creationLegend.setText(activity.getResources().getString(R.string.updated_on).concat(" ").concat(ptime.format(new Date(route.updatedAt))));
@@ -66,7 +103,27 @@ public class RouteViews {
             updater.setImageAndImageProcessor(ownerPic, Others.ImageProcessor.ROUND_FOR_MINI_USER_PROFILE);
             updater.execute(route.userPicURL);
         }
-        
+	}
+	
+	private static void buildRouteRankingViewFor(Activity activity, Dialog dialog, Route route) {
+        ((TextView) dialog.findViewById(R.id.route_fast_value_text)).setTypeface(AppBase.getTypefaceLight());
+        ((TextView) dialog.findViewById(R.id.route_comfort_value_text)).setTypeface(AppBase.getTypefaceLight());
+        ((TextView) dialog.findViewById(R.id.route_security_value_text)).setTypeface(AppBase.getTypefaceLight());
+
+        TextView fastText = (TextView) dialog.findViewById(R.id.route_fast_text);
+        fastText.setTypeface(AppBase.getTypefaceStrong());
+        fastText.setText("3");
+
+        TextView comfortText = (TextView) dialog.findViewById(R.id.route_comfort_text);
+        comfortText.setTypeface(AppBase.getTypefaceStrong());
+        comfortText.setText("6");
+
+        TextView securityText = (TextView) dialog.findViewById(R.id.route_security_text);
+        securityText.setTypeface(AppBase.getTypefaceStrong());
+        securityText.setText("9");
+	}
+	
+	private static void buildRouteRankingControlsViewFor(Activity activity, Dialog dialog) {
         // Common actions for POIs
         TextView positiveRankingLegend = (TextView) dialog.findViewById(R.id.positive_button_ranks_text);
         positiveRankingLegend.setText("100");
@@ -75,29 +132,14 @@ public class RouteViews {
         TextView negativeRankingLegend = (TextView) dialog.findViewById(R.id.negative_button_ranks_text);
         negativeRankingLegend.setText("30");
         negativeRankingLegend.setTypeface(AppBase.getTypefaceStrong());
-        
-        TextView moreInfoText = (TextView) dialog.findViewById(R.id.route_more_info_text);
-        moreInfoText.setTypeface(AppBase.getTypefaceStrong());
-        
-        dialog.findViewById(R.id.route_more_info_container_button).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				
-			}
-        	
-        });
-        
-        dialog.findViewById(R.id.dialog_close).setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-        	
-        });
-        
+	}
+	
+	public static void buildDestructiveControlsViewFor(final Activity activity, final Dialog dialog, final Route route) {
         if(route.isOwnedByCurrentUser()) {
+            
+        	LinearLayout modifyContainer = (LinearLayout) dialog.findViewById(R.id.modify_button_container);
+            LinearLayout destroyContainer = (LinearLayout) dialog.findViewById(R.id.delete_button_container);
+            
         	TextView modifyButton = (TextView) dialog.findViewById(R.id.button_modify);
             modifyButton.setTypeface(AppBase.getTypefaceStrong());
             
@@ -166,6 +208,5 @@ public class RouteViews {
         	dialog.findViewById(R.id.action_buttons_container).setVisibility(View.GONE);
         }
         
-        dialog.show();
 	}
 }

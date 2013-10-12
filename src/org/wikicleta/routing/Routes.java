@@ -9,6 +9,7 @@ import org.json.simple.JSONValue;
 import org.wikicleta.R;
 import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.routes.NewRouteActivity;
+import org.wikicleta.activities.routes.RoutesConnectorInterface;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.common.Toasts;
@@ -27,7 +28,7 @@ public class Routes {
 	
 	protected String postPath="/api/routes";
 	protected String putPath="/api/routes/:id";
-
+	protected String showPath="/api/routes/:id";
 	protected String getPath="/api/routes?";
 	
 	public class Get extends AsyncTask<Void, Void, Boolean> {
@@ -87,6 +88,58 @@ public class Routes {
 
 	}
 	
+	public class Show extends AsyncTask<Route, Void, Boolean> {
+    	
+		public RoutesConnectorInterface connector;
+
+	    JSONArray objectList;
+	   
+	    public Show(RoutesConnectorInterface connector) {
+	    	this.connector = connector;
+	    }
+	    
+		@Override
+		protected Boolean doInBackground(Route... args) {
+			Route route = args[0];
+			String fetchedString = NetworkOperations.getJSONExpectingString(showPath.replace(":id", String.valueOf(route.remoteId)), false);
+
+			if(fetchedString == null)
+				return false;
+
+			JSONObject object = (JSONObject) JSONValue.parse(fetchedString);
+			if((Boolean) object.get("success")) {
+				objectList = (JSONArray) object.get("route_path");
+				return true;
+			} else {
+				return false;
+			}
+		}	
+		
+		@Override
+		protected void onPostExecute(final Boolean success) {
+			double [][] path = new double[objectList.size()][2];
+
+			if(success) {
+				@SuppressWarnings("unchecked")
+				Iterator<JSONArray> iterator = (Iterator<JSONArray>) objectList.iterator();
+				int i = 0;
+				while(iterator.hasNext()) {
+					JSONArray json = iterator.next();
+					path[i][0] = (Double) json.get(0);
+					path[i][1] = (Double) json.get(1);
+					i++;
+				}
+			}
+			connector.pathFinishedLoading(success, path);
+		}
+		
+		@Override
+		protected void onCancelled() {
+			connector.pathDidNotLoad(false);
+		}
+
+	}
+	
 	
 	public class PostOrPut extends AsyncTask<Route, Void, Boolean> {
 		private Route route;
@@ -119,11 +172,14 @@ public class Routes {
 	    	if(success) {
 				if(route != null && route.getId() != null)
 					route.delete();
-	    		if(mode == Cruds.CREATE)
+	    		if(mode == Cruds.CREATE) {
 	    			Toasts.showToastWithMessage(activity, R.string.route_saved_successfully, R.drawable.success_icon);
-				else if(mode == Cruds.MODIFY)
+		    		activity.resetAll();
+		    		dialog.dismiss();
+		    		activity.finish();
+		    		AppBase.launchActivity(DiscoverActivity.class);
+	    		} else if(mode == Cruds.MODIFY)
 					Toasts.showToastWithMessage(activity, R.string.route_updated_successfully, R.drawable.success_icon);
-	    		AppBase.launchActivity(DiscoverActivity.class);
 	    	} else {
 	    		int message = (mode == Cruds.CREATE) ? R.string.route_not_saved : R.string.route_not_updated;
 	    		
