@@ -30,6 +30,7 @@ public class Routes {
 	protected String putPath="/api/routes/:id";
 	protected String showPath="/api/routes/:id";
 	protected String getPath="/api/routes?";
+	protected String deletePath="/api/routes/:id";
 	
 	public class Get extends AsyncTask<Void, Void, Boolean> {
     	
@@ -138,6 +139,43 @@ public class Routes {
 			connector.pathDidNotLoad(false);
 		}
 
+	}
+	
+	public class Delete extends AsyncTask<Route, Void, Boolean> {
+		
+		Route route;
+		AlertDialog dialog;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage(AppBase.currentActivity, R.string.destroying).create();
+			dialog.show();
+		}
+		
+		@Override
+		protected Boolean doInBackground(Route... params) {
+			route = params[0];
+			
+			HashMap<String, Object> auth = new HashMap<String, Object>();
+			auth.put("auth_token", User.token());
+			HashMap<String, Object> extras = new HashMap<String, Object>();
+			extras.put("extras", auth);
+			int requestStatus = NetworkOperations.postJSONTo(deletePath.replace(":id", String.valueOf(route.remoteId)), JSONObject.toJSONString(extras));
+			return requestStatus == 200;
+		}
+		
+		@Override
+		protected void onPostExecute(final Boolean success) {
+	    	dialog.dismiss();
+			if(success) {
+				Toasts.showToastWithMessage(AppBase.currentActivity, R.string.route_deleted_successfully, R.drawable.success_icon);
+				AppBase.launchActivity(DiscoverActivity.class);
+			} else {
+				Toasts.showToastWithMessage(AppBase.currentActivity, R.string.route_not_deleted, R.drawable.failure_icon);
+			}
+		}
+		
 	}
 	
 	

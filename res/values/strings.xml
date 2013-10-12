@@ -60,7 +60,7 @@
 	<string name="routes_unsynced_title">%d rutas sin sincronizar</string>
 	<string name="route_unsynced_title">1 ruta sin sincronizar</string>
 	<string name="empty_routes_title">No has compartido ninguna ruta aún</string>
-	
+	<string name="routes_question_delete">¿Deseas eliminar esta ruta?</string>
 	<string name="routes_syncing_title">Sincronizando rutas</string>
 	<string name="routes_discard_route_question">¿Realmente quieres descartar esta ruta?</string>
 	<string name="routes_saving_title">Guardar Ruta</string>
@@ -83,6 +83,9 @@
 	
 	<string name="route_updated_successfully">Ruta actualizada correctamente</string>
 	<string name="route_not_updated">No fué posible guardar los cambios en esta ruta</string>
+	
+	<string name="route_deleted_successfully">Ruta eliminada correctamente</string>
+	<string name="route_not_deleted">No fué posible eliminar esta ruta</string>
 	
 	<string name="route_sent_to_drafts">Ruta guardada como borrador</string>
 	

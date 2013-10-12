@@ -10,6 +10,7 @@ import org.wikicleta.models.Route;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others;
 import org.wikicleta.routing.Others.ImageUpdater;
+import org.wikicleta.routing.Routes;
 
 import com.ocpsoft.pretty.time.PrettyTime;
 
@@ -44,6 +45,7 @@ public class RouteViews {
 
 			@Override
 			public void onClick(View v) {
+				dialog.dismiss();
 				RouteDetailsActivity.currentRoute = route;
 				AppBase.launchActivity(RouteDetailsActivity.class);
 			}
@@ -162,7 +164,7 @@ public class RouteViews {
 
     			@Override
     			public void onClick(View v) {
-    				AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.question, R.string.tips_question_delete);
+    				AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.question, R.string.routes_question_delete);
     				
     				final AlertDialog alert = builder.setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener() {
 
@@ -178,9 +180,8 @@ public class RouteViews {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							dialog.dismiss();
-							//Routes.Delete routesDelete = new Routes().new Delete();
-							//routesDelete.activity = (DiscoverActivity) activity;
-							//routesDelete.execute(route);
+							Routes.Delete routesDelete = new Routes().new Delete();
+							routesDelete.execute(route);
 							dialog.dismiss();
 						}
 

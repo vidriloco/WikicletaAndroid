@@ -97,6 +97,7 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		this.reloadActiveLayersWithMapClearing();
 	}
 	
 	public void reloadActiveLayersWithMapClearing() {
