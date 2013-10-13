@@ -12,7 +12,6 @@ import org.wikicleta.helpers.Formatters;
 import org.wikicleta.models.Route;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Routes;
-import org.wikicleta.routing.Others.Cruds;
 import org.wikicleta.services.routes.NavigationListener;
 import org.wikicleta.services.routes.RouteTrackingService;
 import org.wikicleta.services.routes.ServiceConstructor;
@@ -236,10 +235,8 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 			return;
 		}
 		
-		Routes.PostOrPut poster = new Routes().new PostOrPut();
+		Routes.Post poster = new Routes().new Post();
 		poster.activity = this;
-		if(route.existsOnRemoteServer())
-			poster.mode = Cruds.MODIFY;
 		poster.execute(route);
 	}
 	

@@ -18,11 +18,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,7 +57,7 @@ public class RouteViews {
         dialog.show();
 	}
 
-	public static void buildViewDetailsExtra(final Activity activity,Route route) {
+	public static void buildViewDetailsExtra(final RouteDetailsActivity activity,Route route) {
     	final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_route_extra_details);
@@ -136,7 +138,7 @@ public class RouteViews {
         negativeRankingLegend.setTypeface(AppBase.getTypefaceStrong());
 	}
 	
-	public static void buildDestructiveControlsViewFor(final Activity activity, final Dialog dialog, final Route route) {
+	public static void buildDestructiveControlsViewFor(final RouteDetailsActivity activity, final Dialog dialog, final Route route) {
         if(route.isOwnedByCurrentUser()) {
             
         	LinearLayout modifyContainer = (LinearLayout) dialog.findViewById(R.id.modify_button_container);
@@ -149,10 +151,46 @@ public class RouteViews {
 
     			@Override
     			public void onClick(View v) {
-    				dialog.dismiss();
-    				Bundle bundle = new Bundle();
-    				bundle.putSerializable("route", route);
-    				//AppBase.launchActivityWithBundle(ModifyingActivity.class, bundle);
+    				dialog.hide();
+    				
+    				AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
+    		        LayoutInflater inflater = activity.getLayoutInflater();
+    		        View view = inflater.inflate(R.layout.dialog_route_save, null);
+    				alertDialog.setView(view);
+    				final AlertDialog modifyingDialog = alertDialog.create();
+
+    				// First, preload the route fields
+    				((EditText) view.findViewById(R.id.route_name)).setText(route.name);
+    				((EditText) view.findViewById(R.id.route_details)).setText(route.details);
+    				((CheckBox) view.findViewById(R.id.route_is_private)).setChecked(!route.isPublic);
+    				
+    		        Button saveButton = (Button) view.findViewById(R.id.save_route);
+    		        saveButton.setTypeface(AppBase.getTypefaceStrong());
+    		        
+    		        ((TextView) view.findViewById(R.id.dialog_menu_title)).setTypeface(AppBase.getTypefaceStrong());
+    		        
+    		        ImageView closeImage = (ImageView) view.findViewById(R.id.dialog_close);
+    		        closeImage.setOnClickListener(new OnClickListener () {
+    		        	
+    					@Override
+    					public void onClick(View v) {
+    						dialog.show();
+    						modifyingDialog.dismiss();
+    					}
+    		        	
+    		        });
+    		        
+    		        saveButton.setOnClickListener(new OnClickListener () {
+
+    					@Override
+    					public void onClick(View v) {
+    						modifyingDialog.dismiss();
+    						activity.attemptUpdate(modifyingDialog);
+    					}
+    		        	
+    		        });
+    				
+    				modifyingDialog.show();
     			}
             	
             });

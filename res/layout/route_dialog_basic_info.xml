@@ -52,6 +52,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_gravity="center_horizontal"
+           android:padding="10dp"
            android:text="Una super ruta"
            android:layout_marginTop="10dp"
            android:textColor="@color/wikicleta_orange"

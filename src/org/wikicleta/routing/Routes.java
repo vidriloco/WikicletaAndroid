@@ -9,6 +9,7 @@ import org.json.simple.JSONValue;
 import org.wikicleta.R;
 import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.routes.NewRouteActivity;
+import org.wikicleta.activities.routes.RouteDetailsActivity;
 import org.wikicleta.activities.routes.RoutesConnectorInterface;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.NetworkOperations;
@@ -17,7 +18,6 @@ import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.layers.common.LayersConnectorListener;
 import org.wikicleta.models.Route;
 import org.wikicleta.models.User;
-import org.wikicleta.routing.Others.Cruds;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -178,25 +178,75 @@ public class Routes {
 		
 	}
 	
-	
-	public class PostOrPut extends AsyncTask<Route, Void, Boolean> {
+	public class Put extends AsyncTask<Route, Void, Boolean> {
 		private Route route;
-		public NewRouteActivity activity;
-		public Cruds mode = Cruds.CREATE;
+		public RouteDetailsActivity activity;
 		AlertDialog dialog;
 
 		@Override
 		protected Boolean doInBackground(Route... args) {
 			route = args[0];
 			HashMap<String, Object> auth = new HashMap<String, Object>();
-			auth.put("auth_token", User.token());
-			int requestStatus = 404;
-			if(mode == Cruds.CREATE)
-				requestStatus = NetworkOperations.postJSONTo(postPath, route.toJSON(auth));
-			else if(mode == Cruds.MODIFY)
-				requestStatus = NetworkOperations.putJSONTo(putPath.replace(":id", String.valueOf(route.remoteId)), route.toJSON(auth));
-			
-			return requestStatus == 200;
+			auth.put("auth_token", User.token());			
+			return NetworkOperations.putJSONTo(putPath.replace(":id", String.valueOf(route.remoteId)), route.toJSONForPut(auth)) == 200;
+		}
+		
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage(activity, R.string.uploading).create();
+			dialog.show();
+		}
+		
+	    protected void onPostExecute(Boolean success) {
+	    	dialog.dismiss();
+	    	if(success) {
+    			Toasts.showToastWithMessage(activity, R.string.route_updated_successfully, R.drawable.success_icon);
+	    		dialog.dismiss();
+	    	} else {	    		
+	    		AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.notification, R.string.route_not_updated);
+	    		builder.setNeutralButton(activity.getResources().getString(R.string.neutral), new DialogInterface.OnClickListener() {
+    				public void onClick(DialogInterface dialog,int id) {
+    					
+    				}
+    			});
+	    		
+	    		final AlertDialog subDialog = builder.create();
+	    		
+	    		subDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+	    		    @Override
+	    		    public void onShow(DialogInterface dialog) {
+	    		        
+	    		        Button btnNeutral = subDialog.getButton(Dialog.BUTTON_NEUTRAL);
+	    		        btnNeutral.setTextSize(13);
+	    		        btnNeutral.setTypeface(AppBase.getTypefaceStrong());
+
+	    		    }
+	    		});
+	    		
+	    		subDialog.show();
+	    	}
+	    }
+	}
+	
+	
+	/*
+	 * else if(mode == Cruds.MODIFY)
+	 * requestStatus = NetworkOperations.putJSONTo(putPath.replace(":id", String.valueOf(route.remoteId)), route.toJSON(auth));
+	 * Toasts.showToastWithMessage(activity, R.string.route_updated_successfully, R.drawable.success_icon);
+	 * 
+	 */
+	
+	public class Post extends AsyncTask<Route, Void, Boolean> {
+		private Route route;
+		public NewRouteActivity activity;
+		AlertDialog dialog;
+
+		@Override
+		protected Boolean doInBackground(Route... args) {
+			route = args[0];
+			HashMap<String, Object> auth = new HashMap<String, Object>();
+			auth.put("auth_token", User.token());			
+			return NetworkOperations.postJSONTo(postPath, route.toJSON(auth)) == 200;
 		}
 		
 		protected void onPreExecute() {
@@ -210,30 +260,22 @@ public class Routes {
 	    	if(success) {
 				if(route != null && route.getId() != null)
 					route.delete();
-	    		if(mode == Cruds.CREATE) {
-	    			Toasts.showToastWithMessage(activity, R.string.route_saved_successfully, R.drawable.success_icon);
-		    		activity.resetAll();
-		    		dialog.dismiss();
-		    		activity.finish();
-		    		AppBase.launchActivity(DiscoverActivity.class);
-	    		} else if(mode == Cruds.MODIFY)
-					Toasts.showToastWithMessage(activity, R.string.route_updated_successfully, R.drawable.success_icon);
-	    	} else {
-	    		int message = (mode == Cruds.CREATE) ? R.string.route_not_saved : R.string.route_not_updated;
+    			Toasts.showToastWithMessage(activity, R.string.route_saved_successfully, R.drawable.success_icon);
+	    		activity.resetAll();
+	    		dialog.dismiss();
+	    		activity.finish();
+	    		AppBase.launchActivity(DiscoverActivity.class);
+	    	} else {	    		
+	    		AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.notification, R.string.route_not_saved);
 	    		
-	    		AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.notification, message);
-	    		
-	    		// Only allowing to save drafts when creating a new route
-	    		if(mode == Cruds.CREATE) {
-	    			builder = builder.setNeutralButton(activity.getResources().getString(R.string.save_as_draft), new DialogInterface.OnClickListener() {
-	    				public void onClick(DialogInterface dialog,int id) {
-	    					route.save();
-		    				AppBase.launchActivity(DiscoverActivity.class);
-		    				Toasts.showToastWithMessage(activity, R.string.route_sent_to_drafts, R.drawable.archive_icon);
-		    	    		activity.finish();
-	    				}
-	    			});
-	    		}
+    			builder = builder.setNeutralButton(activity.getResources().getString(R.string.save_as_draft), new DialogInterface.OnClickListener() {
+    				public void onClick(DialogInterface dialog,int id) {
+    					route.save();
+	    				AppBase.launchActivity(DiscoverActivity.class);
+	    				Toasts.showToastWithMessage(activity, R.string.route_sent_to_drafts, R.drawable.archive_icon);
+	    	    		activity.finish();
+    				}
+    			});
 	    		
 	    		builder.setNegativeButton(activity.getResources().getString(R.string.discard), new DialogInterface.OnClickListener() {
 	    			public void onClick(DialogInterface dialog,int id) {

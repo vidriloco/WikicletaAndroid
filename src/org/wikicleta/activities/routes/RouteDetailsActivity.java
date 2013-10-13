@@ -4,6 +4,7 @@ import org.wikicleta.R;
 import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.common.LocationAwareMapWithMarkersActivity;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.common.FieldValidators;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.models.Route;
 import org.wikicleta.routing.Routes;
@@ -17,9 +18,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity implements RoutesConnectorInterface {
@@ -90,6 +94,31 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
     	routesFetcher.execute(currentRoute);
 	}
 
+	public void attemptUpdate(Dialog dialog) {
+		EditText nameView = (EditText) dialog.findViewById(R.id.route_name);
+		EditText detailsView = (EditText) dialog.findViewById(R.id.route_details);
+		CheckBox routeIsPrivate = (CheckBox) dialog.findViewById(R.id.route_is_private);
+		
+		String routeName = nameView.getText().toString();
+		String routeDetails = detailsView.getText().toString();
+
+		if(FieldValidators.isFieldEmpty(routeName)) {
+			nameView.setError(getResources().getString(R.string.tips_input_empty));
+			return;
+		}
+		
+		if(FieldValidators.isFieldEmpty(routeDetails)) {
+			detailsView.setError(getResources().getString(R.string.tips_input_empty));
+			return;
+		}
+		
+		currentRoute.updateAttributes(routeName, routeDetails, !routeIsPrivate.isChecked());
+		
+		Routes.Put updater = new Routes().new Put();
+		updater.activity = this;
+		updater.execute(currentRoute);
+	}
+	
 	@Override
 	public void pathFinishedLoading(boolean status, double[][] path) {
 		if(status) {
