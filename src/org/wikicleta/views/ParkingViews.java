@@ -91,7 +91,7 @@ public class ParkingViews extends BaseViews {
         negativeRankingLegend.setText("30");
         negativeRankingLegend.setTypeface(AppBase.getTypefaceStrong());
         
-        buildViewForParkingFavorited(dialog, parking);
+        buildViewForFavoritedResource(dialog, parking.remoteId);
         
         if(parking.isOwnedByCurrentUser()) {
         	TextView modifyButton = (TextView) dialog.findViewById(R.id.button_modify);
