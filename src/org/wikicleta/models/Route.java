@@ -104,6 +104,7 @@ public class Route extends Model implements MarkerInterface, Serializable {
 		this.userId = userId;
 		this.username = username;
 		this.userPicURL = new String();
+		this.persistedRoutePerformances = new ArrayList<RoutePerformance>();
 	}
 
 	public Route(String name, String details, long elapsedTime, float averageSpeed, float kilometers, long createdAt, ArrayList<Instant> coordinateVector, Long userId, boolean shouldAdd) {

@@ -87,7 +87,7 @@ public class RouteViews {
     	loadingAnimator.setDuration(3000);
     	loadingAnimator.setRepeatCount(ObjectAnimator.INFINITE);
         loadingAnimator.start();
-        
+
         Routes.Performances poster = new Routes().new Performances(activity);
 		poster.execute(route);
         

@@ -28,15 +28,25 @@
        android:layout_alignParentBottom="true"
        android:paddingBottom="110dp"
        android:clickable="false" >
+  	 	<ImageView
+          android:id="@+id/non_favorited_button_icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_marginRight="20dp"
+          android:clickable="true"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/non_favorited_button_icon" />
         <ImageView
-          android:id="@+id/favorite_button_icon"
+          android:id="@+id/favorited_button_icon"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentRight="true"
 		  android:layout_marginRight="20dp"
           android:clickable="true"
           android:contentDescription="@string/nothing"
-          android:src="@drawable/favorite_button_icon" />
+          android:visibility="gone"
+          android:src="@drawable/favorited_button_icon" />
   </RelativeLayout>
   
   

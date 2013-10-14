@@ -14,8 +14,8 @@ import org.apache.http.protocol.HTTP;
 import org.wikicleta.helpers.Strings;
 
 public class NetworkOperations {
-	public static String serverHost = "http://wikicleta.com";
-	//public static String serverHost = "http://192.168.1.66:3000";
+	//public static String serverHost = "http://wikicleta.com";
+	public static String serverHost = "http://192.168.1.66:3000";
 	
 	public static int postJSONTo(String path, String jsonValue) {
 		HttpResponse response = NetworkOperations.postJSON(path, jsonValue);
@@ -25,6 +25,7 @@ public class NetworkOperations {
 		return response.getStatusLine().getStatusCode();
 	}
 	
+	
 	public static int putJSONTo(String path, String jsonValue) {
 		HttpResponse response = NetworkOperations.putJSON(path, jsonValue);
 		
@@ -32,6 +33,7 @@ public class NetworkOperations {
 			return 404;
 		return response.getStatusLine().getStatusCode();
 	}
+	
 	
 	public static String postJSONExpectingStringTo(String path, String jsonValue) {
 		HttpResponse response = NetworkOperations.postJSON(path, jsonValue);
