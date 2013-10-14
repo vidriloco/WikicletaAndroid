@@ -42,7 +42,7 @@
 	<string name="bike_parking_dialog_section">Estacionamiento</string>
 	<string name="bike_repair_dialog_section">Taller/tienda</string>
 	
-	<string name="toggle_menu_routes">Rutas/Bicibuses</string>
+	<string name="toggle_menu_routes">Rutas</string>
 	<string name="toggle_menu_tips">Tips</string>
 	<string name="toggle_menu_bike_parking">Estacionamientos</string>
 	<string name="toggle_menu_bike_sharing">Bicis públicas</string>
