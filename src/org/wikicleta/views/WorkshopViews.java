@@ -29,7 +29,7 @@ import android.widget.TextView;
 
 import com.ocpsoft.pretty.time.PrettyTime;
 
-public class WorkshopViews {
+public class WorkshopViews extends BaseViews {
 	
 	public static void buildViewForWorkshop(final Activity activity, final Workshop workshop) {
     	final Dialog dialog = new Dialog(activity);
@@ -66,6 +66,9 @@ public class WorkshopViews {
         
         creatorName.setText(activity.getResources().getString(R.string.created_by).concat(" ").concat(username));
         creatorName.setTypeface(AppBase.getTypefaceStrong());
+        
+        buildViewForFavoritedResource(dialog, workshop.remoteId);
+
         
         // Hide or fill and show open/closed days information
         if(workshop.horary.length() > 0) {
