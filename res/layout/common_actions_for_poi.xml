@@ -58,19 +58,25 @@
           		android:textStyle="bold" />
     </LinearLayout>
     <LinearLayout 
-        android:id="@+id/comments_button"
+        android:id="@+id/favorites_button"
         android:layout_width="0px"
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:gravity="center"
         android:clickable="true"
-		android:background="@drawable/background_selector"
-        android:padding="10dp">
+		android:background="@drawable/background_selector">
         <ImageView
-            android:id="@+id/comments_image"
-            android:layout_width="wrap_content"
-          		android:layout_height="wrap_content"
-          		android:padding="5dp"
-          		android:src="@drawable/comment_icon" />
+            android:id="@+id/favorited_image"
+            android:layout_width="fill_parent"
+          	android:layout_height="wrap_content"
+          	android:padding="10dp"
+          	android:src="@drawable/favorited_icon"
+          	android:visibility="gone" />
+		<ImageView
+            android:id="@+id/non_favorited_image"
+            android:layout_width="fill_parent"
+          	android:layout_height="wrap_content"
+          	android:padding="10dp"
+          	android:src="@drawable/non_favorited_icon" />
     </LinearLayout>
 </LinearLayout>
