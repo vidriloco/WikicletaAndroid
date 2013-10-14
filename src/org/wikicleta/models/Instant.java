@@ -1,6 +1,12 @@
 package org.wikicleta.models;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+
+import org.json.simple.JSONObject;
 
 import android.location.Location;
 import android.location.LocationManager;
@@ -24,6 +30,9 @@ public class Instant extends Model {
 	@Column(name = "Time")
 	public long time;
 	
+	@Column(name = "CreatedAt")
+	public long createdAt;
+	
 	public Instant() {
 		
 	}
@@ -33,6 +42,15 @@ public class Instant extends Model {
 		this.longitude = lastLocationCatched.getLongitude();
 		this.speed = speed;
 		this.time = time;
+		this.createdAt = new Date().getTime();
+	}
+	
+	public Instant(double lat, double lon, float speed, long time, Date date){
+		this.latitude = lat;
+		this.longitude = lon;
+		this.speed = speed;
+		this.time = time;
+		this.createdAt = date.getTime();
 	}
 	
 	public LatLng geoPoint() {
@@ -47,12 +65,35 @@ public class Instant extends Model {
 	}
 	
 	public HashMap<String, Object> toHashMap() {
-		HashMap<String, Object> coord = new HashMap<String, Object>();
-		coord.put("lat", this.latitude);
-		coord.put("lon", this.longitude);
-		coord.put("speed", this.speed);
-		coord.put("time", this.time);
-		return coord;
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("lat", this.latitude);
+		params.put("lon", this.longitude);
+		params.put("speed", this.speed);
+		params.put("time", this.time);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		params.put("created_at", sdf.format(new Date(this.createdAt)));
+		params.put("updated_at", sdf.format(new Date(this.createdAt)));
+		return params;
+	}
+	
+	public static Instant buildFrom(JSONObject object) {
+		long elapsedTime = (Long) object.get("elapsed_time");
+		float speedAt = Float.parseFloat( (String) object.get("speed_at"));
+		
+		double lat = (Double) object.get("lat");
+		double lon = (Double) object.get("lon");
+		
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date creationDate = null;
+		try {
+			creationDate = df.parse((String)  object.get("str_created_at"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new Instant(lat, lon, speedAt, elapsedTime, creationDate);
 	}
 	
 	@Column(name = "Route")

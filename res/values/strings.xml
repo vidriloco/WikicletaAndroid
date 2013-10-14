@@ -23,6 +23,9 @@
 	<string name="event_unknown">No se sabe cuando</string>
 	<string name="event_other">En %d días</string>
 	
+	<string name="minutes">Minutos</string>
+	<string name="seconds">Segundos</string>
+	
 	<string name="see_comments">Ver Comentarios</string>
 	<!-- Sliding Menu options -->
 	<string name="map_section">Mapa</string>
@@ -116,6 +119,15 @@
 	<string name="route_not_uploaded">Sin subir</string>
 	<string name="route_uploading">Subiendo</string>
 	
+	<string name="waiting_for_performances">Cargando tabla de rendimientos</string>
+	<string name="all_performants">Rendimientos de otros usuarios</string>
+	<string name="challenge_or_check_in_text">Compite / Haz check-in</string>
+	
+	<string name="route_performances_table_username_title_text">Usuario</string>
+	<string name="route_performances_table_date_title_text">Fecha</string>
+	<string name="route_performances_table_time_title_text">Tiempo</string>
+	<string name="route_performances_table_velocity_title_text">Vel.</string>
+		
 	<!-- Strings for Tips  -->
 	<string name="tip">Tip</string>
 	<string name="tips_new_title">Nuevo Tip</string>

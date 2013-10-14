@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/contact_item_selector"
+	android:weightSum="4"
+	android:padding="5dp">
+	
+    <LinearLayout
+        android:id="@+id/event_picture_container"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1" >
+
+        <ImageView
+            android:id="@+id/user_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/none"
+            android:src="@drawable/profile_placeholder_avatar_mini" />
+       	<TextView
+       	    android:id="@+id/username_text"
+       	    android:layout_width="fill_parent"
+       	    android:layout_height="wrap_content"
+       	    android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+       	    android:text="@string/none"
+       	    android:textColor="@color/wikicleta_blue"
+       	    android:textSize="11sp" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+		<LinearLayout
+        	android:layout_width="match_parent"
+        	android:layout_height="match_parent"
+        	android:gravity="center_horizontal|center_vertical"
+        	android:orientation="vertical" >
+        	<TextView
+            	android:id="@+id/average_speed_text"
+            	android:layout_width="wrap_content"
+           	 	android:layout_height="wrap_content"
+            	android:text="10"
+            	android:textAllCaps="true"
+            	android:textColor="@color/wikicleta_blue"
+            	android:textSize="17sp" />
+
+        	<TextView
+        	    android:id="@+id/metric_unit_speed_text"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="wrap_content"
+        	    android:text="km/h"
+        	    android:textAllCaps="true"
+        	    android:textColor="@color/wikicleta_orange"
+        	    android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+		<LinearLayout
+        	android:layout_width="match_parent"
+        	android:layout_height="match_parent"
+        	android:gravity="center_horizontal|center_vertical"
+        	android:orientation="vertical" >
+        	<TextView
+            	android:id="@+id/average_timing_text"
+            	android:layout_width="wrap_content"
+           	 	android:layout_height="wrap_content"
+            	android:text="20:30"
+            	android:textAllCaps="true"
+            	android:textColor="@color/wikicleta_blue"
+            	android:textSize="17sp" />
+
+        	<TextView
+        	    android:id="@+id/metric_unit_timing_text"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="wrap_content"
+        	    android:text="@string/minutes"
+        	    android:textAllCaps="true"
+        	    android:textColor="@color/wikicleta_orange"
+        	    android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1" >
+
+       	<TextView
+       	    android:id="@+id/date_text"
+       	    android:layout_width="fill_parent"
+       	    android:layout_height="match_parent"
+       	    android:gravity="center_horizontal|center_vertical"
+       	    android:text="12-01-2013"
+       	    android:textAllCaps="true"
+       	    android:textColor="@color/wikicleta_blue"
+       	    android:textSize="11sp" />
+
+    </LinearLayout>
+</LinearLayout>

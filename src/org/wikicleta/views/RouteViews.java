@@ -1,5 +1,6 @@
 package org.wikicleta.views;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 
 import org.wikicleta.R;
@@ -12,12 +13,14 @@ import org.wikicleta.routing.Others;
 import org.wikicleta.routing.Others.ImageUpdater;
 import org.wikicleta.routing.Routes;
 
+import com.nineoldandroids.animation.ObjectAnimator;
 import com.ocpsoft.pretty.time.PrettyTime;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -70,18 +73,50 @@ public class RouteViews {
         
         dialog.show();
 	}
+	
+	public static Dialog buildPerformancesView(final RouteDetailsActivity activity, Route route) {
+    	Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_route_performances);
+        
+        ImageView performancesLoaderView = (ImageView) dialog.findViewById(R.id.loading_performances_icon);
+
+        ((TextView) dialog.findViewById(R.id.waiting_for_performances_text)).setTypeface(AppBase.getTypefaceStrong());
+        
+        final ObjectAnimator loadingAnimator = ObjectAnimator.ofFloat(performancesLoaderView, "alpha", 1, 0.2f, 1);
+    	loadingAnimator.setDuration(3000);
+    	loadingAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+        loadingAnimator.start();
+        
+        Routes.Performances poster = new Routes().new Performances(activity);
+		poster.execute(route);
+        
+        dialog.setOnDismissListener(new OnDismissListener() {
+
+			@Override
+			public void onDismiss(DialogInterface dialog) {
+				loadingAnimator.cancel();
+			}
+        	
+        });
+        dialog.show();
+
+        return dialog;
+	}
 
 	private static void buildRouteBasicInfoView(Activity activity, Dialog dialog, Route route) {
         TextView title = (TextView) dialog.findViewById(R.id.route_name_text);
-        title.setText(route.shortName());
+        title.setText(route.name);
         title.setTypeface(AppBase.getTypefaceStrong());
         
         TextView content = (TextView) dialog.findViewById(R.id.route_details_text);
         content.setText(route.details);
         content.setTypeface(AppBase.getTypefaceLight());
         
+        DecimalFormat format=new DecimalFormat("#.##");
+        
         TextView kilometers = (TextView) dialog.findViewById(R.id.route_kms_text);
-        kilometers.setText("30 kms");
+        kilometers.setText(format.format(route.kilometers).concat(" Km/h"));
         kilometers.setTypeface(AppBase.getTypefaceStrong());
 
 	}

@@ -17,6 +17,7 @@ import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.layers.common.LayersConnectorListener;
 import org.wikicleta.models.Route;
+import org.wikicleta.models.RoutePerformance;
 import org.wikicleta.models.User;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -31,6 +32,8 @@ public class Routes {
 	protected String showPath="/api/routes/:id";
 	protected String getPath="/api/routes?";
 	protected String deletePath="/api/routes/:id";
+	
+	protected String performancesPath="/api/routes/:id/performances";
 	
 	public class Get extends AsyncTask<Void, Void, Boolean> {
     	
@@ -92,8 +95,9 @@ public class Routes {
 	public class Show extends AsyncTask<Route, Void, Boolean> {
     	
 		public RoutesConnectorInterface connector;
+		Route route;
 
-	    JSONArray objectList;
+	    JSONObject routeExtras;
 	   
 	    public Show(RoutesConnectorInterface connector) {
 	    	this.connector = connector;
@@ -101,7 +105,7 @@ public class Routes {
 	    
 		@Override
 		protected Boolean doInBackground(Route... args) {
-			Route route = args[0];
+			route = args[0];
 			String fetchedString = NetworkOperations.getJSONExpectingString(showPath.replace(":id", String.valueOf(route.remoteId)), false);
 
 			if(fetchedString == null)
@@ -109,7 +113,7 @@ public class Routes {
 
 			JSONObject object = (JSONObject) JSONValue.parse(fetchedString);
 			if((Boolean) object.get("success")) {
-				objectList = (JSONArray) object.get("route_path");
+				routeExtras = (JSONObject) object.get("route");
 				return true;
 			} else {
 				return false;
@@ -118,27 +122,84 @@ public class Routes {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
-			double [][] path = new double[objectList.size()][2];
+			JSONArray jsonPath = (JSONArray) routeExtras.get("path");
+
+			double [][] path = new double[jsonPath.size()][2];
 
 			if(success) {
 				@SuppressWarnings("unchecked")
-				Iterator<JSONArray> iterator = (Iterator<JSONArray>) objectList.iterator();
+				Iterator<JSONArray> pathIterator = (Iterator<JSONArray>) jsonPath.iterator();
 				int i = 0;
-				while(iterator.hasNext()) {
-					JSONArray json = iterator.next();
+				while(pathIterator.hasNext()) {
+					JSONArray json = pathIterator.next();
 					path[i][0] = (Double) json.get(0);
 					path[i][1] = (Double) json.get(1);
 					i++;
 				}
+				
+				route.path = path;
+
 			}
-			connector.pathFinishedLoading(success, path);
+			
+			connector.routeDetailsFinishedLoading(success);
 		}
 		
 		@Override
 		protected void onCancelled() {
-			connector.pathDidNotLoad(false);
+			connector.routePerformancesDidNotLoad(false);
 		}
+	}
+	
+	public class Performances extends AsyncTask<Route, Void, Boolean> {
+    	
+		public RoutesConnectorInterface connector;
+		Route route;
 
+	    JSONObject routeExtras;
+	   
+	    public Performances(RoutesConnectorInterface connector) {
+	    	this.connector = connector;
+	    }
+	    
+		@Override
+		protected Boolean doInBackground(Route... args) {
+			route = args[0];
+			String fetchedString = NetworkOperations.getJSONExpectingString(performancesPath.replace(":id", String.valueOf(route.remoteId)), false);
+
+			if(fetchedString == null)
+				return false;
+
+			JSONObject object = (JSONObject) JSONValue.parse(fetchedString);
+			if((Boolean) object.get("success")) {
+				routeExtras = (JSONObject) object.get("route");
+				return true;
+			} else {
+				return false;
+			}
+		}	
+		
+		@Override
+		protected void onPostExecute(final Boolean success) {
+			JSONArray jsonPerformances = (JSONArray) routeExtras.get("performances");
+
+			if(success) {
+				ArrayList<RoutePerformance> routePerformances = new ArrayList<RoutePerformance>();
+				@SuppressWarnings("unchecked")
+				Iterator<JSONObject> performancesIterator = (Iterator<JSONObject>) jsonPerformances.iterator();
+				while(performancesIterator.hasNext()) {
+					JSONObject object = performancesIterator.next();
+					routePerformances.add(RoutePerformance.buildFrom(object));
+				}
+				route.persistedRoutePerformances = routePerformances;
+			}
+			
+			connector.routePerformancesFinishedLoading(success);
+		}
+		
+		@Override
+		protected void onCancelled() {
+			connector.routeDetailsDidNotLoad(false);
+		}
 	}
 	
 	public class Delete extends AsyncTask<Route, Void, Boolean> {

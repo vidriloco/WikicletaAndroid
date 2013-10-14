@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" > 
+    <LinearLayout
+        android:id="@+id/container_for_title"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:background="@drawable/background_selector"
+    	android:gravity="center">
+        <TextView
+	    android:id="@+id/dialog_title"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:padding="14dp"
+	    android:text="@string/all_performants"
+	    android:textColor="@color/wikicleta_blue"
+	    android:textSize="15sp"
+	    android:textStyle="bold" />
+    </LinearLayout>
+	<LinearLayout
+	    android:id="@+id/performances_table_header"
+	    android:layout_below="@+id/container_for_title"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:background="@drawable/contact_item_selector"
+		android:weightSum="4">
+		
+	    <LinearLayout
+	        android:id="@+id/username_title_container"
+	        android:layout_width="1dp"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:layout_weight="1"
+	        android:gravity="center_horizontal" >
+	       	<TextView
+	       	    android:id="@+id/username_title_text"
+	       	    android:layout_width="fill_parent"
+	       	    android:layout_height="wrap_content"
+	       	    android:padding="5dp"
+				android:textColor="@color/wikicleta_white"
+	       	    android:text="@string/route_performances_table_username_title_text"
+	       	    android:gravity="center_horizontal"
+	       	    android:background="@color/wikicleta_blue"
+	       	    android:textSize="14sp" />
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/velocity_title_container"
+	        android:layout_width="1dp"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:layout_weight="1"
+	        android:gravity="center_horizontal" >
+	       	<TextView
+	       	    android:id="@+id/velocity_title_text"
+	       	    android:layout_width="fill_parent"
+	       	    android:layout_height="wrap_content"
+	       	    android:padding="5dp"
+				android:textColor="@color/wikicleta_white"
+	       	    android:text="@string/route_performances_table_velocity_title_text"
+	       	    android:alpha="0.8"
+	       	    android:gravity="center_horizontal"
+	       	    android:background="@color/wikicleta_blue"
+	       	    android:textSize="14sp" />
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/time_title_container"
+	        android:layout_width="1dp"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:layout_weight="1"
+	        android:gravity="center_horizontal" >
+	       	<TextView
+	       	    android:id="@+id/time_title_text"
+	       	    android:layout_width="fill_parent"
+	       	    android:layout_height="wrap_content"
+	       	    android:padding="5dp"
+				android:textColor="@color/wikicleta_white"
+	       	    android:text="@string/route_performances_table_time_title_text"
+	       	    android:gravity="center_horizontal"
+	       	    android:background="@color/wikicleta_blue"
+	       	    android:textSize="14sp" />
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/date_title_container"
+	        android:layout_width="1dp"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:layout_weight="1"
+	        android:gravity="center_horizontal" >
+	       	<TextView
+	       	    android:id="@+id/date_title_text"
+	       	    android:layout_width="fill_parent"
+	       	    android:layout_height="wrap_content"
+	       	    android:padding="5dp"
+				android:textColor="@color/wikicleta_white"
+	       	    android:text="@string/route_performances_table_date_title_text"
+	       	    android:alpha="0.8"
+	       	    android:gravity="center_horizontal"
+	       	    android:background="@color/wikicleta_blue"
+	       	    android:textSize="14sp" />
+	    </LinearLayout>
+	</LinearLayout>
+	<ListView
+	    android:id="@+id/list_events"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/performances_table_header"
+	    android:background="@drawable/list_item_background"
+	    android:fadeScrollbars="true"
+	    android:fastScrollEnabled="true"
+	    android:focusable="true"
+	    android:focusableInTouchMode="true"
+	    android:scrollbarFadeDuration="100"
+	    android:scrollbars="vertical" />
+
+	<LinearLayout 
+	    android:id="@+id/bottom_container"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/wikicleta_white"
+		android:layout_below="@id/list_events"
+		android:orientation="horizontal">
+	    <LinearLayout 
+	        android:id="@+id/challenge_or_check_in"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:clickable="true"
+	        android:gravity="center"
+	        android:background="@drawable/background_selector"
+	        android:padding="14dp">
+	        <TextView
+           		android:id="@+id/challenge_or_check_in_text"
+           		android:layout_width="wrap_content"
+           		android:layout_height="wrap_content"
+           		android:text="@string/challenge_or_check_in_text"
+           		android:textColor="@color/wikicleta_orange"
+           		android:textSize="16sp"
+           		android:paddingLeft="10dp"
+           		android:paddingRight="10dp"
+           		android:textStyle="bold" />
+	    </LinearLayout>
+	</LinearLayout>
+</RelativeLayout>

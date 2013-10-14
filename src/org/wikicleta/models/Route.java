@@ -69,8 +69,11 @@ public class Route extends Model implements MarkerInterface, Serializable {
 	public int speedIndex;
 	public int safetyIndex;
 	
+	public double [][] path;
+	
 	public ArrayList<Instant> temporalInstants;
-	public ArrayList<RoutePerformance> temporalRoutePerformances;
+	protected ArrayList<RoutePerformance> temporalRoutePerformances;
+	public ArrayList<RoutePerformance> persistedRoutePerformances;
 
 	protected Marker associatedMarker;
 	
@@ -147,9 +150,13 @@ public class Route extends Model implements MarkerInterface, Serializable {
 		HashMap<String, Object> performance = new HashMap<String, Object>();
 		performance.put("elapsed_time", performanceTmp.elapsedTime);
 		performance.put("average_speed", performanceTmp.averageSpeed);
-		params.put("route_performance", performance);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		performance.put("created_at", sdf.format(new Date(this.createdAt)));
+		performance.put("updated_at", sdf.format(new Date(this.createdAt)));
+		
+		params.put("route_performance", performance);
+		
 		params.put("created_at", sdf.format(new Date(this.createdAt)));
 		params.put("updated_at", sdf.format(new Date(this.updatedAt)));
 		
@@ -298,4 +305,7 @@ public class Route extends Model implements MarkerInterface, Serializable {
 		return JSONValue.toJSONString(routeEnvelope);
 	}
 	
+	public boolean hasNoPathLoaded() {
+		return (this.path == null);
+	}
 }

@@ -3,6 +3,7 @@ package org.wikicleta.activities.routes;
 import org.wikicleta.R;
 import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.common.LocationAwareMapWithMarkersActivity;
+import org.wikicleta.adapters.PerformancesListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.helpers.NotificationBuilder;
@@ -25,6 +26,8 @@ import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity implements RoutesConnectorInterface {
 	
@@ -39,6 +42,9 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 	ServiceConstructor serviceInitializator;
 	private ImageView returnIcon;
 	private ImageView moreInfoIcon;
+	private ImageView performancesIcon;
+	
+	private Dialog performancesDialog;
 
 	public void onCreate(Bundle savedInstanceState) {
 		attemptCenterOnLocationAtStart = false;
@@ -49,33 +55,45 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
         
         if(currentRoute == null)
         	AppBase.launchActivity(DiscoverActivity.class);
-        
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentRoute.originCoordinate, 15));
-        
-        returnIcon = (ImageView) this.findViewById(R.id.return_button);
-    	returnIcon.setOnClickListener(new OnClickListener() {
+        else {
+        	map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentRoute.originCoordinate, 15));
+            
+            returnIcon = (ImageView) this.findViewById(R.id.return_button);
+        	returnIcon.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				overridePendingTransition(0, 0);
-				finish();
-			}
-    		
-    	});
-    	
-    	moreInfoIcon = (ImageView) this.findViewById(R.id.more_info_button);
-    	moreInfoIcon.setOnClickListener(new OnClickListener() {
+    			@Override
+    			public void onClick(View v) {
+    				overridePendingTransition(0, 0);
+    				finish();
+    			}
+        		
+        	});
+        	
+        	moreInfoIcon = (ImageView) this.findViewById(R.id.more_info_button);
+        	moreInfoIcon.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				RouteViews.buildViewDetailsExtra(RouteDetailsActivity.this, currentRoute);
-			}
-    		
-    	});
-    	
-    	fetchAndDrawRoute();
-    	
-    	loadMarkers();
+    			@Override
+    			public void onClick(View v) {
+    				RouteViews.buildViewDetailsExtra(RouteDetailsActivity.this, currentRoute);
+    			}
+        		
+        	});
+        	
+        	performancesIcon = (ImageView) this.findViewById(R.id.performances_button);
+        	performancesIcon.setOnClickListener(new OnClickListener() {
+
+    			@Override
+    			public void onClick(View v) {
+    				performancesDialog = RouteViews.buildPerformancesView(RouteDetailsActivity.this, currentRoute);
+    			}
+        		
+        	});
+        	
+        	
+        	fetchAndDrawRoute();
+        	
+        	loadMarkers();
+        }
 	}
 	
 	private void loadMarkers() {
@@ -89,9 +107,11 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 	}
 	
 	private void fetchAndDrawRoute() {
-		Routes routes = new Routes();
-    	Routes.Show routesFetcher = routes.new Show(this);
-    	routesFetcher.execute(currentRoute);
+		if(currentRoute.hasNoPathLoaded()) {
+			Routes routes = new Routes();
+	    	Routes.Show routesFetcher = routes.new Show(this);
+	    	routesFetcher.execute(currentRoute);
+		}
 	}
 
 	public void attemptUpdate(Dialog dialog) {
@@ -120,26 +140,52 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 	}
 	
 	@Override
-	public void pathFinishedLoading(boolean status, double[][] path) {
+	public void routeDetailsFinishedLoading(boolean status) {
 		if(status) {
 			PolylineOptions options = new PolylineOptions();
-			for(int i=0; i < path.length ; i++) {
-				options.add(new LatLng(path[i][1], path[i][0]));
+			for(int i=0; i < currentRoute.path.length ; i++) {
+				options.add(new LatLng(currentRoute.path[i][1], currentRoute.path[i][0]));
 			}
 			
 			options.color(R.color.wikicleta_blue);
 			this.map.addPolyline(options);
 		} else {
-			pathDidNotLoad(status);
+			routeDetailsDidNotLoad(status);
 		}
 
 
 	}
 
 	@Override
-	public void pathDidNotLoad(boolean status) {
+	public void routeDetailsDidNotLoad(boolean status) {
 		overridePendingTransition(0, 0);
 		finish();
+	}
+
+	@Override
+	public void routePerformancesFinishedLoading(boolean status) {
+		performancesDialog.setContentView(R.layout.dialog_performances_list);
+		TextView dialogTitle = (TextView) performancesDialog.findViewById(R.id.dialog_title);
+        dialogTitle.setTypeface(AppBase.getTypefaceStrong());
+        
+        ((TextView) performancesDialog.findViewById(R.id.username_title_text)).setTypeface(AppBase.getTypefaceStrong());
+        ((TextView) performancesDialog.findViewById(R.id.date_title_text)).setTypeface(AppBase.getTypefaceStrong());
+        ((TextView) performancesDialog.findViewById(R.id.time_title_text)).setTypeface(AppBase.getTypefaceStrong());
+        ((TextView) performancesDialog.findViewById(R.id.velocity_title_text)).setTypeface(AppBase.getTypefaceStrong());
+
+        
+        final ListView listview = (ListView) performancesDialog.findViewById(R.id.list_events);
+        PerformancesListAdapter listAdapter = new PerformancesListAdapter(this, currentRoute.persistedRoutePerformances);
+	    listview.setAdapter(listAdapter);
+	    
+		((TextView) performancesDialog.findViewById(R.id.challenge_or_check_in_text)).setTypeface(AppBase.getTypefaceStrong());
+
+	}
+
+	@Override
+	public void routePerformancesDidNotLoad(boolean status) {
+		performancesDialog.dismiss();
+		// Add toast with failure legend
 	}
 
 }
