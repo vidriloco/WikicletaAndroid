@@ -8,7 +8,6 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.models.Parking;
 import org.wikicleta.models.User;
-import org.wikicleta.routing.Favorites;
 import org.wikicleta.routing.Others;
 import org.wikicleta.routing.Others.ImageUpdater;
 import org.wikicleta.routing.Parkings;
@@ -171,38 +170,4 @@ public class ParkingViews extends BaseViews {
         
         dialog.show();
     }
-	
-	private static void buildViewForParkingFavorited(Dialog dialog, final Parking parking) {
-		loadSingleton();
-		
-		singleton.favoritedIcon = (ImageView) dialog.findViewById(R.id.favorited_image);
-        singleton.favoritedIcon.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				singleton.favoritedIcon.setClickable(false);
-				Favorites.Post unMarker = new Favorites().new Post(singleton, "unmark");
-				unMarker.execute(String.valueOf(parking.remoteId), "Parking", String.valueOf(User.id()));
-				singleton.runAnimator(singleton.favoritedIcon);
-			}
-        	
-        });
-        
-        singleton.nonFavoritedIcon = (ImageView) dialog.findViewById(R.id.non_favorited_image);
-        singleton.nonFavoritedIcon.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				singleton.nonFavoritedIcon.setClickable(false);
-				Favorites.Post unMarker = new Favorites().new Post(singleton, "mark");
-				unMarker.execute(String.valueOf(parking.remoteId), "Parking", String.valueOf(User.id()));
-				singleton.runAnimator(singleton.nonFavoritedIcon);
-			}
-        	
-        });
-        
-		Favorites.Marked markedInvestigator = new Favorites().new Marked(singleton);
-		markedInvestigator.execute(String.valueOf(parking.remoteId), "Parking", String.valueOf(User.id()));
-		singleton.runAnimator(singleton.nonFavoritedIcon);
-	}
 }
