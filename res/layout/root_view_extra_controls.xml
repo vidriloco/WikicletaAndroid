@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout 
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/extra_actions_for_profile"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:baselineAligned="false"
+		android:layout_below="@id/main_actions_for_profile"
+		android:weightSum="2">
+	    <LinearLayout 
+	        android:id="@+id/settings_container"
+	        android:layout_width="0px"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:orientation="horizontal"
+	        android:clickable="true"
+	        android:padding="5dp"
+	        android:background="@drawable/contact_item_selector">
+
+         	<ImageView 
+         	    android:id="@+id/settings_icon"
+         	    android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:src="@drawable/settings_icon" />
+        	<TextView
+          		android:id="@+id/settings_in_root_text"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:textColor="@color/wikicleta_blue"
+          		android:textSize="12sp"
+          		android:layout_marginLeft="10dp"
+          		android:gravity="center_horizontal"
+          		android:text="@string/settings_in_root"
+          		android:textAllCaps="true"
+          		android:textStyle="bold" />
+	    </LinearLayout>
+	
+	    <LinearLayout 
+	        android:id="@+id/messages_container"
+	        android:layout_width="0px"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:orientation="horizontal"
+	        android:clickable="true"
+	        android:padding="5dp"
+	        android:background="@drawable/contact_item_selector">
+
+         	<ImageView 
+         	    android:id="@+id/messages_icon"
+         	    android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:src="@drawable/messages_icon" />
+        	<TextView
+          		android:id="@+id/messages_in_root_text"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:textColor="@color/wikicleta_blue"
+          		android:textSize="12sp"
+          		android:layout_marginLeft="10dp"
+          		android:gravity="center_horizontal"
+          		android:text="@string/messages_in_root"
+          		android:textAllCaps="true"
+          		android:textStyle="bold" />
+	    </LinearLayout>
+	</LinearLayout>

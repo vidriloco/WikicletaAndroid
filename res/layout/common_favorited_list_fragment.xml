@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <LinearLayout 
+        android:id="@+id/loading_view"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:gravity="center">
+
+        <ImageView
+            android:id="@+id/spinner_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/spinner_big" />
+
+    </LinearLayout>
+    <LinearLayout 
+        android:id="@+id/empty_list"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		   
+        <LinearLayout 
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:gravity="center"
+		android:orientation="vertical">
+			<ImageView 
+			    android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/favorites_icon_big" />
+			<TextView
+	        android:id="@+id/no_favorited_items"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/favorites_empty_list"
+	        android:textColor="@color/wikicleta_orange"
+	        android:textSize="20sp"
+	        android:textStyle="bold" />
+        </LinearLayout>
+
+	</LinearLayout>
+    <ListView
+   		android:id="@+id/light_pois_list"
+   		android:layout_width="fill_parent"
+   		android:layout_height="wrap_content"
+   		android:background="@drawable/list_item_background"
+   		android:fadeScrollbars="true"
+   		android:fastScrollEnabled="true"
+   		android:focusable="true"
+   		android:focusableInTouchMode="true"
+   		android:scrollbarFadeDuration="100"
+   		android:scrollbars="vertical" />
+
+    
+
+</LinearLayout>
+    

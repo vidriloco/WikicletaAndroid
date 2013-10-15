@@ -106,7 +106,7 @@
           		android:textAllCaps="true" />
 	    </LinearLayout>
 		<LinearLayout 
-	        android:id="@+id/friends_container"
+	        android:id="@+id/favorites_container"
 	        android:layout_width="0px"
 	        android:layout_weight="1"
 	        android:layout_height="match_parent"
@@ -117,13 +117,13 @@
 	        android:background="@drawable/contact_item_selector">
 
 	        <TextView
-          		android:id="@+id/friends_button_text"
+          		android:id="@+id/favorites_button_text"
           		android:layout_width="wrap_content"
           		android:layout_height="wrap_content"
           		android:textColor="@color/wikicleta_orange"
           		android:drawablePadding="10dp"
-          		android:drawableTop="@drawable/friends_icon"
-          		android:text="@string/friends_in_root"
+          		android:drawableTop="@drawable/favorites_icon"
+          		android:text="@string/favorites_in_root"
           		android:textSize="13sp"
           		android:layout_marginLeft="10dp"
           		android:gravity="center_horizontal"
@@ -133,79 +133,13 @@
     <LinearLayout android:id="@+id/white_space"
        	android:layout_width="fill_parent"
 		android:layout_height="5dp"
-		android:layout_below="@id/main_actions_for_profile"></LinearLayout>
-    <LinearLayout 
-	    xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:id="@+id/extra_actions_for_profile"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:baselineAligned="false"
-		android:layout_below="@id/main_actions_for_profile"
-		android:weightSum="2">
-	    <LinearLayout 
-	        android:id="@+id/settings_container"
-	        android:layout_width="0px"
-	        android:layout_weight="1"
-	        android:layout_height="wrap_content"
-	        android:gravity="center"
-	        android:orientation="horizontal"
-	        android:clickable="true"
-	        android:padding="5dp"
-	        android:background="@drawable/contact_item_selector">
-
-         	<ImageView 
-         	    android:id="@+id/settings_icon"
-         	    android:layout_width="wrap_content"
-          		android:layout_height="wrap_content"
-          		android:src="@drawable/settings_icon" />
-        	<TextView
-          		android:id="@+id/settings_in_root_text"
-          		android:layout_width="wrap_content"
-          		android:layout_height="wrap_content"
-          		android:textColor="@color/wikicleta_blue"
-          		android:textSize="12sp"
-          		android:layout_marginLeft="10dp"
-          		android:gravity="center_horizontal"
-          		android:text="@string/settings_in_root"
-          		android:textAllCaps="true"
-          		android:textStyle="bold" />
-	    </LinearLayout>
-	
-	    <LinearLayout 
-	        android:id="@+id/messages_container"
-	        android:layout_width="0px"
-	        android:layout_weight="1"
-	        android:layout_height="wrap_content"
-	        android:gravity="center"
-	        android:orientation="horizontal"
-	        android:clickable="true"
-	        android:padding="5dp"
-	        android:background="@drawable/contact_item_selector">
-
-         	<ImageView 
-         	    android:id="@+id/messages_icon"
-         	    android:layout_width="wrap_content"
-          		android:layout_height="wrap_content"
-          		android:src="@drawable/messages_icon" />
-        	<TextView
-          		android:id="@+id/messages_in_root_text"
-          		android:layout_width="wrap_content"
-          		android:layout_height="wrap_content"
-          		android:textColor="@color/wikicleta_blue"
-          		android:textSize="12sp"
-          		android:layout_marginLeft="10dp"
-          		android:gravity="center_horizontal"
-          		android:text="@string/messages_in_root"
-          		android:textAllCaps="true"
-          		android:textStyle="bold" />
-	    </LinearLayout>
-	</LinearLayout>
+		android:layout_below="@id/main_actions_for_profile">
+    </LinearLayout>
 	<LinearLayout android:id="@+id/separator"
 	    android:layout_height="4dp"
 	    android:layout_width="fill_parent"
 	    android:background="@color/wikicleta_light_blue"
-	    android:layout_below="@id/extra_actions_for_profile"></LinearLayout>
+	    android:layout_below="@id/white_space"></LinearLayout>
 	<ScrollView 
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"

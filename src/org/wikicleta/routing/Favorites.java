@@ -1,11 +1,17 @@
 package org.wikicleta.routing;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
+import org.interfaces.CollectionFetchedListener;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.common.interfaces.FavoritesConnectorInterface;
+import org.wikicleta.models.LightPOI;
 import org.wikicleta.models.User;
 
 import android.os.AsyncTask;
@@ -14,7 +20,8 @@ public class Favorites {
 
 	protected String getPath="/api/favorites/marked/:object_id/:object_type/:user_id";
 	protected String postPath="/api/favorites/:mode";
-
+	protected String listPath="/api/favorites/list/:user_id";
+	
 	public class Marked extends AsyncTask<String, Void, Boolean> {
     	
 		public FavoritesConnectorInterface connector;
@@ -96,6 +103,62 @@ public class Favorites {
 		@Override
 		protected void onCancelled() {
 			connector.onFavoritedItemChangedState(false);
+		}
+
+	}
+	
+	public class List extends AsyncTask<Void, Void, Boolean> {
+    	
+		public CollectionFetchedListener listener;
+		public HashMap<String, ArrayList<LightPOI>> collection;
+	    JSONObject objectList;
+	   
+	    public List(CollectionFetchedListener listener) {
+	    	this.listener = listener;
+	    }
+
+		@Override
+		protected Boolean doInBackground(Void... args) {
+			String fetchedString = NetworkOperations.getJSONExpectingString(listPath.replaceFirst(":user_id", String.valueOf(User.id())), false);
+			if(fetchedString == null)
+				return false;
+			
+			JSONObject object = (JSONObject) JSONValue.parse(fetchedString);
+			if((Boolean) object.get("success")) {
+				objectList = (JSONObject) object.get("favorites");
+				return true;
+			} else {
+				return false;
+			}
+		}	
+		
+		@SuppressWarnings("unchecked")
+		@Override
+		protected void onPostExecute(final Boolean success) {
+			
+			if(success) {
+				collection = new HashMap<String, ArrayList<LightPOI>>();
+				for(String modelName : (Set<String>) objectList.keySet()) {
+					processList(modelName, (JSONArray) objectList.get(modelName));
+				}
+			}
+			listener.onFinishedFetchingCollection(collection);
+		}
+		
+		@Override
+		protected void onCancelled() {
+			listener.onFailedFetchingCollection();
+		}
+		
+		protected void processList(String model, JSONArray list) {
+			@SuppressWarnings("unchecked")
+			Iterator<JSONObject> iterator = (Iterator<JSONObject>) list.iterator();
+			while(iterator.hasNext()) {
+				JSONObject json = iterator.next();
+				if(!collection.containsKey(model))
+					collection.put(model, new ArrayList<LightPOI>());
+				collection.get(model).add(LightPOI.buildFrom(model, json));
+			}
 		}
 
 	}

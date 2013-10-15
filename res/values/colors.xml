@@ -12,7 +12,7 @@
     <color name="wikicleta_medium_light_blue">#EAF6FF</color>
 	<color name="wikicleta_blue">#1f3a50</color>
 	<color name="wikicleta_white">#FFF</color>
-	
+	<color name="wikicleta_lightest_blue">#F0F7FF</color>
 	<color name="actionbar_title">#043257</color>
 	<color name="actionbar_separator">#CEDFFF</color>
     <color name="actionbar_background_start">#FFF</color>

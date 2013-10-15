@@ -31,10 +31,10 @@ public class RootActivity extends Activity {
         
         ((TextView) findViewById(R.id.activity_button_text)).setTypeface(AppBase.getTypefaceLight());
         ((TextView) findViewById(R.id.achievements_button_text)).setTypeface(AppBase.getTypefaceLight());
-        ((TextView) findViewById(R.id.friends_button_text)).setTypeface(AppBase.getTypefaceLight());
+        ((TextView) findViewById(R.id.favorites_button_text)).setTypeface(AppBase.getTypefaceLight());
 
-        ((TextView) findViewById(R.id.settings_in_root_text)).setTypeface(AppBase.getTypefaceStrong());
-        ((TextView) findViewById(R.id.messages_in_root_text)).setTypeface(AppBase.getTypefaceStrong());
+        //((TextView) findViewById(R.id.settings_in_root_text)).setTypeface(AppBase.getTypefaceStrong());
+        //((TextView) findViewById(R.id.messages_in_root_text)).setTypeface(AppBase.getTypefaceStrong());
 
         ImageView ownerPic = (ImageView) findViewById(R.id.user_pic);
         ImageUpdater updater = Others.getImageFetcher();
@@ -47,6 +47,16 @@ public class RootActivity extends Activity {
 
         ((TextView) findViewById(R.id.local_events_container_text)).setTypeface(AppBase.getTypefaceStrong());
         ((TextView) findViewById(R.id.routes_tracer_container_text)).setTypeface(AppBase.getTypefaceStrong());
+        
+        
+        findViewById(R.id.favorites_container).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				AppBase.launchActivity(FavoritesActivity.class);
+			}
+        	
+        });
         
         LinearLayout discoverContainer = (LinearLayout) findViewById(R.id.discover_container);
         discoverContainer.setOnClickListener(new OnClickListener() {

@@ -42,9 +42,11 @@
         
     </style>
 
-    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@drawable/ab_transparent_wikicleta</item>
+    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
+        <item name="android:background">@color/wikicleta_white</item>
         <item name="android:textColor">@color/wikicleta_blue</item>
+        <item name="android:backgroundStacked">@color/wikicleta_lightest_blue</item>
+    	<item name="backgroundStacked">@color/wikicleta_lightest_blue</item>
     </style>
 
     <style name="Widget.ActionBar.Transparent">
