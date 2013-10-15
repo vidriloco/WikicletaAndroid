@@ -31,6 +31,8 @@ import com.ocpsoft.pretty.time.PrettyTime;
 
 public class WorkshopViews extends BaseViews {
 	
+	protected static String modelNamed = "Workshop";
+
 	public static void buildViewForWorkshop(final Activity activity, final Workshop workshop) {
     	final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -67,7 +69,7 @@ public class WorkshopViews extends BaseViews {
         creatorName.setText(activity.getResources().getString(R.string.created_by).concat(" ").concat(username));
         creatorName.setTypeface(AppBase.getTypefaceStrong());
         
-        buildViewForFavoritedResource(dialog, workshop.remoteId);
+        buildViewForFavoritedResource(dialog, workshop.remoteId, "Workshop");
 
         
         // Hide or fill and show open/closed days information
@@ -318,4 +320,8 @@ public class WorkshopViews extends BaseViews {
         	((LinearLayout) dialog.findViewById(R.id.contact_buttons_container)).setVisibility(View.GONE);
         }
     }
+	
+	protected static void loadSingleton() {
+		singleton = new WorkshopViews();
+	}
 }

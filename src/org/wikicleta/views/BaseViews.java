@@ -17,11 +17,11 @@ import com.nineoldandroids.animation.ObjectAnimator;
 public class BaseViews implements FavoritesConnectorInterface {
 	protected ObjectAnimator favoritedAnimator;
 	
-	protected static ParkingViews singleton;
+	protected static BaseViews singleton;
 	protected ImageView favoritedIcon;
 	protected ImageView nonFavoritedIcon;
-    
-	protected static void buildViewForFavoritedResource(Dialog dialog, final long remoteId) {
+
+	protected static void buildViewForFavoritedResource(Dialog dialog, final long remoteId, final String modelNamed) {
 		loadSingleton();
 		
 		singleton.favoritedIcon = (ImageView) dialog.findViewById(R.id.favorited_image);
@@ -31,7 +31,7 @@ public class BaseViews implements FavoritesConnectorInterface {
 			public void onClick(View v) {
 				singleton.favoritedIcon.setClickable(false);
 				Favorites.Post unMarker = new Favorites().new Post(singleton, "unmark");
-				unMarker.execute(String.valueOf(remoteId), "Parking", String.valueOf(User.id()));
+				unMarker.execute(String.valueOf(remoteId), modelNamed, String.valueOf(User.id()));
 				singleton.runAnimator(singleton.favoritedIcon);
 			}
         	
@@ -44,14 +44,14 @@ public class BaseViews implements FavoritesConnectorInterface {
 			public void onClick(View v) {
 				singleton.nonFavoritedIcon.setClickable(false);
 				Favorites.Post unMarker = new Favorites().new Post(singleton, "mark");
-				unMarker.execute(String.valueOf(remoteId), "Parking", String.valueOf(User.id()));
+				unMarker.execute(String.valueOf(remoteId), modelNamed, String.valueOf(User.id()));
 				singleton.runAnimator(singleton.nonFavoritedIcon);
 			}
         	
         });
         
 		Favorites.Marked markedInvestigator = new Favorites().new Marked(singleton);
-		markedInvestigator.execute(String.valueOf(remoteId), "Parking", String.valueOf(User.id()));
+		markedInvestigator.execute(String.valueOf(remoteId), modelNamed, String.valueOf(User.id()));
 		singleton.runAnimator(singleton.nonFavoritedIcon);
 	}
 	
@@ -85,7 +85,6 @@ public class BaseViews implements FavoritesConnectorInterface {
 	}
 	
 	protected static void loadSingleton() {
-		if(singleton == null)
-			singleton = new ParkingViews();
+		singleton = new BaseViews();
 	}
 }

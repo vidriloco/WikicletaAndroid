@@ -26,7 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ParkingViews extends BaseViews {
-
+	
 	public static void buildViewForParking(final Activity activity, final Parking parking) {
     	final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -91,7 +91,7 @@ public class ParkingViews extends BaseViews {
         negativeRankingLegend.setText("30");
         negativeRankingLegend.setTypeface(AppBase.getTypefaceStrong());
         
-        buildViewForFavoritedResource(dialog, parking.remoteId);
+        buildViewForFavoritedResource(dialog, parking.remoteId, "Parking");
         
         if(parking.isOwnedByCurrentUser()) {
         	TextView modifyButton = (TextView) dialog.findViewById(R.id.button_modify);

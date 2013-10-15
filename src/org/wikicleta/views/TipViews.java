@@ -29,6 +29,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class TipViews extends BaseViews {
+	
+	protected static String modelNamed = "Tip";
+	
 	public static void buildViewForTip(final Activity activity, final Tip tip) {
     	final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -86,7 +89,7 @@ public class TipViews extends BaseViews {
         negativeRankingLegend.setText("30");
         negativeRankingLegend.setTypeface(AppBase.getTypefaceStrong());
         
-        buildViewForFavoritedResource(dialog, tip.remoteId);
+        buildViewForFavoritedResource(dialog, tip.remoteId, "Tip");
 
         dialog.findViewById(R.id.dialog_close).setOnClickListener(new OnClickListener(){
 
@@ -167,5 +170,9 @@ public class TipViews extends BaseViews {
         }
         
         dialog.show();
+	}
+	
+	protected static void loadSingleton() {
+		singleton = new TipViews();
 	}
 }
