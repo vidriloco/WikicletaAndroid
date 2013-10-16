@@ -273,6 +273,18 @@
 	<string name="syncing_profile_text_value">Sincronizando tu perfil &#8230;</string>
 	<string name="syncing_profile_failed_text_value">No pudimos sincronizar tu perfil, toca aquí para intentarlo de nuevo</string>
 	
+	<!-- Challenges -->
+	<string name="challenges.names.climber">Pedal de Montaña</string>
+	<string name="challenges.names.messenger">Bicimensajero</string>
+	<string name="challenges.names.high">Pedal de Altura</string>
+	<string name="challenges.names.plain">Pedal de Aguante</string>
+	<string name="challenges.names.multimodal">Multimodal</string>
+	<string name="challenges.names.nocturne">Nocturno</string>
+	<string name="challenges_total_text">Puntos totales</string>
+	<string name="challenges_week_text">Puntos semanales</string>
+	<string name="challenges_category_text">Puntos ganados en esta categoría</string>
+	<string name="challenges_events_now_text">Retos en tu área</string>
+	<string name="challenges_events_discover_text">Descubre</string>
 	<!-- Bar -->
 	<string name="bar_center_map_text_value">Encender GPS</string>
 	<string name="bar_center_map_enabled_text_value">Apagar GPS</string>

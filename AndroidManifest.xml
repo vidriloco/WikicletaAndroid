@@ -220,6 +220,18 @@
         </activity>
         
         <activity
+            android:name="org.wikicleta.activities.AchievementsActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.TranslucentActionBar"
+            android:screenOrientation="portrait"
+            android:alwaysRetainTaskState="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
             android:name="org.wikicleta.activities.FavoritesActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.TranslucentActionBar"
@@ -237,6 +249,45 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCYLVNyHlVZlU68kvnTS9gE2rWCJ9O9JtQ" />
+        
+        
+        
+        <!-- UNDERLINE INDICATOR -->
+        <activity
+                android:name=".SampleUnderlinesDefault"
+                android:label="Underlines/Default">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".SampleUnderlinesNoFade"
+                android:label="Underlines/No Fade">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".SampleUnderlinesStyledLayout"
+                android:label="Underlines/Styled (via layout)"
+                android:theme="@android:style/Theme.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".SampleUnderlinesStyledMethods"
+                android:label="Underlines/Styled (via methods)"
+                android:theme="@android:style/Theme.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

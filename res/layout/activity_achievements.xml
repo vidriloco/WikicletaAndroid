@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/wikicleta_white">
+	
+   	<LinearLayout 
+	    android:id="@+id/challenges_status"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/wikicleta_blue"
+		android:orientation="horizontal"
+		android:weightSum="2">
+	    <LinearLayout 
+	        android:layout_width="0px"
+	        android:layout_weight="1"
+	        android:layout_height="match_parent"
+	        android:gravity="center"
+	        android:padding="10dp"
+	        android:orientation="vertical">
+	        <TextView android:id="@+id/challenges_total_value"
+	            android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+				android:layout_gravity="center"
+	        	android:textColor="@color/wikicleta_orange"
+	        	android:text="250"
+	        	android:textAllCaps="true"
+	        	android:textSize="25sp" />
+	        <TextView android:id="@+id/challenges_total_text"
+	            android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+				android:layout_gravity="center"
+	        	android:textColor="@color/wikicleta_white"
+	        	android:text="@string/challenges_total_text"
+	        	android:textAllCaps="true"
+	        	android:layout_marginTop="5dp"
+	        	android:textSize="13sp" />
+	    </LinearLayout>
+
+	    <LinearLayout 
+	        android:id="@+id/favorites_button"
+	        android:layout_width="0px"
+	        android:layout_weight="1"
+	        android:layout_height="match_parent"
+	        android:gravity="center"
+	        android:orientation="vertical">
+	        <TextView android:id="@+id/challenges_week_value"
+	            android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:layout_marginTop="5dp"
+	        	android:textColor="@color/wikicleta_orange"
+	        	android:text="50"
+	        	android:textAllCaps="true"
+	        	android:textSize="25sp" />
+	        <TextView android:id="@+id/challenges_week_text"
+	            android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:layout_marginTop="5dp"
+	        	android:textColor="@color/wikicleta_white"
+	        	android:text="@string/challenges_week_text"
+	        	android:textAllCaps="true"
+	        	android:textSize="13sp" />
+	    </LinearLayout>
+	</LinearLayout>
+    
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:layout_below="@+id/challenges_status"
+        android:layout_above="@+id/indicator" />
+    <com.viewpagerindicator.UnderlinePageIndicator
+        android:id="@+id/indicator"
+        android:layout_height="2dp"
+        android:layout_width="fill_parent"
+        android:background="@color/wikicleta_white"
+        app:selectedColor="@color/wikicleta_orange"
+        app:fadeDelay="1000"
+        app:fadeLength="1000"
+        android:layout_above="@+id/listing_container" />
+
+    <LinearLayout
+        android:id="@+id/listing_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:clickable="true"
+        android:background="@color/wikicleta_lightest_blue" >
+
+        <ImageView
+            android:id="@+id/return_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:clickable="true"
+            android:contentDescription="@string/nothing"
+            android:src="@drawable/return_icon" />
+    </LinearLayout>
+</RelativeLayout>
