@@ -1,33 +1,40 @@
-package org.wikicleta.fragments.favorites;
+package org.wikicleta.fragments.activities;
 
 import java.util.ArrayList;
+
 import org.interfaces.FragmentNotificationsInterface;
 import org.wikicleta.R;
-import org.wikicleta.activities.FavoritesActivity;
+import org.wikicleta.activities.ActivitiesActivity;
 import org.wikicleta.adapters.LightPOIsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.LightPOI;
-import android.support.v4.app.Fragment;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
-public class BaseFavoriteFragment extends Fragment implements FragmentNotificationsInterface {
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+public class RecentsFragment extends Fragment implements FragmentNotificationsInterface {
 
 	AnimatorSet set;
-	String modelNamed;
 	
-	public BaseFavoriteFragment(String modelNamed) {
-		this.modelNamed = modelNamed;
+	protected ActivitiesActivity getParentActivity() {
+		return (ActivitiesActivity) this.getActivity();
 	}
 	
-	protected FavoritesActivity getParentActivity() {
-		return (FavoritesActivity) this.getActivity();
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_recents, container, false);
+        this.drawLoadingView(rootView);
+        return rootView;
+    }
 	
 	public void drawLoadingView(View view) {
 		final ImageView spinner = (ImageView) view.findViewById(R.id.spinner_view);
@@ -60,6 +67,7 @@ public class BaseFavoriteFragment extends Fragment implements FragmentNotificati
     protected void toggleViews(ArrayList<LightPOI> objects) {
 		if(objects == null || objects.isEmpty()) {
 			switchActiveViewTo(R.id.empty_list);
+			((ImageView) this.getView().findViewById(R.id.empty_light_list_icon)).setImageResource(R.drawable.activity_icon_big);
 			((TextView) this.getView().findViewById(R.id.empty_light_list_text)).setTypeface(AppBase.getTypefaceStrong());
 		} else {
 			switchActiveViewTo(R.id.light_pois_list);
@@ -69,7 +77,7 @@ public class BaseFavoriteFragment extends Fragment implements FragmentNotificati
     
     protected void loadListViewFor(ArrayList<LightPOI> objects) {
         final ListView listview = (ListView) this.getView().findViewById(R.id.light_pois_list);
-        final LightPOIsListAdapter listAdapter = new LightPOIsListAdapter(this.getActivity(), objects, false);
+        final LightPOIsListAdapter listAdapter = new LightPOIsListAdapter(this.getActivity(), objects, true);
 	    listview.setAdapter(listAdapter);
 	    listview.getCheckedItemPositions();
 	    listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -77,12 +85,12 @@ public class BaseFavoriteFragment extends Fragment implements FragmentNotificati
 
 	@Override
 	public void notifyUINeedsUpdate() {
-		toggleViews(this.getParentActivity().favorites.get(modelNamed));
+		toggleViews(this.getParentActivity().activities);
 	}
 
 	@Override
 	public void viewWillAppear() {
-		this.getParentActivity().fetchUserFavorites();		
+		this.getParentActivity().fetchUserActivities();		
 	}
 	
 	@Override
@@ -92,5 +100,4 @@ public class BaseFavoriteFragment extends Fragment implements FragmentNotificati
 	    	this.viewWillAppear();
 	    }
 	}
-	
 }

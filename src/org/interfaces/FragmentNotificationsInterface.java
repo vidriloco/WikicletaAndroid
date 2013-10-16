@@ -1,6 +1,6 @@
 package org.interfaces;
 
-public interface FavoriteFragmentInterface {
+public interface FragmentNotificationsInterface {
 
 	public void notifyUINeedsUpdate();
 	public void viewWillAppear();

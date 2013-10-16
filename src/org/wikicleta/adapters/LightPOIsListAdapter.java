@@ -6,7 +6,6 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.models.LightPOI;
 import com.ocpsoft.pretty.time.PrettyTime;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,8 +43,11 @@ public class LightPOIsListAdapter extends ArrayAdapter<LightPOI> {
 	    TextView lastLightUpdatedText = (TextView) rowView.findViewById(R.id.last_light_updated_text);
 	    lastLightUpdatedText.setTypeface(AppBase.getTypefaceLight());
 	    if(this.showKind) {
+	    	rowView.findViewById(R.id.kind_of_light_poi_container).setVisibility(View.VISIBLE);
 	    	TextView kindText = (TextView) rowView.findViewById(R.id.kind_of_light_poi_text);
 	    	kindText.setTypeface(AppBase.getTypefaceStrong());
+	    	kindText.setText(lightPOI.kindString(context));
+	    	kindText.setVisibility(View.VISIBLE);
 	    }
 	    
 	    lightTitleText.setText(lightPOI.getTitle(context));

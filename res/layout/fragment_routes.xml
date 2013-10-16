@@ -4,6 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/wikicleta_white" >
-    <include layout="@layout/common_favorited_list_fragment" android:id="@+id/common_favorited_list_fragment" />
+    <include layout="@layout/common_light_poi_list_fragment" android:id="@+id/common_favorited_list_fragment" />
 
 </LinearLayout>

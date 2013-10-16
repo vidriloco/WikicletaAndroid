@@ -37,30 +37,39 @@
     	android:paddingRight="10dp"
     	android:orientation="horizontal"
     	android:weightSum="2">
-    	<TextView
-        android:id="@+id/last_light_updated_text"
-        android:layout_width="1dp"
-        android:layout_height="wrap_content"
-        android:text="Última actualización ..."
-        android:textColor="@color/wikicleta_orange"
-        android:textSize="8sp"
-        android:layout_marginTop="5dp"
-        android:textAllCaps="true"
-        android:maxLines="2"
-        android:layout_weight="1" />
+    	<LinearLayout 
+    	    android:layout_width="1dp"
+    		android:layout_height="wrap_content"
+    		android:layout_weight="1" >
+    	    <TextView
+        		android:id="@+id/last_light_updated_text"
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:text="Última actualización ..."
+        		android:textColor="@color/wikicleta_orange"
+        		android:textSize="8sp"
+        		android:layout_marginTop="5dp"
+        		android:textAllCaps="true"
+       	 		android:maxLines="2" />
+    	</LinearLayout>
+    	<LinearLayout 
+    	    android:id="@+id/kind_of_light_poi_container"
+    	    android:layout_width="1dp"
+    		android:layout_height="wrap_content"
+    		android:layout_weight="1"
+    		android:visibility="invisible" >
             <TextView
-        android:id="@+id/kind_of_light_poi_text"
-        android:layout_width="1dp"
-        android:layout_height="wrap_content"
-        android:text="Taller"
-        android:textColor="@color/wikicleta_blue"
-        android:textSize="15sp"
-        android:gravity="right"
-        android:layout_marginTop="5dp"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        android:maxLines="1"
-        android:layout_weight="1"
-        android:visibility="invisible" />
+        		android:id="@+id/kind_of_light_poi_text"
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:textColor="@color/wikicleta_blue"
+        		android:textSize="10sp"
+        		android:gravity="right"
+        		android:layout_marginTop="5dp"
+        		android:textAllCaps="true"
+        		android:textStyle="bold"
+        		android:maxLines="1" />
+    	</LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

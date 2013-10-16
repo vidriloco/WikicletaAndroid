@@ -49,6 +49,15 @@ public class RootActivity extends Activity {
         ((TextView) findViewById(R.id.routes_tracer_container_text)).setTypeface(AppBase.getTypefaceStrong());
         
         
+        findViewById(R.id.activity_container).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				AppBase.launchActivity(ActivitiesActivity.class);
+			}
+        	
+        });
+        
         findViewById(R.id.favorites_container).setOnClickListener(new OnClickListener() {
 
 			@Override

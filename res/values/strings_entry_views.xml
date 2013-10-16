@@ -87,4 +87,7 @@
 	<string name="favorites_menu_parkings">Estacionamientos</string>
 	<string name="favorites_menu_tips">Tips</string>
 	<string name="favorites_empty_list">No tienes favoritos aquí aún</string>
+	<!-- Activities activity -->
+	<string name="activities_list">Reciente</string>
+	<string name="activities_drafts">Borradores</string>
 </resources>

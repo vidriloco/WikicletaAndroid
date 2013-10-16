@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.json.simple.JSONObject;
+import org.wikicleta.R;
+
 import android.content.Context;
 
 public class LightPOI {
@@ -35,6 +37,11 @@ public class LightPOI {
 		this.updatedAt = updatedAt;
 	}
 
+	public static LightPOI buildFrom(JSONObject json) {
+		return buildFrom((String) json.get("kind"), json);
+	}
+
+	
 	public static LightPOI buildFrom(String kind, JSONObject json) {
 		String title = null;
 		long category = -1;
@@ -75,5 +82,16 @@ public class LightPOI {
 			}
 		} else 
 			return title;
+	}
+
+	public CharSequence kindString(Context context) {
+		if(this.kind.equalsIgnoreCase("Tip")) 
+			return context.getResources().getString(R.string.tip);
+		else if(this.kind.equalsIgnoreCase("Parking"))
+			return context.getResources().getString(R.string.parking);
+		else if(this.kind.equalsIgnoreCase("Route"))
+			return context.getResources().getString(R.string.route);
+		else
+			return context.getResources().getString(R.string.workshop);
 	}
 }
