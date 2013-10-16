@@ -1,22 +1,22 @@
 package org.wikicleta.fragments.activities;
 
 import java.util.ArrayList;
-
 import org.interfaces.FragmentNotificationsInterface;
 import org.wikicleta.R;
 import org.wikicleta.activities.ActivitiesActivity;
+import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.adapters.LightPOIsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.LightPOI;
-
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -80,6 +80,15 @@ public class RecentsFragment extends Fragment implements FragmentNotificationsIn
         final LightPOIsListAdapter listAdapter = new LightPOIsListAdapter(this.getActivity(), objects, true);
 	    listview.setAdapter(listAdapter);
 	    listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+	    listview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				DiscoverActivity.selectedPoi = listAdapter.getItem(position);
+				AppBase.launchActivity(DiscoverActivity.class);
+			}
+	    	
+	    });
     }
 
 	@Override

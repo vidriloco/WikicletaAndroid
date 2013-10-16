@@ -11,7 +11,6 @@ import android.os.Bundle;
 public class ActivityWithLocationAwareMap extends SherlockFragmentActivity {
 	protected GoogleMap map;
 	protected LatLng lastKnownLocation;
-	protected boolean centerMapOnCurrentLocationByDefault;
 	protected boolean shouldAnimateWithCustomTransition = false;
 	
 	public void onCreate(Bundle savedInstanceState, int layoutID) {
@@ -21,7 +20,6 @@ public class ActivityWithLocationAwareMap extends SherlockFragmentActivity {
 	}
 	
 	protected void initialize() {
-		this.centerMapOnCurrentLocationByDefault = true;
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
 		map = mapFragment.getMap();
         this.setMapToDefaultValues();  

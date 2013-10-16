@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.LatLng;
 import android.annotation.SuppressLint;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -116,6 +117,7 @@ public class LocationAwareMapWithControlsActivity extends ActivityWithLocationAw
 	public void onLocationChanged(Location location) {
 		map.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
 		lastKnownLocation = new LatLng(location.getLatitude(), location.getLongitude());
+
 		if(!this.firstLocationReceived) {
 			firstLocationReceived = true;
 			this.turnOffLocation();

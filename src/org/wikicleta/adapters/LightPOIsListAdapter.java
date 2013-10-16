@@ -31,7 +31,6 @@ public class LightPOIsListAdapter extends ArrayAdapter<LightPOI> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 	    LightPOI lightPOI = objects.get(position);
-
 	    
 		View rowView = inflater.inflate(R.layout.item_light_on_list, parent, false);
 	    TextView lightTitleText = (TextView) rowView.findViewById(R.id.light_title_text);

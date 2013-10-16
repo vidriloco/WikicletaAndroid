@@ -9,6 +9,7 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.SlidingMenuBuilder;
 import org.wikicleta.models.CycleStation;
+import org.wikicleta.models.LightPOI;
 import org.wikicleta.models.Parking;
 import org.wikicleta.models.Route;
 import org.wikicleta.models.Tip;
@@ -23,6 +24,8 @@ import org.wikicleta.views.ParkingViews;
 import org.wikicleta.views.RouteViews;
 import org.wikicleta.views.TipViews;
 import org.wikicleta.views.WorkshopViews;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.SlidingMenu.OnClosedListener;
@@ -49,10 +52,14 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 	protected ImageView rightMenuToggler;
 	protected ImageView returnIcon;
 	protected LinearLayout toggableGroup;
-		
+	
+	public static LightPOI selectedPoi;
+	
 	@SuppressLint("UseSparseArrays")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		if(selectedPoi != null)
+			this.attemptCenterOnLocationAtStart = false;
 		super.onCreate(savedInstanceState, R.layout.activity_main_map);
 		setTheme(R.style.Theme_wikicleta);
 		
@@ -98,6 +105,16 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 	protected void onResume() {
 		super.onResume();
 		this.reloadActiveLayersWithMapClearing();
+    	centerMapOnPointWithLayerEnabled();
+	}
+	
+	public void centerMapOnPointWithLayerEnabled() {
+		if(selectedPoi != null) {
+			this.firstLocationReceived = true;
+			this.selectedLayersMenuAdapter.setSelectedString(selectedPoi.kind, true);
+			this.map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(selectedPoi.lat, selectedPoi.lon), 18));
+			selectedPoi = null;
+		}
 	}
 	
 	public void reloadActiveLayersWithMapClearing() {
@@ -138,11 +155,6 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 	    });
 
 	    menu.setMenu(view);
-	}
-	
-	@Override
-	protected void onStart() {
-		super.onStart();
 	}
 	
 	protected void toggleLayers(ArrayList<Integer> layers) {

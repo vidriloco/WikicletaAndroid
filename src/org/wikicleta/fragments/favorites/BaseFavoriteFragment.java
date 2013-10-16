@@ -3,15 +3,18 @@ package org.wikicleta.fragments.favorites;
 import java.util.ArrayList;
 import org.interfaces.FragmentNotificationsInterface;
 import org.wikicleta.R;
+import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.FavoritesActivity;
 import org.wikicleta.adapters.LightPOIsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.LightPOI;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
@@ -71,8 +74,17 @@ public class BaseFavoriteFragment extends Fragment implements FragmentNotificati
         final ListView listview = (ListView) this.getView().findViewById(R.id.light_pois_list);
         final LightPOIsListAdapter listAdapter = new LightPOIsListAdapter(this.getActivity(), objects, false);
 	    listview.setAdapter(listAdapter);
-	    listview.getCheckedItemPositions();
-	    listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+	    listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+	    
+	    listview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				DiscoverActivity.selectedPoi = listAdapter.getItem(position);
+				AppBase.launchActivity(DiscoverActivity.class);
+			}
+	    	
+	    });
     }
 
 	@Override

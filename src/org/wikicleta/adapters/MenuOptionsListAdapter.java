@@ -7,6 +7,7 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,31 @@ public class MenuOptionsListAdapter extends ArrayAdapter<Integer> {
 	    this.context = context;
 	    this.values = values;
 	    inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	  }
+	  
+	  public void setSelectedString(String identifier, boolean clearPreviousSelection) {
+		  Integer selected = -1;
+		  if(identifier.equalsIgnoreCase("Workshop"))
+			  selected = Constants.BIKE_WORKSHOPS_AND_STORES_OVERLAY;
+		  else if(identifier.equalsIgnoreCase("Parking"))
+			  selected = Constants.BIKE_PARKING_OVERLAY;
+		  else if(identifier.equalsIgnoreCase("Tip"))
+			  selected = Constants.TIPS_OVERLAY;
+		  else if(identifier.equalsIgnoreCase("Route"))
+			  selected = Constants.ROUTES_OVERLAY;
+		  
+		  if(clearPreviousSelection) {
+			  selectedPos.clear();
+		  }
+		  
+		  for(int i = 0; i < values.length ; i++) {
+			  if(values[i] == selected) {
+				  selectedPos.add(Integer.valueOf(i));
+				  notifyDataSetChanged();
+				  break;
+			  }
+		  }
+		  
 	  }
 
 	  public void setSelectedPosition(Integer pos){
