@@ -39,6 +39,8 @@ public abstract class TabbedActivity extends SherlockFragmentActivity implements
 	}
 	
 	protected void loadAdditionalControls() {
+		viewPager.setPageMargin(10);
+	    viewPager.setPageMarginDrawable(R.color.wikicleta_blue);
 		/**
 		 * on swiping the viewpager make respective tab selected
 		 * */

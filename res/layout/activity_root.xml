@@ -48,7 +48,6 @@
     </RelativeLayout>
     
     <LinearLayout 
-	    xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:id="@+id/main_actions_for_profile"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
@@ -130,16 +129,11 @@
           		android:textAllCaps="true" />
 	    </LinearLayout>
 	</LinearLayout>
-    <LinearLayout android:id="@+id/white_space"
-       	android:layout_width="fill_parent"
-		android:layout_height="5dp"
-		android:layout_below="@id/main_actions_for_profile">
-    </LinearLayout>
 	<LinearLayout android:id="@+id/separator"
 	    android:layout_height="4dp"
 	    android:layout_width="fill_parent"
 	    android:background="@color/wikicleta_light_blue"
-	    android:layout_below="@id/white_space"></LinearLayout>
+	    android:layout_below="@id/main_actions_for_profile"></LinearLayout>
 	<ScrollView 
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"

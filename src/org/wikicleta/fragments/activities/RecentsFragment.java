@@ -79,8 +79,7 @@ public class RecentsFragment extends Fragment implements FragmentNotificationsIn
         final ListView listview = (ListView) this.getView().findViewById(R.id.light_pois_list);
         final LightPOIsListAdapter listAdapter = new LightPOIsListAdapter(this.getActivity(), objects, true);
 	    listview.setAdapter(listAdapter);
-	    listview.getCheckedItemPositions();
-	    listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+	    listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
 	@Override

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="10dp"
+    android:background="@drawable/contact_item_selector"
+    android:clickable="true" >
     <LinearLayout
         android:layout_width="fill_parent"
     	android:layout_height="wrap_content" 
@@ -17,7 +19,6 @@
         android:textColor="@color/wikicleta_orange"
         android:textSize="20sp"
         android:maxLines="1"
-        android:inputType="text"
         android:textStyle="bold" />
     <TextView
         android:id="@+id/light_description_text"
@@ -26,9 +27,7 @@
         android:text="Bueno, rápido y barato"
         android:textColor="@color/wikicleta_blue"
         android:textSize="14sp"
-        android:maxLines="1"
-        android:inputType="text"
-        android:ellipsize="end" />
+        android:maxLines="1" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
