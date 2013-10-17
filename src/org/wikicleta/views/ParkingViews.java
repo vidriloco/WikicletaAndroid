@@ -3,6 +3,7 @@ package org.wikicleta.views;
 import java.util.Date;
 import org.wikicleta.R;
 import org.wikicleta.activities.DiscoverActivity;
+import org.wikicleta.activities.common.CommentsActivity;
 import org.wikicleta.activities.parkings.ModifyingActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.DialogBuilder;
@@ -90,6 +91,30 @@ public class ParkingViews extends BaseViews {
         TextView negativeRankingLegend = (TextView) dialog.findViewById(R.id.negative_button_ranks_text);
         negativeRankingLegend.setText("30");
         negativeRankingLegend.setTypeface(AppBase.getTypefaceStrong());
+        
+        dialog.findViewById(R.id.positive_rankings_container).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Bundle bundle = new Bundle();
+				bundle.putBoolean("like", true);
+				CommentsActivity.selectedPoint = parking;
+				AppBase.launchActivityWithBundle(CommentsActivity.class, bundle);
+			}
+        	
+        });
+        
+        dialog.findViewById(R.id.negative_rankings_container).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Bundle bundle = new Bundle();
+				bundle.putBoolean("false", true);
+				CommentsActivity.selectedPoint = parking;
+				AppBase.launchActivityWithBundle(CommentsActivity.class, bundle);
+			}
+        	
+        });
         
         buildViewForFavoritedResource(dialog, parking.remoteId, "Parking");
         

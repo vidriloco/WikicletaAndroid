@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.wikicleta.R;
 import org.wikicleta.activities.DiscoverActivity;
+import org.wikicleta.activities.common.CommentsActivity;
 import org.wikicleta.activities.tips.ModifyingActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.DialogBuilder;
@@ -89,6 +90,30 @@ public class TipViews extends BaseViews {
         negativeRankingLegend.setText("30");
         negativeRankingLegend.setTypeface(AppBase.getTypefaceStrong());
         
+        dialog.findViewById(R.id.positive_rankings_container).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Bundle bundle = new Bundle();
+				bundle.putBoolean("like", true);
+				CommentsActivity.selectedPoint = tip;
+				AppBase.launchActivityWithBundle(CommentsActivity.class, bundle);
+			}
+        	
+        });
+        
+        dialog.findViewById(R.id.negative_rankings_container).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Bundle bundle = new Bundle();
+				bundle.putBoolean("false", true);
+				CommentsActivity.selectedPoint = tip;
+				AppBase.launchActivityWithBundle(CommentsActivity.class, bundle);
+			}
+        	
+        });
+                
         buildViewForFavoritedResource(dialog, tip.remoteId, "Tip");
 
         dialog.findViewById(R.id.dialog_close).setOnClickListener(new OnClickListener(){

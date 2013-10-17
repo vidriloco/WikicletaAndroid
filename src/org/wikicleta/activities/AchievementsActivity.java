@@ -2,16 +2,12 @@ package org.wikicleta.activities;
 
 import org.wikicleta.R;
 import org.wikicleta.adapters.AchievementsFragmentAdapter;
-import org.wikicleta.adapters.TabsPagerAdapter;
 import org.wikicleta.common.AppBase;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.viewpagerindicator.PageIndicator;
 import com.viewpagerindicator.UnderlinePageIndicator;
-
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;

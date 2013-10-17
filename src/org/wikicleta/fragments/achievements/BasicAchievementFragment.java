@@ -15,6 +15,10 @@ public class BasicAchievementFragment extends Fragment {
 
 	String kind;
 	
+	public BasicAchievementFragment() {
+		this.kind = "Climber";
+	}
+	
 	public BasicAchievementFragment(String kind) {
 		this.kind = kind;
 	}

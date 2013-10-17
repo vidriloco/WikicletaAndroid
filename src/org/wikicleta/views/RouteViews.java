@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.Date;
 
 import org.wikicleta.R;
+import org.wikicleta.activities.common.CommentsActivity;
 import org.wikicleta.activities.routes.RouteDetailsActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.DialogBuilder;
@@ -21,6 +22,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -69,7 +71,7 @@ public class RouteViews {
         buildDestructiveControlsViewFor(activity, dialog, route);
         buildRouteRankingViewFor(activity, dialog, route);
         buildContributorDetailsViewFor(activity, dialog, route);
-        buildRouteRankingControlsViewFor(activity, dialog);
+        buildRouteRankingControlsViewFor(activity, dialog, route);
         
         dialog.show();
 	}
@@ -162,7 +164,7 @@ public class RouteViews {
         securityText.setText("9");
 	}
 	
-	private static void buildRouteRankingControlsViewFor(Activity activity, Dialog dialog) {
+	private static void buildRouteRankingControlsViewFor(Activity activity, Dialog dialog, final Route route) {
         // Common actions for POIs
         TextView positiveRankingLegend = (TextView) dialog.findViewById(R.id.positive_button_ranks_text);
         positiveRankingLegend.setText("100");
@@ -171,6 +173,31 @@ public class RouteViews {
         TextView negativeRankingLegend = (TextView) dialog.findViewById(R.id.negative_button_ranks_text);
         negativeRankingLegend.setText("30");
         negativeRankingLegend.setTypeface(AppBase.getTypefaceStrong());
+        
+        dialog.findViewById(R.id.positive_rankings_container).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Bundle bundle = new Bundle();
+				bundle.putBoolean("like", true);
+				CommentsActivity.selectedPoint = route;
+				AppBase.launchActivityWithBundle(CommentsActivity.class, bundle);
+			}
+        	
+        });
+        
+        dialog.findViewById(R.id.negative_rankings_container).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Bundle bundle = new Bundle();
+				bundle.putBoolean("false", true);
+				CommentsActivity.selectedPoint = route;
+				AppBase.launchActivityWithBundle(CommentsActivity.class, bundle);
+			}
+        	
+        });
+
 	}
 	
 	public static void buildDestructiveControlsViewFor(final RouteDetailsActivity activity, final Dialog dialog, final Route route) {
