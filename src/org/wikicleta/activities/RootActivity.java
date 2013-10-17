@@ -1,11 +1,13 @@
 package org.wikicleta.activities;
 
+import org.json.simple.JSONObject;
 import org.wikicleta.R;
 import org.wikicleta.activities.routes.NewRouteActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others;
 import org.wikicleta.routing.Others.ImageUpdater;
+import org.wikicleta.routing.Users;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -35,11 +37,6 @@ public class RootActivity extends Activity {
 
         //((TextView) findViewById(R.id.settings_in_root_text)).setTypeface(AppBase.getTypefaceStrong());
         //((TextView) findViewById(R.id.messages_in_root_text)).setTypeface(AppBase.getTypefaceStrong());
-
-        ImageView ownerPic = (ImageView) findViewById(R.id.user_pic);
-        ImageUpdater updater = Others.getImageFetcher();
-        updater.setImageAndImageProcessor(ownerPic, Others.ImageProcessor.ROUND_FOR_USER_PROFILE);
-        updater.execute("http://d3j5vwomefv46c.cloudfront.net/photos/large/812789987.png?1380818170");
         
         ((TextView) findViewById(R.id.discover_container_text)).setTypeface(AppBase.getTypefaceStrong());
         ((TextView) findViewById(R.id.share_container_text)).setTypeface(AppBase.getTypefaceStrong());
@@ -116,6 +113,19 @@ public class RootActivity extends Activity {
 			}
         	
         });
+        
+    	Users users = new Users();
+    	Users.Get usersFetcher = users.new Get(this);
+    	usersFetcher.execute();
+	}
+	
+	public void displayUserDetails(JSONObject object) {
+		String URL = (String) object.get("user_pic");
+		
+        ImageView ownerPic = (ImageView) findViewById(R.id.user_pic);
+        ImageUpdater updater = Others.getImageFetcher();
+        updater.setImageAndImageProcessor(ownerPic, Others.ImageProcessor.ROUND_FOR_USER_PROFILE);
+        updater.execute(URL);
 	}
 	
 	@Override
