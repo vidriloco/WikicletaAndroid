@@ -237,5 +237,10 @@ public class Tip extends Model implements Serializable, DraftModel, MarkerInterf
 	public void setMarker(Marker marker) {
 		this.marker = marker;
 	}
+	
+	@Override
+	public long getRemoteId() {
+		return remoteId;
+	}
 
 }

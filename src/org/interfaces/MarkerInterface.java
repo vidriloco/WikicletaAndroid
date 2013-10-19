@@ -8,4 +8,5 @@ public interface MarkerInterface {
 	public int getDrawable();
 	public Marker getAssociatedMarker();
 	public void setMarker(Marker marker);
+	public long getRemoteId();
 }

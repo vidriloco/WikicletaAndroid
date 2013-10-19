@@ -45,20 +45,20 @@ public class ActivitiesActivity extends TabbedActivity {
 			Ownerships.List markedInvestigator = new Ownerships().new List(this);
 			markedInvestigator.execute();
 		} else {
-			this.onFinishedFetchingCollection(activities);
+			this.onFinished(activities);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void onFinishedFetchingCollection(Object collection) {
+	public void onFinished(Object collection) {
 		this.activities = (ArrayList<LightPOI>) collection;
 		FragmentNotificationsInterface fragment = (FragmentNotificationsInterface) mAdapter.getItem(viewPager.getCurrentItem());
 		fragment.notifyUINeedsUpdate();
 	}
 
 	@Override
-	public void onFailedFetchingCollection() {
+	public void onFailed() {
 		
 	}
 

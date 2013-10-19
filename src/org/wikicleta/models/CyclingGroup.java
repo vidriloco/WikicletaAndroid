@@ -197,4 +197,9 @@ public class CyclingGroup extends Model implements Serializable, DraftModel, Mar
 		this.marker = marker;
 	}
 
+	@Override
+	public long getRemoteId() {
+		return remoteId;
+	}
+
 }

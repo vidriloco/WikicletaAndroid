@@ -237,5 +237,10 @@ public class Parking extends Model implements Serializable, DraftModel, MarkerIn
 	public void setMarker(Marker marker) {
 		this.marker = marker;
 	}
+	
+	@Override
+	public long getRemoteId() {
+		return remoteId;
+	}
 
 }

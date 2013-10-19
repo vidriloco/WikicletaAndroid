@@ -1,7 +1,9 @@
 package org.wikicleta.helpers;
 
 import org.wikicleta.R;
-import com.slidingmenu.lib.SlidingMenu;
+
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+
 import android.app.Activity;
 
 public class SlidingMenuBuilder {

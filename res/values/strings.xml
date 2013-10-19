@@ -302,4 +302,12 @@
 	<string name="discard_draft">¿Quieres descartar este elemento guardado como borrador?</string>
 	
 	<string name="not_implemented_yet">Lo sentimos, esta sección no está lista aún, por ahora, te invitamos a probar las demás secciones.</string>
+	
+	<string name="comments_input_length_max_error">Este comentario no debe ser mayor a 250 caracteres</string>
+	<string name="comments_input_length_min_error">Este comentario debe ser de al menos 15 caracteres</string>
+	<string name="comments_input_empty">Este comentario no puede ir vacío</string>
+	<string name="comment_saved_successfully">Tu comentario ha sido compartido</string>
+	<string name="comment_failed_to_save">Lo sentimos, no fué posible subir tu comentario, intenta de nuevo por favor.</string>
+	<string name="comment_not_saved">Tu comentario no ha sido guardado aún. ¿Descartarlo?</string>
+	
 </resources>

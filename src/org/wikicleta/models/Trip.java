@@ -175,4 +175,9 @@ public class Trip implements Serializable, DraftModel, MarkerInterface, EventInt
 	public void setMarker(Marker marker) {
 		this.marker = marker;
 	}
+	
+	@Override
+	public long getRemoteId() {
+		return remoteId;
+	}
 }

@@ -252,5 +252,10 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 	public void setMarker(Marker marker) {
 		this.marker = marker;
 	}
+	
+	@Override
+	public long getRemoteId() {
+		return remoteId;
+	}
 
 }

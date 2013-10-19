@@ -1,7 +1,7 @@
 package org.wikicleta.activities.common;
 
 import java.util.ArrayList;
-import org.interfaces.CollectionFetchedListener;
+import org.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.R;
 import org.wikicleta.activities.RootActivity;
 import org.wikicleta.adapters.TabsPagerAdapter;
@@ -18,7 +18,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.ActionBar.Tab;
 
-public abstract class TabbedActivity extends SherlockFragmentActivity implements ActionBar.TabListener, CollectionFetchedListener {
+public abstract class TabbedActivity extends SherlockFragmentActivity implements ActionBar.TabListener, RemoteFetchingDutyListener {
 
 	protected ViewPager viewPager;
 	protected TabsPagerAdapter mAdapter;

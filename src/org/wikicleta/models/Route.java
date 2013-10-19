@@ -309,4 +309,9 @@ public class Route extends Model implements MarkerInterface, Serializable {
 	public boolean hasNoPathLoaded() {
 		return (this.path == null);
 	}
+
+	@Override
+	public long getRemoteId() {
+		return remoteId;
+	}
 }

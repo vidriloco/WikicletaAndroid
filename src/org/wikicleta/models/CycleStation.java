@@ -69,4 +69,10 @@ public class CycleStation implements MarkerInterface {
 		this.marker = marker;
 	}
 
+	@Override
+	public long getRemoteId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

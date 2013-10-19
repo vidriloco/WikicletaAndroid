@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.interfaces.CollectionFetchedListener;
+import org.interfaces.RemoteFetchingDutyListener;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -109,11 +109,11 @@ public class Favorites {
 	
 	public class List extends AsyncTask<Void, Void, Boolean> {
     	
-		public CollectionFetchedListener listener;
+		public RemoteFetchingDutyListener listener;
 		public HashMap<String, ArrayList<LightPOI>> collection;
 	    JSONObject objectList;
 	   
-	    public List(CollectionFetchedListener listener) {
+	    public List(RemoteFetchingDutyListener listener) {
 	    	this.listener = listener;
 	    }
 
@@ -142,12 +142,12 @@ public class Favorites {
 					processList(modelName, (JSONArray) objectList.get(modelName));
 				}
 			}
-			listener.onFinishedFetchingCollection(collection);
+			listener.onFinished(collection);
 		}
 		
 		@Override
 		protected void onCancelled() {
-			listener.onFailedFetchingCollection();
+			listener.onFailed();
 		}
 		
 		protected void processList(String model, JSONArray list) {

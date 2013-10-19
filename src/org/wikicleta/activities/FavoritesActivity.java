@@ -51,20 +51,20 @@ public class FavoritesActivity extends TabbedActivity {
 			Favorites.List markedInvestigator = new Favorites().new List(this);
 			markedInvestigator.execute();
 		} else {
-			this.onFinishedFetchingCollection(favorites);
+			this.onFinished(favorites);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void onFinishedFetchingCollection(Object collection) {
+	public void onFinished(Object collection) {
 		this.favorites = (HashMap<String, ArrayList<LightPOI>>) collection;
 		FragmentNotificationsInterface fragment = (FragmentNotificationsInterface) mAdapter.getItem(viewPager.getCurrentItem());
 		fragment.notifyUINeedsUpdate();
 	}
 
 	@Override
-	public void onFailedFetchingCollection() {
+	public void onFailed() {
 		
 	}
 

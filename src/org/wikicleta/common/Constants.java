@@ -17,6 +17,7 @@ public class Constants {
 	
 	public static int CHARACTERS_LENGTH_MIN = 30;
 	public static int CHARACTERS_LENGTH_MAX = 250;
+	public static int CHARACTERS_LENGTH_MIN_FOR_COMMENTS = 15;
 	
 	public static long MAX_AWAITING_TIME_BETWEEN_LAYER_RELOADING = 2*60*1000;
 }

@@ -195,6 +195,7 @@ public class RouteTrackingService extends LocationAwareService {
 	 */
 	
 	public void addLocation(Location location) {
+		//Log.e("WIKICLETA", "Ac: "+String.valueOf(location.getAccuracy()));
 		if(isTracking) {
 			// calculate average speed
 			float speed = (float) location.getSpeed()*3600 / 1000;
