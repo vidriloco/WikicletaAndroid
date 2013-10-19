@@ -83,11 +83,11 @@ public class TipViews extends BaseViews {
         
         // Common actions for POIs
         TextView positiveRankingLegend = (TextView) dialog.findViewById(R.id.positive_button_ranks_text);
-        positiveRankingLegend.setText("100");
+        positiveRankingLegend.setText(String.valueOf(tip.likesCount));
         positiveRankingLegend.setTypeface(AppBase.getTypefaceStrong());
 
         TextView negativeRankingLegend = (TextView) dialog.findViewById(R.id.negative_button_ranks_text);
-        negativeRankingLegend.setText("30");
+        negativeRankingLegend.setText(String.valueOf(tip.dislikesCount));
         negativeRankingLegend.setTypeface(AppBase.getTypefaceStrong());
         
         dialog.findViewById(R.id.positive_rankings_container).setOnClickListener(new OnClickListener() {

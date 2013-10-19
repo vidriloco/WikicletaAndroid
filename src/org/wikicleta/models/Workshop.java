@@ -70,6 +70,8 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 	public long updatedAt;
 	
 	public int likesCount;
+	public int dislikesCount;
+
 	public String username;
 	public String userPicURL;
 	protected Marker marker;
@@ -82,7 +84,7 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 	}
 	
 	public Workshop(long remoteId, String name, String details,
-			LatLng point, long userId, int likesCount, boolean isStore, 
+			LatLng point, long userId, int likesCount, int dislikesCount, boolean isStore, 
 			long createdAt, long updatedAt,
 			String username, long phone, long cellPhone, String webPage,
 			String twitter, String horary) {
@@ -102,6 +104,8 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 		this.horary = horary;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+		this.likesCount = likesCount;
+		this.dislikesCount = dislikesCount;
 	}
 
 	public boolean existsOnRemoteServer() {
@@ -204,6 +208,9 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 		long likesCountTmp = (Long) object.get("likes_count");
 		int likesCount = (int) likesCountTmp;
 		
+		long dislikesCountTmp = (Long) object.get("dislikes_count");
+		int dislikesCount = (int) dislikesCountTmp;
+		
 		JSONObject owner = (JSONObject) object.get("owner");
 		long userId = (Long) owner.get("id");
 		String username = (String) owner.get("username");
@@ -225,7 +232,7 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 		String twitter = (String) object.get("twitter");
 		String horary = (String) object.get("horary");
 		LatLng point = new LatLng((Double) object.get("lat"), (Double) object.get("lon"));
-		Workshop workshop = new Workshop(remoteId, name, details, point, userId, likesCount, isStore, 
+		Workshop workshop = new Workshop(remoteId, name, details, point, userId, likesCount, dislikesCount, isStore, 
 				createdAt, updatedAt, username, phone, cellPhone, webPage, twitter, horary);
 		if(owner.containsKey("pic"))
 			workshop.userPicURL = (String) owner.get("pic");

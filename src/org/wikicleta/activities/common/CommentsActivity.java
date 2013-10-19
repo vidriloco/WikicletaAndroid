@@ -230,6 +230,7 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 	public void onFinished(Object duty) {	
 		this.reFetchComments();
 		Toasts.showToastWithMessage(this, R.string.comment_saved_successfully, R.drawable.success_icon);
+		commentTextField.setText("");
 	}
 
 	@Override

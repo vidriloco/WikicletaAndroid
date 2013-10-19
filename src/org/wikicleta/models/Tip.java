@@ -54,6 +54,8 @@ public class Tip extends Model implements Serializable, DraftModel, MarkerInterf
 	public long userId;
 	
 	public int likesCount;
+	public int dislikesCount;
+
 	public String username;
 	public String userPicURL;
 	protected Marker marker;
@@ -71,13 +73,14 @@ public class Tip extends Model implements Serializable, DraftModel, MarkerInterf
 		this.userPicURL = new String();
 	}
 	
-	public Tip(long remoteId, String content, int category, LatLng geopoint, long userId, int likes, long millisC, long millisU, String username) {
+	public Tip(long remoteId, String content, int category, LatLng geopoint, long userId, int likes, int dislikes, long millisC, long millisU, String username) {
 		this(content, category, geopoint.latitude, geopoint.longitude, userId);
 		this.remoteId = remoteId;
 		this.likesCount = likes;
 		this.createdAt = millisC;
 		this.updatedAt = millisU;
 		this.username = username;
+		this.dislikesCount = dislikes;
 	}
 	
 	public Tip() {
@@ -199,12 +202,15 @@ public class Tip extends Model implements Serializable, DraftModel, MarkerInterf
 		long likesCountTmp = (Long) object.get("likes_count");
 		int likesCount = (int) likesCountTmp;
 		
+		long dislikesCountTmp = (Long) object.get("dislikes_count");
+		int dislikesCount = (int) dislikesCountTmp;
+		
 		JSONObject owner = (JSONObject) object.get("owner");
 		long userId = (Long) owner.get("id");
 		String name = (String) owner.get("username");
 				
 		LatLng point = new LatLng((Double) object.get("lat"), (Double) object.get("lon"));
-		Tip tip = new Tip(id, content, category, point, userId, likesCount, createdAt, updatedAt, name);
+		Tip tip = new Tip(id, content, category, point, userId, likesCount, dislikesCount, createdAt, updatedAt, name);
 		if(owner.containsKey("pic"))
 			tip.userPicURL = (String) owner.get("pic");
 		
