@@ -66,6 +66,8 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 	public String username;
 	public String userPicURL;
 	
+	public int likesCount;
+	public int dislikesCount;
 	public int comfortIndex;
 	public int speedIndex;
 	public int safetyIndex;
@@ -95,7 +97,7 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 	/*
 	 * Default Route constructor for json retrieved routes data
 	 */
-	public Route(long id, String name, String details, float kilometers, long createdAt, long updatedAt, Long userId, String username) {
+	public Route(long id, String name, int likesCount, int dislikesCount, String details, float kilometers, long createdAt, long updatedAt, Long userId, String username) {
 		this.name = name;
 		this.details = details;
 		this.kilometers = kilometers;
@@ -104,6 +106,8 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 		this.remoteId = id;
 		this.userId = userId;
 		this.username = username;
+		this.likesCount = likesCount;
+		this.dislikesCount = dislikesCount;
 		this.userPicURL = new String();
 		this.persistedRoutePerformances = new ArrayList<RoutePerformance>();
 	}
@@ -256,10 +260,16 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 		long userId = (Long) owner.get("id");
 		String name = (String) owner.get("username");
 				
-		Route route = new Route(id, routeName, routeDetails, kilometers, createdAt, updatedAt, userId, name);
+		long likesCountTmp = (Long) object.get("likes_count");
+		int likesCount = (int) likesCountTmp;
+		
+		long dislikesCountTmp = (Long) object.get("dislikes_count");
+		int dislikesCount = (int) dislikesCountTmp;
+		
+		Route route = new Route(id, routeName, likesCount, dislikesCount, routeDetails, kilometers, createdAt, updatedAt, userId, name);
 		route.originCoordinate = new LatLng((Double) object.get("origin_lat"), (Double) object.get("origin_lon"));
 		route.endCoordinate = new LatLng((Double) object.get("end_lat"), (Double) object.get("end_lon"));
-
+		
 		if(owner.containsKey("pic"))
 			route.userPicURL = (String) owner.get("pic");
 		
@@ -318,6 +328,6 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 
 	@Override
 	public String getKind() {
-		return "CyclingGroup";
+		return "Route";
 	}
 }
