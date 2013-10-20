@@ -1,12 +1,17 @@
 package org.wikicleta.adapters;
 
 import java.util.List;
+
+import org.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.RankedComment;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others;
+import org.wikicleta.routing.RankedComments;
 import org.wikicleta.routing.Others.ImageUpdater;
+import org.wikicleta.routing.RankedComments.Get;
+
 import com.ocpsoft.pretty.time.PrettyTime;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -32,7 +37,7 @@ public class CommentsListAdapter extends ArrayAdapter<RankedComment> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		RankedComment rankedComment = objects.get(position);
+		final RankedComment rankedComment = objects.get(position);
 	    
 		View rowView = inflater.inflate(R.layout.item_ranked_comment, parent, false);
 	    TextView commentText = (TextView) rowView.findViewById(R.id.comment_content_text);
@@ -70,7 +75,9 @@ public class CommentsListAdapter extends ArrayAdapter<RankedComment> {
 
 				@Override
 				public void onClick(View v) {
-					
+					RankedComments comments = new RankedComments();
+			    	RankedComments.Delete commentsDestroyer = comments.new Delete((RemoteFetchingDutyListener) context);
+			    	commentsDestroyer.execute(rankedComment);
 				}
     	    	
     	    });

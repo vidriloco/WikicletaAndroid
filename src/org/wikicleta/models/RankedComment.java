@@ -5,16 +5,20 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+
+import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-public class RankedComment {
+public class RankedComment implements RemoteModelInterface {
 
 	public String associatedModelKind;
 	public long associatedModelId;
 	public String comment;
 	public boolean positive;
 	public Date createdAt;
+	
+	public long remoteId;
 	
 	public long userId;
 	public String username;
@@ -27,18 +31,19 @@ public class RankedComment {
 		this.positive = positive;
 	}
 	
-	public RankedComment(String content, boolean positive, Date creationDate,
+	public RankedComment(long remoteId, String content, boolean positive, Date creationDate,
 			long userId, String username) {
 		this.comment = content;
 		this.positive = positive;
 		this.createdAt = creationDate;
 		this.userId = userId;
 		this.username = username;
+		this.remoteId = remoteId;
 	}
 
-	public RankedComment(String content, boolean positive, Date creationDate,
+	public RankedComment(long remoteId, String content, boolean positive, Date creationDate,
 			long userId, String username, String userPicURL) {
-		this(content, positive, creationDate, userId, username);
+		this(remoteId, content, positive, creationDate, userId, username);
 		this.userPicURL = userPicURL;
 	}
 
@@ -64,6 +69,7 @@ public class RankedComment {
 	}
 
 	public static RankedComment buildFrom(JSONObject json) {
+		long remoteId = (Long) json.get("id");
 		String content = (String) json.get("content");
 		boolean positive = (Boolean) json.get("positive");
 		
@@ -80,9 +86,9 @@ public class RankedComment {
 		}
 		
 		if(owner.containsKey("pic"))
-			return new RankedComment(content, positive, creationDate, userId, userName, (String) owner.get("pic"));
+			return new RankedComment(remoteId, content, positive, creationDate, userId, userName, (String) owner.get("pic"));
 		else
-			return new RankedComment(content, positive, creationDate, userId, userName);
+			return new RankedComment(remoteId, content, positive, creationDate, userId, userName);
 	}
 	
 	public boolean hasPic() {
@@ -91,5 +97,15 @@ public class RankedComment {
 	
 	public boolean isOwnedByCurrentUser() {
 		return User.id() == this.userId;
+	}
+
+	@Override
+	public long getRemoteId() {
+		return remoteId;
+	}
+
+	@Override
+	public String getKind() {
+		return "RankedComment";
 	}
 }

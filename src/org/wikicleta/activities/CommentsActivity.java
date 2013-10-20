@@ -230,11 +230,14 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void onFinished(Object duty) {	
+	public void onSuccess(Object duty) {	
+		// TODO: Implement no re-fetching of comments for visual adding/removing of new comment
 		if(duty instanceof ArrayList)
 			loadComments((ArrayList<RankedComment>) duty);
-		else {
-			// TODO: Implement no re-fetching of comments for visual adding of new comment
+		else if((duty instanceof String) && ((String) duty).equalsIgnoreCase("Delete")) { 
+			this.fetchComments();
+			Toasts.showToastWithMessage(this, R.string.comment_deleted_successfully, R.drawable.success_icon);
+		} else {
 			this.fetchComments();
 			Toasts.showToastWithMessage(this, R.string.comment_saved_successfully, R.drawable.success_icon);
 			commentTextField.setText("");
@@ -244,6 +247,7 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 	private void loadComments(ArrayList<RankedComment> duty) {
         findViewById(R.id.loading_view).setVisibility(View.GONE);
         findViewById(R.id.empty_comments_list).setVisibility(View.GONE);
+        findViewById(R.id.comments_list).setVisibility(View.GONE);
 
 		if(duty.isEmpty()) {
 	        ((TextView) findViewById(R.id.no_comments_text)).setTypeface(AppBase.getTypefaceStrong());
@@ -259,8 +263,28 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 	}
 
 	@Override
-	public void onFailed() {	
-		Toasts.showToastWithMessage(this, R.string.comment_failed_to_save, R.drawable.failure_icon);
+	public void onFailed(Object message) {
+		if(message instanceof String) {
+			String messageS = (String) message;
+			if(messageS.equalsIgnoreCase("Post"))
+				Toasts.showToastWithMessage(this, R.string.comment_failed_to_save, R.drawable.failure_icon);
+			else if(messageS.equalsIgnoreCase("Delete"))
+				Toasts.showToastWithMessage(this, R.string.comment_failed_to_delete, R.drawable.failure_icon);
+			else if(messageS.equalsIgnoreCase("Get"))
+				showAttemptReloadView();
+		}
+		
+	}
+	
+	@Override
+	public void onFailed() {
+		
+	}
+	
+	protected void showAttemptReloadView() {
+		findViewById(R.id.loading_view).setVisibility(View.GONE);
+        findViewById(R.id.empty_comments_list).setVisibility(View.GONE);
+        findViewById(R.id.comments_list).setVisibility(View.GONE);
 	}
 	
 	protected void drawLoadingView() {

@@ -142,7 +142,7 @@ public class Favorites {
 					processList(modelName, (JSONArray) objectList.get(modelName));
 				}
 			}
-			listener.onFinished(collection);
+			listener.onSuccess(collection);
 		}
 		
 		@Override

@@ -69,7 +69,7 @@
 		    android:layout_below="@+id/no_comments_icon"
 		    android:layout_centerHorizontal="true"
 		    android:textColor="@color/wikicleta_blue"
-		    android:text="Por ahora, no hay comentarios"
+		    android:text="@string/no_comments_to_show"
 		    android:layout_marginTop="20dp" />
 	</RelativeLayout>
 	

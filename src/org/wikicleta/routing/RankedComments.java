@@ -18,13 +18,13 @@ import org.wikicleta.routing.Others.Cruds;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class RankedComments {
 
 	protected String postPath="/api/ranked_comments";
 	protected String getPath="/api/ranked_comments/list/:object_id/:object_type";
-	
+	protected String deletePath="/api/ranked_comments/:id";
+
 	public class Post extends AsyncTask<RankedComment, Void, Boolean> {
 		private RankedComment comment;
 		public Cruds mode = Cruds.CREATE;
@@ -53,9 +53,9 @@ public class RankedComments {
 	    	dialog.dismiss();
 	    	if(success) {
 				dialog.dismiss();
-				listener.onFinished(comment);
+				listener.onSuccess(comment);
 	    	} else {
-	    		listener.onFailed();
+	    		listener.onFailed("Post");
 	    	}
 	    }
 
@@ -65,9 +65,7 @@ public class RankedComments {
 	public class Get extends AsyncTask<RemoteModelInterface, Void, Boolean> {
     	
 		RemoteFetchingDutyListener listener;
-
 	    JSONArray objectList;
-	    HashMap<String, String> viewport;
 	   
 	    public Get(RemoteFetchingDutyListener listener) {
 	    	this.listener = listener;
@@ -78,7 +76,6 @@ public class RankedComments {
 			RemoteModelInterface model = args[0];
 			
 			String item = getPath.replaceFirst(":object_id", String.valueOf(model.getRemoteId())).replaceFirst(":object_type", model.getKind());
-			Log.e("WIKICLETA", item);
 			String fetchedString = NetworkOperations.getJSONExpectingString(item, false);
 			if(fetchedString == null)
 				return false;
@@ -103,15 +100,62 @@ public class RankedComments {
 					JSONObject json = iterator.next();
 					commentList.add(RankedComment.buildFrom(json));
 				}
-				listener.onFinished(commentList);
+				listener.onSuccess(commentList);
 			}
 		}
 		
 		@Override
 		protected void onCancelled() {
-			listener.onFailed();
+			listener.onFailed("Get");
 		}
 
+	}
+	
+	public class Delete extends AsyncTask<RemoteModelInterface, Void, Boolean> {
+		
+		RemoteFetchingDutyListener listener;
+		AlertDialog dialog;
+		RemoteModelInterface model;
+
+	    public Delete(RemoteFetchingDutyListener listener) {
+	    	this.listener = listener;
+	    }
+		
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage((Activity) listener, R.string.destroying).create();
+			dialog.show();
+		}
+		
+		@Override
+		protected Boolean doInBackground(RemoteModelInterface... params) {
+			model = params[0];
+			
+			HashMap<String, Object> auth = new HashMap<String, Object>();
+			auth.put("auth_token", User.token());
+			HashMap<String, Object> extras = new HashMap<String, Object>();
+			extras.put("extras", auth);
+
+			int requestStatus = NetworkOperations.postJSONTo(deletePath.replaceFirst(":id", String.valueOf(model.getRemoteId())), JSONObject.toJSONString(extras));
+			return requestStatus == 200;
+		}
+		
+		@Override
+		protected void onPostExecute(final Boolean success) {
+			dialog.dismiss();
+			if(success) {
+				listener.onSuccess("Delete");
+			} else {
+				listener.onFailed("Delete");
+			}
+		}
+		
+		@Override
+		protected void onCancelled() {
+			listener.onFailed("Delete");
+		}
+		
 	}
 
 }

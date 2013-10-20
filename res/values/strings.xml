@@ -308,6 +308,8 @@
 	<string name="comments_input_empty">Este comentario no puede ir vacío</string>
 	<string name="comment_saved_successfully">Tu comentario ha sido compartido</string>
 	<string name="comment_failed_to_save">Lo sentimos, no fué posible subir tu comentario, intenta de nuevo por favor.</string>
+	<string name="comment_failed_to_delete">Lo sentimos, no fué posible eliminar tu comentario.</string>
 	<string name="comment_not_saved">Tu comentario no ha sido guardado aún. ¿Descartarlo?</string>
-	
+	<string name="comment_deleted_successfully">Tu comentario ha sido eliminado</string>
+	<string name="no_comments_to_show">¡Sé el primero en dejar un comentario!</string>
 </resources>
