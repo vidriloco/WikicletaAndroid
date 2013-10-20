@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 import java.util.Date;
 
 import org.wikicleta.R;
-import org.wikicleta.activities.common.CommentsActivity;
+import org.wikicleta.activities.CommentsActivity;
 import org.wikicleta.activities.routes.RouteDetailsActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.DialogBuilder;

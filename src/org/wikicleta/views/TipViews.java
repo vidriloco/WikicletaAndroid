@@ -3,8 +3,8 @@ package org.wikicleta.views;
 import java.util.Date;
 
 import org.wikicleta.R;
+import org.wikicleta.activities.CommentsActivity;
 import org.wikicleta.activities.DiscoverActivity;
-import org.wikicleta.activities.common.CommentsActivity;
 import org.wikicleta.activities.tips.ModifyingActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.DialogBuilder;

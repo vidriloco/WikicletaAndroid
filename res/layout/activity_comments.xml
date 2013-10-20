@@ -48,11 +48,12 @@
 	</RelativeLayout>
 	
 	<RelativeLayout 
-	    android:id="@+id/image_icon"
+	    android:id="@+id/empty_comments_list"
 	    android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/selected_point_container"
-        android:layout_above="@+id/new_comment_action">
+        android:layout_above="@+id/new_comment_action"
+        android:visibility="gone">
 	   	<ImageView
 		    android:id="@+id/no_comments_icon"
 		    android:layout_width="wrap_content"
@@ -71,6 +72,38 @@
 		    android:text="Por ahora, no hay comentarios"
 		    android:layout_marginTop="20dp" />
 	</RelativeLayout>
+	
+	<LinearLayout 
+        android:id="@+id/loading_view"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_below="@+id/selected_point_container"
+        android:layout_above="@+id/new_comment_action"
+		android:gravity="center">
+
+        <ImageView
+            android:id="@+id/spinner_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/spinner_big" />
+
+    </LinearLayout>
+    
+	<ListView
+   		android:id="@+id/comments_list"
+   		android:layout_width="fill_parent"
+   		android:layout_height="wrap_content"
+   		android:layout_below="@+id/selected_point_container"
+        android:layout_above="@+id/new_comment_action"
+        android:clickable="false"
+   		android:fadeScrollbars="true"
+   		android:fastScrollEnabled="true"
+   		android:listSelector="@drawable/transparent_selector"
+   		android:dividerHeight="0dp"
+		android:divider="@null"
+   		android:scrollbarFadeDuration="100"
+   		android:scrollbars="vertical"
+   		android:visibility="gone" />
 	
     <RelativeLayout
         android:id="@+id/new_comment_action"

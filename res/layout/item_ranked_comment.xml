@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    android:background="@null" >
+    
+    <LinearLayout 
+    	android:orientation="vertical"
+    	android:layout_marginTop="4dp"
+		android:layout_marginBottom="4dp"
+      	android:layout_marginRight="8dp" 
+      	android:layout_marginLeft="8dp"  	
+        android:background="@drawable/white_shadows"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content">
+            <LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:padding="10dp"
+	    android:background="@color/wikicleta_white" >
+	    	
+           <ImageView 
+               	android:layout_width="wrap_content"
+	  			android:layout_height="wrap_content"
+	  			android:id="@+id/comment_positive_image"
+				android:src="@drawable/like_icon"
+	  			android:contentDescription="@string/none" />
+           <TextView
+           		android:id="@+id/comment_content_text"
+           		android:layout_width="fill_parent"
+           		android:layout_height="wrap_content"
+           		android:layout_marginLeft="10dp"
+           		android:text="Un comentario bastante bueno Un comentario bastante bueno"
+           		android:gravity="left"
+           		android:textColor="@color/wikicleta_blue"
+           		android:textSize="14sp" />
+   	</LinearLayout>
+   	<include layout="@layout/thin_separator" android:id="@+id/common_contributor_info" />
+   	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:padding="10dp"
+	    android:layout_gravity="right"
+	    android:background="@color/wikicleta_white" >
+   		<include layout="@layout/common_contributor_info" android:id="@+id/common_contributor_info" />
+	</LinearLayout>
+	<LinearLayout
+	    android:id="@+id/delete_invitation_container"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:padding="10dp"
+	    android:clickable="true"
+		android:background="@drawable/background_selector"
+		android:visibility="gone" >
+   		<TextView
+        	android:id="@+id/delete_invitation_text"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_marginLeft="10dp"
+        	android:text="@string/actions.delete"
+        	android:drawableRight="@drawable/trash_icon"
+        	android:drawablePadding="10dp"
+        	android:textColor="@color/wikicleta_orange"
+        	android:textSize="14sp"
+        	android:textAlignment="center"
+        	android:gravity="center" />
+	</LinearLayout>
+    </LinearLayout>
+</LinearLayout>

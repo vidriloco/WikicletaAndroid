@@ -1,12 +1,13 @@
 package org.wikicleta.models;
 
 import org.interfaces.MarkerInterface;
+import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONObject;
 import org.wikicleta.R;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
-public class CycleStation implements MarkerInterface {
+public class CycleStation implements MarkerInterface, RemoteModelInterface {
 	
 	public String name;
 	public LatLng location;
@@ -71,8 +72,12 @@ public class CycleStation implements MarkerInterface {
 
 	@Override
 	public long getRemoteId() {
-		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public String getKind() {
+		return null;
 	}
 
 }

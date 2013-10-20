@@ -1,8 +1,10 @@
-package org.wikicleta.activities.common;
+package org.wikicleta.activities;
 
-import org.interfaces.MarkerInterface;
+import java.util.ArrayList;
 import org.interfaces.RemoteFetchingDutyListener;
+import org.interfaces.RemoteModelInterface;
 import org.wikicleta.R;
+import org.wikicleta.adapters.CommentsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
@@ -15,8 +17,8 @@ import org.wikicleta.models.Tip;
 import org.wikicleta.models.Workshop;
 import org.wikicleta.routing.RankedComments;
 
+import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -27,15 +29,18 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class CommentsActivity extends Activity implements RemoteFetchingDutyListener {
 
-    public static MarkerInterface selectedPoint;
-    String modelKind;
-
+    public static RemoteModelInterface selectedPoint;
     EditText commentTextField;
-    
+	AnimatorSet set;
+	
+	RankedComment lastComment;
+	ArrayList<RankedComment> existentComments;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setTheme(R.style.Theme_Sherlock_Light_NoActionBar);
@@ -82,8 +87,6 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 		});
 		
         ((TextView) findViewById(R.id.text_comment_title)).setTypeface(AppBase.getTypefaceStrong());
-        ((TextView) findViewById(R.id.no_comments_text)).setTypeface(AppBase.getTypefaceStrong());
-
         
         ImageView returnIcon = (ImageView) this.findViewById(R.id.return_button);
     	returnIcon.setOnClickListener(new OnClickListener() {
@@ -119,7 +122,8 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
     	});
 
 		commentTextField = (EditText) this.findViewById(R.id.comment_input_field);
-    	
+		drawLoadingView();
+		fetchComments();
 	}
 
 	private void notifyAboutPotentialLossOfComment() {
@@ -172,10 +176,10 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 			return;
 		}
 				
+		lastComment = new RankedComment(selectedPoint.getKind(), selectedPoint.getRemoteId(), comment, positive);
     	RankedComments comments = new RankedComments();
     	RankedComments.Post commentsPoster = comments.new Post(this);
-    	//commentsPoster.execute(new RankedComment("Parking", 39, comment, positive));
-    	commentsPoster.execute(new RankedComment(modelKind, selectedPoint.getRemoteId(), comment, positive));
+    	commentsPoster.execute(lastComment);
 	}
 	
 	
@@ -197,19 +201,16 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 			title.setText(type);
 			details.setText(tip.content);
 			icon.setImageResource(tip.getDrawable());
-			modelKind = "Tip";
 		} else if(selectedPoint instanceof Workshop) {
 			Workshop workshop = (Workshop) selectedPoint;
 			title.setText(workshop.name);
 			details.setText(workshop.details);
 			icon.setImageResource(workshop.getDrawable());
-			modelKind = "Workshop";
 		} else if(selectedPoint instanceof Route) {
 			Route route = (Route) selectedPoint;
 			title.setText(route.name);
 			details.setText(route.details);
 			icon.setImageResource(route.getDrawable());
-			modelKind = "Route";
 		} else if(selectedPoint instanceof Parking) {
 			Parking parking = (Parking) selectedPoint;
 			String type = getResources().getString(
@@ -218,23 +219,67 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 			title.setText(type);
 			details.setText(parking.details);
 			icon.setImageResource(parking.getDrawable());
-			modelKind = "Parking";
 		}
 	}
 
-	private void reFetchComments() {
-		
+	private void fetchComments() {
+		RankedComments comments = new RankedComments();
+    	RankedComments.Get commentsGetter = comments.new Get(this);
+    	commentsGetter.execute(selectedPoint);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onFinished(Object duty) {	
-		this.reFetchComments();
-		Toasts.showToastWithMessage(this, R.string.comment_saved_successfully, R.drawable.success_icon);
-		commentTextField.setText("");
+		if(duty instanceof ArrayList)
+			loadComments((ArrayList<RankedComment>) duty);
+		else {
+			// TODO: Implement no re-fetching of comments for visual adding of new comment
+			this.fetchComments();
+			Toasts.showToastWithMessage(this, R.string.comment_saved_successfully, R.drawable.success_icon);
+			commentTextField.setText("");
+		}
+	}
+
+	private void loadComments(ArrayList<RankedComment> duty) {
+        findViewById(R.id.loading_view).setVisibility(View.GONE);
+        findViewById(R.id.empty_comments_list).setVisibility(View.GONE);
+
+		if(duty.isEmpty()) {
+	        ((TextView) findViewById(R.id.no_comments_text)).setTypeface(AppBase.getTypefaceStrong());
+	        findViewById(R.id.empty_comments_list).setVisibility(View.VISIBLE);
+		} else {
+			findViewById(R.id.comments_list).setVisibility(View.VISIBLE);
+			
+			final ListView listview = (ListView) findViewById(R.id.comments_list);
+	        final CommentsListAdapter listAdapter = new CommentsListAdapter(this, duty);
+		    listview.setAdapter(listAdapter);
+		    listview.setChoiceMode(ListView.CHOICE_MODE_NONE);
+		}
 	}
 
 	@Override
 	public void onFailed() {	
 		Toasts.showToastWithMessage(this, R.string.comment_failed_to_save, R.drawable.failure_icon);
+	}
+	
+	protected void drawLoadingView() {
+		final ImageView spinner = (ImageView) this.findViewById(R.id.spinner_view);
+		set = new AnimatorSet();
+
+		ObjectAnimator rotator = ObjectAnimator.ofFloat(spinner, "rotation", 0, 360);
+		rotator.setRepeatCount(ObjectAnimator.INFINITE);
+		
+		ObjectAnimator fader = ObjectAnimator.ofFloat(spinner, "alpha", 1, 0.1f, 1);
+		fader.setDuration(1800);
+		fader.setRepeatCount(ObjectAnimator.INFINITE);
+		
+		set.playTogether(
+				rotator,
+				fader
+		);
+		
+		set.setDuration(1800);
+		set.start();
 	}
 }

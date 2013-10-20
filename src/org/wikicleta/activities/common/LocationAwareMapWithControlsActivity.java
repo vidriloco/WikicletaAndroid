@@ -15,7 +15,6 @@ import com.google.android.gms.maps.model.LatLng;
 import android.annotation.SuppressLint;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;

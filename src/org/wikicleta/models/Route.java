@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import org.interfaces.MarkerInterface;
+import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
@@ -22,7 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
 @Table(name = "Routes")
-public class Route extends Model implements MarkerInterface, Serializable {
+public class Route extends Model implements MarkerInterface, Serializable, RemoteModelInterface {
 
 	private static final long serialVersionUID = 1L;
 
@@ -313,5 +314,10 @@ public class Route extends Model implements MarkerInterface, Serializable {
 	@Override
 	public long getRemoteId() {
 		return remoteId;
+	}
+
+	@Override
+	public String getKind() {
+		return "CyclingGroup";
 	}
 }

@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import org.interfaces.MarkerInterface;
+import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
@@ -23,7 +24,7 @@ import com.google.android.gms.maps.model.Marker;
 
 @SuppressLint("SimpleDateFormat")
 @Table(name = "Workshops")
-public class Workshop extends Model implements Serializable, DraftModel, MarkerInterface {
+public class Workshop extends Model implements Serializable, DraftModel, MarkerInterface, RemoteModelInterface {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -263,6 +264,11 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 	@Override
 	public long getRemoteId() {
 		return remoteId;
+	}
+	
+	@Override
+	public String getKind() {
+		return "Workshop";
 	}
 
 }

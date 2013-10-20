@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import org.interfaces.EventInterface;
 import org.interfaces.MarkerInterface;
+import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.wikicleta.R;
@@ -16,7 +17,7 @@ import org.wikicleta.common.NetworkOperations;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
-public class Trip implements Serializable, DraftModel, MarkerInterface, EventInterface {
+public class Trip implements Serializable, DraftModel, MarkerInterface, EventInterface, RemoteModelInterface {
 	/**
 	 * 
 	 */
@@ -179,5 +180,10 @@ public class Trip implements Serializable, DraftModel, MarkerInterface, EventInt
 	@Override
 	public long getRemoteId() {
 		return remoteId;
+	}
+	
+	@Override
+	public String getKind() {
+		return "Trip";
 	}
 }

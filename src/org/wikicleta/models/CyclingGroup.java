@@ -9,6 +9,7 @@ import java.util.Date;
 
 import org.interfaces.EventInterface;
 import org.interfaces.MarkerInterface;
+import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONObject;
 import org.wikicleta.R;
 
@@ -19,7 +20,7 @@ import com.activeandroid.annotation.Column;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
-public class CyclingGroup extends Model implements Serializable, DraftModel, MarkerInterface, EventInterface {
+public class CyclingGroup extends Model implements Serializable, DraftModel, MarkerInterface, EventInterface, RemoteModelInterface {
 
 	private static final long serialVersionUID = 1L;
 	@Column(name = "RemoteId")
@@ -200,6 +201,11 @@ public class CyclingGroup extends Model implements Serializable, DraftModel, Mar
 	@Override
 	public long getRemoteId() {
 		return remoteId;
+	}
+
+	@Override
+	public String getKind() {
+		return "CyclingGroup";
 	}
 
 }

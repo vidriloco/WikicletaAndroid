@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 import org.interfaces.MarkerInterface;
+import org.interfaces.RemoteModelInterface;
 import org.wikicleta.common.AppBase;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -12,7 +13,7 @@ import com.google.android.gms.maps.model.Marker;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-public class TripPoi implements Serializable, MarkerInterface {
+public class TripPoi implements Serializable, MarkerInterface, RemoteModelInterface {
 
 	public String name;
 	public String details;
@@ -117,6 +118,11 @@ public class TripPoi implements Serializable, MarkerInterface {
 	public long getRemoteId() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public String getKind() {
+		return null;
 	}
 
 }
