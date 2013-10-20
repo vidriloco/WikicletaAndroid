@@ -73,6 +73,32 @@
 		    android:layout_marginTop="20dp" />
 	</RelativeLayout>
 	
+	<RelativeLayout 
+	    android:id="@+id/attempt_reload_view"
+	    android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selected_point_container"
+        android:layout_above="@+id/new_comment_action"
+        android:visibility="gone">
+	   	<ImageView
+		    android:id="@+id/attempt_reload_image"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerInParent="true"
+		    android:contentDescription="@string/none"
+		    android:scaleType="fitXY"
+		    android:src="@drawable/reload_icon" />
+	   	<TextView 
+	   	    android:id="@+id/attempt_reload_text" 
+	   	    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_below="@+id/attempt_reload_image"
+		    android:layout_centerHorizontal="true"
+		    android:textColor="@color/wikicleta_blue"
+		    android:text="@string/attempt_reload_text"
+		    android:layout_marginTop="20dp" />
+	</RelativeLayout>
+	
 	<LinearLayout 
         android:id="@+id/loading_view"
 		android:layout_width="fill_parent"

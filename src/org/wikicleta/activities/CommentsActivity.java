@@ -285,9 +285,23 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 	}
 	
 	protected void showAttemptReloadView() {
+		((TextView) findViewById(R.id.attempt_reload_text)).setTypeface(AppBase.getTypefaceStrong());
 		findViewById(R.id.loading_view).setVisibility(View.GONE);
         findViewById(R.id.empty_comments_list).setVisibility(View.GONE);
         findViewById(R.id.comments_list).setVisibility(View.GONE);
+        findViewById(R.id.attempt_reload_view).setVisibility(View.VISIBLE);
+        findViewById(R.id.attempt_reload_view).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				findViewById(R.id.attempt_reload_view).setVisibility(View.GONE);
+				findViewById(R.id.loading_view).setVisibility(View.VISIBLE);
+				drawLoadingView();
+				fetchComments();
+			}
+        	
+        });
+        
 	}
 	
 	protected void drawLoadingView() {

@@ -101,6 +101,8 @@ public class RankedComments {
 					commentList.add(RankedComment.buildFrom(json));
 				}
 				listener.onSuccess(commentList);
+			} else {
+				listener.onFailed("Get");
 			}
 		}
 		

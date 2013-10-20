@@ -17,7 +17,7 @@
 	<string name="favs">favs</string>
 	<string name="connectivity_problems">No ha sido posible conectar con el servidor remoto, por favor, revisa tu conexión</string>
 	<string name="hide">Ocultar</string>
-	
+	<string name="attempt_reload_text">Toca aquí para re-intentar cargar</string>
 	<string name="event_today">Hoy</string>
 	<string name="event_tomorrow">Mañana</string>
 	<string name="event_unknown">No se sabe cuando</string>
