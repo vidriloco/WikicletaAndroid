@@ -223,9 +223,12 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 	}
 
 	private void fetchComments() {
-		RankedComments comments = new RankedComments();
-    	RankedComments.Get commentsGetter = comments.new Get(this);
-    	commentsGetter.execute(selectedPoint);
+    	if(selectedPoint != null) {
+    		RankedComments comments = new RankedComments();
+        	RankedComments.Get commentsGetter = comments.new Get(this);
+        	commentsGetter.execute(selectedPoint);
+        } else
+    		finish();
 	}
 	
 	@SuppressWarnings("unchecked")
