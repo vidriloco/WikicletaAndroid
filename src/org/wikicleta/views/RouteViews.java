@@ -34,7 +34,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class RouteViews {
+public class RouteViews extends BaseViews {
 
 	public static void buildViewDetails(final Activity activity, final Route route) {
     	final Dialog dialog = new Dialog(activity);
@@ -72,7 +72,8 @@ public class RouteViews {
         buildRouteRankingViewFor(activity, dialog, route);
         buildContributorDetailsViewFor(activity, dialog, route);
         buildRouteRankingControlsViewFor(activity, dialog, route);
-        
+        buildViewForFavoritedResource(dialog, route.remoteId, "Route");
+
         dialog.show();
 	}
 	
