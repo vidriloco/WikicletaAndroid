@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.interfaces.MarkerInterface;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.SimpleAnimatorListener;
 import org.wikicleta.layers.common.LayersConnectorListener;
 import android.annotation.SuppressLint;
@@ -55,7 +56,8 @@ public class LocationAwareMapWithMarkersActivity extends LocationAwareMapWithCon
 
 			@Override
 			public void onCameraChange(CameraPosition position) {
-				reloadActiveLayers();
+				if(map.getCameraPosition().zoom >= Constants.LAYERS_UPDATED_ON_ZOOM)
+					reloadActiveLayers();
 			}
     		
     	});
