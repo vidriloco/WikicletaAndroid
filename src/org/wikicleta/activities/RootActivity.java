@@ -1,5 +1,7 @@
 package org.wikicleta.activities;
 
+import java.util.HashMap;
+
 import org.json.simple.JSONObject;
 import org.wikicleta.R;
 import org.wikicleta.activities.routes.NewRouteActivity;
@@ -18,7 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class RootActivity extends Activity {
-
+	TextView creatorName;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -26,7 +29,7 @@ public class RootActivity extends Activity {
 		AppBase.currentActivity = this;
 		this.setContentView(R.layout.activity_root); 
 		
-		TextView creatorName = (TextView) findViewById(R.id.user_name);
+		creatorName = (TextView) findViewById(R.id.user_name);
                 
         creatorName.setText(User.username());
         creatorName.setTypeface(AppBase.getTypefaceStrong());
@@ -120,6 +123,12 @@ public class RootActivity extends Activity {
 	}
 	
 	public void displayUserDetails(JSONObject object) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("username", (String) object.get("username"));
+
+		User.storeWithParams(map, User.token());
+        creatorName.setText(User.username());
+
 		String URL = (String) object.get("user_pic");
 		
         ImageView ownerPic = (ImageView) findViewById(R.id.user_pic);

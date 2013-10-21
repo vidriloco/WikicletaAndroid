@@ -19,12 +19,18 @@ public class User {
 	
 	public static void storeWithParams(Map<String,String> params, String token) {
 		SharedPreferences.Editor editor = getPreferences().edit();
-		editor.putString("full_name", params.get("full_name"));
-		editor.putString("email", params.get("email"));
-		editor.putString("username", params.get("username"));
 		editor.putString("token", token);
-		editor.putLong("id", Long.parseLong(params.get("identifier")));
-		editor.putLong("created-at", Long.parseLong(params.get("created_at_ms")));
+
+		if(params.containsKey("full_name"))
+			editor.putString("full_name", params.get("full_name"));
+		if(params.containsKey("email"))
+			editor.putString("email", params.get("email"));
+		if(params.containsKey("username"))
+			editor.putString("username", params.get("username"));
+		if(params.containsKey("identifier"))
+			editor.putLong("id", Long.parseLong(params.get("identifier")));
+		if(params.containsKey("created-at"))
+			editor.putLong("created-at", Long.parseLong(params.get("created_at_ms")));
 		editor.commit();
 	}
 	
