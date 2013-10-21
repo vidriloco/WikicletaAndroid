@@ -1,13 +1,18 @@
 package org.wikicleta.activities.routes;
 
+import java.text.DecimalFormat;
+import org.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.R;
 import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.common.LocationAwareMapWithMarkersActivity;
 import org.wikicleta.adapters.PerformancesListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
+import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.models.Route;
+import org.wikicleta.models.RouteRanking;
+import org.wikicleta.routing.RouteRankings;
 import org.wikicleta.routing.Routes;
 import org.wikicleta.services.routes.RouteTrackingService;
 import org.wikicleta.services.routes.ServiceConstructor;
@@ -22,6 +27,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -29,7 +35,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity implements RoutesConnectorInterface {
+public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity implements RoutesConnectorInterface, RemoteFetchingDutyListener {
 	
 	protected NotificationBuilder notification;
 	protected RouteOverlay routesOverlay;
@@ -45,6 +51,9 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 	private ImageView performancesIcon;
 	
 	private Dialog performancesDialog;
+	private Dialog rankingDialog;
+	
+	private RouteRanking lastRouteRanking;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		attemptCenterOnLocationAtStart = false;
@@ -182,7 +191,155 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 	@Override
 	public void routePerformancesDidNotLoad(boolean status) {
 		performancesDialog.dismiss();
-		// Add toast with failure legend
+	}
+	
+	protected void attemptCommitRouteRanking(int security, int speed, int comfort) {
+		RouteRankings rankings = new RouteRankings();
+		RouteRankings.Post commentsPoster = rankings.new Post(this);
+		lastRouteRanking = new RouteRanking(currentRoute.remoteId, security, speed, comfort);
+    	commentsPoster.execute(lastRouteRanking);
+	}
+	
+	public void showRankingRouteView(final Dialog dialog) {
+		dialog.hide();
+		rankingDialog = new Dialog(this);
+		rankingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		rankingDialog.setContentView(R.layout.dialog_route_ranking);
+		
+		((TextView) rankingDialog.findViewById(R.id.route_security_value_text)).setTypeface(AppBase.getTypefaceStrong());
+		((TextView) rankingDialog.findViewById(R.id.route_fast_value_text)).setTypeface(AppBase.getTypefaceStrong());
+		((TextView) rankingDialog.findViewById(R.id.route_comfort_value_text)).setTypeface(AppBase.getTypefaceStrong());
+		
+		((TextView) rankingDialog.findViewById(R.id.ranking_instructions_text)).setTypeface(AppBase.getTypefaceLight());
+
+		((TextView) rankingDialog.findViewById(R.id.route_name_text)).setTypeface(AppBase.getTypefaceStrong());
+		((TextView) rankingDialog.findViewById(R.id.route_name_text)).setText(currentRoute.name);
+		DecimalFormat format=new DecimalFormat("#.##");
+
+		TextView kilometers = (TextView) rankingDialog.findViewById(R.id.route_kms_text);
+		kilometers.setText(format.format(currentRoute.kilometers).concat(" Km/h"));
+		kilometers.setTypeface(AppBase.getTypefaceStrong());
+		
+		rankingDialog.findViewById(R.id.route_security_container).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				changeSelectedRankingView(v);
+			}
+			
+		});
+		
+		rankingDialog.findViewById(R.id.route_comfort_container).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				changeSelectedRankingView(v);
+			}
+			
+		});
+		
+		rankingDialog.findViewById(R.id.route_fast_container).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				changeSelectedRankingView(v);
+			}
+			
+		});
+		
+		((TextView) rankingDialog.findViewById(R.id.button_save_text)).setTypeface(AppBase.getTypefaceStrong());
+		rankingDialog.findViewById(R.id.save_button_container).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				int speed = getSelectedRankingValueForView(rankingDialog.findViewById(R.id.route_fast_container));
+				int comfort = getSelectedRankingValueForView(rankingDialog.findViewById(R.id.route_comfort_container));
+				int security = getSelectedRankingValueForView(rankingDialog.findViewById(R.id.route_security_container));
+				if(speed > 0  && comfort > 0 && security > 0)
+					attemptCommitRouteRanking(security, speed, comfort);
+					
+			}
+			
+		});
+		
+		((TextView) rankingDialog.findViewById(R.id.button_return_text)).setTypeface(AppBase.getTypefaceStrong());
+		rankingDialog.findViewById(R.id.return_button_container).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {		
+				rankingDialog.dismiss();
+				dialog.show();
+			}
+			
+		});
+		rankingDialog.show();
+		
+		RouteRankings rankings = new RouteRankings();
+		RouteRankings.Get commentsPoster = rankings.new Get(this);
+    	commentsPoster.execute(currentRoute);
+	}
+	
+	protected int getSelectedRankingValueForView(View v) {
+		if(v.findViewById(R.id.ranking_value_1).getVisibility() == View.VISIBLE)
+			return 1;
+		else if(v.findViewById(R.id.ranking_value_2).getVisibility() == View.VISIBLE)
+			return 2;
+		else if(v.findViewById(R.id.ranking_value_3).getVisibility() == View.VISIBLE)
+			return 3;
+		else
+			return 0;
+	}
+	
+	protected void changeSelectedRankingView(View v) {
+		if(v.findViewById(R.id.ranking_value_0).getVisibility() == View.VISIBLE) {
+			v.findViewById(R.id.ranking_value_0).setVisibility(View.GONE);
+			v.findViewById(R.id.ranking_value_1).setVisibility(View.VISIBLE);
+			v.findViewById(R.id.ranking_value_2).setVisibility(View.GONE);
+			v.findViewById(R.id.ranking_value_3).setVisibility(View.GONE);
+		} else if(v.findViewById(R.id.ranking_value_1).getVisibility() == View.VISIBLE) {
+			v.findViewById(R.id.ranking_value_1).setVisibility(View.GONE);
+			v.findViewById(R.id.ranking_value_2).setVisibility(View.VISIBLE);
+			v.findViewById(R.id.ranking_value_3).setVisibility(View.GONE);
+		} else if(v.findViewById(R.id.ranking_value_2).getVisibility() == View.VISIBLE) {
+			v.findViewById(R.id.ranking_value_1).setVisibility(View.GONE);
+			v.findViewById(R.id.ranking_value_2).setVisibility(View.GONE);
+			v.findViewById(R.id.ranking_value_3).setVisibility(View.VISIBLE);
+		} else if(v.findViewById(R.id.ranking_value_3).getVisibility() == View.VISIBLE) {
+			v.findViewById(R.id.ranking_value_1).setVisibility(View.VISIBLE);
+			v.findViewById(R.id.ranking_value_2).setVisibility(View.GONE);
+			v.findViewById(R.id.ranking_value_3).setVisibility(View.GONE);
+		}	
+	}
+
+	@Override
+	public void onSuccess(Object duty) {
+		if(duty instanceof String) {
+			String dutyKind = (String) duty;
+			if(dutyKind.equalsIgnoreCase("Post")) {
+				Toasts.showToastWithMessage(this, R.string.route_ranking_shared_successfully, R.drawable.success_icon);
+				rankingDialog.dismiss();
+				currentRoute.updateWith(lastRouteRanking);
+				RouteViews.buildViewDetailsExtra(RouteDetailsActivity.this, currentRoute);
+			}
+		} else if(duty instanceof RouteRanking) {
+			RouteViews.setRankedViewsWith(this, rankingDialog, (RouteRanking) duty);
+		}
+	}
+
+	@Override
+	public void onFailed(Object message) {
+		if(message instanceof String) {
+			String dutyKind = (String) message;
+			if(dutyKind.equalsIgnoreCase("Post")) {
+				Toasts.showToastWithMessage(this, R.string.route_ranking_failed_to_share, R.drawable.failure_icon);
+			}
+		}		
+	}
+
+	@Override
+	public void onFailed() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

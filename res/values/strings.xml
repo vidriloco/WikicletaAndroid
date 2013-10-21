@@ -111,13 +111,16 @@
 	
 	<string name="route_security_value">Seguridad</string>
 	<string name="route_fast_value">Rapidez</string>
-	<string name="route_comfort_value">Comfort</string>
+	<string name="route_comfort_value">Comodidad</string>
 		
 	<string name="route_rank_top_value">/10</string>
 	<string name="route_privacy_private">Privada</string>
 	<string name="route_privacy_public">Pública</string>
 	<string name="route_not_uploaded">Sin subir</string>
 	<string name="route_uploading">Subiendo</string>
+	<string name="route_ranking_instructions_text">Toca una categoría y cambia su valor, según tu percepción de la ruta</string>
+	<string name="route_ranking_shared_successfully">Hemos recibido tu ranking sobre esta ruta. ¡gracias!</string>
+	<string name="route_ranking_failed_to_share">No pudimos recibir tu ranking de esta ruta. Intenta más tarde.</string>
 	
 	<string name="waiting_for_performances">Cargando tabla de rendimientos</string>
 	<string name="all_performants">Rendimientos de otros usuarios</string>

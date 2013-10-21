@@ -10,7 +10,28 @@
 	    android:layout_width="match_parent">
 		
         <include layout="@layout/route_dialog_basic_info" android:id="@+id/route_dialog_basic_info"/>
-		<include layout="@layout/route_rankings" android:id="@+id/route_rankings" />
+		<include layout="@layout/thin_separator" android:id="@+id/separator_three" />
+        <LinearLayout 
+	    android:id="@+id/rank_button_container"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/background_selector"
+		android:gravity="center"
+		android:clickable="true"
+		android:padding="14dp">
+	        <TextView
+           		android:id="@+id/button_rank_text"
+           		android:layout_width="wrap_content"
+           		android:layout_height="wrap_content"
+           		android:text="@string/actions.rank"
+           		android:textColor="@color/wikicleta_orange"
+           		android:textSize="16sp"
+           		android:paddingLeft="10dp"
+           		android:paddingRight="10dp"
+           		android:textStyle="bold" />
+	    </LinearLayout>
+       	<include layout="@layout/thin_separator" android:id="@+id/separator_four" />
+        <include layout="@layout/common_routes_ranking" android:id="@+id/routes_ranking" />
 		<include layout="@layout/thin_separator" android:id="@+id/separator_one" />
 		<include layout="@layout/common_actions_for_poi" android:id="@+id/common_actions_for_poi" />
 		<include layout="@layout/thin_separator" android:id="@+id/separator_two" />

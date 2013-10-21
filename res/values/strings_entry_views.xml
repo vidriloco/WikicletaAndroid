@@ -18,6 +18,8 @@
     <string name="actions.new">Nuevo</string>
     <string name="actions.update">Guardar</string>
     <string name="actions.details">Ver Detalles</string>
+    <string name="actions.rank">Rankear</string>
+    <string name="actions.return">Volver</string>
     <!-- Registration Activity strings -->
     <string name="registration_title">Únete a Wikicleta</string>
     <string name="registration_prologue_text">Regálanos los siguientes datos para completar tu registro:</string>

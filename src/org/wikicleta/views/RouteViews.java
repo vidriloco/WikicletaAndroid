@@ -9,6 +9,7 @@ import org.wikicleta.activities.routes.RouteDetailsActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.models.Route;
+import org.wikicleta.models.RouteRanking;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others;
 import org.wikicleta.routing.Others.ImageUpdater;
@@ -59,10 +60,15 @@ public class RouteViews extends BaseViews {
         	
         });
         
+        dialog.findViewById(R.id.route_security_container).setBackgroundColor(android.R.color.transparent);
+        dialog.findViewById(R.id.route_fast_container).setBackgroundColor(android.R.color.transparent);
+        dialog.findViewById(R.id.route_comfort_container).setBackgroundColor(android.R.color.transparent);
+
         dialog.show();
 	}
 
-	public static void buildViewDetailsExtra(final RouteDetailsActivity activity,Route route) {
+	public static void buildViewDetailsExtra(final RouteDetailsActivity activity,final Route route) {
+		
     	final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_route_extra_details);
@@ -74,6 +80,21 @@ public class RouteViews extends BaseViews {
         buildRouteRankingControlsViewFor(activity, dialog, route);
         buildViewForFavoritedResource(dialog, route.remoteId, "Route");
 
+        ((TextView) dialog.findViewById(R.id.button_rank_text)).setTypeface(AppBase.getTypefaceStrong());
+
+        dialog.findViewById(R.id.rank_button_container).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				activity.showRankingRouteView(dialog);
+			}
+        	
+        });
+        
+        dialog.findViewById(R.id.route_security_container).setBackgroundColor(android.R.color.transparent);
+        dialog.findViewById(R.id.route_fast_container).setBackgroundColor(android.R.color.transparent);
+        dialog.findViewById(R.id.route_comfort_container).setBackgroundColor(android.R.color.transparent);
+        
         dialog.show();
 	}
 	
@@ -148,21 +169,30 @@ public class RouteViews extends BaseViews {
 	}
 	
 	private static void buildRouteRankingViewFor(Activity activity, Dialog dialog, Route route) {
+
         ((TextView) dialog.findViewById(R.id.route_fast_value_text)).setTypeface(AppBase.getTypefaceLight());
         ((TextView) dialog.findViewById(R.id.route_comfort_value_text)).setTypeface(AppBase.getTypefaceLight());
         ((TextView) dialog.findViewById(R.id.route_security_value_text)).setTypeface(AppBase.getTypefaceLight());
-
-        TextView fastText = (TextView) dialog.findViewById(R.id.route_fast_text);
-        fastText.setTypeface(AppBase.getTypefaceStrong());
-        fastText.setText("3");
-
-        TextView comfortText = (TextView) dialog.findViewById(R.id.route_comfort_text);
-        comfortText.setTypeface(AppBase.getTypefaceStrong());
-        comfortText.setText("6");
-
-        TextView securityText = (TextView) dialog.findViewById(R.id.route_security_text);
-        securityText.setTypeface(AppBase.getTypefaceStrong());
-        securityText.setText("9");
+        
+        setRankedViewsWith(activity, dialog, new RouteRanking(route.safetyIndex, route.speedIndex, route.comfortIndex));
+	}
+	
+	public static void setRankedViewsWith(Activity activity, Dialog dialog, RouteRanking ranking) {
+		int viewForSecurity = activity.getResources().getIdentifier("ranking_value_".concat(String.valueOf(ranking.safetyIndex)), "id", activity.getPackageName());
+		setRankingViewSelected(dialog, R.id.route_security_container, viewForSecurity);
+		int viewForSpeed = activity.getResources().getIdentifier("ranking_value_".concat(String.valueOf(ranking.speedIndex)), "id", activity.getPackageName());
+		setRankingViewSelected(dialog, R.id.route_fast_container, viewForSpeed);
+		int viewForComfort = activity.getResources().getIdentifier("ranking_value_".concat(String.valueOf(ranking.comfortIndex)), "id", activity.getPackageName());
+		setRankingViewSelected(dialog, R.id.route_comfort_container, viewForComfort);
+	}
+	
+	protected static void setRankingViewSelected(Dialog rankingDialog, int superviewId, int viewWithId) {
+		rankingDialog.findViewById(superviewId).findViewById(R.id.ranking_value_0).setVisibility(View.GONE);
+		rankingDialog.findViewById(superviewId).findViewById(R.id.ranking_value_1).setVisibility(View.GONE);
+		rankingDialog.findViewById(superviewId).findViewById(R.id.ranking_value_2).setVisibility(View.GONE);
+		rankingDialog.findViewById(superviewId).findViewById(R.id.ranking_value_3).setVisibility(View.GONE);
+		
+		rankingDialog.findViewById(superviewId).findViewById(viewWithId).setVisibility(View.VISIBLE);
 	}
 	
 	private static void buildRouteRankingControlsViewFor(Activity activity, Dialog dialog, final Route route) {

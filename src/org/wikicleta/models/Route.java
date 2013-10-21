@@ -66,11 +66,11 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 	public String username;
 	public String userPicURL;
 	
-	public int likesCount;
-	public int dislikesCount;
-	public int comfortIndex;
-	public int speedIndex;
-	public int safetyIndex;
+	public int likesCount = 0;
+	public int dislikesCount = 0;
+	public int comfortIndex = 0;
+	public int speedIndex = 0;
+	public int safetyIndex = 0;
 	
 	public double [][] path;
 	
@@ -97,7 +97,7 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 	/*
 	 * Default Route constructor for json retrieved routes data
 	 */
-	public Route(long id, String name, int likesCount, int dislikesCount, String details, float kilometers, long createdAt, long updatedAt, Long userId, String username) {
+	public Route(long id, String name, int likesCount, int dislikesCount, int speed, int safety, int comfort, String details, float kilometers, long createdAt, long updatedAt, Long userId, String username) {
 		this.name = name;
 		this.details = details;
 		this.kilometers = kilometers;
@@ -110,6 +110,9 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 		this.dislikesCount = dislikesCount;
 		this.userPicURL = new String();
 		this.persistedRoutePerformances = new ArrayList<RoutePerformance>();
+		this.speedIndex = speed;
+		this.safetyIndex = safety;
+		this.comfortIndex = comfort;
 	}
 
 	public Route(String name, String details, long elapsedTime, float averageSpeed, float kilometers, long createdAt, ArrayList<Instant> coordinateVector, Long userId, boolean shouldAdd) {
@@ -266,7 +269,16 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 		long dislikesCountTmp = (Long) object.get("dislikes_count");
 		int dislikesCount = (int) dislikesCountTmp;
 		
-		Route route = new Route(id, routeName, likesCount, dislikesCount, routeDetails, kilometers, createdAt, updatedAt, userId, name);
+		long speedTmp = (Long) object.get("speed_index");
+		int speed = (int) speedTmp;
+		
+		long safetyTmp = (Long) object.get("safety_index");
+		int safety = (int) safetyTmp;
+		
+		long comfortTmp = (Long) object.get("comfort_index");
+		int comfort = (int) comfortTmp;
+		
+		Route route = new Route(id, routeName, likesCount, dislikesCount, speed, safety, comfort, routeDetails, kilometers, createdAt, updatedAt, userId, name);
 		route.originCoordinate = new LatLng((Double) object.get("origin_lat"), (Double) object.get("origin_lon"));
 		route.endCoordinate = new LatLng((Double) object.get("end_lat"), (Double) object.get("end_lon"));
 		
@@ -329,5 +341,22 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 	@Override
 	public String getKind() {
 		return "Route";
+	}
+
+	public void updateWith(RouteRanking lastRouteRanking) {
+		if(comfortIndex != 0)
+			comfortIndex=Math.round((comfortIndex+lastRouteRanking.comfortIndex)/2);
+		else
+			comfortIndex=lastRouteRanking.comfortIndex;
+		
+		if(safetyIndex != 0)
+			safetyIndex=Math.round((safetyIndex+lastRouteRanking.safetyIndex)/2);
+		else
+			safetyIndex=lastRouteRanking.safetyIndex;
+
+		if(speedIndex != 0)
+			speedIndex=Math.round((speedIndex+lastRouteRanking.speedIndex)/2);
+		else
+			speedIndex=lastRouteRanking.speedIndex;
 	}
 }

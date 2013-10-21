@@ -10,8 +10,7 @@
 	    android:layout_width="match_parent">
 
 		<include layout="@layout/route_dialog_basic_info" android:id="@+id/route_dialog_basic_info"/>
-		<include layout="@layout/route_rankings" android:id="@+id/route_rankings" />
-		
+		<include layout="@layout/common_routes_ranking" android:id="@+id/route_rankings" />
 		<include layout="@layout/common_contributor_info" android:id="@+id/common_contributor_info" />
 		<include layout="@layout/thin_separator" android:id="@+id/separator_one" />
 		<LinearLayout 
