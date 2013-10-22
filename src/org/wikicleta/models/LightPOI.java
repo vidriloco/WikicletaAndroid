@@ -4,12 +4,14 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.interfaces.ListedModelInterface;
 import org.json.simple.JSONObject;
 import org.wikicleta.R;
 
 import android.content.Context;
 
-public class LightPOI {
+public class LightPOI implements ListedModelInterface {
 
 	public String title;
 	public Integer category;
@@ -93,5 +95,74 @@ public class LightPOI {
 			return context.getResources().getString(R.string.route);
 		else
 			return context.getResources().getString(R.string.workshop);
+	}
+
+	@Override
+	public int getDrawable() {
+		if(this.kind.equalsIgnoreCase("Tip")) {
+			if(Tip.getCategories().get(this.category).equalsIgnoreCase("danger"))
+				return R.drawable.tip_danger_icon;
+			else if(Tip.getCategories().get(this.category).equalsIgnoreCase("alert"))
+				return R.drawable.tip_alert_icon;
+			else
+				return R.drawable.tip_sightseeing_icon;
+		} else if(this.kind.equalsIgnoreCase("Parking")) {
+			if(Parking.getKinds().get(this.category) == "government_provided") {
+				return R.drawable.parking_government_provided_icon;
+			} else if(Parking.getKinds().get(this.category) == "urban_mobiliary") {
+				return R.drawable.parking_urban_mobiliary_icon;
+			} else 
+				return R.drawable.parking_venue_provided_icon;
+		} else if(this.kind.equalsIgnoreCase("Route"))
+			return R.drawable.start_flag_marker;
+		else
+			return R.drawable.workshop_icon;
+	}
+
+	@Override
+	public int getTitle() {
+		if(this.kind.equalsIgnoreCase("Tip")) 
+			return R.string.tip;
+		else if(this.kind.equalsIgnoreCase("Parking"))
+			return R.string.parking;
+		else if(this.kind.equalsIgnoreCase("Route"))
+			return R.string.route;
+		else
+			return R.string.workshop;
+	}
+
+	@Override
+	public String getSubtitle() {
+		if(this.kind.equalsIgnoreCase("Tip")) 
+			return "tips.categories.".concat(Tip.getCategories().get(this.category));
+		else if(this.kind.equalsIgnoreCase("Parking"))
+			return "parkings.kinds.".concat(Parking.getKinds().get(this.category));
+		else
+			return null;
+	}
+
+	@Override
+	public String getDetails() {
+		return description;
+	}
+
+	@Override
+	public Date getDate() {
+		return updatedAt;
+	}
+
+	@Override
+	public String getName() {
+		return title;
+	}
+
+	@Override
+	public String getKind() {
+		return this.kind;
+	}
+
+	@Override
+	public Long getId() {
+		return new Long(0);
 	}
 }

@@ -1,73 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp"
-    android:background="@drawable/contact_item_selector" >
-    <LinearLayout
-        android:layout_width="fill_parent"
-    	android:layout_height="wrap_content" 
-    	android:gravity="left"
-    	android:orientation="vertical">
-    <TextView
-        android:id="@+id/light_title_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Taller Juvenal"
-        android:textColor="@color/wikicleta_orange"
-        android:textSize="20sp"
-        android:maxLines="1"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/light_description_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bueno, rápido y barato"
-        android:textColor="@color/wikicleta_blue"
-        android:textSize="14sp"
-        android:maxLines="1" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="fill_parent"
-    	android:layout_height="wrap_content" 
-    	android:gravity="right"
-    	android:paddingRight="10dp"
-    	android:orientation="horizontal"
-    	android:weightSum="2">
-    	<LinearLayout 
-    	    android:layout_width="1dp"
-    		android:layout_height="wrap_content"
-    		android:layout_weight="1" >
-    	    <TextView
-        		android:id="@+id/last_light_updated_text"
-        		android:layout_width="fill_parent"
-        		android:layout_height="wrap_content"
-        		android:text="Última actualización ..."
-        		android:textColor="@color/wikicleta_orange"
-        		android:textSize="8sp"
-        		android:layout_marginTop="5dp"
-        		android:textAllCaps="true"
-       	 		android:maxLines="2" />
-    	</LinearLayout>
-    	<LinearLayout 
-    	    android:id="@+id/kind_of_light_poi_container"
-    	    android:layout_width="1dp"
-    		android:layout_height="wrap_content"
-    		android:layout_weight="1"
-    		android:visibility="invisible" >
-            <TextView
-        		android:id="@+id/kind_of_light_poi_text"
-        		android:layout_width="fill_parent"
-        		android:layout_height="wrap_content"
-        		android:textColor="@color/wikicleta_blue"
-        		android:textSize="10sp"
-        		android:gravity="right"
-        		android:layout_marginTop="5dp"
-        		android:textAllCaps="true"
-        		android:textStyle="bold"
-        		android:maxLines="1" />
-    	</LinearLayout>
 
-    </LinearLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    android:background="@null" >
+    
+    <LinearLayout 
+    	android:orientation="vertical"
+    	android:layout_marginTop="15dp"
+		android:layout_marginBottom="0dp"
+      	android:layout_marginRight="15dp" 
+      	android:layout_marginLeft="15dp"  	
+        android:background="@drawable/white_shadows"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content">
+
+   <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:padding="10dp"
+	    android:background="@color/wikicleta_white" >
+	   	<LinearLayout android:layout_width="fill_parent"
+	   	    android:layout_height="wrap_content"
+	   	    android:orientation="horizontal"
+	   	    android:layout_marginBottom="10dp">
+	   	    <ImageView android:id="@+id/ligth_poi_icon"
+	   	        android:src="@drawable/parking_government_provided_icon"
+    			android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:contentDescription="@string/none"
+    			android:layout_gravity="center_vertical"
+    			android:layout_marginRight="5dp" />
+	   	    <LinearLayout android:layout_width="fill_parent"
+	   	    	android:layout_height="wrap_content"
+	   	    	android:orientation="vertical">
+	   	        <TextView
+       				android:id="@+id/light_poi_title"
+       				android:layout_width="wrap_content"
+       				android:layout_height="wrap_content"
+       				android:text="Taller"
+    				android:layout_gravity="center_vertical"
+       				android:textColor="@color/wikicleta_blue"
+       				android:textSize="13sp"
+       				android:textAllCaps="true" />
+	   	        <TextView
+       				android:id="@+id/light_poi_subtitle"
+       				android:layout_width="wrap_content"
+       				android:layout_height="wrap_content"
+       				android:text="Fodongin"
+    				android:layout_gravity="center_vertical"
+       				android:textColor="@color/wikicleta_orange"
+       				android:textSize="13sp" />
+	   	    </LinearLayout>
+	   	    
+	   	</LinearLayout>
+        <TextView
+       		android:id="@+id/light_poi_details"
+       		android:layout_width="fill_parent"
+       		android:layout_height="wrap_content"
+       		android:layout_marginLeft="10dp"
+       		android:text="Un comentario bastante bueno Un comentario bastante bueno"
+       		android:gravity="left"
+       		android:maxLines="2"
+       		android:textColor="@color/wikicleta_blue"
+       		android:textSize="14sp" />
+        <TextView
+       		android:id="@+id/light_poi_date"
+       		android:layout_width="fill_parent"
+       		android:layout_height="wrap_content"
+       		android:layout_marginTop="10dp"
+       		android:text="En borradores hace 3 dias"
+       		android:gravity="right"
+       		android:maxLines="2"
+       		android:textColor="@color/wikicleta_blue"
+       		android:textSize="12sp" />
+   	</LinearLayout>
+</LinearLayout>
 </LinearLayout>
