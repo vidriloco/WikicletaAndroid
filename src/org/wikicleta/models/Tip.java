@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.interfaces.ListedModelInterface;
 import org.interfaces.MarkerInterface;
 import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONObject;
@@ -24,7 +25,7 @@ import com.google.android.gms.maps.model.Marker;
 
 @SuppressLint("SimpleDateFormat")
 @Table(name = "Tips")
-public class Tip extends Model implements Serializable, DraftModel, MarkerInterface, RemoteModelInterface {
+public class Tip extends Model implements Serializable, ListedModelInterface, MarkerInterface, RemoteModelInterface {
 	
 	/**
 	 * 
@@ -160,26 +161,6 @@ public class Tip extends Model implements Serializable, DraftModel, MarkerInterf
 		}
 		return categoriesStrs;
 	}
-
-	@Override
-	public String getContent() {
-		return this.content;
-	}
-
-	@Override
-	public String getCategoryName() {
-		return "tips.categories.".concat(this.categoryString());
-	}
-
-	@Override
-	public boolean requiresCategoryTranslation() {
-		return true;
-	}
-	
-	@Override
-	public Date getDate() {
-		return new Date(this.createdAt);
-	}
 	
 	@SuppressLint("SimpleDateFormat")
 	public static Tip buildFrom(JSONObject object) throws IOException {
@@ -253,6 +234,31 @@ public class Tip extends Model implements Serializable, DraftModel, MarkerInterf
 	@Override
 	public String getKind() {
 		return "Tip";
+	}
+
+	@Override
+	public String getDetails() {
+		return this.content;
+	}
+
+	@Override
+	public String getName() {
+		return null;
+	}
+	
+	@Override
+	public Date getDate() {
+		return new Date(this.createdAt);
+	}
+	
+	@Override
+	public int getTitle() {
+		return R.string.tip;
+	}
+
+	@Override
+	public String getSubtitle() {
+		return "tips.categories.".concat(this.categoryString());
 	}
 
 }

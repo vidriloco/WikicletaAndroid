@@ -2,8 +2,6 @@ package org.wikicleta.activities.routes;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.Date;
-
 import org.wikicleta.R;
 import org.wikicleta.activities.RootActivity;
 import org.wikicleta.common.AppBase;
@@ -222,7 +220,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 		
 		Route route = new Route(routeName, routeDetails, 
 				Formatters.secondsFromMilliseconds(theService.seconds), 
-				theService.averageSpeed, theService.accumulatedDistance, new Date().getTime(), theService.coordinateVector, User.id(), false);
+				theService.averageSpeed, theService.accumulatedDistance, theService.coordinateVector, User.id(), false);
 		route.isPublic = !routeIsPrivate.isChecked();
 
 		if(FieldValidators.isFieldEmpty(routeName)) {

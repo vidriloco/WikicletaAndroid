@@ -11,6 +11,7 @@ import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.routes.NewRouteActivity;
 import org.wikicleta.activities.routes.RouteDetailsActivity;
 import org.wikicleta.activities.routes.RoutesConnectorInterface;
+import org.wikicleta.adapters.DraftsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.common.Toasts;
@@ -287,6 +288,39 @@ public class Routes {
 	    		subDialog.show();
 	    	}
 	    }
+	}
+	
+	public class DraftPost extends AsyncTask<Route, Void, Boolean> {
+		private Route route;
+		AlertDialog dialog;
+		DraftsListAdapter adapter;
+		
+		public DraftPost(DraftsListAdapter adapter) {
+			this.adapter = adapter;
+		}
+		
+		@Override
+		protected Boolean doInBackground(Route... args) {
+			route = args[0];		
+			return NetworkOperations.postJSONTo(postPath, route.draftContent) == 200;
+		}
+		
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage(adapter.context, R.string.uploading).create();
+			dialog.show();
+		}
+		
+		protected void onPostExecute(Boolean success) {
+			dialog.dismiss();
+			
+	    	if(success) {
+	    		adapter.removeItem(route);
+    			Toasts.showToastWithMessage(adapter.context, R.string.route_saved_successfully, R.drawable.success_icon);
+	    	} else {
+    			Toasts.showToastWithMessage(adapter.context, R.string.route_not_saved, R.drawable.failure_icon);
+	    	}
+		}
 	}
 	
 	

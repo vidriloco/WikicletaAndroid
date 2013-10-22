@@ -2,9 +2,7 @@ package org.wikicleta.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
-
 import org.interfaces.EventInterface;
 import org.interfaces.MarkerInterface;
 import org.interfaces.RemoteModelInterface;
@@ -17,7 +15,7 @@ import org.wikicleta.common.NetworkOperations;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
-public class Trip implements Serializable, DraftModel, MarkerInterface, EventInterface, RemoteModelInterface {
+public class Trip implements Serializable, MarkerInterface, EventInterface, RemoteModelInterface {
 	/**
 	 * 
 	 */
@@ -130,36 +128,6 @@ public class Trip implements Serializable, DraftModel, MarkerInterface, EventInt
 	@Override
 	public int getDrawable() {
 		return R.drawable.trip_icon;
-	}
-
-	@Override
-	public String getContent() {
-		return null;
-	}
-
-	@Override
-	public String getCategoryName() {
-		return null;
-	}
-
-	@Override
-	public Date getDate() {
-		return null;
-	}
-
-	@Override
-	public Long getId() {
-		return this.remoteId;
-	}
-
-	@Override
-	public void delete() {
-		
-	}
-
-	@Override
-	public boolean requiresCategoryTranslation() {
-		return false;
 	}
 
 	@Override

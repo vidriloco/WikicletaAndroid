@@ -87,7 +87,7 @@ public class LocationAwareMapWithControlsActivity extends ActivityWithLocationAw
 	protected void turnOffLocation() {
 		map.setMyLocationEnabled(false);
 		
-		if(locationClient != null) {
+		if(locationClient != null  && locationClient.isConnected()) {
 			locationClient.removeLocationUpdates(this);
 			this.locationClient.disconnect();
 		}

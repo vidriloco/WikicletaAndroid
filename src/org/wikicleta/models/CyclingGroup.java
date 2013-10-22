@@ -6,7 +6,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import org.interfaces.EventInterface;
 import org.interfaces.MarkerInterface;
 import org.interfaces.RemoteModelInterface;
@@ -20,7 +19,7 @@ import com.activeandroid.annotation.Column;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
-public class CyclingGroup extends Model implements Serializable, DraftModel, MarkerInterface, EventInterface, RemoteModelInterface {
+public class CyclingGroup extends Model implements Serializable, MarkerInterface, EventInterface, RemoteModelInterface {
 
 	private static final long serialVersionUID = 1L;
 	@Column(name = "RemoteId")
@@ -112,26 +111,6 @@ public class CyclingGroup extends Model implements Serializable, DraftModel, Mar
 	public int getDrawable() {
 		return R.drawable.cycling_group_icon;
 	}
-
-	@Override
-	public String getContent() {
-		return this.details;
-	}
-
-	@Override
-	public String getCategoryName() {
-		return this.name;
-	}
-
-	@Override
-	public Date getDate() {
-		return new Date(this.createdAt);
-	}
-
-	@Override
-	public boolean requiresCategoryTranslation() {
-		return false;
-	}
 	
 	@SuppressLint("SimpleDateFormat")
 	public static CyclingGroup buildFrom(JSONObject object) throws IOException {
@@ -207,5 +186,4 @@ public class CyclingGroup extends Model implements Serializable, DraftModel, Mar
 	public String getKind() {
 		return "CyclingGroup";
 	}
-
 }

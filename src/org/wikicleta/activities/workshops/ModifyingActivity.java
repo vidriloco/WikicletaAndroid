@@ -48,15 +48,13 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		attemptCenterOnLocationAtStart = false;
 		super.onCreate(savedInstanceState);
 		setTheme(R.style.Theme_wikicleta);
 		
 		AppBase.currentActivity = this;
     	assignToggleActionsForAutomapCenter();
-    	
-    	// Workshop from remote server which can be edit by me
-    	workshop = (Workshop) getIntent().getSerializableExtra("workshop");
-    	
+
     	// Workshop from a draft store on local db
     	if(getIntent().getSerializableExtra("id") != null)
     		workshop = Workshop.load(Workshop.class, Long.valueOf(getIntent().getSerializableExtra("id").toString()));

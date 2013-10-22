@@ -101,8 +101,6 @@
 	<string name="route_layers_menu_highlights">Puntos de riesgo</string>
 	<string name="route_layers_menu_places">Lugares</string>
 	
-	<string name="route_drafts_notification_total_one">1 ruta sin subir.</string>
-	<string name="route_drafts_notification_total_many">%d rutas sin subir.</string>
 	<string name="route_details_menu_item">Ver en el mapa</string>
 	<string name="route_destroy_menu_item">Descartar ruta</string>
 	

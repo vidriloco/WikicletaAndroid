@@ -6,23 +6,22 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
-	
+
 	private List<Fragment> fragments;
 
 	
-    public TabsPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
-        super(fm);
-        this.fragments = fragments;
-    }
- 
-    @Override
-    public Fragment getItem(int index) {
-    	return fragments.get(index);
-    }
- 
-    @Override
-    public int getCount() {
-        return this.fragments.size();
-    }
- 
+	public TabsPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+		super(fm);
+		this.fragments = fragments;
+	}
+
+	@Override
+	public Fragment getItem(int position) {
+		return this.fragments.get(position);
+	}
+
+	@Override
+	public int getCount() {
+		return this.fragments.size();
+	}
 }

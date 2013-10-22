@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.interfaces.ListedModelInterface;
 import org.interfaces.MarkerInterface;
 import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONObject;
@@ -24,7 +25,7 @@ import com.google.android.gms.maps.model.Marker;
 
 @SuppressLint("SimpleDateFormat")
 @Table(name = "Workshops")
-public class Workshop extends Model implements Serializable, DraftModel, MarkerInterface, RemoteModelInterface {
+public class Workshop extends Model implements Serializable, ListedModelInterface, MarkerInterface, RemoteModelInterface {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -167,29 +168,6 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 		ActiveAndroid.endTransaction();
 	}
 
-	@Override
-	public String getContent() {
-		return this.details;
-	}
-
-	@Override
-	public String getCategoryName() {
-		if(this.isStore) {
-			return "workshop_store";
-		}
-		return "workshop";
-	}
-	
-	@Override
-	public boolean requiresCategoryTranslation() {
-		return false;
-	}
-	
-	@Override
-	public Date getDate() {
-		return new Date(this.createdAt);
-	}
-
 	public static Workshop buildFrom(JSONObject object) {
 		long remoteId = (Long) object.get("id");
 		String name = (String) object.get("name");
@@ -269,6 +247,34 @@ public class Workshop extends Model implements Serializable, DraftModel, MarkerI
 	@Override
 	public String getKind() {
 		return "Workshop";
+	}
+	
+	@Override
+	public String getDetails() {
+		return this.details;
+	}
+
+	@Override
+	public String getName() {
+		return this.name;
+	}
+
+	@Override
+	public Date getDate() {
+		return new Date(this.createdAt);
+	}
+
+	@Override
+	public int getTitle() {
+		if(this.isStore) {
+			return R.string.workshop_store;
+		}
+		return R.string.workshop;
+	}
+
+	@Override
+	public String getSubtitle() {
+		return null;
 	}
 
 }

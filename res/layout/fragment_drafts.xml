@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/wikicleta_white" >
+    <LinearLayout 
+        android:id="@+id/loading_view"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:gravity="center">
+
+        <ImageView
+            android:id="@+id/spinner_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/spinner_big" />
+
+    </LinearLayout>
+	<ListView
+   		android:id="@+id/drafts_list"
+   		android:layout_width="fill_parent"
+   		android:layout_height="wrap_content"
+        android:clickable="false"
+   		android:fadeScrollbars="true"
+   		android:fastScrollEnabled="true"
+   		android:listSelector="@drawable/transparent_selector"
+   		android:dividerHeight="0dp"
+		android:divider="@null"
+   		android:scrollbarFadeDuration="100"
+   		android:scrollbars="vertical"
+   		android:visibility="gone" />
+	<RelativeLayout 
+	    android:id="@+id/drafts_list_empty"
+   		android:layout_width="fill_parent"
+   		android:layout_height="fill_parent"
+   		android:visibility="gone">
+	    
+	    <ImageView
+		    android:id="@+id/no_comments_icon"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerInParent="true"
+		    android:contentDescription="@string/none"
+		    android:scaleType="fitXY"
+		    android:src="@drawable/archive_icon_big" />
+	   	<TextView 
+	   	    android:id="@+id/no_drafts_listed_text" 
+	   	    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_below="@+id/no_comments_icon"
+		    android:layout_centerHorizontal="true"
+		    android:textColor="@color/wikicleta_blue"
+		    android:text="@string/no_drafts_listed"
+		    android:layout_marginTop="20dp" />
+	    
+	</RelativeLayout>
+</LinearLayout>

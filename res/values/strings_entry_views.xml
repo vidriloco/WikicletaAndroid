@@ -5,6 +5,7 @@
     <string name="landing_explore_text">Explora</string>
     <string name="landing_login_text">Iniciar</string>
     
+    <string name="drafts_on">En borradores </string>
     <string name="created_by">creado por </string>
     <string name="updated_on">Actualizado </string>
     <string name="created_on">Creado </string>
@@ -20,6 +21,9 @@
     <string name="actions.details">Ver Detalles</string>
     <string name="actions.rank">Rankear</string>
     <string name="actions.return">Volver</string>
+    <string name="actions.review">Revisar</string>
+    <string name="actions.upload">Subir</string>
+    
     <!-- Registration Activity strings -->
     <string name="registration_title">Únete a Wikicleta</string>
     <string name="registration_prologue_text">Regálanos los siguientes datos para completar tu registro:</string>

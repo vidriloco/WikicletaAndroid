@@ -5,9 +5,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.interfaces.ListedModelInterface;
 import org.interfaces.MarkerInterface;
 import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONObject;
@@ -23,7 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
 @Table(name = "Routes")
-public class Route extends Model implements MarkerInterface, Serializable, RemoteModelInterface {
+public class Route extends Model implements MarkerInterface, ListedModelInterface, Serializable, RemoteModelInterface {
 
 	private static final long serialVersionUID = 1L;
 
@@ -47,9 +49,6 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 	
 	@Column(name = "Ranking")
 	public int ranking;
-
-	@Column(name = "IsDraft")
-	public boolean isDraft;
 	
 	@Column(name = "CreatedAt")
 	public long createdAt;
@@ -59,6 +58,9 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 	
 	@Column(name = "UpdatedAt")
 	public long updatedAt;
+	
+	@Column(name = "DraftContent")
+	public String draftContent;
 	
 	public LatLng originCoordinate;
 	public LatLng endCoordinate;
@@ -115,21 +117,27 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 		this.comfortIndex = comfort;
 	}
 
-	public Route(String name, String details, long elapsedTime, float averageSpeed, float kilometers, long createdAt, ArrayList<Instant> coordinateVector, Long userId, boolean shouldAdd) {
-		this(elapsedTime, averageSpeed, kilometers, createdAt, shouldAdd);
+	public Route(String name, String details, long elapsedTime, float averageSpeed, float kilometers, ArrayList<Instant> coordinateVector, Long userId, boolean shouldAdd) {
+		this();
 		this.name = name;
 		this.details = details;
 		this.temporalInstants = coordinateVector;
 		this.userId = userId;
+		this.assignFields(elapsedTime, averageSpeed, kilometers, shouldAdd);
 	}
 	
-	public Route(long elapsedTime, float averageSpeed, float kilometers, long createdAt, boolean shouldAdd) {
+	public Route() {
+		super();
+		this.createdAt = Calendar.getInstance().getTimeInMillis();
+		this.updatedAt = Calendar.getInstance().getTimeInMillis();
+		this.remoteId = 0;
+	}
+	
+	public void assignFields(long elapsedTime, float averageSpeed, float kilometers, boolean shouldAdd) {
 		performanceTmp = new RoutePerformance(elapsedTime, averageSpeed);
 		if(shouldAdd)
 			this.temporalRoutePerformances.add(performanceTmp);
 		this.kilometers = kilometers;
-		this.createdAt = createdAt;
-		this.updatedAt = createdAt;
 	}
 	
 	public boolean existsOnRemoteServer() {
@@ -183,11 +191,13 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 	public String toJSON(HashMap<String, Object> object) {
 		HashMap<String, Object> routeEnvelope = toHashMap();
 		routeEnvelope.put("extras", object);
-		return JSONValue.toJSONString(routeEnvelope);
+		draftContent = JSONValue.toJSONString(routeEnvelope);
+		return draftContent;
 	}
 	
 	public String toJSON() {
-		return JSONValue.toJSONString(toHashMap());
+		draftContent = JSONValue.toJSONString(toHashMap());
+		return draftContent;
 	}
 	
 	public static Route findById(Long id) {
@@ -223,19 +233,19 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 	public void delete() {
 		super.delete();
 		
-		for(Instant instant : this.instants()) {
-			instant.delete();
-		}
+		//for(Instant instant : this.instants()) {
+		//	instant.delete();
+		//}
 	}
 	
 	protected static void commitLocally(Route route) {
 		ActiveAndroid.beginTransaction();
 
 		route.save();
-		for (Instant instant : route.instants()) {
-			instant.route = route;
-			instant.save();
-		}
+		//for (Instant instant : route.instants()) {
+		//	instant.route = route;
+		//	instant.save();
+		//}
 		
 		ActiveAndroid.setTransactionSuccessful();
 		ActiveAndroid.endTransaction();
@@ -326,7 +336,8 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 	public String toJSONForPut(HashMap<String, Object> object) {
 		HashMap<String, Object> routeEnvelope = toPutHashMap();
 		routeEnvelope.put("extras", object);
-		return JSONValue.toJSONString(routeEnvelope);
+		draftContent = JSONValue.toJSONString(routeEnvelope);
+		return draftContent;
 	}
 	
 	public boolean hasNoPathLoaded() {
@@ -358,5 +369,30 @@ public class Route extends Model implements MarkerInterface, Serializable, Remot
 			speedIndex=Math.round((speedIndex+lastRouteRanking.speedIndex)/2);
 		else
 			speedIndex=lastRouteRanking.speedIndex;
+	}
+
+	@Override
+	public int getTitle() {
+		return R.string.route;
+	}
+
+	@Override
+	public String getSubtitle() {
+		return null;
+	}
+
+	@Override
+	public String getDetails() {
+		return this.details;
+	}
+
+	@Override
+	public Date getDate() {
+		return new Date(this.createdAt);
+	}
+
+	@Override
+	public String getName() {
+		return name;
 	}
 }

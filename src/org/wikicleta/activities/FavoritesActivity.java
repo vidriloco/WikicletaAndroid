@@ -15,8 +15,26 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 public class FavoritesActivity extends TabbedActivity {
+
+	@Override
+	public void onSuccess(Object duty) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onFailed(Object message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onFailed() {
+		// TODO Auto-generated method stub
+		
+	}
 	
-	public HashMap<String, ArrayList<LightPOI>> favorites;
+	/*public HashMap<String, ArrayList<LightPOI>> favorites;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,5 +89,5 @@ public class FavoritesActivity extends TabbedActivity {
 	@Override
 	public void onFailed() {
 	}
-
+	 */
 }

@@ -43,13 +43,11 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		attemptCenterOnLocationAtStart = false;
 		super.onCreate(savedInstanceState);
 		setTheme(R.style.Theme_wikicleta);
 		
 		AppBase.currentActivity = this;
-
-    	// Tip from remote server which can be edit by me
-    	tip = (Tip) getIntent().getSerializableExtra("tip");
     	
     	// Tip from a draft store on local db
     	if(getIntent().getSerializableExtra("id") != null)

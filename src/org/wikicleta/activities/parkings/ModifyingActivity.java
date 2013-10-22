@@ -38,18 +38,16 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 	protected EditText details;
 	protected CheckBox hasRoofCheckbox;
 	public Parking parking;
-	
+
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		attemptCenterOnLocationAtStart = false;
 		super.onCreate(savedInstanceState);
 		setTheme(R.style.Theme_wikicleta);
 		
 		AppBase.currentActivity = this;
-    	
-    	// Parking from remote server which can be edit by me
-    	parking = (Parking) getIntent().getSerializableExtra("parking");
-    	
+
     	// Parking from a draft store on local db
     	if(getIntent().getSerializableExtra("id") != null)
     		parking = Parking.load(Parking.class, Long.valueOf(getIntent().getSerializableExtra("id").toString()));

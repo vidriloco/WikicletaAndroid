@@ -1,6 +1,7 @@
 package org.wikicleta.fragments.activities;
 
 import java.util.ArrayList;
+
 import org.interfaces.FragmentNotificationsInterface;
 import org.wikicleta.R;
 import org.wikicleta.activities.ActivitiesActivity;
@@ -12,6 +13,7 @@ import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +35,7 @@ public class RecentsFragment extends Fragment implements FragmentNotificationsIn
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_recents, container, false);
         this.drawLoadingView(rootView);
+        
         return rootView;
     }
 	
@@ -54,6 +57,13 @@ public class RecentsFragment extends Fragment implements FragmentNotificationsIn
 		
 		set.setDuration(1800);
 		set.start();
+		
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		triggerFetch();
 	}
 	
 	protected void switchActiveViewTo(int displayId) {
@@ -92,20 +102,23 @@ public class RecentsFragment extends Fragment implements FragmentNotificationsIn
     }
 
 	@Override
-	public void notifyUINeedsUpdate() {
-		toggleViews(this.getParentActivity().activities);
+	public void triggerFetch() {
+		if(this.getParentActivity() != null)
+			this.getParentActivity().fetchUserActivities();
 	}
-
-	@Override
-	public void viewWillAppear() {
-		this.getParentActivity().fetchUserActivities();		
+	
+	protected boolean UIIsReady() {
+		return getParentActivity() != null && this.getView() != null;
 	}
 	
 	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-	    super.setUserVisibleHint(isVisibleToUser);
-	    if (isVisibleToUser) { 
-	    	this.viewWillAppear();
-	    }
+	public void notifyIsNowVisible() {			
+		triggerFetch();
+	}
+
+	@Override
+	public void notifyDataFetched() {
+		if(UIIsReady())
+			toggleViews(getParentActivity().activities);
 	}
 }

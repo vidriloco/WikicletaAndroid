@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.interfaces.ListedModelInterface;
 import org.interfaces.MarkerInterface;
 import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONObject;
@@ -24,7 +25,7 @@ import com.google.android.gms.maps.model.Marker;
 
 @SuppressLint("SimpleDateFormat")
 @Table(name = "Parkings")
-public class Parking extends Model implements Serializable, DraftModel, MarkerInterface, RemoteModelInterface  {
+public class Parking extends Model implements Serializable, ListedModelInterface, MarkerInterface, RemoteModelInterface  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -160,26 +161,6 @@ public class Parking extends Model implements Serializable, DraftModel, MarkerIn
 		}
 		return kindsStrs;
 	}
-
-	@Override
-	public String getContent() {
-		return this.details;
-	}
-
-	@Override
-	public String getCategoryName() {
-		return "parkings.kinds.".concat(this.kindString());
-	}
-	
-	@Override
-	public boolean requiresCategoryTranslation() {
-		return true;
-	}
-
-	@Override
-	public Date getDate() {
-		return new Date(this.createdAt);
-	}
 	
 	public static Parking buildFrom(JSONObject object) throws IOException {
 		long remoteId = (Long) object.get("id");
@@ -253,6 +234,31 @@ public class Parking extends Model implements Serializable, DraftModel, MarkerIn
 	@Override
 	public String getKind() {
 		return "Parking";
+	}
+
+	@Override
+	public String getDetails() {
+		return this.details;
+	}
+
+	@Override
+	public Date getDate() {
+		return new Date(this.createdAt);
+	}
+	
+	@Override
+	public int getTitle() {
+		return R.string.parking;
+	}
+
+	@Override
+	public String getSubtitle() {
+		return "parkings.kinds.".concat(this.kindString());
+	}
+
+	@Override
+	public String getName() {
+		return null;
 	}
 
 }

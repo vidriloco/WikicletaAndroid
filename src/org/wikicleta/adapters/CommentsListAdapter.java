@@ -10,8 +10,6 @@ import org.wikicleta.models.User;
 import org.wikicleta.routing.Others;
 import org.wikicleta.routing.RankedComments;
 import org.wikicleta.routing.Others.ImageUpdater;
-import org.wikicleta.routing.RankedComments.Get;
-
 import com.ocpsoft.pretty.time.PrettyTime;
 import android.content.Context;
 import android.view.LayoutInflater;

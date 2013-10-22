@@ -88,21 +88,28 @@ public class BaseFavoriteFragment extends Fragment implements FragmentNotificati
     }
 
 	@Override
-	public void notifyUINeedsUpdate() {
-		toggleViews(this.getParentActivity().favorites.get(modelNamed));
-	}
-
-	@Override
-	public void viewWillAppear() {
-		this.getParentActivity().fetchUserFavorites();		
+	public void triggerFetch() {
+		//this.getParentActivity().fetchUserFavorites();		
 	}
 	
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 	    super.setUserVisibleHint(isVisibleToUser);
 	    if (isVisibleToUser) { 
-	    	this.viewWillAppear();
+	    	this.triggerFetch();
 	    }
+	}
+	
+	@Override
+	public void notifyIsNowVisible() {
+		//toggleViews(this.getParentActivity().favorites.get(modelNamed));
+
+	}
+
+	@Override
+	public void notifyDataFetched() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
