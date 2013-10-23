@@ -30,29 +30,34 @@
    		android:scrollbarFadeDuration="100"
    		android:scrollbars="vertical"
    		android:visibility="gone" />
-	<RelativeLayout 
-	    android:id="@+id/drafts_list_empty"
-   		android:layout_width="fill_parent"
-   		android:layout_height="fill_parent"
-   		android:visibility="gone">
-	    
-	    <ImageView
-		    android:id="@+id/no_comments_icon"
+	<LinearLayout 
+        android:id="@+id/drafts_list_empty"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:visibility="gone">
+		   
+        <LinearLayout 
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:gravity="center"
+		android:orientation="vertical">
+			<ImageView
+		    android:id="@+id/no_drafts_icon"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:layout_centerInParent="true"
-		    android:contentDescription="@string/none"
-		    android:scaleType="fitXY"
 		    android:src="@drawable/archive_icon_big" />
-	   	<TextView 
+	   		<TextView 
 	   	    android:id="@+id/no_drafts_listed_text" 
 	   	    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_below="@+id/no_comments_icon"
 		    android:layout_centerHorizontal="true"
-		    android:textColor="@color/wikicleta_blue"
+		    android:textColor="@color/wikicleta_orange"
 		    android:text="@string/no_drafts_listed"
+		    android:textSize="20sp"
 		    android:layout_marginTop="20dp" />
-	    
-	</RelativeLayout>
+        </LinearLayout>
+
+	</LinearLayout>
+	
 </LinearLayout>

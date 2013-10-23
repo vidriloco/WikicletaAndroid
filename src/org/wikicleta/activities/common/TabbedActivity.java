@@ -8,9 +8,6 @@ import org.wikicleta.R;
 import org.wikicleta.activities.RootActivity;
 import org.wikicleta.adapters.TabsPagerAdapter;
 import org.wikicleta.common.AppBase;
-import org.wikicleta.fragments.activities.DraftsFragment;
-import org.wikicleta.fragments.activities.RecentsFragment;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -109,8 +106,6 @@ public abstract class TabbedActivity extends SherlockFragmentActivity implements
 	
 	protected void initializeFragments() {
 		fragments = new ArrayList<Fragment>();
-		fragments.add(Fragment.instantiate(this, RecentsFragment.class.getName()));
-		fragments.add(Fragment.instantiate(this, DraftsFragment.class.getName()));
 	}
 	
 	private void initialiseViewPager() {

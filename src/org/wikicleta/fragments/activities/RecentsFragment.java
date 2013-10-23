@@ -5,55 +5,88 @@ import java.util.ArrayList;
 import org.interfaces.FragmentNotificationsInterface;
 import org.wikicleta.R;
 import org.wikicleta.activities.ActivitiesActivity;
-import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.adapters.LightPOIsListAdapter;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.helpers.SimpleAnimatorListener;
 import org.wikicleta.models.LightPOI;
+
+import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class RecentsFragment extends Fragment implements FragmentNotificationsInterface {
 
-	AnimatorSet set;
+	static AnimatorSet set;
 	
-	protected ActivitiesActivity getParentActivity() {
-		return (ActivitiesActivity) this.getActivity();
-	}
+	enum DataLoaded {SUCCESS, FAILURE};
+	static DataLoaded statusOfData = null;
+	
+	int MAX_ATTEMPTS = 1;
+	static int fetchAttempts = 0;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_recents, container, false);
-        this.drawLoadingView(rootView);
-        
-        return rootView;
+        View view = inflater.inflate(R.layout.fragment_recents, container, false);
+        this.drawLoadingView(view);
+        return view;
+    }
+    
+    @Override
+    public void onDestroy() {
+    	super.onDestroy();
+    	statusOfData = null;
+    	fetchAttempts = 0;
     }
 	
-	public void drawLoadingView(View view) {
+	protected void drawLoadingView(View view) {	
+		if(statusOfData == null) {
+			if(fetchAttempts < MAX_ATTEMPTS) {
+				fetchAttempts++;
+				this.triggerFetch();
+				this.prepareAnimationAndLaunchIt(view);
+			} else {
+				fetchAttempts=0;
+				displayFailureOnFetchView(view);
+			}
+		} else {
+			if(statusOfData == DataLoaded.FAILURE)
+				displayFailureOnFetchView(view);
+			else if(statusOfData == DataLoaded.SUCCESS)
+				displaySuccessOnFetchView(view);
+		}
+	}
+	
+	protected void prepareAnimationAndLaunchIt(final View view) {
+		
 		final ImageView spinner = (ImageView) view.findViewById(R.id.spinner_view);
 		set = new AnimatorSet();
 
 		ObjectAnimator rotator = ObjectAnimator.ofFloat(spinner, "rotation", 0, 360);
-		rotator.setRepeatCount(ObjectAnimator.INFINITE);
-		
+		rotator.setDuration(1800);
+
 		ObjectAnimator fader = ObjectAnimator.ofFloat(spinner, "alpha", 1, 0.1f, 1);
 		fader.setDuration(1800);
-		fader.setRepeatCount(ObjectAnimator.INFINITE);
-		
+
 		set.playTogether(
 				rotator,
 				fader
 		);
+		
+		set.addListener(new SimpleAnimatorListener() {
+			@Override
+			public void onAnimationEnd(Animator animation) {
+				drawLoadingView(view);
+			}
+		});
 		
 		set.setDuration(1800);
 		set.start();
@@ -63,62 +96,75 @@ public class RecentsFragment extends Fragment implements FragmentNotificationsIn
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		triggerFetch();
 	}
 	
-	protected void switchActiveViewTo(int displayId) {
-		this.getView().findViewById(R.id.loading_view).setVisibility(View.GONE);
-		this.getView().findViewById(R.id.light_pois_list).setVisibility(View.GONE);
-		this.getView().findViewById(R.id.empty_list).setVisibility(View.GONE);
-		this.getView().findViewById(displayId).setVisibility(View.VISIBLE);
-		this.set.cancel();
+	protected void switchActiveViewTo(View view, int displayId) {
+		view.findViewById(R.id.loading_view).setVisibility(View.GONE);
+		view.findViewById(R.id.light_pois_list).setVisibility(View.GONE);
+		view.findViewById(R.id.empty_list).setVisibility(View.GONE);
+		view.findViewById(R.id.attempt_reload_view).setVisibility(View.GONE);
+		view.findViewById(displayId).setVisibility(View.VISIBLE);
 	}
-		
-    protected void toggleViews(ArrayList<LightPOI> objects) {
+	
+    protected void displaySuccessOnFetchView(View view) {
+    	ArrayList<LightPOI> objects = getAssociatedActivity().activities;
 		if(objects == null || objects.isEmpty()) {
-			switchActiveViewTo(R.id.empty_list);
-			((ImageView) this.getView().findViewById(R.id.empty_light_list_icon)).setImageResource(R.drawable.activity_icon_big);
-			((TextView) this.getView().findViewById(R.id.empty_light_list_text)).setTypeface(AppBase.getTypefaceStrong());
+			switchActiveViewTo(view, R.id.empty_list);
+			((ImageView) view.findViewById(R.id.empty_light_list_icon)).setImageResource(R.drawable.activity_icon_big);
+			((TextView) view.findViewById(R.id.empty_light_list_text)).setTypeface(AppBase.getTypefaceStrong());
+			((TextView) view.findViewById(R.id.empty_light_list_text)).setText(R.string.activities_list_empty);
+
 		} else {
-			switchActiveViewTo(R.id.light_pois_list);
+			switchActiveViewTo(view, R.id.light_pois_list);
 			this.loadListViewFor(objects);
 		}
 	}
+    
+	protected void displayFailureOnFetchView(final View view) {
+		switchActiveViewTo(view, R.id.attempt_reload_view);
+		((TextView) view.findViewById(R.id.attempt_reload_text)).setTypeface(AppBase.getTypefaceStrong());
+		view.findViewById(R.id.attempt_reload_view).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				statusOfData = null;
+				switchActiveViewTo(view, R.id.loading_view);
+				drawLoadingView(view);
+			}
+			
+		});
+	}
+    
+    protected ActivitiesActivity getAssociatedActivity() {
+    	return (ActivitiesActivity) AppBase.currentActivity;
+    }
     
     protected void loadListViewFor(ArrayList<LightPOI> objects) {
         final ListView listview = (ListView) this.getView().findViewById(R.id.light_pois_list);
         final LightPOIsListAdapter listAdapter = new LightPOIsListAdapter(this.getActivity(), objects, true);
 	    listview.setAdapter(listAdapter);
 	    listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-	    listview.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				DiscoverActivity.selectedPoi = listAdapter.getItem(position);
-				AppBase.launchActivity(DiscoverActivity.class);
-			}
-	    	
-	    });
     }
 
 	@Override
 	public void triggerFetch() {
-		if(this.getParentActivity() != null)
-			this.getParentActivity().fetchUserActivities();
-	}
-	
-	protected boolean UIIsReady() {
-		return getParentActivity() != null && this.getView() != null;
+		if(getAssociatedActivity()!=null)
+			getAssociatedActivity().fetchUserActivities();
 	}
 	
 	@Override
-	public void notifyIsNowVisible() {			
-		triggerFetch();
+	public void notifyIsNowVisible() {
 	}
+	
 
 	@Override
 	public void notifyDataFetched() {
-		if(UIIsReady())
-			toggleViews(getParentActivity().activities);
+		statusOfData = DataLoaded.SUCCESS;
 	}
+
+	@Override
+	public void notifyDataFailedToLoad() {
+		statusOfData = DataLoaded.FAILURE;
+	}
+	
 }

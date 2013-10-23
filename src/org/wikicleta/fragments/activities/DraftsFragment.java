@@ -91,4 +91,10 @@ public class DraftsFragment extends Fragment implements FragmentNotificationsInt
 	public void notifyDataFetched() {
 		
 	}
+
+	@Override
+	public void notifyDataFailedToLoad() {
+		// TODO Auto-generated method stub
+		
+	}
 }

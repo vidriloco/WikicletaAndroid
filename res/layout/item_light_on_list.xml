@@ -20,12 +20,14 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:orientation="vertical"
-	    android:padding="10dp"
+	    android:paddingTop="10dp"
 	    android:background="@color/wikicleta_white" >
 	   	<LinearLayout android:layout_width="fill_parent"
 	   	    android:layout_height="wrap_content"
 	   	    android:orientation="horizontal"
-	   	    android:layout_marginBottom="10dp">
+	   	    android:layout_marginBottom="10dp"
+	    	android:paddingLeft="10dp"
+	    	android:paddingRight="10dp">
 	   	    <ImageView android:id="@+id/ligth_poi_icon"
 	   	        android:src="@drawable/parking_government_provided_icon"
     			android:layout_width="wrap_content"
@@ -66,16 +68,49 @@
        		android:maxLines="2"
        		android:textColor="@color/wikicleta_blue"
        		android:textSize="14sp" />
-        <TextView
-       		android:id="@+id/light_poi_date"
-       		android:layout_width="fill_parent"
-       		android:layout_height="wrap_content"
-       		android:layout_marginTop="10dp"
-       		android:text="En borradores hace 3 dias"
-       		android:gravity="right"
-       		android:maxLines="2"
-       		android:textColor="@color/wikicleta_blue"
-       		android:textSize="12sp" />
+        <LinearLayout 
+		    android:id="@+id/action_buttons_container"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/wikicleta_white"
+			android:orientation="horizontal"
+			android:baselineAligned="false"
+			android:weightSum="3">
+		    <LinearLayout 
+		        android:layout_width="0px"
+		        android:layout_weight="2"
+		        android:layout_height="wrap_content"
+		        android:gravity="center"
+		        android:padding="14dp">
+		        <TextView
+		            android:id="@+id/light_poi_date"
+		       		android:layout_width="fill_parent"
+		       		android:layout_height="wrap_content"
+		       		android:text="En borradores hace 3 dias"
+		       		android:textColor="@color/wikicleta_blue"
+		       		android:textSize="12sp" />
+		    </LinearLayout>
+		    <LinearLayout 
+		        android:id="@+id/button_details_container"
+		        android:layout_width="0px"
+		        android:layout_weight="1"
+		        android:layout_height="fill_parent"
+		        android:gravity="center"
+		        android:background="@drawable/background_selector">
+		        <TextView
+	           		android:id="@+id/button_details_light_poi"
+	           		android:layout_width="wrap_content"
+	           		android:layout_height="wrap_content"
+	           		android:text="@string/actions.go"
+	           		android:textColor="@color/wikicleta_orange"
+		       		android:drawableRight="@drawable/location_icon_mini"
+		       		android:drawablePadding="10dp"
+	           		android:textSize="14sp"
+	           		android:paddingLeft="10dp"
+	           		android:paddingRight="10dp"
+	           		android:textStyle="bold" />
+		    </LinearLayout>
+		</LinearLayout>
    	</LinearLayout>
 </LinearLayout>
 </LinearLayout>

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import org.interfaces.FragmentNotificationsInterface;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.TabbedActivity;
+import org.wikicleta.fragments.activities.DraftsFragment;
+import org.wikicleta.fragments.activities.RecentsFragment;
 import org.wikicleta.models.LightPOI;
 import org.wikicleta.routing.Ownerships;
 import android.os.Bundle;
@@ -16,7 +18,15 @@ public class ActivitiesActivity extends TabbedActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.string.activities_in_root, R.layout.activity_activities);
+	    this.fetchUserActivities();
 	}
+	
+	protected void initializeFragments() {
+		super.initializeFragments();
+		fragments.add(Fragment.instantiate(this, RecentsFragment.class.getName()));
+		fragments.add(Fragment.instantiate(this, DraftsFragment.class.getName()));
+	}
+
 	
 	public void buildTabs() {
 		String [] tmpTabs = { this.getString(R.string.activities_list), this.getString(R.string.activities_drafts) };
@@ -29,11 +39,14 @@ public class ActivitiesActivity extends TabbedActivity {
 		this.activities = null;
 	}
 	
+	@Override
+	public void onResume() {
+	    super.onResume();
+	}
+	
 	public void fetchUserActivities() {
-		if(this.activities == null || this.activities.isEmpty()) {
-			Ownerships.List markedInvestigator = new Ownerships().new List(this);
-			markedInvestigator.execute();
-		} 
+		Ownerships.List markedInvestigator = new Ownerships().new List(this);
+		markedInvestigator.execute();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -52,7 +65,8 @@ public class ActivitiesActivity extends TabbedActivity {
 
 	@Override
 	public void onFailed() {
-		// TODO Auto-generated method stub
+		for(Fragment fragment : this.fragments)
+			((FragmentNotificationsInterface) fragment).notifyDataFailedToLoad();
 	}
 
 }

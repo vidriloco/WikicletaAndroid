@@ -3,18 +3,15 @@ package org.wikicleta.fragments.favorites;
 import java.util.ArrayList;
 import org.interfaces.FragmentNotificationsInterface;
 import org.wikicleta.R;
-import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.FavoritesActivity;
 import org.wikicleta.adapters.LightPOIsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.LightPOI;
 import android.support.v4.app.Fragment;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
@@ -75,22 +72,7 @@ public class BaseFavoriteFragment extends Fragment implements FragmentNotificati
         final LightPOIsListAdapter listAdapter = new LightPOIsListAdapter(this.getActivity(), objects, false);
 	    listview.setAdapter(listAdapter);
 	    listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-	    
-	    listview.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				DiscoverActivity.selectedPoi = listAdapter.getItem(position);
-				AppBase.launchActivity(DiscoverActivity.class);
-			}
-	    	
-	    });
     }
-
-	@Override
-	public void triggerFetch() {
-		//this.getParentActivity().fetchUserFavorites();		
-	}
 	
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -101,13 +83,29 @@ public class BaseFavoriteFragment extends Fragment implements FragmentNotificati
 	}
 	
 	@Override
-	public void notifyIsNowVisible() {
-		//toggleViews(this.getParentActivity().favorites.get(modelNamed));
-
+	public void triggerFetch() {
+		if(this.getParentActivity() != null)
+			this.getParentActivity().fetchUserFavorites();
+	}
+	
+	protected boolean UIIsReady() {
+		return getParentActivity() != null && this.getView() != null;
+	}
+	
+	@Override
+	public void notifyIsNowVisible() {			
+		triggerFetch();
 	}
 
 	@Override
 	public void notifyDataFetched() {
+		if(UIIsReady())
+			toggleViews(this.getParentActivity().favorites.get(modelNamed));		
+
+	}
+	
+	@Override
+	public void notifyDataFailedToLoad() {
 		// TODO Auto-generated method stub
 		
 	}

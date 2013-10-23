@@ -23,6 +23,7 @@
     <string name="actions.return">Volver</string>
     <string name="actions.review">Revisar</string>
     <string name="actions.upload">Subir</string>
+    <string name="actions.go">Ir</string>
     
     <!-- Registration Activity strings -->
     <string name="registration_title">Únete a Wikicleta</string>
@@ -97,4 +98,5 @@
 	<!-- Activities activity -->
 	<string name="activities_list">Reciente</string>
 	<string name="activities_drafts">Borradores</string>
+	<string name="activities_list_empty">No hay actividades que mostrar</string>
 </resources>

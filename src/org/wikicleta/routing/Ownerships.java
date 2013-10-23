@@ -45,8 +45,10 @@ public class Ownerships {
 			if(success) {
 				collection = new ArrayList<LightPOI>();
 				processList((JSONArray) objectList);
+				listener.onSuccess(collection);
+			} else {
+				listener.onFailed();
 			}
-			listener.onSuccess(collection);
 		}
 		
 		@Override

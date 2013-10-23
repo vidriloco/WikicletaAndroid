@@ -4,6 +4,8 @@ import java.util.List;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.view.ViewGroup;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
@@ -23,5 +25,13 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 	@Override
 	public int getCount() {
 		return this.fragments.size();
+	}
+	
+	@Override
+	public void destroyItem(ViewGroup container, int position, Object object) {
+        FragmentManager manager = ((Fragment) object).getFragmentManager();
+        FragmentTransaction trans = manager.beginTransaction();
+        trans.remove((Fragment) object);
+        trans.commit();
 	}
 }
