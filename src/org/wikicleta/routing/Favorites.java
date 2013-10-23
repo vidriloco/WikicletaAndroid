@@ -87,9 +87,8 @@ public class Favorites {
 			HashMap<String, Object> extras = new HashMap<String, Object>();
 			extras.put("auth_token", User.token());
 			cover.put("extras", extras);
-			NetworkOperations.postJSONExpectingStringTo(postPath.replaceFirst(":mode", mode), 
-					JSONValue.toJSONString(cover));
-			return true;
+			return NetworkOperations.postJSONTo(postPath.replaceFirst(":mode", mode), 
+					JSONValue.toJSONString(cover)) == 200;
 		}	
 		
 		@Override
@@ -97,6 +96,8 @@ public class Favorites {
 			
 			if(success) {
 				connector.onFavoritedItemChangedState(mode.equalsIgnoreCase("mark"));
+			} else {
+				connector.onFavoritedItemChangedState(false);
 			}
 		}
 		
