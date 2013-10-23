@@ -77,7 +77,8 @@
           android:background="@drawable/contact_item_selector"
           android:paddingBottom="15dp"
           android:clickable="true"
-          android:paddingTop="15dp" >
+          android:paddingTop="15dp"
+          android:visibility="gone" >
 
           <ImageView
               android:id="@+id/challenges_icon"
