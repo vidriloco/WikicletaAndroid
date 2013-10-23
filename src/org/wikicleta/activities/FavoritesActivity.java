@@ -33,10 +33,10 @@ public class FavoritesActivity extends TabbedActivity {
 	
 	protected void initializeFragments() {
 		super.initializeFragments();
-        fragments.add(new RoutesFragment("Route"));
-        fragments.add(new ParkingsFragment("Parking"));
-        fragments.add(new TipsFragment("Tip"));
-        fragments.add(new WorkshopsFragment("Workshop"));
+        fragments.add(new RoutesFragment());
+        fragments.add(new ParkingsFragment());
+        fragments.add(new TipsFragment());
+        fragments.add(new WorkshopsFragment());
 	}
 	
 	@Override
@@ -46,12 +46,8 @@ public class FavoritesActivity extends TabbedActivity {
 	}
 	
 	public void fetchUserFavorites() {
-		if(this.favorites == null || this.favorites.isEmpty()) {
-			Favorites.List markedInvestigator = new Favorites().new List(this);
-			markedInvestigator.execute();
-		} else {
-			this.onSuccess(favorites);
-		}
+		Favorites.List markedInvestigator = new Favorites().new List(this);
+		markedInvestigator.execute();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -71,6 +67,9 @@ public class FavoritesActivity extends TabbedActivity {
 	
 	@Override
 	public void onFailed() {
+		for(Fragment fragment : this.fragments) {
+			((FragmentNotificationsInterface) fragment).notifyDataFailedToLoad();
+		}
 	}
 
 }

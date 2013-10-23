@@ -8,15 +8,17 @@ import android.view.ViewGroup;
 
 public class ParkingsFragment extends BaseFavoriteFragment {
 	
-	public ParkingsFragment(String modelNamed) {
-		super(modelNamed);
+	static String modelNamed = "Parking";
+
+	protected String getModelName() {
+		return modelNamed;
 	}
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_parkings, container, false);
-        this.drawLoadingView(rootView);
-        return rootView;
+        View view = inflater.inflate(R.layout.fragment_parkings, container, false);
+        this.drawLoadingView(view);
+        return view;
     }
 	
 }

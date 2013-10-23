@@ -1,78 +1,32 @@
 package org.wikicleta.fragments.favorites;
 
 import java.util.ArrayList;
-import org.interfaces.FragmentNotificationsInterface;
 import org.wikicleta.R;
 import org.wikicleta.activities.FavoritesActivity;
-import org.wikicleta.adapters.LightPOIsListAdapter;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.common.fragments.BasePagedFragment;
 import org.wikicleta.models.LightPOI;
-import android.support.v4.app.Fragment;
+import android.app.Activity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-
 import com.nineoldandroids.animation.AnimatorSet;
-import com.nineoldandroids.animation.ObjectAnimator;
 
-public class BaseFavoriteFragment extends Fragment implements FragmentNotificationsInterface {
+public class BaseFavoriteFragment extends BasePagedFragment {
 
 	AnimatorSet set;
-	String modelNamed;
+	FavoritesActivity activity;
 	
-	public BaseFavoriteFragment(String modelNamed) {
-		this.modelNamed = modelNamed;
+	protected FavoritesActivity getAssociatedActivity() {
+		return activity;
 	}
-	
-	protected FavoritesActivity getParentActivity() {
-		return (FavoritesActivity) this.getActivity();
-	}
-	
-	public void drawLoadingView(View view) {
-		final ImageView spinner = (ImageView) view.findViewById(R.id.spinner_view);
-		set = new AnimatorSet();
 
-		ObjectAnimator rotator = ObjectAnimator.ofFloat(spinner, "rotation", 0, 360);
-		rotator.setRepeatCount(ObjectAnimator.INFINITE);
-		
-		ObjectAnimator fader = ObjectAnimator.ofFloat(spinner, "alpha", 1, 0.1f, 1);
-		fader.setDuration(1800);
-		fader.setRepeatCount(ObjectAnimator.INFINITE);
-		
-		set.playTogether(
-				rotator,
-				fader
-		);
-		
-		set.setDuration(1800);
-		set.start();
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		this.activity = (FavoritesActivity) activity;
 	}
-	
-	protected void switchActiveViewTo(int displayId) {
-		this.getView().findViewById(R.id.loading_view).setVisibility(View.GONE);
-		this.getView().findViewById(R.id.light_pois_list).setVisibility(View.GONE);
-		this.getView().findViewById(R.id.empty_list).setVisibility(View.GONE);
-		this.getView().findViewById(displayId).setVisibility(View.VISIBLE);
-		this.set.cancel();
-	}
-		
-    protected void toggleViews(ArrayList<LightPOI> objects) {
-		if(objects == null || objects.isEmpty()) {
-			switchActiveViewTo(R.id.empty_list);
-			((TextView) this.getView().findViewById(R.id.empty_light_list_text)).setTypeface(AppBase.getTypefaceStrong());
-		} else {
-			switchActiveViewTo(R.id.light_pois_list);
-			this.loadListViewFor(objects);
-		}
-	}
-    
-    protected void loadListViewFor(ArrayList<LightPOI> objects) {
-        final ListView listview = (ListView) this.getView().findViewById(R.id.light_pois_list);
-        final LightPOIsListAdapter listAdapter = new LightPOIsListAdapter(this.getActivity(), objects, false);
-	    listview.setAdapter(listAdapter);
-	    listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-    }
 	
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -82,32 +36,48 @@ public class BaseFavoriteFragment extends Fragment implements FragmentNotificati
 	    }
 	}
 	
+	protected String getModelName() {
+		return null;
+	}
+	
+	protected void displaySuccessOnFetchView(View view) {
+    	ArrayList<LightPOI> objects = getAssociatedActivity().favorites.get(this.getModelName());
+		if(objects == null || objects.isEmpty()) {
+			switchActiveViewTo(view, R.id.empty_list);
+			((ImageView) view.findViewById(R.id.empty_light_list_icon)).setImageResource(R.drawable.favorites_icon_big);
+			((TextView) view.findViewById(R.id.empty_light_list_text)).setTypeface(AppBase.getTypefaceStrong());
+			((TextView) view.findViewById(R.id.empty_light_list_text)).setText(R.string.favorites_empty_list);
+
+		} else {
+			switchActiveViewTo(view, R.id.light_pois_list);
+			this.loadListViewFor(view, objects);
+		}
+	}
+
 	@Override
 	public void triggerFetch() {
-		if(this.getParentActivity() != null)
-			this.getParentActivity().fetchUserFavorites();
-	}
-	
-	protected boolean UIIsReady() {
-		return getParentActivity() != null && this.getView() != null;
-	}
-	
-	@Override
-	public void notifyIsNowVisible() {			
-		triggerFetch();
+		if(getAssociatedActivity()!=null)
+			getAssociatedActivity().fetchUserFavorites();
 	}
 
 	@Override
-	public void notifyDataFetched() {
-		if(UIIsReady())
-			toggleViews(this.getParentActivity().favorites.get(modelNamed));		
-
-	}
-	
-	@Override
-	public void notifyDataFailedToLoad() {
-		// TODO Auto-generated method stub
+	public void notifyIsNowVisible() {
 		
+	}
+
+	protected void displayFailureOnFetchView(final View view) {
+		switchActiveViewTo(view, R.id.attempt_reload_view);
+		((TextView) view.findViewById(R.id.attempt_reload_text)).setTypeface(AppBase.getTypefaceStrong());
+		view.findViewById(R.id.attempt_reload_view).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				statusOfData = null;
+				switchActiveViewTo(view, R.id.loading_view);
+				drawLoadingView(view);
+			}
+			
+		});
 	}
 	
 }

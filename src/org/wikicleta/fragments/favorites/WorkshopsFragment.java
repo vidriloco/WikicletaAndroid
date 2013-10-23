@@ -8,16 +8,18 @@ import android.view.ViewGroup;
 
 public class WorkshopsFragment extends BaseFavoriteFragment  {
     
-	public WorkshopsFragment(String modelNamed) {
-		super(modelNamed);
-	}
+	static String modelNamed = "Workshop";
 
+	protected String getModelName() {
+		return modelNamed;
+	}
+	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_workshops, container, false);
-        this.drawLoadingView(rootView);
-        return rootView;
+		View view = inflater.inflate(R.layout.fragment_workshops, container, false);
+        this.drawLoadingView(view);
+        return view;
     }
 
 

@@ -8,6 +8,8 @@ import org.wikicleta.models.LightPOI;
 import org.wikicleta.models.helpers.ListedModelExtractor;
 
 import com.ocpsoft.pretty.time.PrettyTime;
+
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +22,12 @@ import android.widget.TextView;
 public class LightPOIsListAdapter extends ArrayAdapter<LightPOI> {
 
 	
-	protected final Context context;
+	protected final Activity context;
 	protected final List<LightPOI> objects;
 	protected LayoutInflater inflater;
 	protected boolean showKind;
   	  
-	public LightPOIsListAdapter(Context context, List<LightPOI> objects, boolean showKind) {
+	public LightPOIsListAdapter(Activity context, List<LightPOI> objects, boolean showKind) {
 		super(context, R.layout.item_light_on_list, objects);
 		this.context = context;
 		this.objects = objects;
@@ -66,7 +68,8 @@ public class LightPOIsListAdapter extends ArrayAdapter<LightPOI> {
 			@Override
 			public void onClick(View v) {
 				DiscoverActivity.selectedPoi = lightPOI;
-				AppBase.launchActivity(DiscoverActivity.class);				
+				AppBase.launchActivity(DiscoverActivity.class);	
+				context.finish();
 			}
 	   		
 	   	});

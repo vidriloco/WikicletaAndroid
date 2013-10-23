@@ -8,15 +8,17 @@ import android.view.ViewGroup;
 
 public class TipsFragment extends BaseFavoriteFragment {
 
-	public TipsFragment(String modelNamed) {
-		super(modelNamed);
+	static String modelNamed = "Tip";
+
+	protected String getModelName() {
+		return modelNamed;
 	}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_tips, container, false);
-        this.drawLoadingView(rootView);
-        return rootView;
+    	View view = inflater.inflate(R.layout.fragment_tips, container, false);
+        this.drawLoadingView(view);
+        return view;
     }
 
 }

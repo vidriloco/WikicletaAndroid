@@ -141,8 +141,10 @@ public class Favorites {
 				for(String modelName : (Set<String>) objectList.keySet()) {
 					processList(modelName, (JSONArray) objectList.get(modelName));
 				}
+				listener.onSuccess(collection);
+			} else {
+				listener.onFailed();
 			}
-			listener.onSuccess(collection);
 		}
 		
 		@Override

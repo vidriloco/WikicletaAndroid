@@ -26,12 +26,4 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 	public int getCount() {
 		return this.fragments.size();
 	}
-	
-	@Override
-	public void destroyItem(ViewGroup container, int position, Object object) {
-        FragmentManager manager = ((Fragment) object).getFragmentManager();
-        FragmentTransaction trans = manager.beginTransaction();
-        trans.remove((Fragment) object);
-        trans.commit();
-	}
 }
