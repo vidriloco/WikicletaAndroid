@@ -251,6 +251,12 @@
 	<string name="user_profile_title">Tu Perfil</string>
 	<string name="user_profile_tab">Tu</string>
 	<string name="user_drafts_tab">Borradores</string>
+	<string name="user_username_restriction">El nombre de usuario no debe ser mayor a 16 caracteres. Puede tener números, letras, guiones y guiones bajos.</string>
+	<string name="user_bio_length_restriction">Tu bio no debe ser de más de 200 caracteres de longitud</string>
+	<string name="user_profile_updated_successfully">Los cambios a tu perfil han sido guardados correctamente</string>
+	<string name="user_profile_could_not_update">Los cambios a tu perfil no pudieron guardarse, intenta más tarde por favor.</string>
+	
+	<string name="updating_your_profile">Actualizando tu perfil</string>
 	<string name="no_drafts_listed">No tienes borradores por ahora</string>
 	<string name="profile_road_gear_title_text">Equipo para rodar:</string>
 	<string name="profile_stats_title_text">Cifras:</string>

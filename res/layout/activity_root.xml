@@ -14,6 +14,16 @@
         android:contentDescription="@string/none" >
     </ImageView>
     
+    <ImageView
+        android:id="@+id/settings_launcher_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/settings_icon_button"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/none" >
+    </ImageView>
+    
     <RelativeLayout android:id="@+id/user_info_container"
 		android:layout_width="fill_parent"
         android:layout_height="wrap_content"

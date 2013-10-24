@@ -1,41 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/wikicleta_white" >
 
-	
-	<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
-	    xmlns:tools="http://schemas.android.com/tools"
-	    android:id="@android:id/tabhost"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:orientation="vertical" >
-	
-	    <LinearLayout
-	        android:orientation="vertical"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent">
-	
-	        <TabWidget
-	            android:id="@android:id/tabs"
-	            android:orientation="horizontal"
-	            android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gears_icon"
+        android:alpha="0.3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:contentDescription="@string/none" >
+    </ImageView>
+    
+	<LinearLayout android:id="@+id/user_logged_in"
+            android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:orientation="vertical"
+        	android:gravity="center"
+        	android:layout_margin="50dp">
+            <ImageView android:id="@+id/user_pic" 
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_gravity="center"
+        	android:src="@drawable/profile_placeholder_avatar" />
+            <LinearLayout 
+                android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+	            android:layout_margin="30dp"
+	            android:orientation="vertical">
+                
+				<EditText
+		           android:id="@+id/profile_username"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:maxLength="100"
+		           android:ems="10"
+		           android:textColor="@color/wikicleta_blue"
+		           android:inputType="textMultiLine" >
+				   <requestFocus />
+	       		</EditText>
+	       		
+				<EditText
+		           android:id="@+id/profile_bio"
+		           android:layout_width="match_parent"
+		           android:layout_height="wrap_content"
+		           android:layout_marginTop="20dp"
+		           android:maxLength="250"
+		           android:maxLines="2"
+		           android:ems="10"
+		           android:textColor="@color/wikicleta_orange"
+		           android:hint="@string/profile_details_content_hint"
+		           android:inputType="textMultiLine" >
+		
+		           <requestFocus />
+		       </EditText>
+
+            </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/listing_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_alignParentBottom="true" >
+		<RelativeLayout 
+	        android:layout_width="wrap_content"
+	       	android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_toRightOf="@+id/return_button">
+	        <ImageView
+	            android:id="@+id/save_profile"
+	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_weight="0"/>
-	
-	        <FrameLayout
-	            android:id="@android:id/tabcontent"
-	            android:layout_width="0dp"
-	            android:layout_height="0dp"
-	            android:layout_weight="0" />
-	
-	        <android.support.v4.view.ViewPager
-	            android:id="@+id/pager"
-	            android:layout_width="fill_parent"
-	            android:layout_height="0dp"
-	            android:layout_weight="1"/>
-	
-	    </LinearLayout>
-	</TabHost>
-</LinearLayout>
+	            android:background="@drawable/background_selector"
+	            android:contentDescription="@string/nothing"
+	            android:src="@drawable/save_icon_orange"
+	            android:clickable="true"
+	            android:layout_alignParentRight="true" />
+	        
+	    </RelativeLayout>
+        <ImageView
+            android:id="@+id/return_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:contentDescription="@string/nothing"
+            android:background="@drawable/background_selector"
+            android:src="@drawable/return_icon" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -3,6 +3,7 @@ package org.wikicleta.routing;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import org.interfaces.ImageFetchedListener;
 import org.wikicleta.helpers.Graphics;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -37,10 +38,15 @@ public class Others {
 		
 		protected ImageView imagePlaceHolder;
 		protected ImageProcessor processorMode;
+		protected ImageFetchedListener listener;
 		
 		public void setImageAndImageProcessor(ImageView image, ImageProcessor processor) {
 			this.imagePlaceHolder = image;
 			this.processorMode = processor;
+		}
+		
+		public void setListener(ImageFetchedListener listener) {
+			this.listener = listener;
 		}
 		
 		@Override
@@ -76,6 +82,8 @@ public class Others {
 					this.roundAt(30, result);
 				else
 					imagePlaceHolder.setImageBitmap(result);
+				
+				this.listener.imageFetchedSucceded(result);
 			}
 	    }
 		
@@ -89,8 +97,7 @@ public class Others {
 		}
 		
 		protected void roundAtDefaultNoScaling(Bitmap result) {
-			Bitmap ownerPicBitmap = Bitmap.createScaledBitmap(result, 230, 230, true);
-        	imagePlaceHolder.setImageBitmap(Graphics.getRoundedCornerBitmap(ownerPicBitmap, 115));
+        	imagePlaceHolder.setImageBitmap(Graphics.getRoundedImageAtSize(result, 230, 115));
 		}
 		
 		protected void scaleAndRoundForMiniPic(Bitmap result) {

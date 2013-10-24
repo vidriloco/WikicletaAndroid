@@ -1,5 +1,9 @@
 package org.wikicleta.common;
 
+import java.io.File;
+
+import android.os.Environment;
+
 public class Constants {
 
 	public static int DY_TRANSLATION=100;
@@ -18,8 +22,10 @@ public class Constants {
 	public static int CHARACTERS_LENGTH_MIN = 30;
 	public static int CHARACTERS_LENGTH_MAX = 250;
 	public static int CHARACTERS_LENGTH_MIN_FOR_COMMENTS = 15;
-	
+	public static int CHARACTERS_LENGTH_MAX_FOR_USER_BIO = 200;
 	public static long MAX_AWAITING_TIME_BETWEEN_LAYER_RELOADING = 2*60*1000;
 	
 	public static int LAYERS_UPDATED_ON_ZOOM = 12;
+	
+	public static String USER_PIC_DIR = Environment.getExternalStorageDirectory() + File.separator + "WIKICLETA_USER_PIC.jpg";
 }

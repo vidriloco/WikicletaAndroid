@@ -1,5 +1,7 @@
 package org.wikicleta.helpers;
 
+import java.io.ByteArrayOutputStream;
+
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -8,8 +10,22 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Base64;
 
 public class Graphics {
+	
+	public static String generateEncodedStringForImage(Bitmap bm) {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); 
+		byte[] b = baos.toByteArray(); 
+		return Base64.encodeToString(b, Base64.DEFAULT);
+	}
+	
+	public static Bitmap getRoundedImageAtSize(Bitmap bitmap, int size, float round) {
+		return Graphics.getRoundedCornerBitmap(Graphics.scaleCenterCrop(bitmap, size, size), round);
+	}
+	
+	
 	public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float roundPx) {
 	    Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
 	    bitmap.getHeight(), Config.ARGB_8888);

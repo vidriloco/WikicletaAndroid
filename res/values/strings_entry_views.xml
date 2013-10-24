@@ -38,6 +38,12 @@
 	<string name="login_prologue_text">Bienvenid@, llena los siguientes campos para usar Wikicleta en tu teléfono</string>
 	<string name="login_register">Registrarme</string>
 	
+	<!-- Profiles Activity -->
+	<string name="your_profile">Tu perfil</string>
+	<string name="your_profile_settings">Tus preferencias</string>
+	<string name="profile_details_content_hint">Tu bio</string>
+	<string name="file_to_upload_profile">Selecciona una imagen para tu perfil</string>
+	<string name="update_profile_text">Actualizar perfil</string>
 	<string name="twitter">Twitter</string>
 	<string name="facebook">Facebook</string>
     <string name="webpage">Sitio Web</string>

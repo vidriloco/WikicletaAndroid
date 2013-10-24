@@ -1,5 +1,9 @@
 package org.wikicleta.models;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import org.json.simple.JSONValue;
@@ -27,11 +31,28 @@ public class User {
 			editor.putString("email", params.get("email"));
 		if(params.containsKey("username"))
 			editor.putString("username", params.get("username"));
+		if(params.containsKey("bio"))
+			editor.putString("bio", params.get("bio"));
 		if(params.containsKey("identifier"))
 			editor.putLong("id", Long.parseLong(params.get("identifier")));
-		if(params.containsKey("created-at"))
-			editor.putLong("created-at", Long.parseLong(params.get("created_at_ms")));
+		if(params.containsKey("updated_at")) {
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date creationDate = null;
+			try {
+				creationDate = df.parse((String)  params.get("updated_at"));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			editor.putLong("updated_at", creationDate.getTime());
+		}
+
+		
 		editor.commit();
+	}
+	
+	public static long lastUpdateOn() {
+		return getPreferences().getLong("updated_at", 0);
 	}
 	
 	public static String token() {
@@ -81,5 +102,9 @@ public class User {
 			
 		}
 
+	}
+
+	public static CharSequence bio() {
+		return getPreferences().getString("bio", "");
 	}
 }
