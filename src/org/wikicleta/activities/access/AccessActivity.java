@@ -2,8 +2,7 @@ package org.wikicleta.activities.access;
 
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
-
-import android.app.Activity;
+import com.actionbarsherlock.app.SherlockActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AccessActivity extends Activity {
+public class AccessActivity extends SherlockActivity {
 	
 	protected void showGreetMessage() {
 		LayoutInflater inflater = this.getLayoutInflater();

@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/gradient_blue"
-    android:orientation="vertical" >
+    android:background="@drawable/gradient_blue" >
 	
     <ImageView
         android:layout_width="wrap_content"
@@ -18,7 +17,7 @@
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/none"
         android:drawingCacheQuality="high"
@@ -29,118 +28,54 @@
         android:id="@+id/cycle_the_city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/container"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
+        android:alpha="0.7"
         android:contentDescription="@string/none"
         android:drawingCacheQuality="high"
-        android:src="@drawable/city_cycling"
-		android:visibility="gone" />
-    
-    
-    <RelativeLayout
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/city_cycling" />
+
+    <LinearLayout
         android:id="@+id/container"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:orientation="horizontal"
-        android:background="@drawable/landing_bar" >
+        android:layout_marginBottom="0dp"
+        android:weightSum="2"
+        android:background="@drawable/white_shadows" >
 		
-        <LinearLayout
-            android:id="@+id/container_into_container"
-            android:layout_width="wrap_content"
+
+        <TextView
+            android:id="@+id/login_text"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal" >
-        	
-            <RelativeLayout 
-            android:id="@+id/explore_container"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:padding="10dp">
-        	<ImageView 
-        	    android:id="@+id/explore_icon"
-        	    android:contentDescription="@string/none"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:src="@drawable/explore_icon"
-            	android:layout_centerHorizontal="true"
-            	android:padding="10dp"
-            	android:alpha="0.7" />
-           <TextView
-            android:id="@+id/explore_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/explore_icon"
             android:padding="10dp"
-            android:text="@string/landing_explore_text"
+            android:text="@string/landing_login_text"
+            android:drawableLeft="@drawable/login_icon"
+            android:drawablePadding="15dp"
+            android:gravity="center|center_vertical"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#fb4e15" />
-        	</RelativeLayout>
+            android:clickable="true"
+            android:background="@drawable/background_selector"
+            android:textColor="@color/wikicleta_orange" />
+        <TextView
+            android:id="@+id/join_text"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:clickable="true"
+            android:gravity="center|center_vertical"
+            android:text="@string/landing_join_text"
+            android:drawableLeft="@drawable/unite_icon"
+            android:drawablePadding="15dp"
+            android:textSize="20sp"
+            android:background="@drawable/background_selector"
+            android:textColor="@color/wikicleta_orange" />
 
-        	<RelativeLayout 
-            android:id="@+id/login_container"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:paddingTop="10dp"
-        	android:paddingBottom="10dp"
-        	android:paddingRight="20dp"
-        	android:paddingLeft="20dp">
-        	<ImageView 
-        	    android:id="@+id/login_icon"
-        	    android:contentDescription="@string/none"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:src="@drawable/login_icon"
-            	android:layout_centerHorizontal="true"
-            	android:padding="10dp"
-            	android:alpha="0.7" />
-
-           <TextView
-               android:id="@+id/login_text"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_below="@+id/login_icon"
-               android:padding="10dp"
-               android:text="@string/landing_login_text"
-               android:textColor="#fb4e15"
-               android:textSize="20sp"
-               android:textStyle="bold" />
-
-        	</RelativeLayout>
-        
-        	<RelativeLayout 
-            android:id="@+id/join_container"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:padding="10dp">
-        	<ImageView 
-        	    android:id="@+id/join_icon"
-        	    android:contentDescription="@string/none"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:src="@drawable/unite_icon"
-            	android:layout_centerHorizontal="true"
-            	android:padding="10dp"
-            	android:alpha="0.7" />
-
-           <TextView
-               android:id="@+id/join_text"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_below="@+id/join_icon"
-               android:padding="10dp"
-               android:text="@string/landing_join_text"
-               android:textColor="#fb4e15"
-               android:textSize="20sp"
-               android:textStyle="bold" />
-
-        	</RelativeLayout>
-        </LinearLayout>
-        
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>
 

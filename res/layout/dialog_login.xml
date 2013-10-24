@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout android:id="@+id/trip_container"
+	    android:orientation="vertical"
+	    android:layout_height="wrap_content"
+	    android:layout_width="match_parent"
+	    android:padding="20dp"
+	    android:background="@color/wikicleta_white">
+        
+	    <TextView
+	       android:id="@+id/login_text"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:text="@string/login_title"
+           android:textColor="@color/wikicleta_blue"
+           android:textSize="20sp"
+           android:layout_margin="10dp"
+           android:textAlignment="center"
+           android:gravity="center" />
+	    
+	    <LinearLayout 
+	        android:layout_height="wrap_content"
+	    	android:layout_width="wrap_content"
+	    	android:layout_margin="20dp"
+	    	android:orientation="vertical">
+	        
+	       	<EditText
+           		android:id="@+id/login_username"
+		        android:layout_height="wrap_content"
+           		android:layout_width="match_parent"
+           		android:maxLength="16"
+           		android:ems="10"
+           		android:layout_marginBottom="10dp"
+           		android:hint="@string/login_username"
+           		android:inputType="textMultiLine" >
+
+           		<requestFocus />
+           </EditText>
+           <EditText
+           		android:id="@+id/login_password"
+		        android:layout_height="wrap_content"
+           		android:layout_width="match_parent"
+           		android:maxLength="16"
+           		android:ems="10"
+           		android:hint="@string/login_password"
+           		android:inputType="textPassword" >
+
+           		<requestFocus />
+       		</EditText>
+	    </LinearLayout>
+
+	</LinearLayout>
+	<include layout="@layout/thin_separator" android:id="@+id/separator_simple" />
+	<LinearLayout 
+	    android:id="@+id/action_buttons_container"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/wikicleta_white"
+		android:orientation="horizontal"
+		android:baselineAligned="false">
+	    <LinearLayout 
+	        android:id="@+id/return_button_container"
+	        android:layout_width="0px"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/background_selector"
+	        android:gravity="center"
+	        android:padding="14dp">
+	        <TextView
+           		android:id="@+id/button_return"
+           		android:layout_width="wrap_content"
+           		android:layout_height="wrap_content"
+           		android:text="@string/actions.return"
+           		android:textColor="@color/wikicleta_orange"
+           		android:textSize="16sp"
+           		android:paddingLeft="10dp"
+           		android:paddingRight="10dp"
+           		android:textStyle="bold" />
+	    </LinearLayout>
+	    <LinearLayout 
+	        android:id="@+id/login_button_container"
+	        android:layout_width="0px"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:background="@drawable/background_selector"
+	        android:padding="14dp">
+	        <TextView
+           		android:id="@+id/button_login"
+           		android:layout_width="wrap_content"
+           		android:layout_height="wrap_content"
+           		android:text="@string/actions.login"
+           		android:textColor="@color/wikicleta_orange"
+           		android:textSize="16sp"
+           		android:paddingLeft="10dp"
+           		android:paddingRight="10dp"
+           		android:textStyle="bold" />
+	    </LinearLayout>
+	</LinearLayout>
+	   
+</LinearLayout>

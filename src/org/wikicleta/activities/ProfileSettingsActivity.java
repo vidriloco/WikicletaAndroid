@@ -1,10 +1,9 @@
 package org.wikicleta.activities;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashMap;
 import org.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.R;
+import org.wikicleta.activities.common.ImageSelectionActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
@@ -13,34 +12,24 @@ import org.wikicleta.helpers.Graphics;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Users;
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ProfileSettingsActivity extends SherlockActivity implements RemoteFetchingDutyListener {
+public class ProfileSettingsActivity extends ImageSelectionActivity implements RemoteFetchingDutyListener {
 	protected ActionBar actionBar;
-
-	protected int SELECT_FILE=1;
-	protected ImageView pic;
-	protected Bitmap bitmap;
 	
 	EditText usernameField;
 	EditText bioField;
 	
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState, R.layout.activity_profile);
 		AppBase.currentActivity = this;
-
-		setContentView(R.layout.activity_profile);
 		
 		usernameField = (EditText) this.findViewById(R.id.profile_username);
 		bioField = (EditText) this.findViewById(R.id.profile_bio);
@@ -58,16 +47,6 @@ public class ProfileSettingsActivity extends SherlockActivity implements RemoteF
 				overridePendingTransition(0, 0);
 				AppBase.launchActivity(RootActivity.class);
 				finish();
-			}
-    		
-    	});
-    	
-    	pic = (ImageView) this.findViewById(R.id.user_pic);
-    	pic.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				selectImage();
 			}
     		
     	});
@@ -126,32 +105,6 @@ public class ProfileSettingsActivity extends SherlockActivity implements RemoteF
     	fetcher.execute(cover);
 	}
 	
-	protected void selectImage() {
-		Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,this.getString(R.string.file_to_upload_profile)), SELECT_FILE);
-	}
-	
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (resultCode == RESULT_OK) {
-            Uri selectedImage = data.getData();
-            
-            try {
-            	bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-            
-            if(bitmap != null)
-            	pic.setImageBitmap(Graphics.getRoundedImageAtSize(bitmap, 230, 115));
-        }
-
-    }
-
 	@Override
 	public void onSuccess(Object duty) {
 		Toasts.showToastWithMessage(this, R.string.user_profile_updated_successfully, R.drawable.success_icon);
@@ -164,9 +117,7 @@ public class ProfileSettingsActivity extends SherlockActivity implements RemoteF
 	}
 
 	@Override
-	public void onFailed() {
-		// TODO Auto-generated method stub
-		
+	public void onFailed() {		
 	}
 	
 	protected Bitmap loadUserPic() {
