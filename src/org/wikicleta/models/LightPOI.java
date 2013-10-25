@@ -5,9 +5,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.interfaces.ListedModelInterface;
 import org.json.simple.JSONObject;
 import org.wikicleta.R;
+import org.wikicleta.interfaces.ListedModelInterface;
 
 import android.content.Context;
 

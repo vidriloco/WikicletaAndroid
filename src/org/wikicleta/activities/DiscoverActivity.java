@@ -1,13 +1,13 @@
 package org.wikicleta.activities;
 
 import java.util.ArrayList;
-import org.interfaces.MarkerInterface;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.LocationAwareMapWithMarkersActivity;
 import org.wikicleta.adapters.MenuOptionsListAdapter;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.SlidingMenuBuilder;
+import org.wikicleta.interfaces.MarkerInterface;
 import org.wikicleta.models.CycleStation;
 import org.wikicleta.models.LightPOI;
 import org.wikicleta.models.Parking;

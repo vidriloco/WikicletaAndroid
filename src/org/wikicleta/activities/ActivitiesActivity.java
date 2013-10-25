@@ -1,11 +1,11 @@
 package org.wikicleta.activities;
 
 import java.util.ArrayList;
-import org.interfaces.FragmentNotificationsInterface;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.TabbedActivity;
 import org.wikicleta.fragments.activities.DraftsFragment;
 import org.wikicleta.fragments.activities.RecentsFragment;
+import org.wikicleta.interfaces.FragmentNotificationsInterface;
 import org.wikicleta.models.LightPOI;
 import org.wikicleta.routing.Ownerships;
 import android.os.Bundle;

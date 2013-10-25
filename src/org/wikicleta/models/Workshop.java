@@ -8,12 +8,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-import org.interfaces.ListedModelInterface;
-import org.interfaces.MarkerInterface;
-import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
+import org.wikicleta.interfaces.ListedModelInterface;
+import org.wikicleta.interfaces.MarkerInterface;
+import org.wikicleta.interfaces.RemoteModelInterface;
 
 import android.annotation.SuppressLint;
 import com.activeandroid.ActiveAndroid;

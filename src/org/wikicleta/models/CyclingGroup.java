@@ -6,11 +6,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.interfaces.EventInterface;
-import org.interfaces.MarkerInterface;
-import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONObject;
 import org.wikicleta.R;
+import org.wikicleta.interfaces.EventInterface;
+import org.wikicleta.interfaces.MarkerInterface;
+import org.wikicleta.interfaces.RemoteModelInterface;
 
 import android.annotation.SuppressLint;
 

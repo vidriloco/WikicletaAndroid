@@ -2,7 +2,6 @@
 <resources>
     <!-- Landing Activity strings -->
     <string name="landing_join_text">Únete</string>
-    <string name="landing_explore_text">Explora</string>
     <string name="landing_login_text">Iniciar</string>
     
     <string name="drafts_on">En borradores </string>

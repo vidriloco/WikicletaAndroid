@@ -2,11 +2,11 @@ package org.wikicleta.routing;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import org.interfaces.RemoteFetchingDutyListener;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.common.NetworkOperations;
+import org.wikicleta.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.models.LightPOI;
 import org.wikicleta.models.User;
 import android.os.AsyncTask;

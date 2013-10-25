@@ -2,7 +2,7 @@ package org.wikicleta.helpers;
 
 import java.util.Comparator;
 
-import org.interfaces.EventInterface;
+import org.wikicleta.interfaces.EventInterface;
 
 public class EventProximityComparator implements Comparator<EventInterface> {
 	@Override

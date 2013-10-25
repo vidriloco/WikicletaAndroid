@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.interfaces.RemoteFetchingDutyListener;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.common.NetworkOperations;
-import org.wikicleta.common.interfaces.FavoritesConnectorInterface;
+import org.wikicleta.interfaces.FavoritesConnectorInterface;
+import org.wikicleta.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.models.LightPOI;
 import org.wikicleta.models.User;
 

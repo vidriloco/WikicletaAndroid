@@ -27,15 +27,7 @@
 	<string name="seconds">Segundos</string>
 	
 	<string name="see_comments">Ver Comentarios</string>
-	<!-- Sliding Menu options -->
-	<string name="map_section">Mapa</string>
-	<string name="real_time_section">Ahora</string>
-	<string name="market_section">Bicis y Más</string>
-	<string name="bikecity_section">Pasea</string>
-	<string name="profile_section">Perfil</string>
-	<string name="no_profile_section">Ingresa</string>
 	
-	<string name="select_location_on_map">Centra el pin de Wikicleta debajo de la ubicación deseada</string>
 	<string name="routes_dialog_section">Ruta</string>
 	<string name="tips_dialog_section">Tip</string>
 	<string name="bicibus_dialog_section">Bicibus</string>
@@ -60,11 +52,8 @@
 	<string name="route_details">Detalles</string>
 	<string name="routes_title">Rutas</string>
 	<string name="save_route">Guardar ruta</string>
-	<string name="routes_unsynced_title">%d rutas sin sincronizar</string>
-	<string name="route_unsynced_title">1 ruta sin sincronizar</string>
 	<string name="empty_routes_title">No has compartido ninguna ruta aún</string>
 	<string name="routes_question_delete">¿Deseas eliminar esta ruta?</string>
-	<string name="routes_syncing_title">Sincronizando rutas</string>
 	<string name="routes_discard_route_question">¿Realmente quieres descartar esta ruta?</string>
 	<string name="routes_saving_title">Guardar Ruta</string>
 	
@@ -92,30 +81,10 @@
 	
 	<string name="route_sent_to_drafts">Ruta guardada como borrador</string>
 	
-	<string name="routes_details_ranked">RANKING</string>
-	<string name="routes_details_checkin">CHECK-INS</string>
-	<string name="routes_details_speed">VELOCIDAD</string>
-	
-	<string name="route_layers_menu_none">Ninguna</string>
-	<string name="route_layers_menu_basic_info">Detalles de ruta</string>
-	<string name="route_layers_menu_highlights">Puntos de riesgo</string>
-	<string name="route_layers_menu_places">Lugares</string>
-	
-	<string name="route_details_menu_item">Ver en el mapa</string>
-	<string name="route_destroy_menu_item">Descartar ruta</string>
-	
-	<string name="route_being_sent">Subiendo ruta ..</string>
-	<string name="route_being_destroyed">Descartando ruta ..</string>
-	
 	<string name="route_security_value">Seguridad</string>
 	<string name="route_fast_value">Rapidez</string>
 	<string name="route_comfort_value">Comodidad</string>
 		
-	<string name="route_rank_top_value">/10</string>
-	<string name="route_privacy_private">Privada</string>
-	<string name="route_privacy_public">Pública</string>
-	<string name="route_not_uploaded">Sin subir</string>
-	<string name="route_uploading">Subiendo</string>
 	<string name="route_ranking_instructions_text">Toca una categoría y cambia su valor, según tu percepción de la ruta</string>
 	<string name="route_ranking_shared_successfully">Hemos recibido tu ranking sobre esta ruta. ¡gracias!</string>
 	<string name="route_ranking_failed_to_share">No pudimos recibir tu ranking de esta ruta. Intenta más tarde.</string>
@@ -307,9 +276,7 @@
 	<string name="destroying">Eliminando</string>
 	<string name="saved_as_draft_on">en borradores desde </string>
 	<string name="discard_draft">¿Quieres descartar este elemento guardado como borrador?</string>
-	
-	<string name="not_implemented_yet">Lo sentimos, esta sección no está lista aún, por ahora, te invitamos a probar las demás secciones.</string>
-	
+		
 	<string name="comments_input_length_max_error">Este comentario no debe ser mayor a 250 caracteres</string>
 	<string name="comments_input_length_min_error">Este comentario debe ser de al menos 15 caracteres</string>
 	<string name="comments_input_empty">Este comentario no puede ir vacío</string>

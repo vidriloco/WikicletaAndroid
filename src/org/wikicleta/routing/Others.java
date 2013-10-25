@@ -3,8 +3,9 @@ package org.wikicleta.routing;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.interfaces.ImageFetchedListener;
 import org.wikicleta.helpers.Graphics;
+import org.wikicleta.interfaces.ImageFetchedListener;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;

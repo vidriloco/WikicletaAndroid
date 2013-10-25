@@ -3,13 +3,13 @@ package org.wikicleta.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
-import org.interfaces.EventInterface;
-import org.interfaces.MarkerInterface;
-import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.wikicleta.R;
 import org.wikicleta.common.NetworkOperations;
+import org.wikicleta.interfaces.EventInterface;
+import org.wikicleta.interfaces.MarkerInterface;
+import org.wikicleta.interfaces.RemoteModelInterface;
 
 
 import com.google.android.gms.maps.model.LatLng;

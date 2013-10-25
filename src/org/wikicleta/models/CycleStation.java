@@ -1,9 +1,10 @@
 package org.wikicleta.models;
 
-import org.interfaces.MarkerInterface;
-import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONObject;
 import org.wikicleta.R;
+import org.wikicleta.interfaces.MarkerInterface;
+import org.wikicleta.interfaces.RemoteModelInterface;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 

@@ -1,6 +1,7 @@
 package org.wikicleta.models.helpers;
 
-import org.interfaces.ListedModelInterface;
+import org.wikicleta.interfaces.ListedModelInterface;
+
 import android.content.Context;
 
 public class ListedModelExtractor {

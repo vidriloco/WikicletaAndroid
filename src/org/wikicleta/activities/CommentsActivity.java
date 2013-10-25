@@ -1,8 +1,6 @@
 package org.wikicleta.activities;
 
 import java.util.ArrayList;
-import org.interfaces.RemoteFetchingDutyListener;
-import org.interfaces.RemoteModelInterface;
 import org.wikicleta.R;
 import org.wikicleta.adapters.CommentsListAdapter;
 import org.wikicleta.common.AppBase;
@@ -10,6 +8,8 @@ import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.DialogBuilder;
+import org.wikicleta.interfaces.RemoteFetchingDutyListener;
+import org.wikicleta.interfaces.RemoteModelInterface;
 import org.wikicleta.models.RankedComment;
 import org.wikicleta.models.Parking;
 import org.wikicleta.models.Route;

@@ -1,4 +1,4 @@
-package org.interfaces;
+package org.wikicleta.interfaces;
 
 import java.util.Date;
 

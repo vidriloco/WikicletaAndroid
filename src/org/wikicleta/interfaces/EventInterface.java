@@ -1,4 +1,4 @@
-package org.interfaces;
+package org.wikicleta.interfaces;
 
 public interface EventInterface {
 

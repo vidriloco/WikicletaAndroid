@@ -2,12 +2,13 @@ package org.wikicleta.activities.common;
 
 import java.util.ArrayList;
 
-import org.interfaces.FragmentNotificationsInterface;
-import org.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.R;
 import org.wikicleta.activities.RootActivity;
 import org.wikicleta.adapters.TabsPagerAdapter;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.interfaces.FragmentNotificationsInterface;
+import org.wikicleta.interfaces.RemoteFetchingDutyListener;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;

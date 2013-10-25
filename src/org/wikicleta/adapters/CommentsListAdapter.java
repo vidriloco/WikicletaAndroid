@@ -2,9 +2,9 @@ package org.wikicleta.adapters;
 
 import java.util.List;
 
-import org.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.models.RankedComment;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others;

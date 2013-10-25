@@ -1,4 +1,4 @@
-package org.interfaces;
+package org.wikicleta.interfaces;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;

@@ -2,13 +2,13 @@ package org.wikicleta.activities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.interfaces.FragmentNotificationsInterface;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.TabbedActivity;
 import org.wikicleta.fragments.favorites.ParkingsFragment;
 import org.wikicleta.fragments.favorites.RoutesFragment;
 import org.wikicleta.fragments.favorites.TipsFragment;
 import org.wikicleta.fragments.favorites.WorkshopsFragment;
+import org.wikicleta.interfaces.FragmentNotificationsInterface;
 import org.wikicleta.models.LightPOI;
 import org.wikicleta.routing.Favorites;
 import android.os.Bundle;

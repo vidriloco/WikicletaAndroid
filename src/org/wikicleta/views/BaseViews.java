@@ -1,8 +1,8 @@
 package org.wikicleta.views;
 
 import org.wikicleta.R;
-import org.wikicleta.common.interfaces.FavoritesConnectorInterface;
 import org.wikicleta.helpers.SimpleAnimatorListener;
+import org.wikicleta.interfaces.FavoritesConnectorInterface;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Favorites;
 

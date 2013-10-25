@@ -1,11 +1,12 @@
 package org.wikicleta.views;
 
-import org.interfaces.EventInterface;
-import org.interfaces.MarkerInterface;
 import org.wikicleta.R;
 import org.wikicleta.activities.EventsActivity;
 import org.wikicleta.adapters.EventsListAdapter;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.interfaces.EventInterface;
+import org.wikicleta.interfaces.MarkerInterface;
+
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;

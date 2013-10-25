@@ -1,11 +1,11 @@
 package org.wikicleta.adapters;
 
 import java.util.List;
-import org.interfaces.ListedModelInterface;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.fragments.activities.DraftsFragment;
 import org.wikicleta.helpers.DialogBuilder;
+import org.wikicleta.interfaces.ListedModelInterface;
 import org.wikicleta.models.Parking;
 import org.wikicleta.models.Route;
 import org.wikicleta.models.Tip;

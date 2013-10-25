@@ -1,7 +1,6 @@
 package org.wikicleta.activities.routes;
 
 import java.text.DecimalFormat;
-import org.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.R;
 import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.common.LocationAwareMapWithMarkersActivity;
@@ -10,6 +9,7 @@ import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.NotificationBuilder;
+import org.wikicleta.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.models.Route;
 import org.wikicleta.models.RouteRanking;
 import org.wikicleta.routing.RouteRankings;
@@ -17,7 +17,6 @@ import org.wikicleta.routing.Routes;
 import org.wikicleta.services.routes.RouteTrackingService;
 import org.wikicleta.services.routes.ServiceConstructor;
 import org.wikicleta.views.RouteViews;
-import org.wikicleta.layers.RouteOverlay;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -38,7 +37,6 @@ import android.widget.TextView;
 public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity implements RoutesConnectorInterface, RemoteFetchingDutyListener {
 	
 	protected NotificationBuilder notification;
-	protected RouteOverlay routesOverlay;
 	public static Route currentRoute;
 	public AlertDialog.Builder alertDialog;
 	protected AlertDialog toggleLayersMenu;

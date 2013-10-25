@@ -2,12 +2,12 @@ package org.wikicleta.activities;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import org.interfaces.EventInterface;
-import org.interfaces.MarkerInterface;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.LocationAwareMapWithMarkersActivity;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.EventProximityComparator;
+import org.wikicleta.interfaces.EventInterface;
+import org.wikicleta.interfaces.MarkerInterface;
 import org.wikicleta.models.CyclingGroup;
 import org.wikicleta.models.Trip;
 import org.wikicleta.routing.Trips;

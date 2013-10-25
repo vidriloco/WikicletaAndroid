@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/route_details"
-          android:title="@string/route_details_menu_item" >
-    </item>
-    <item android:id="@+id/route_destroy"
-          android:title="@string/route_destroy_menu_item" >
-    </item>
-</menu>

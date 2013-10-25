@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.interfaces.RemoteFetchingDutyListener;
-import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.helpers.DialogBuilder;
+import org.wikicleta.interfaces.RemoteFetchingDutyListener;
+import org.wikicleta.interfaces.RemoteModelInterface;
 import org.wikicleta.models.RankedComment;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others.Cruds;

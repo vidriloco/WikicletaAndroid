@@ -2,10 +2,10 @@ package org.wikicleta.activities.trips;
 
 import java.util.HashMap;
 
-import org.interfaces.MarkerInterface;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.LocationAwareMapWithControlsActivity;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.interfaces.MarkerInterface;
 import org.wikicleta.models.Segment;
 import org.wikicleta.models.Trip;
 import org.wikicleta.models.TripPoi;

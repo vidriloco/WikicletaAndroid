@@ -2,10 +2,10 @@ package org.wikicleta.common.fragments;
 
 import java.util.ArrayList;
 
-import org.interfaces.FragmentNotificationsInterface;
 import org.wikicleta.R;
 import org.wikicleta.adapters.LightPOIsListAdapter;
 import org.wikicleta.helpers.SimpleAnimatorListener;
+import org.wikicleta.interfaces.FragmentNotificationsInterface;
 import org.wikicleta.models.LightPOI;
 
 import com.nineoldandroids.animation.Animator;

@@ -1,13 +1,13 @@
 package org.wikicleta.routing;
 
 import java.util.HashMap;
-import org.interfaces.RemoteFetchingDutyListener;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
 import org.wikicleta.activities.RootActivity;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.helpers.DialogBuilder;
+import org.wikicleta.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others.Cruds;
 import android.app.Activity;

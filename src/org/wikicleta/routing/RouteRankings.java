@@ -1,12 +1,12 @@
 package org.wikicleta.routing;
 
 import java.util.HashMap;
-import org.interfaces.RemoteFetchingDutyListener;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.helpers.DialogBuilder;
+import org.wikicleta.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.models.Route;
 import org.wikicleta.models.RouteRanking;
 import org.wikicleta.models.User;

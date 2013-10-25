@@ -6,14 +6,6 @@ import android.location.Location;
 import android.location.LocationManager;
 
 public class GeoHelpers {
-		
-	public static LatLng buildGeoPointFromLongitude(Location location) {
-		return buildGeoPointFromLatLon(location.getLatitude(), location.getLongitude());
-	}
-	
-	public static LatLng buildGeoPointFromLatLon(double lat, double lon) {
-		return new LatLng((int) (lat * 1E6), (int) (lon * 1E6));
-	}
 	
 	public static Location buildLocationFromLatLon(double lat, double lon) {
 		Location location = new Location(LocationManager.GPS_PROVIDER);

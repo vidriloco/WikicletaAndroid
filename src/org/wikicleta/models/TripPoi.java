@@ -3,9 +3,9 @@ package org.wikicleta.models;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import org.interfaces.MarkerInterface;
-import org.interfaces.RemoteModelInterface;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.interfaces.MarkerInterface;
+import org.wikicleta.interfaces.RemoteModelInterface;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;

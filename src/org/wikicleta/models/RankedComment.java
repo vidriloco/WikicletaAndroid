@@ -6,9 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-import org.interfaces.RemoteModelInterface;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.wikicleta.interfaces.RemoteModelInterface;
 
 public class RankedComment implements RemoteModelInterface {
 

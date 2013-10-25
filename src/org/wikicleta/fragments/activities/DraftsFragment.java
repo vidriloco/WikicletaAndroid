@@ -1,11 +1,11 @@
 package org.wikicleta.fragments.activities;
 
 import java.util.LinkedList;
-import org.interfaces.FragmentNotificationsInterface;
-import org.interfaces.ListedModelInterface;
 import org.wikicleta.R;
 import org.wikicleta.adapters.DraftsListAdapter;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.interfaces.FragmentNotificationsInterface;
+import org.wikicleta.interfaces.ListedModelInterface;
 import org.wikicleta.models.helpers.Drafts;
 
 import com.nineoldandroids.animation.AnimatorSet;

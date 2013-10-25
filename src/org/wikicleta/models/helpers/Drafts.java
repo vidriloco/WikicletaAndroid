@@ -2,7 +2,8 @@ package org.wikicleta.models.helpers;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import org.interfaces.ListedModelInterface;
+
+import org.wikicleta.interfaces.ListedModelInterface;
 import org.wikicleta.models.Parking;
 import org.wikicleta.models.Route;
 import org.wikicleta.models.Tip;

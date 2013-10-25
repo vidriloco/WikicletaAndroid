@@ -1,8 +1,8 @@
 package org.wikicleta.adapters;
 
-import org.interfaces.EventInterface;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.interfaces.EventInterface;
 import org.wikicleta.models.CyclingGroup;
 import org.wikicleta.models.Trip;
 import org.wikicleta.routing.Others;

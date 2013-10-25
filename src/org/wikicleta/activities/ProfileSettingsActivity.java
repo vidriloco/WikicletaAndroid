@@ -1,7 +1,6 @@
 package org.wikicleta.activities;
 
 import java.util.HashMap;
-import org.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.ImageSelectionActivity;
 import org.wikicleta.common.AppBase;
@@ -9,6 +8,7 @@ import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.Graphics;
+import org.wikicleta.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Users;
 import com.actionbarsherlock.app.ActionBar;
