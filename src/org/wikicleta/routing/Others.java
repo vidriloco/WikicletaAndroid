@@ -84,7 +84,8 @@ public class Others {
 				else
 					imagePlaceHolder.setImageBitmap(result);
 				
-				this.listener.imageFetchedSucceded(result);
+				if(listener != null)
+					this.listener.imageFetchedSucceded(result);
 			}
 	    }
 		
