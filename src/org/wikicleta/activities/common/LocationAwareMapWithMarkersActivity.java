@@ -18,6 +18,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -56,7 +58,9 @@ public class LocationAwareMapWithMarkersActivity extends LocationAwareMapWithCon
 
 			@Override
 			public void onCameraChange(CameraPosition position) {
-				if(map.getCameraPosition().zoom >= Constants.LAYERS_UPDATED_ON_ZOOM)
+				if(map.getCameraPosition().zoom <= Constants.MIN_ALLOWED_ZOOM)
+					map.animateCamera(CameraUpdateFactory.zoomTo(Constants.MIN_ALLOWED_ZOOM));
+				else
 					reloadActiveLayers();
 			}
     		
