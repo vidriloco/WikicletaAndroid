@@ -90,7 +90,7 @@
 	<string name="route_ranking_failed_to_share">No pudimos recibir tu ranking de esta ruta. Intenta más tarde.</string>
 	
 	<string name="waiting_for_performances">Cargando tabla de rendimientos</string>
-	<string name="all_performants">Rendimientos de otros usuarios</string>
+	<string name="all_performants">Tabla de Rendimiento</string>
 	<string name="challenge_or_check_in_text">Compite / Haz check-in</string>
 	
 	<string name="route_performances_table_username_title_text">Usuario</string>

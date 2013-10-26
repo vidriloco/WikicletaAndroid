@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout 
+<RelativeLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/dialog_events_list_container"
     android:orientation="vertical"
@@ -8,8 +8,10 @@
     android:layout_width="match_parent"
     android:background="@color/wikicleta_white">
 	<LinearLayout 
+	    android:id="@+id/events_list"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
+		    android:layout_alignParentTop="true"
 		    android:background="@drawable/toolbar_inv">
 		    
 		    <ImageView android:id="@+id/dialog_close"
@@ -35,6 +37,7 @@
    		android:id="@+id/list_events"
    		android:layout_width="fill_parent"
    		android:layout_height="wrap_content"
+   		android:layout_below="@+id/events_list"
    		android:background="@drawable/list_item_background"
    		android:fadeScrollbars="true"
    		android:fastScrollEnabled="true"
@@ -42,4 +45,4 @@
    		android:focusableInTouchMode="true"
    		android:scrollbarFadeDuration="100"
    		android:scrollbars="vertical" />
-</LinearLayout>
+</RelativeLayout>

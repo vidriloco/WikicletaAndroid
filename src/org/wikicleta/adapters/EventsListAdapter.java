@@ -19,7 +19,7 @@ public class EventsListAdapter extends ArrayAdapter<EventInterface> {
 	  protected final Context context;
 	  protected final EventInterface[] values;
 	  protected LayoutInflater inflater;
-	  	  
+	  	  	  
 	  public EventsListAdapter(Context context, EventInterface[] values) {
 	    super(context, R.layout.layers_menu_list_item, values);
 	    this.context = context;

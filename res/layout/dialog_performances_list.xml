@@ -126,7 +126,8 @@
 		android:layout_height="wrap_content"
 		android:background="@color/wikicleta_white"
 		android:layout_below="@id/list_events"
-		android:orientation="horizontal">
+		android:orientation="horizontal"
+		android:visibility="gone">
 	    <LinearLayout 
 	        android:id="@+id/challenge_or_check_in"
 	        android:layout_width="fill_parent"

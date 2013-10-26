@@ -63,6 +63,10 @@ public class EventsListingViewBuilder {
 		    listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 	        
 	        dialog.setView(view);
+	        
+		    if(events.length >= 4)
+		    	listview.getLayoutParams().height = 120*4;
+	        
 	        final AlertDialog visibleDialog = dialog.create();
 	        
 	        view.findViewById(R.id.dialog_close).setOnClickListener(new OnClickListener() {

@@ -137,7 +137,7 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
         		Constants.BIKE_PARKING_OVERLAY, 
         		Constants.BIKE_WORKSHOPS_AND_STORES_OVERLAY,
         		Constants.BIKE_SHARING_OVERLAY,
-        		Constants.CYCLEPATHS_OVERLAY,
+        		//Constants.CYCLEPATHS_OVERLAY,
         		Constants.TIPS_OVERLAY};
         
 	    final ListView listview = (ListView) view.findViewById(R.id.layers_menu_list_view);
