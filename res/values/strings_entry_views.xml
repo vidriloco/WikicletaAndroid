@@ -92,7 +92,7 @@
 	<string name="challenges_in_root_text">Retos</string>
 	<string name="routes_tracer_in_root_text">Trazador de rutas</string>
 	<string name="local_events_in_root_text">Eventos locales</string>
-	
+	<string name="about_in_root_text">Acerca de esta app</string>
 	<!-- Favorites activity -->
 	<!-- Menu -->
 	<string name="favorites_menu_routes">Rutas</string>

@@ -287,5 +287,13 @@
 	<string name="comment_deleted_successfully">Tu comentario ha sido eliminado</string>
 	<string name="no_comments_to_show">¡Sé el primero en dejar un comentario!</string>	
 	
+	<!-- About -->
+	<string name="made_in_text">Hecho en México</string>
+	<string name="attribution_icons_text">Usamos iconografía de</string>
+	<string name="comes_from_text">www.thenounproject.com</string>
+	<string name="made_in_text">Hecho en México con </string>
+	<string name="time_text">Otoño de 2013</string>
+	<string name="app_version_one_text">Versión 1</string>
+	<string name="about_google_play_services">Google Play Services</string>
 	<string name="no_google_play_services">Wikicleta necesita que Google Play Services esté instalado."</string>
 </resources>

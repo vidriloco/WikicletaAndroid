@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/wikicleta_white" >
+    
+   	<android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/indicator" />
+    <com.viewpagerindicator.UnderlinePageIndicator
+        android:id="@+id/indicator"
+        android:layout_height="2dp"
+        android:layout_width="fill_parent"
+        android:background="@color/wikicleta_white"
+        app:selectedColor="@color/wikicleta_orange"
+        app:fadeDelay="1000"
+        app:fadeLength="1000"
+        android:layout_above="@+id/under_control_group" />
+    
+     <RelativeLayout
+	       android:id="@+id/under_control_group"
+	       android:layout_width="fill_parent"
+	       android:layout_height="wrap_content"
+	       android:orientation="horizontal"
+	       android:layout_alignParentBottom="true"
+	       android:paddingBottom="20dp" >
+	              
+        <ImageView
+          android:id="@+id/return_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/return_icon"
+          android:clickable="true" />
+	  </RelativeLayout>
+
+</RelativeLayout>

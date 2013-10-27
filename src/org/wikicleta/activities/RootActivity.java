@@ -56,6 +56,9 @@ public class RootActivity extends Activity implements ImageFetchedListener {
         ((TextView) findViewById(R.id.local_events_container_text)).setTypeface(AppBase.getTypefaceStrong());
         ((TextView) findViewById(R.id.routes_tracer_container_text)).setTypeface(AppBase.getTypefaceStrong());
         
+        ((TextView) findViewById(R.id.about_container_text)).setTypeface(AppBase.getTypefaceStrong());
+
+        
         findViewById(R.id.settings_launcher_icon).setOnClickListener(new OnClickListener() {
 			
         	@Override
@@ -88,6 +91,15 @@ public class RootActivity extends Activity implements ImageFetchedListener {
 			@Override
 			public void onClick(View v) {
 				AppBase.launchActivity(FavoritesActivity.class);
+			}
+        	
+        });
+        
+        findViewById(R.id.about_container).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				AppBase.launchActivity(AboutActivity.class);
 			}
         	
         });

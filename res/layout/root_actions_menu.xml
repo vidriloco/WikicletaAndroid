@@ -170,4 +170,37 @@
               android:textSize="18sp"
               android:textStyle="bold" />
       </LinearLayout>
+      <LinearLayout
+          android:id="@+id/about_container"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/contact_item_selector"
+          android:paddingBottom="15dp"
+          android:clickable="true"
+          android:paddingTop="15dp" >
+
+          <ImageView
+              android:id="@+id/about_icon"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_centerVertical="true"
+              android:layout_marginLeft="38dp"
+              android:contentDescription="@string/none"
+              android:src="@drawable/info_icon" />
+
+          <TextView
+              android:id="@+id/about_container_text"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="20dp"
+              android:gravity="right"
+              android:padding="10dp"
+              android:text="@string/about_in_root_text"
+              android:textColor="@color/wikicleta_orange"
+              android:textSize="18sp"
+              android:textStyle="bold" />
+      </LinearLayout>
 </LinearLayout>
