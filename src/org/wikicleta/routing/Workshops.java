@@ -161,6 +161,7 @@ public class Workshops {
 				else if(mode == Cruds.MODIFY)
 					Toasts.showToastWithMessage(activity, R.string.workshops_changes_uploaded_successfully, R.drawable.success_icon);
 	    		AppBase.launchActivity(DiscoverActivity.class);
+	    		activity.finish();
 	    	} else {
 	    		activity.dialog.hide();
 	    		int message = (mode == Cruds.CREATE) ? R.string.workshops_not_commited : R.string.workshops_changes_not_commited;
