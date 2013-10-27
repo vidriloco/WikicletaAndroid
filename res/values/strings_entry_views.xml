@@ -102,5 +102,5 @@
 	<!-- Activities activity -->
 	<string name="activities_list">Reciente</string>
 	<string name="activities_drafts">Borradores</string>
-	<string name="activities_list_empty">No hay actividades que mostrar</string>
+	<string name="activities_list_empty">Sin actividades que mostrar</string>
 </resources>

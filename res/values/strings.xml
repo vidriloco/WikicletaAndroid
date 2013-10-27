@@ -226,7 +226,7 @@
 	<string name="user_profile_could_not_update">Los cambios a tu perfil no pudieron guardarse, intenta más tarde por favor.</string>
 	
 	<string name="updating_your_profile">Actualizando tu perfil</string>
-	<string name="no_drafts_listed">No tienes borradores por ahora</string>
+	<string name="no_drafts_listed">No hay borradores</string>
 	<string name="profile_road_gear_title_text">Equipo para rodar:</string>
 	<string name="profile_stats_title_text">Cifras:</string>
 	<string name="profile_pedal_distance_title_text">Distancia recorrida:</string>
