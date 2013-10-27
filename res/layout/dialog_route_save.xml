@@ -1,6 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <LinearLayout 
@@ -30,13 +30,14 @@
 	</LinearLayout>
     
 	<ScrollView
-        android:id="@+id/routes_saving_form"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+	    android:id="@+id/routes_saving_form"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/titlebar" >
 
 		   <LinearLayout
 		       android:layout_width="match_parent"
-		       android:layout_height="292dp"
+		       android:layout_height="wrap_content"
 		       android:background="#fff"
 		       android:orientation="vertical"
 		       android:padding="10dp" >
@@ -89,4 +90,4 @@
         	</LinearLayout>
         	        
     </ScrollView>
-</LinearLayout>
+</RelativeLayout>
