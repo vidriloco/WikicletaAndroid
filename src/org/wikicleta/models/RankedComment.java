@@ -29,6 +29,7 @@ public class RankedComment implements RemoteModelInterface {
 		this.associatedModelKind = associatedModelKind;
 		this.comment = comment;
 		this.positive = positive;
+		this.userPicURL = new String();
 	}
 	
 	public RankedComment(long remoteId, String content, boolean positive, Date creationDate,
@@ -39,6 +40,7 @@ public class RankedComment implements RemoteModelInterface {
 		this.userId = userId;
 		this.username = username;
 		this.remoteId = remoteId;
+		this.userPicURL = new String();
 	}
 
 	public RankedComment(long remoteId, String content, boolean positive, Date creationDate,

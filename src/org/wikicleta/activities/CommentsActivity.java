@@ -100,8 +100,8 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
     		
     	});
     	
-    	ImageView likeButton = (ImageView) this.findViewById(R.id.save_button);
-    	likeButton.setOnClickListener(new OnClickListener() {
+    	ImageView saveButton = (ImageView) this.findViewById(R.id.save_button);
+    	saveButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -124,7 +124,8 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
     	});
 
 		commentTextField = (EditText) this.findViewById(R.id.comment_input_field);
-		drawLoadingView();
+		if(android.os.Build.VERSION.SDK_INT >= 11)
+			drawLoadingView();
 		fetchComments();
 	}
 
@@ -298,7 +299,8 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 			public void onClick(View v) {
 				findViewById(R.id.attempt_reload_view).setVisibility(View.GONE);
 				findViewById(R.id.loading_view).setVisibility(View.VISIBLE);
-				drawLoadingView();
+				if(android.os.Build.VERSION.SDK_INT >= 11)
+					drawLoadingView();
 				fetchComments();
 			}
         	
