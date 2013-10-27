@@ -3,17 +3,16 @@ package org.wikicleta.activities.common;
 import org.wikicleta.R;
 import org.wikicleta.activities.RootActivity;
 import org.wikicleta.common.AppBase;
-
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ModifyingOnMapBaseActivity extends LocationAwareMapWithControlsActivity {
-	protected AlertDialog addMenu;
 	protected ImageView returnIcon;
 	protected ImageView newIcon;
 	protected ImageView saveIcon;
@@ -62,8 +61,9 @@ public class ModifyingOnMapBaseActivity extends LocationAwareMapWithControlsActi
 	}
 	
 	protected void buildAndShowMenu() {
-    	AlertDialog.Builder addBuilder = new AlertDialog.Builder(this);
-
+		final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        
         LayoutInflater inflater = this.getLayoutInflater();
         
         View view = inflater.inflate(R.layout.dialog_add, null);
@@ -71,7 +71,7 @@ public class ModifyingOnMapBaseActivity extends LocationAwareMapWithControlsActi
 
 			@Override
 			public void onClick(View v) {
-				addMenu.dismiss();
+				dialog.dismiss();
 			}
         	
         });
@@ -91,7 +91,7 @@ public class ModifyingOnMapBaseActivity extends LocationAwareMapWithControlsActi
         view.findViewById(R.id.tips_dialog_group).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				addMenu.dismiss();
+				dialog.dismiss();
 				AppBase.launchActivity(org.wikicleta.activities.tips.ModifyingActivity.class);
 			}
         });
@@ -99,7 +99,7 @@ public class ModifyingOnMapBaseActivity extends LocationAwareMapWithControlsActi
         view.findViewById(R.id.bike_parking_dialog_group).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				addMenu.dismiss();
+				dialog.dismiss();
 				AppBase.launchActivity(org.wikicleta.activities.parkings.ModifyingActivity.class);
 			}
         });
@@ -107,14 +107,14 @@ public class ModifyingOnMapBaseActivity extends LocationAwareMapWithControlsActi
         view.findViewById(R.id.bike_repair_dialog_group).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				addMenu.dismiss();
+				dialog.dismiss();
 				AppBase.launchActivity(org.wikicleta.activities.workshops.ModifyingActivity.class);
 
 			}
         });
         
-    	addBuilder.setView(view);
-		addMenu = addBuilder.show();
+    	dialog.setContentView(view);
+		dialog.show();
 		getWindow().setBackgroundDrawableResource(android.R.color.transparent); 
 	}
 

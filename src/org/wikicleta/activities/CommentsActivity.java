@@ -59,7 +59,8 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 		}
 
 		image.setVisibility(View.VISIBLE);
-		ObjectAnimator.ofFloat(image, "alpha", 0.4f, 1, 1).setDuration(1000).start();
+		if(android.os.Build.VERSION.SDK_INT >= 11)
+			ObjectAnimator.ofFloat(image, "alpha", 0.4f, 1, 1).setDuration(1000).start();
 		
 		
 		this.findViewById(R.id.like_button).setOnClickListener(new OnClickListener() {
@@ -67,9 +68,10 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 			@Override
 			public void onClick(View v) {
 				v.setVisibility(View.GONE);
-
+				if(android.os.Build.VERSION.SDK_INT >= 11)
+					ObjectAnimator.ofFloat(v, "alpha", 1, 0.2f, 1).setDuration(1000).start();
 				findViewById(R.id.dislike_button).setVisibility(View.VISIBLE);
-				ObjectAnimator.ofFloat(findViewById(R.id.dislike_button), "alpha", 0.4f, 1, 1).setDuration(1000).start();
+				
 			}
 			
 		});
@@ -79,8 +81,8 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 			@Override
 			public void onClick(View v) {
 				v.setVisibility(View.GONE);
-
-				ObjectAnimator.ofFloat(findViewById(R.id.like_button), "alpha", 0.4f, 1, 1).setDuration(1000).start();
+				if(android.os.Build.VERSION.SDK_INT >= 11)
+					ObjectAnimator.ofFloat(v, "alpha", 1, 0.2f, 1).setDuration(1000).start();
 				findViewById(R.id.like_button).setVisibility(View.VISIBLE);
 			}
 			

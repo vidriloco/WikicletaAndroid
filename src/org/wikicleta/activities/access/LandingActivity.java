@@ -12,13 +12,22 @@ import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.models.User;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,56 +43,111 @@ public class LandingActivity extends AccessActivity {
 		
 		AppBase.currentActivity = this;
 		this.setContentView(R.layout.activity_landing); 
-
-		if(User.isRegisteredLocally()) {
-			AppBase.launchActivity(RootActivity.class);
-			finish();
-		} else {
-			AnimatorSet set = new AnimatorSet();
-	    	set.playTogether(
-	    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "scaleX", 1, 1.2f),
-	    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "scaleY", 1, 1.2f),
-	    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "alpha", 0, 1, 1)
-	    	);
-			set.setDuration(1500).start();
-
-			TextView loginText = (TextView) this.findViewById(R.id.login_text);
-			TextView joinText = (TextView) this.findViewById(R.id.join_text);
-
-			loginText.setTypeface(AppBase.getTypefaceStrong());		
-			joinText.setTypeface(AppBase.getTypefaceStrong());
+		
+		bootApplicationMainView();
+	}
+	
+	protected void bootApplicationMainView() {
+		int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+		if(status != ConnectionResult.SUCCESS) {
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			
-			loginText.setOnClickListener(new OnClickListener() {
+			alertDialogBuilder
+					.setTitle("Google Play Services")
+					.setMessage(this.getString(R.string.no_google_play_services))
+					.setCancelable(true)
+					.setPositiveButton(this.getString(R.string.actions_install), new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,int id) {
+							dialog.dismiss();
+							// Try the new HTTP method (I assume that is the official way now given that google uses it).
+							try
+							{
+								Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.google.android.gms"));
+								intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+								intent.setPackage("com.android.vending");
+								startActivity(intent);
+								finish();
+							}
+							catch (ActivityNotFoundException e)
+							{
+								try
+								{
+									Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.google.android.gms"));
+									intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+									intent.setPackage("com.android.vending");
+									startActivity(intent);
+									finish();
+								}
+								catch (ActivityNotFoundException f)
+								{
+									Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.google.android.gms"));
+									intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+									startActivity(intent);
+									finish();
+								}
+							}
+						}
+					})
+					.setNegativeButton(this.getString(R.string.confirm_no) ,new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,int id) {
+							dialog.cancel();
+							finish();
+						}
+					})
+					.create()
+					.show();
+        } else {
+        	if(User.isRegisteredLocally()) {
+    			AppBase.launchActivity(RootActivity.class);
+    			finish();
+    		} else {
+    			AnimatorSet set = new AnimatorSet();
+    	    	set.playTogether(
+    	    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "scaleX", 1, 1.2f),
+    	    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "scaleY", 1, 1.2f),
+    	    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "alpha", 0, 1, 1)
+    	    	);
+    			set.setDuration(1500).start();
 
-				@Override
-				public void onClick(View arg0) {
-					displaySignInForm();				
-				}
-				
-			});
-			
-			joinText.setOnClickListener(new OnClickListener() {
+    			TextView loginText = (TextView) this.findViewById(R.id.login_text);
+    			TextView joinText = (TextView) this.findViewById(R.id.join_text);
 
-				@Override
-				public void onClick(View arg0) {
-					sendToRegistrationActivity();				
-				}
-				
-			});
-		}
+    			loginText.setTypeface(AppBase.getTypefaceStrong());		
+    			joinText.setTypeface(AppBase.getTypefaceStrong());
+    			
+    			loginText.setOnClickListener(new OnClickListener() {
+
+    				@Override
+    				public void onClick(View arg0) {
+    					displaySignInForm();				
+    				}
+    				
+    			});
+    			
+    			joinText.setOnClickListener(new OnClickListener() {
+
+    				@Override
+    				public void onClick(View arg0) {
+    					sendToRegistrationActivity();				
+    				}
+    				
+    			});
+    		}
+        }
 	}
 	
 	protected void displaySignInForm() {
-		AlertDialog.Builder toggleBuilder = new AlertDialog.Builder(this);
+		final Dialog toggleBuilder = new Dialog(this);
+		toggleBuilder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         LayoutInflater inflater = this.getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_login, null);
         ((TextView) view.findViewById(R.id.login_text)).setTypeface(AppBase.getTypefaceStrong());
         
         ((EditText) view.findViewById(R.id.login_username)).setTypeface(AppBase.getTypefaceStrong());
         ((EditText) view.findViewById(R.id.login_password)).setTypeface(AppBase.getTypefaceStrong());
-        toggleBuilder.setView(view);
-        final AlertDialog dialog = toggleBuilder.create();
-        dialog.show();
+        toggleBuilder.setContentView(view);
+        toggleBuilder.show();
         
         ((TextView) view.findViewById(R.id.button_return)).setTypeface(AppBase.getTypefaceStrong());
         ((TextView) view.findViewById(R.id.button_login)).setTypeface(AppBase.getTypefaceStrong());
@@ -92,7 +156,7 @@ public class LandingActivity extends AccessActivity {
 
 			@Override
 			public void onClick(View v) {
-				dialog.dismiss();
+				toggleBuilder.dismiss();
 			}
         	
         });
@@ -155,7 +219,7 @@ public class LandingActivity extends AccessActivity {
 	 */
 	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 		JSONObject responseObject;
-		private AlertDialog progressDialog;
+		private Dialog progressDialog;
 		
 		protected String mLogin;
 		protected String mPassword;
@@ -198,7 +262,7 @@ public class LandingActivity extends AccessActivity {
 		@Override
 		protected void onPreExecute() {
 		    super.onPreExecute();
-		    progressDialog = DialogBuilder.buildLoadingDialogWithMessage(LandingActivity.this, R.string.signing_in).create();
+		    progressDialog = DialogBuilder.buildLoadingDialogWithMessage(LandingActivity.this, R.string.signing_in);
 		    progressDialog.show();
 		}
 		

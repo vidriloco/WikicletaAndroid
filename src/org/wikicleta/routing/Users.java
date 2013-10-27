@@ -11,7 +11,7 @@ import org.wikicleta.interfaces.RemoteFetchingDutyListener;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others.Cruds;
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.AsyncTask;
 
 public class Users {
@@ -59,7 +59,7 @@ public class Users {
 	public class Post extends AsyncTask<HashMap<String, Object>, Void, Boolean> {
 		private HashMap<String, Object> params;
 		public Cruds mode = Cruds.CREATE;
-		AlertDialog dialog;
+		Dialog dialog;
 		RemoteFetchingDutyListener listener;
 		
 	    public Post(RemoteFetchingDutyListener listener) {
@@ -78,7 +78,7 @@ public class Users {
 		
 		protected void onPreExecute() {
 			super.onPreExecute();
-			dialog = DialogBuilder.buildLoadingDialogWithMessage((Activity) listener, R.string.updating_your_profile).create();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage((Activity) listener, R.string.updating_your_profile);
 			dialog.show();
 		}
 		

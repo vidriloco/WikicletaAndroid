@@ -8,9 +8,10 @@ import org.wikicleta.layers.common.LayersConnectorListener;
 import org.wikicleta.models.CycleStation;
 import com.google.android.gms.maps.model.LatLng;
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,7 +19,10 @@ import android.widget.TextView;
 public class CycleStationViews  {
 	public static void buildViewForCycleStation(LayersConnectorListener listener, final CycleStation item) {
     	Activity activity = listener.getActivity();
-        AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+    	
+    	final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        
         LayoutInflater inflater = activity.getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_cycle_station_details, null);
         
@@ -70,17 +74,18 @@ public class CycleStationViews  {
         if(item.availableSlots != 1)
         	slotCountTextView.setText(activity.getResources().getString(R.string.many_available_slots));
        
-        dialog.setView(view);
-        final AlertDialog visibleDialog = dialog.create();
+        
         view.findViewById(R.id.dialog_close).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				visibleDialog.dismiss();
+				dialog.dismiss();
 			}
         	
         });
         
-        visibleDialog.show();
+        dialog.setContentView(view);
+        
+        dialog.show();
 	}
 }

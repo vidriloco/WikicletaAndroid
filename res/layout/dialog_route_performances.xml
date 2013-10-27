@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_vertical|center_horizontal" >
+    android:gravity="center_vertical|center_horizontal"
+    android:background="@color/wikicleta_lightest_blue" >
 
     <RelativeLayout
         android:id="@+id/waiting_for_gps_container"

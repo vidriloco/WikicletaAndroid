@@ -3,7 +3,6 @@ package org.wikicleta.routing;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -16,7 +15,7 @@ import org.wikicleta.models.RankedComment;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others.Cruds;
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.AsyncTask;
 
 public class RankedComments {
@@ -28,7 +27,7 @@ public class RankedComments {
 	public class Post extends AsyncTask<RankedComment, Void, Boolean> {
 		private RankedComment comment;
 		public Cruds mode = Cruds.CREATE;
-		AlertDialog dialog;
+		Dialog dialog;
 		RemoteFetchingDutyListener listener;
 		
 	    public Post(RemoteFetchingDutyListener listener) {
@@ -45,7 +44,7 @@ public class RankedComments {
 		
 		protected void onPreExecute() {
 			super.onPreExecute();
-			dialog = DialogBuilder.buildLoadingDialogWithMessage((Activity) listener, R.string.uploading).create();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage((Activity) listener, R.string.uploading);
 			dialog.show();
 		}
 		
@@ -116,7 +115,7 @@ public class RankedComments {
 	public class Delete extends AsyncTask<RemoteModelInterface, Void, Boolean> {
 		
 		RemoteFetchingDutyListener listener;
-		AlertDialog dialog;
+		Dialog dialog;
 		RemoteModelInterface model;
 
 	    public Delete(RemoteFetchingDutyListener listener) {
@@ -126,7 +125,7 @@ public class RankedComments {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			dialog = DialogBuilder.buildLoadingDialogWithMessage((Activity) listener, R.string.destroying).create();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage((Activity) listener, R.string.destroying);
 			dialog.show();
 		}
 		

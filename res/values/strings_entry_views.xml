@@ -23,6 +23,7 @@
     <string name="actions.review">Revisar</string>
     <string name="actions.upload">Subir</string>
     <string name="actions.login">Iniciar</string>
+    <string name="actions.install">Instalar</string>
     <string name="actions.go">Ir</string>
     
     <!-- Registration Activity strings -->

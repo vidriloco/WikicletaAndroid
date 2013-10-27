@@ -5,12 +5,10 @@ import org.wikicleta.helpers.SimpleAnimatorListener;
 import org.wikicleta.interfaces.FavoritesConnectorInterface;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Favorites;
-
 import android.app.Dialog;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ObjectAnimator;
 
@@ -32,7 +30,9 @@ public class BaseViews implements FavoritesConnectorInterface {
 				singleton.favoritedIcon.setClickable(false);
 				Favorites.Post unMarker = new Favorites().new Post(singleton, "unmark");
 				unMarker.execute(String.valueOf(remoteId), modelNamed, String.valueOf(User.id()));
-				singleton.runAnimator(singleton.favoritedIcon);
+				
+				if(android.os.Build.VERSION.SDK_INT >= 11)
+					singleton.runAnimator(singleton.favoritedIcon);
 			}
         	
         });
@@ -45,19 +45,22 @@ public class BaseViews implements FavoritesConnectorInterface {
 				singleton.nonFavoritedIcon.setClickable(false);
 				Favorites.Post unMarker = new Favorites().new Post(singleton, "mark");
 				unMarker.execute(String.valueOf(remoteId), modelNamed, String.valueOf(User.id()));
-				singleton.runAnimator(singleton.nonFavoritedIcon);
+				if(android.os.Build.VERSION.SDK_INT >= 11)
+					singleton.runAnimator(singleton.nonFavoritedIcon);
 			}
         	
         });
         
 		Favorites.Marked markedInvestigator = new Favorites().new Marked(singleton);
 		markedInvestigator.execute(String.valueOf(remoteId), modelNamed, String.valueOf(User.id()));
-		singleton.runAnimator(singleton.nonFavoritedIcon);
+		if(android.os.Build.VERSION.SDK_INT >= 11)
+			singleton.runAnimator(singleton.nonFavoritedIcon);
 	}
 	
 	@Override
 	public void onFavoritedItemChangedState(boolean isFavorite) {
-		favoritedAnimator.cancel();
+		if(favoritedAnimator!=null)
+			favoritedAnimator.cancel();
 		nonFavoritedIcon.setClickable(true);
 		favoritedIcon.setClickable(true);
 

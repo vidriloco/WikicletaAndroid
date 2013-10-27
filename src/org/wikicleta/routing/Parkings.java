@@ -37,12 +37,12 @@ public class Parkings {
 		
 		Parking parking;
 		public DiscoverActivity activity;
-		AlertDialog dialog;
+		Dialog dialog;
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			dialog = DialogBuilder.buildLoadingDialogWithMessage(activity, R.string.destroying).create();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage(activity, R.string.destroying);
 			dialog.show();
 		}
 		
@@ -134,11 +134,11 @@ public class Parkings {
 		private Parking parking;
 		public ModifyingActivity activity;
 		public Cruds mode = Cruds.CREATE;
-		AlertDialog dialog;
+		Dialog dialog;
 		
 		protected void onPreExecute() {
 			super.onPreExecute();
-			dialog = DialogBuilder.buildLoadingDialogWithMessage(activity, R.string.uploading).create();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage(activity, R.string.uploading);
 			dialog.show();
 		}
 		
@@ -167,7 +167,7 @@ public class Parkings {
 					Toasts.showToastWithMessage(activity, R.string.parkings_changes_uploaded_successfully, R.drawable.success_icon);
 	    		AppBase.launchActivity(DiscoverActivity.class);
 	    	} else {
-	    		activity.formView.hide();
+	    		activity.dialog.hide();
 	    		int message = (mode == Cruds.CREATE) ? R.string.parkings_not_commited : R.string.parkings_changes_not_commited;
 	    		
 	    		AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.notification, message);
@@ -192,7 +192,7 @@ public class Parkings {
 	    		}).setPositiveButton(activity.getResources().getString(R.string.retry), new DialogInterface.OnClickListener() {
 	    			public void onClick(DialogInterface dialog,int id) {
 	    				dialog.dismiss();
-	    				activity.formView.show();
+	    				activity.dialog.show();
 	    			}
 	    		});
 	    		final AlertDialog alert = builder.create();
@@ -201,7 +201,7 @@ public class Parkings {
 
 					@Override
 					public void onDismiss(DialogInterface arg0) {
-						activity.formView.show();
+						activity.dialog.show();
 					}
 	    			
 	    		});

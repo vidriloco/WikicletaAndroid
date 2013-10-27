@@ -35,7 +35,6 @@ public class EventsActivity extends LocationAwareMapWithMarkersActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_events);
-		setTheme(R.style.Theme_wikicleta);
 		
 		returnIcon = (ImageView) this.findViewById(R.id.return_button);
     	returnIcon.setOnClickListener(new OnClickListener() {

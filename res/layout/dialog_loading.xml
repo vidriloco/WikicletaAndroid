@@ -3,7 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="20dp"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:background="@color/wikicleta_lightest_blue" >
 
     <ImageView android:id="@+id/image_loading"
         android:layout_width="wrap_content"

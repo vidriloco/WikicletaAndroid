@@ -3,22 +3,22 @@ package org.wikicleta.views;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.TripPoi;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.util.Log;
+import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class TripPoiViews {
-	public static void buildViewForTripPoi(final Activity activity, TripPoi item) {
-		Log.e("WIKICLETA", "Prueba");
-    	AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+	public static void buildViewForTripPoi(final Activity activity, TripPoi item) {    	
+		final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
         LayoutInflater inflater = activity.getLayoutInflater();
-        final View view = inflater.inflate(R.layout.poi_details, null);
+        final View view = inflater.inflate(R.layout.dialog_poi_details, null);
         
         ImageView categoryImage = (ImageView) view.findViewById(R.id.trip_poi_category_icon);
         categoryImage.setImageResource(item.getDrawable());
@@ -40,19 +40,18 @@ public class TripPoiViews {
         model.setTypeface(AppBase.getTypefaceStrong());
         if(item.name != null)
         	model.setText(item.name);
-        builder.setView(view);
+        dialog.setContentView(view);
 
-        final AlertDialog tripDialog = builder.create();
         view.findViewById(R.id.dialog_close).setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
-				tripDialog.dismiss();
+				dialog.dismiss();
 			}
         	
         });
         
         
-        tripDialog.show();
+        dialog.show();
     }
 }

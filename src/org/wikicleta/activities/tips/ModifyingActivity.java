@@ -13,12 +13,12 @@ import org.wikicleta.routing.Others.Cruds;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -31,9 +31,8 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class ModifyingActivity extends ModifyingOnMapBaseActivity {
-
-	public AlertDialog  formView;
 	
+	public Dialog dialog;
 	protected Spinner categorySelector;
 	protected EditText content;
 	
@@ -103,8 +102,9 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 	}
 	
 	protected void displaySaveForm() {
-		AlertDialog.Builder toggleBuilder = new AlertDialog.Builder(this);
-
+		dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        
         LayoutInflater inflater = this.getLayoutInflater();
         
         View view = inflater.inflate(R.layout.dialog_tip_save, null);
@@ -119,7 +119,7 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				formView.dismiss();
+				dialog.dismiss();
 			}
         	
         });
@@ -172,10 +172,9 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
     		
     	});
        
-    	toggleBuilder.setView(view);
-    	formView = toggleBuilder.create();
-    	formView.setCanceledOnTouchOutside(false);
-    	formView.show();
+    	dialog.setContentView(view);
+    	dialog.setCanceledOnTouchOutside(false);
+    	dialog.show();
 	}
 	
 	public class TipsCategoriesArrayAdapter extends ArrayAdapter<String>{

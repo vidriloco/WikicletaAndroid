@@ -15,7 +15,7 @@ import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.helpers.Graphics;
 import org.wikicleta.models.User;
 import com.actionbarsherlock.app.ActionBar;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -45,7 +45,7 @@ public class RegistrationActivity extends ImageSelectionActivity {
 	
 	protected ActionBar actionBar;
 	
-	protected AlertDialog alertDialog;
+	protected Dialog alertDialog;
 	private UserRegistrationTask mRegAuthTask = null;
 	
 	@Override
@@ -68,7 +68,7 @@ public class RegistrationActivity extends ImageSelectionActivity {
 		
 		((TextView) this.findViewById(R.id.pic_instructions)).setTypeface(AppBase.getTypefaceStrong());
         
-        this.alertDialog = DialogBuilder.buildLoadingDialogWithMessage(this, R.string.registering_user).create();
+        alertDialog = DialogBuilder.buildLoadingDialogWithMessage(this, R.string.registering_user);
         
         this.findViewById(R.id.return_button).setOnClickListener(new OnClickListener() {
 

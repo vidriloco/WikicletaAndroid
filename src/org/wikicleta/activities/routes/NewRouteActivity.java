@@ -17,6 +17,7 @@ import org.wikicleta.services.routes.ServiceListener;
 import com.nineoldandroids.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
@@ -24,6 +25,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -72,11 +74,13 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
         statsView = (RelativeLayout) findViewById(R.id.stats_container);
         gpsWaitingView = (RelativeLayout) findViewById(R.id.waiting_for_gps_container);
         
-        this.uploaderAnimator = ObjectAnimator.ofFloat(gpsWaitingView, "alpha", 1, 0.2f, 1);
-    	this.uploaderAnimator.setDuration(3000);
-    	this.uploaderAnimator.setRepeatCount(ObjectAnimator.INFINITE);
-        this.uploaderAnimator.start();
-        
+        if(android.os.Build.VERSION.SDK_INT >= 11) {
+            this.uploaderAnimator = ObjectAnimator.ofFloat(gpsWaitingView, "alpha", 1, 0.2f, 1);
+        	this.uploaderAnimator.setDuration(3000);
+        	this.uploaderAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+            this.uploaderAnimator.start();
+        }
+
         TextView gpsWaiting = (TextView) findViewById(R.id.waiting_for_gps);
         gpsWaiting.setTypeface(AppBase.getTypefaceStrong());
         
@@ -165,13 +169,13 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 	}
 	
 	protected void buildAndDisplaySaveDialog() {
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+		final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         LayoutInflater inflater = this.getLayoutInflater();
         
         View view = inflater.inflate(R.layout.dialog_route_save, null);
-		alertDialog.setView(view);
-		final AlertDialog dialog = alertDialog.create();
+        dialog.setContentView(view);
 		
 		nameView = (EditText) view.findViewById(R.id.route_name);
 		detailsView = (EditText) view.findViewById(R.id.route_details);
@@ -347,7 +351,8 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 		if(statsView.getVisibility() == View.GONE)
 			statsView.setVisibility(View.VISIBLE);
 		if(gpsWaitingView.getVisibility() == View.VISIBLE) {
-			this.uploaderAnimator.cancel();
+			if(this.uploaderAnimator != null)
+				this.uploaderAnimator.cancel();
 			gpsWaitingView.setVisibility(View.GONE);
 		}
 		

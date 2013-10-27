@@ -12,7 +12,7 @@ import org.wikicleta.models.RouteRanking;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others.Cruds;
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.AsyncTask;
 
 public class RouteRankings {
@@ -79,7 +79,7 @@ public class RouteRankings {
 	public class Post extends AsyncTask<RouteRanking, Void, Boolean> {
 		private RouteRanking routeRanking;
 		public Cruds mode = Cruds.CREATE;
-		AlertDialog dialog;
+		Dialog dialog;
 		RemoteFetchingDutyListener listener;
 		
 	    public Post(RemoteFetchingDutyListener listener) {
@@ -96,7 +96,7 @@ public class RouteRankings {
 		
 		protected void onPreExecute() {
 			super.onPreExecute();
-			dialog = DialogBuilder.buildLoadingDialogWithMessage((Activity) listener, R.string.uploading).create();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage((Activity) listener, R.string.uploading);
 			dialog.show();
 		}
 		

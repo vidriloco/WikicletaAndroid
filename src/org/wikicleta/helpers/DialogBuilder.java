@@ -4,29 +4,33 @@ import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 
 public class DialogBuilder {
 	protected static AlertDialog connectivityAlertDialog;
 
-	public static AlertDialog.Builder buildLoadingDialogWithMessage(Activity activity, int id) {
+	public static Dialog buildLoadingDialogWithMessage(Activity activity, int id) {
 		return buildLoadingDialogWithMessage(activity, activity.getResources().getString(id));
 	}
 	
-	public static AlertDialog.Builder buildLoadingDialogWithMessage(Activity activity, String message) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+	public static Dialog buildLoadingDialogWithMessage(Activity activity, String message) {
+		Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        
         LayoutInflater inflater = activity.getLayoutInflater();
         
-        View view = inflater.inflate(R.layout.loading_dialog, null);
+        View view = inflater.inflate(R.layout.dialog_loading, null);
         TextView loadingViewMsj = (TextView) view.findViewById(R.id.loading_message);
         loadingViewMsj.setTypeface(AppBase.getTypefaceLight());
         loadingViewMsj.setText(message);
-        builder.setView(view);
+        dialog.setContentView(view);
         
-        return builder;
+        return dialog;
 	}
 	
 	public static void displayAlertWithTitleAndMessage(Activity ctx, int title, int message) {

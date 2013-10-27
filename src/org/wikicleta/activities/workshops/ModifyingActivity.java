@@ -10,17 +10,16 @@ import org.wikicleta.models.Tip;
 import org.wikicleta.models.Workshop;
 import org.wikicleta.routing.Others.Cruds;
 import org.wikicleta.routing.Workshops;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -30,9 +29,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ModifyingActivity extends ModifyingOnMapBaseActivity {
-
-	public AlertDialog  formView;
 	
+	public Dialog dialog;
 	protected EditText name;
 	protected EditText details;
 	protected CheckBox isStore;
@@ -145,8 +143,9 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 	}
 	
 	protected void displaySaveForm() {
-		AlertDialog.Builder toggleBuilder = new AlertDialog.Builder(this);
-
+		dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        
         LayoutInflater inflater = this.getLayoutInflater();
         
         final View view = inflater.inflate(R.layout.dialog_workshop_save, null);
@@ -158,7 +157,7 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				formView.dismiss();
+				dialog.dismiss();
 			}
         	
         });
@@ -244,10 +243,9 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
     		
     	});
        
-    	toggleBuilder.setView(view);
-    	formView = toggleBuilder.create();
-    	formView.setCanceledOnTouchOutside(false);
-    	formView.show();
+    	dialog.setContentView(view);
+    	dialog.setCanceledOnTouchOutside(false);
+    	dialog.show();
 	}
 	
 	public class TipsCategoriesArrayAdapter extends ArrayAdapter<String>{

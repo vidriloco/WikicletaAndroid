@@ -7,9 +7,10 @@ import org.wikicleta.models.CyclingGroup;
 import org.wikicleta.routing.Others;
 import org.wikicleta.routing.Others.ImageUpdater;
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,7 +20,10 @@ public class CyclingGroupViews {
 
 	public static void buildViewForCyclingGroup(LayersConnectorListener listener, final CyclingGroup cyclingGroup) {
     	Activity activity = listener.getActivity();
-        AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+        
+    	final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    	
         LayoutInflater inflater = activity.getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_cycling_group_details, null);
         
@@ -109,10 +113,8 @@ public class CyclingGroupViews {
             updater.execute(cyclingGroup.pic);
         }
         
-        dialog.setView(view);
-        final AlertDialog visibleDialog = dialog.create();
-        
-        visibleDialog.show();
+        dialog.setContentView(view);        
+        dialog.show();
 	}
 
 }

@@ -206,12 +206,12 @@ public class Routes {
 	public class Delete extends AsyncTask<Route, Void, Boolean> {
 		
 		Route route;
-		AlertDialog dialog;
+		Dialog dialog;
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			dialog = DialogBuilder.buildLoadingDialogWithMessage(AppBase.currentActivity, R.string.destroying).create();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage(AppBase.currentActivity, R.string.destroying);
 			dialog.show();
 		}
 		
@@ -243,7 +243,7 @@ public class Routes {
 	public class Put extends AsyncTask<Route, Void, Boolean> {
 		private Route route;
 		public RouteDetailsActivity activity;
-		AlertDialog dialog;
+		Dialog dialog;
 
 		@Override
 		protected Boolean doInBackground(Route... args) {
@@ -255,7 +255,7 @@ public class Routes {
 		
 		protected void onPreExecute() {
 			super.onPreExecute();
-			dialog = DialogBuilder.buildLoadingDialogWithMessage(activity, R.string.uploading).create();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage(activity, R.string.uploading);
 			dialog.show();
 		}
 		
@@ -292,7 +292,7 @@ public class Routes {
 	
 	public class DraftPost extends AsyncTask<Route, Void, Boolean> {
 		private Route route;
-		AlertDialog dialog;
+		Dialog dialog;
 		DraftsListAdapter adapter;
 		
 		public DraftPost(DraftsListAdapter adapter) {
@@ -307,7 +307,7 @@ public class Routes {
 		
 		protected void onPreExecute() {
 			super.onPreExecute();
-			dialog = DialogBuilder.buildLoadingDialogWithMessage(adapter.context, R.string.uploading).create();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage(adapter.context, R.string.uploading);
 			dialog.show();
 		}
 		
@@ -334,7 +334,7 @@ public class Routes {
 	public class Post extends AsyncTask<Route, Void, Boolean> {
 		private Route route;
 		public NewRouteActivity activity;
-		AlertDialog dialog;
+		Dialog dialog;
 
 		@Override
 		protected Boolean doInBackground(Route... args) {
@@ -346,7 +346,7 @@ public class Routes {
 		
 		protected void onPreExecute() {
 			super.onPreExecute();
-			dialog = DialogBuilder.buildLoadingDialogWithMessage(activity, R.string.uploading).create();
+			dialog = DialogBuilder.buildLoadingDialogWithMessage(activity, R.string.uploading);
 			dialog.show();
 		}
 		

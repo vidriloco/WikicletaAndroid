@@ -286,4 +286,6 @@
 	<string name="comment_not_saved">Tu comentario no ha sido guardado aún. ¿Descartarlo?</string>
 	<string name="comment_deleted_successfully">Tu comentario ha sido eliminado</string>
 	<string name="no_comments_to_show">¡Sé el primero en dejar un comentario!</string>	
+	
+	<string name="no_google_play_services">Wikicleta necesita que Google Play Services esté instalado."</string>
 </resources>
