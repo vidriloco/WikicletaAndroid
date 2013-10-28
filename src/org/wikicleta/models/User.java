@@ -46,7 +46,6 @@ public class User {
 			
 			editor.putLong("updated_at", creationDate.getTime());
 		}
-
 		
 		editor.commit();
 	}
@@ -57,6 +56,14 @@ public class User {
 	
 	public static String token() {
 		return getPreferences().getString("token", "");
+	}
+	
+	public static String email() {
+		return getPreferences().getString("email", "");
+	}
+	
+	public static String bio() {
+		return getPreferences().getString("bio", "");
 	}
 	
 	public static String username() {
@@ -102,9 +109,5 @@ public class User {
 			
 		}
 
-	}
-
-	public static CharSequence bio() {
-		return getPreferences().getString("bio", "");
 	}
 }

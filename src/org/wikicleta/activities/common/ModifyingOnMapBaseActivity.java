@@ -2,6 +2,7 @@ package org.wikicleta.activities.common;
 
 import org.wikicleta.R;
 import org.wikicleta.activities.RootActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class ModifyingOnMapBaseActivity extends LocationAwareMapWithControlsActi
 			}
     		
     	}); 
+		AnalyticsBase.reportLoggedInEvent("On Share Activity", getApplicationContext());
 
 	}
 	
@@ -92,6 +94,7 @@ public class ModifyingOnMapBaseActivity extends LocationAwareMapWithControlsActi
 			@Override
 			public void onClick(View v) {
 				dialog.dismiss();
+				AnalyticsBase.reportLoggedInEvent("Share Activity: will add new tip", getApplicationContext());
 				AppBase.launchActivity(org.wikicleta.activities.tips.ModifyingActivity.class);
 			}
         });
@@ -100,6 +103,7 @@ public class ModifyingOnMapBaseActivity extends LocationAwareMapWithControlsActi
 			@Override
 			public void onClick(View v) {
 				dialog.dismiss();
+				AnalyticsBase.reportLoggedInEvent("Share Activity: will add new parking", getApplicationContext());
 				AppBase.launchActivity(org.wikicleta.activities.parkings.ModifyingActivity.class);
 			}
         });
@@ -108,10 +112,12 @@ public class ModifyingOnMapBaseActivity extends LocationAwareMapWithControlsActi
 			@Override
 			public void onClick(View v) {
 				dialog.dismiss();
+				AnalyticsBase.reportLoggedInEvent("Share Activity: will add new workshop", getApplicationContext());
 				AppBase.launchActivity(org.wikicleta.activities.workshops.ModifyingActivity.class);
-
 			}
         });
+        
+		AnalyticsBase.reportLoggedInEvent("Share Activity: display add menu", getApplicationContext());
         
     	dialog.setContentView(view);
 		dialog.show();

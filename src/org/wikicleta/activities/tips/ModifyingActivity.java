@@ -3,6 +3,7 @@ package org.wikicleta.activities.tips;
 import java.util.HashMap;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.ModifyingOnMapBaseActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
@@ -64,6 +65,8 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 	}
 	
 	protected void presentSaveForm() {
+		AnalyticsBase.reportLoggedInEvent("Tip Modify/New: display form", getApplicationContext());
+
 		LatLng center = map.getCameraPosition().target;
 		// Setting tip coordinates
 		tip.latitude = center.latitude;
@@ -76,6 +79,8 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 	 */
 	
 	public void attemptCommit() {
+		AnalyticsBase.reportLoggedInEvent("Tip Modify/New: commit attempt", getApplicationContext());
+
 		String tipContents = content.getText().toString();
 		tip.userId = User.id();
 		tip.content = tipContents;

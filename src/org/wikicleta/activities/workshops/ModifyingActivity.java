@@ -3,6 +3,7 @@ package org.wikicleta.activities.workshops;
 import java.util.HashMap;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.ModifyingOnMapBaseActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
@@ -68,6 +69,8 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 	}
 	
 	protected void presentSaveForm() {
+		AnalyticsBase.reportLoggedInEvent("Workshop Modify/New: display form", getApplicationContext());
+
 		LatLng center = map.getCameraPosition().target;
 		// Setting parking coordinates
 		workshop.latitude = center.latitude;
@@ -80,6 +83,8 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 	 */
 	
 	public void attemptCommit() {
+		AnalyticsBase.reportLoggedInEvent("Workshop Modify/New: commit attempt", getApplicationContext());
+
 		String workshopDetails = details.getText().toString();
 		workshop.details = workshopDetails;
 		
@@ -90,10 +95,10 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 		workshop.twitter = twitterValue;
 		
 		if(phone.getText().toString().length() > 0) 
-			workshop.phone = Integer.valueOf(phone.getText().toString());
+			workshop.phone = Long.valueOf(phone.getText().toString());
 		
 		if(cellPhone.getText().toString().length() > 0) 
-			workshop.cellPhone = Integer.valueOf(cellPhone.getText().toString());
+			workshop.cellPhone = Long.valueOf(cellPhone.getText().toString());
 		
 		workshop.horary = horary.getText().toString();
 		workshop.webpage = webpage.getText().toString();

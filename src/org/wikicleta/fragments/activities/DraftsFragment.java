@@ -3,6 +3,7 @@ package org.wikicleta.fragments.activities;
 import java.util.LinkedList;
 import org.wikicleta.R;
 import org.wikicleta.adapters.DraftsListAdapter;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.interfaces.FragmentNotificationsInterface;
 import org.wikicleta.interfaces.ListedModelInterface;
@@ -27,6 +28,9 @@ public class DraftsFragment extends Fragment implements FragmentNotificationsInt
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_drafts, container, false);
+        
+		AnalyticsBase.reportLoggedInEvent("Activities Activity: Drafts", AppBase.currentActivity);
+		
         this.drawLoadingView(rootView);
         return rootView;
     }

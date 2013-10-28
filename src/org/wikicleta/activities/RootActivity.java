@@ -7,6 +7,7 @@ import java.util.HashMap;
 import org.json.simple.JSONObject;
 import org.wikicleta.R;
 import org.wikicleta.activities.routes.NewRouteActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.Graphics;
@@ -36,7 +37,9 @@ public class RootActivity extends Activity implements ImageFetchedListener {
 
 		AppBase.currentActivity = this;
 		this.setContentView(R.layout.activity_root); 
-		
+
+		AnalyticsBase.reportLoggedInEvent("On Root Activity", getApplicationContext());
+
 		creatorName = (TextView) findViewById(R.id.user_name);
                 
         creatorName.setText(User.username());
@@ -68,14 +71,14 @@ public class RootActivity extends Activity implements ImageFetchedListener {
         	
         });
         
-        findViewById(R.id.achievements_container).setOnClickListener(new OnClickListener() {
+        /*findViewById(R.id.achievements_container).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				AppBase.launchActivity(AchievementsActivity.class);
 			}
         	
-        });
+        });*/
         
         findViewById(R.id.activity_container).setOnClickListener(new OnClickListener() {
 

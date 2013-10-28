@@ -2,17 +2,16 @@ package org.wikicleta.activities.access;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
 import org.wikicleta.activities.RootActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.models.User;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.nineoldandroids.animation.AnimatorSet;
@@ -21,6 +20,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -40,16 +40,23 @@ public class LandingActivity extends AccessActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setTheme(R.style.Theme_Sherlock_Light_NoActionBar);
-		
 		AppBase.currentActivity = this;
 		this.setContentView(R.layout.activity_landing); 
-		
+		AnalyticsBase.reportUnloggedEvent("On LandingActivity", this.getApplicationContext());
+
 		bootApplicationMainView();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		AnalyticsBase.flushInstance();
 	}
 	
 	protected void bootApplicationMainView() {
 		int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 		if(status != ConnectionResult.SUCCESS) {
+			AnalyticsBase.reportUnloggedEvent("Google Play NOT FOUND", this.getApplicationContext());
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			
 			alertDialogBuilder
@@ -58,6 +65,7 @@ public class LandingActivity extends AccessActivity {
 					.setCancelable(true)
 					.setPositiveButton(this.getString(R.string.actions_install), new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,int id) {
+							AnalyticsBase.reportUnloggedEvent("Attempt to install Google Play", LandingActivity.this.getApplicationContext());
 							dialog.dismiss();
 							// Try the new HTTP method (I assume that is the official way now given that google uses it).
 							try
@@ -90,6 +98,8 @@ public class LandingActivity extends AccessActivity {
 					})
 					.setNegativeButton(this.getString(R.string.confirm_no) ,new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,int id) {
+							AnalyticsBase.reportUnloggedEvent("Will not install Google Play", LandingActivity.this.getApplicationContext());
+
 							dialog.cancel();
 							finish();
 						}
@@ -97,10 +107,13 @@ public class LandingActivity extends AccessActivity {
 					.create()
 					.show();
         } else {
+        	
         	if(User.isRegisteredLocally()) {
     			AppBase.launchActivity(RootActivity.class);
     			finish();
     		} else {
+    			AnalyticsBase.reportUnloggedEvent("GooglePlay FOUND", this.getApplicationContext());
+    			
     			AnimatorSet set = new AnimatorSet();
     	    	set.playTogether(
     	    	    ObjectAnimator.ofFloat(findViewById(R.id.logo), "scaleX", 1, 1.2f),
@@ -119,6 +132,7 @@ public class LandingActivity extends AccessActivity {
 
     				@Override
     				public void onClick(View arg0) {
+    					AnalyticsBase.reportUnloggedEvent("Clicked on Login Button", getApplicationContext());
     					displaySignInForm();				
     				}
     				
@@ -128,6 +142,7 @@ public class LandingActivity extends AccessActivity {
 
     				@Override
     				public void onClick(View arg0) {
+    					AnalyticsBase.reportUnloggedEvent("Clicked on Join Button", getApplicationContext());
     					sendToRegistrationActivity();				
     				}
     				
@@ -165,7 +180,18 @@ public class LandingActivity extends AccessActivity {
 
 			@Override
 			public void onClick(View v) {
-				attemptLogin((EditText) view.findViewById(R.id.login_username), (EditText) view.findViewById(R.id.login_password));
+				EditText username = (EditText) view.findViewById(R.id.login_username);
+				AnalyticsBase.reportUnloggedEvent("Attempted To Login", getApplicationContext(), "username", username.toString());				
+				attemptLogin(username, (EditText) view.findViewById(R.id.login_password));
+			}
+        	
+        });
+        
+        toggleBuilder.setOnDismissListener(new OnDismissListener() {
+
+			@Override
+			public void onDismiss(DialogInterface dialog) {
+				AnalyticsBase.reportUnloggedEvent("Dismissed Login View", getApplicationContext());				
 			}
         	
         });
@@ -235,9 +261,7 @@ public class LandingActivity extends AccessActivity {
 		
 		@SuppressWarnings("unchecked")
 		@Override
-		protected Boolean doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
-			
+		protected Boolean doInBackground(Void... params) {			
 			Map<String, String> parameters = new LinkedHashMap<String, String>();
 			parameters.put("login", mLogin);
 			parameters.put("password", mPassword);
@@ -255,6 +279,7 @@ public class LandingActivity extends AccessActivity {
 				return false;
 			} else {
 				User.storeWithParams(responseObject, (String) responseObject.get("auth_token"));
+				AnalyticsBase.registerUser(User.id(), getApplicationContext());
 				return true;
 			}
 		}

@@ -3,6 +3,7 @@ package org.wikicleta.fragments.activities;
 import java.util.ArrayList;
 import org.wikicleta.R;
 import org.wikicleta.activities.ActivitiesActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.fragments.BasePagedFragment;
 import org.wikicleta.models.LightPOI;
@@ -19,6 +20,9 @@ public class RecentsFragment extends BasePagedFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recents, container, false);
+        
+		AnalyticsBase.reportLoggedInEvent("Activities Activity: Recents", AppBase.currentActivity);
+        
         this.drawLoadingView(view);
         return view;
     }

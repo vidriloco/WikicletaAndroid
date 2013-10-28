@@ -1,6 +1,7 @@
 package org.wikicleta.fragments.about_sections;
 
 import org.wikicleta.R;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 
 import android.os.Bundle;
@@ -15,7 +16,8 @@ public class GraphicsFragment extends Fragment {
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	View view = (View) inflater.inflate(R.layout.fragment_graphics, null);
-    	
+		AnalyticsBase.reportLoggedInEvent("About Activity: Graphics", AppBase.currentActivity);
+
     	((TextView) view.findViewById(R.id.attribution_icons_text)).setTypeface(AppBase.getTypefaceStrong());
     	((TextView) view.findViewById(R.id.comes_from_text)).setTypeface(AppBase.getTypefaceStrong());
     	return view;

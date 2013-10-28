@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.TabbedActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.fragments.favorites.ParkingsFragment;
 import org.wikicleta.fragments.favorites.RoutesFragment;
 import org.wikicleta.fragments.favorites.TipsFragment;
@@ -21,6 +22,7 @@ public class FavoritesActivity extends TabbedActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.string.favorites_in_root, R.layout.activity_favorites);
+		AnalyticsBase.reportLoggedInEvent("On Favorites Activity", getApplicationContext());
 	}
 	
 	public void buildTabs() {

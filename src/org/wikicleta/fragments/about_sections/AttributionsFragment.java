@@ -1,6 +1,7 @@
 package org.wikicleta.fragments.about_sections;
 
 import org.wikicleta.R;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -17,6 +18,8 @@ public class AttributionsFragment extends Fragment {
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	View view = (View) inflater.inflate(R.layout.fragment_attributions, null);
+		AnalyticsBase.reportLoggedInEvent("About Activity: Attributions", AppBase.currentActivity);
+
     	((TextView) view.findViewById(R.id.attribution_message)).setTypeface(AppBase.getTypefaceLight());
     	((TextView) view.findViewById(R.id.attribution_message_title)).setTypeface(AppBase.getTypefaceStrong());
     	((TextView) view.findViewById(R.id.attribution_message)).setText(GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(AppBase.currentActivity));

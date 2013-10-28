@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.LocationAwareMapWithMarkersActivity;
 import org.wikicleta.adapters.MenuOptionsListAdapter;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.SlidingMenuBuilder;
@@ -29,7 +30,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnClosedListener;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -64,6 +64,8 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 		super.onCreate(savedInstanceState, R.layout.activity_main_map);
 		setTheme(R.style.Theme_wikicleta);
 		
+		AnalyticsBase.reportLoggedInEvent("On Discover Activity", getApplicationContext());
+		
 		// Assign icons
 		returnIcon = (ImageView) this.findViewById(R.id.return_button);
 
@@ -78,6 +80,7 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
     	rightMenuToggler.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+    			AnalyticsBase.reportLoggedInEvent("On Discover Activity: Opened Drawer", getApplicationContext());
 				rightMenu.toggle();
 			}
 		});
@@ -86,6 +89,7 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 
 			@Override
 			public void onClosed() {
+				AnalyticsBase.reportLoggedInEvent("On Discover Activity: display right menu", getApplicationContext());
 				reloadActiveLayersWithMapClearing();
 			}
     		
@@ -96,6 +100,7 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 
 			@Override
 			public void onClick(View v) {
+				AnalyticsBase.reportLoggedInEvent("On Discover Activity: return to back", getApplicationContext());
 				AppBase.launchActivity(RootActivity.class);
 			}
     		
@@ -193,6 +198,8 @@ public class DiscoverActivity extends LocationAwareMapWithMarkersActivity {
 	
 	@Override
 	public boolean onMarkerClick(Marker marker) {
+		AnalyticsBase.reportLoggedInEvent("On Discover Activity: Clicked POI", getApplicationContext());
+
 		MarkerInterface markerIn = (MarkerInterface) markers.get(marker.getPosition());
 		if(markerIn instanceof Workshop)
 			WorkshopViews.buildViewForWorkshop(this, (Workshop) markerIn);

@@ -8,6 +8,7 @@ import org.json.simple.JSONValue;
 import org.wikicleta.R;
 import org.wikicleta.activities.RootActivity;
 import org.wikicleta.activities.common.ImageSelectionActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.NetworkOperations;
@@ -66,6 +67,8 @@ public class RegistrationActivity extends ImageSelectionActivity {
 		mPasswordConfirmationView = (EditText) findViewById(R.id.password_confirmation);
 		mPasswordConfirmationView.setTypeface(AppBase.getTypefaceLight());
 		
+		AnalyticsBase.reportUnloggedEvent("On Registration Activity", getApplicationContext());
+
 		((TextView) this.findViewById(R.id.pic_instructions)).setTypeface(AppBase.getTypefaceStrong());
         
         alertDialog = DialogBuilder.buildLoadingDialogWithMessage(this, R.string.registering_user);
@@ -76,6 +79,8 @@ public class RegistrationActivity extends ImageSelectionActivity {
 			public void onClick(View v) {
 				AppBase.launchActivity(LandingActivity.class);
 				finish();
+    			AnalyticsBase.reportUnloggedEvent("Did not register", RegistrationActivity.this.getApplicationContext());
+
 			}
         	
         });
@@ -84,6 +89,8 @@ public class RegistrationActivity extends ImageSelectionActivity {
 
 			@Override
 			public void onClick(View v) {
+    			AnalyticsBase.reportUnloggedEvent("Attempted to save profile", RegistrationActivity.this.getApplicationContext());
+
 				attemptSignup();
 			}
         	
@@ -180,6 +187,10 @@ public class RegistrationActivity extends ImageSelectionActivity {
 				return false;
 			} else {
 				User.storeWithParams(responseObject, (String) responseObject.get("auth_token"));
+				
+				AnalyticsBase.registerUser(User.id(), getApplicationContext());
+    			AnalyticsBase.reportLoggedInEvent("Registered new user", RegistrationActivity.this.getApplicationContext());
+
 				return true;
 			}
 		}

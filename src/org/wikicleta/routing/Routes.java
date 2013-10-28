@@ -12,6 +12,7 @@ import org.wikicleta.activities.routes.NewRouteActivity;
 import org.wikicleta.activities.routes.RouteDetailsActivity;
 import org.wikicleta.activities.routes.RoutesConnectorInterface;
 import org.wikicleta.adapters.DraftsListAdapter;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.common.Toasts;
@@ -359,6 +360,7 @@ public class Routes {
 	    		activity.resetAll();
 	    		dialog.dismiss();
 	    		activity.finish();
+				AnalyticsBase.reportLoggedInEvent("On New Route Activity: Route Saved successfully", activity);
 	    		AppBase.launchActivity(DiscoverActivity.class);
 	    	} else {	    		
 	    		AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.notification, R.string.route_not_saved);
@@ -366,6 +368,8 @@ public class Routes {
     			builder = builder.setNeutralButton(activity.getResources().getString(R.string.save_as_draft), new DialogInterface.OnClickListener() {
     				public void onClick(DialogInterface dialog,int id) {
     					route.save();
+    					AnalyticsBase.reportLoggedInEvent("On New Route Activity: Route NOT saved; DRAFT", activity);
+
 	    				AppBase.launchActivity(DiscoverActivity.class);
 	    				Toasts.showToastWithMessage(activity, R.string.route_sent_to_drafts, R.drawable.archive_icon);
 	    	    		activity.finish();
@@ -374,11 +378,14 @@ public class Routes {
 	    		
 	    		builder.setNegativeButton(activity.getResources().getString(R.string.discard), new DialogInterface.OnClickListener() {
 	    			public void onClick(DialogInterface dialog,int id) {
+    					AnalyticsBase.reportLoggedInEvent("On New Route Activity: Route NOT saved; DISCARD", activity);
+
 	    				AppBase.launchActivity(DiscoverActivity.class);
 	    				activity.finish();
 	    			}
 	    		}).setPositiveButton(activity.getResources().getString(R.string.retry), new DialogInterface.OnClickListener() {
 	    			public void onClick(DialogInterface dialog,int id) {
+	    				
 	    				dialog.dismiss();
 	    			}
 	    		});

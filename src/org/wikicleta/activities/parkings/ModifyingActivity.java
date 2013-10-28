@@ -2,6 +2,7 @@ package org.wikicleta.activities.parkings;
 
 import org.wikicleta.R;
 import org.wikicleta.activities.common.ModifyingOnMapBaseActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
@@ -62,6 +63,8 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 	}
 
 	protected void presentSaveForm() {
+		AnalyticsBase.reportLoggedInEvent("Parking Modify/New: display form", getApplicationContext());
+
 		LatLng center = map.getCameraPosition().target;
 		// Setting parking coordinates
 		parking.latitude = center.latitude;
@@ -74,6 +77,8 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 	 */
 	
 	public void attemptCommit() {
+		AnalyticsBase.reportLoggedInEvent("Parking Modify/New: commit attempt", getApplicationContext());
+
 		String parkingsContents = details.getText().toString();
 		parking.details = parkingsContents;
 		parking.hasRoof = hasRoofCheckbox.isChecked(); 

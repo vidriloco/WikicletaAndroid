@@ -4,6 +4,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import org.wikicleta.R;
 import org.wikicleta.activities.RootActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.helpers.Formatters;
@@ -68,6 +69,8 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 		this.setContentView(R.layout.activity_new_route);
 		setTheme(R.style.Theme_wikicleta);
 
+		AnalyticsBase.reportLoggedInEvent("On New Route Activity", getApplicationContext());
+		
 		decimalFormat = new DecimalFormat("##.##");
 		decimalFormat.setRoundingMode(RoundingMode.DOWN);
         recordRouteToolbarView = (RelativeLayout) findViewById(R.id.toggable_group);
@@ -99,6 +102,8 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
     	recButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				AnalyticsBase.reportLoggedInEvent("On New Route Activity: Route started tracking", getApplicationContext());
+
 				resumeRecording(true);
 			}
 		});
@@ -106,6 +111,8 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
     	pauseButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				AnalyticsBase.reportLoggedInEvent("On New Route Activity: Route paused tracking", getApplicationContext());
+
 				theService.pauseRecordingAndNotify();
 				pauseRecording(true);
 			}
@@ -113,7 +120,9 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
     	
     	saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {				
+			public void onClick(View v) {
+				AnalyticsBase.reportLoggedInEvent("On New Route Activity: Route ready to save", getApplicationContext());
+
 				if(!theService.pathIsEmpty()) {
 					if(!theService.isTracking)
 						resumeRecording(true);
@@ -130,6 +139,8 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 			public void onClick(View arg0) {
 				if(gpsWaitingView.getVisibility() == View.VISIBLE) {
 					AppBase.launchActivity(RootActivity.class);
+					cancelRecording();
+					AnalyticsBase.reportLoggedInEvent("On New Route Activity: Returned to back (GPS not ready)", getApplicationContext());
 				} else {
 					final boolean wasRecording;
 					if(!theService.pathIsEmpty()) {
@@ -143,6 +154,8 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 						alertDialog.setPositiveButton(getResources().getString(R.string.confirm_yes), new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
+								AnalyticsBase.reportLoggedInEvent("On New Route Activity: User canceled without resuming", getApplicationContext());
+
 								cancelRecording();
 							}
 						});
@@ -153,13 +166,16 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 								if(wasRecording) {
 									// Resume tracking (with auto-recording)
 									resumeRecording(true);
+									AnalyticsBase.reportLoggedInEvent("On New Route Activity: User resumed route after attempt to cancel", getApplicationContext());
 								} 
 							}
 						});		
 						
 						alertDialog.setNeutralButton(null, null);
 						alertDialog.show();
+						
 					} else {
+						AnalyticsBase.reportLoggedInEvent("On New Route Activity: Returned to back", getApplicationContext());
 						cancelRecording();
 					}				
 				}
@@ -200,6 +216,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 
 			@Override
 			public void onClick(View v) {
+				AnalyticsBase.reportLoggedInEvent("On New Route Activity: Save route attempt", getApplicationContext());
 				attemptCommit();
 			}
         	

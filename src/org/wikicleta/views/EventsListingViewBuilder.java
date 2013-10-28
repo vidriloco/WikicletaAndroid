@@ -3,6 +3,7 @@ package org.wikicleta.views;
 import org.wikicleta.R;
 import org.wikicleta.activities.EventsActivity;
 import org.wikicleta.adapters.EventsListAdapter;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.interfaces.EventInterface;
 import org.wikicleta.interfaces.MarkerInterface;
@@ -49,6 +50,7 @@ public class EventsListingViewBuilder {
 		
 		if(events.length == 0) {
 			buildEmptyView(activity);
+			AnalyticsBase.reportLoggedInEvent("Events Activity: No elements nearby", activity);
 		} else {
 			final Dialog dialog = new Dialog(activity);
 	        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -86,6 +88,7 @@ public class EventsListingViewBuilder {
 				public void onItemClick(AdapterView<?> adapterParent, View view, int position, long id) {
 					dialog.dismiss();
 					activity.centerOnEvent((MarkerInterface) listAdapter.getItem(position));
+					AnalyticsBase.reportLoggedInEvent("Events Activity: Clicked list item", activity);
 				}
 
 		    });

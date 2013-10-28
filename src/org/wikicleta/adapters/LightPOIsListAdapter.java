@@ -3,6 +3,7 @@ package org.wikicleta.adapters;
 import java.util.List;
 import org.wikicleta.R;
 import org.wikicleta.activities.DiscoverActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.LightPOI;
 import org.wikicleta.models.helpers.ListedModelExtractor;
@@ -67,6 +68,8 @@ public class LightPOIsListAdapter extends ArrayAdapter<LightPOI> {
 
 			@Override
 			public void onClick(View v) {
+    			AnalyticsBase.reportLoggedInEvent("Clicked LightPoi from list", context.getApplicationContext(), "poi-title", ListedModelExtractor.extractModelTitle(lightPOI));
+
 				DiscoverActivity.selectedPoi = lightPOI;
 				AppBase.launchActivity(DiscoverActivity.class);	
 				context.finish();

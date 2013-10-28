@@ -1,6 +1,7 @@
 package org.wikicleta.views;
 
 import org.wikicleta.R;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.TripPoi;
 import android.app.Activity;
@@ -42,6 +43,8 @@ public class TripPoiViews {
         	model.setText(item.name);
         dialog.setContentView(view);
 
+		AnalyticsBase.reportLoggedInEvent("On TripDetails Activity : Trippoi view", activity, "trip-poi-cat", type);
+        
         view.findViewById(R.id.dialog_close).setOnClickListener(new OnClickListener(){
 
 			@Override

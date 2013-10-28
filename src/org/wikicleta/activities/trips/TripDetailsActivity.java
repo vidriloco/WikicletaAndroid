@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.wikicleta.R;
 import org.wikicleta.activities.common.LocationAwareMapWithControlsActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.interfaces.MarkerInterface;
 import org.wikicleta.models.Segment;
@@ -51,6 +52,7 @@ public class TripDetailsActivity extends LocationAwareMapWithControlsActivity im
         eventName.setTypeface(AppBase.getTypefaceStrong());
         eventName.setText(selectedTrip.name);
 
+		AnalyticsBase.reportLoggedInEvent("On TripDetails Activity", getApplicationContext(), "trip-name", selectedTrip.name);
         
    	 	map.setOnMarkerClickListener(this);
    	 	//map.animateCamera(CameraUpdateFactory.zoomTo(18));

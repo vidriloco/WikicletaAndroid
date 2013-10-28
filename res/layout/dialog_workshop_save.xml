@@ -124,7 +124,7 @@
 	           android:id="@+id/workshops_phone"
 	           android:layout_width="match_parent"
 	           android:layout_height="wrap_content"
-	           android:maxLength="8"
+	           android:maxLength="15"
 	           android:ems="10"
 		       android:inputType="number" 
 	           android:hint="@string/workshops_form_phone_hint" >
@@ -134,7 +134,7 @@
 		           android:id="@+id/workshops_cellphone"
 		           android:layout_width="match_parent"
 		           android:layout_height="wrap_content"
-		           android:maxLength="8"
+		           android:maxLength="15"
 		           android:ems="10"
 		           android:inputType="number" 
 		           android:hint="@string/workshops_form_cellPhone_hint" >

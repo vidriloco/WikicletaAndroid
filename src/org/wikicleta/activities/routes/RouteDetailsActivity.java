@@ -5,6 +5,7 @@ import org.wikicleta.R;
 import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.common.LocationAwareMapWithMarkersActivity;
 import org.wikicleta.adapters.PerformancesListAdapter;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.Toasts;
@@ -24,10 +25,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -57,7 +62,8 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 		attemptCenterOnLocationAtStart = false;
 		super.onCreate(savedInstanceState,R.layout.activity_route_details);
 		setTheme(R.style.Theme_wikicleta);
-		
+		AnalyticsBase.reportLoggedInEvent("On Route Details Activity", getApplicationContext());
+
         AppBase.currentActivity = this;
         
         if(currentRoute == null)
@@ -70,6 +76,8 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 
     			@Override
     			public void onClick(View v) {
+					AnalyticsBase.reportLoggedInEvent("On Route Details Activity: return to back", getApplicationContext());
+
     				overridePendingTransition(0, 0);
     				finish();
     			}
@@ -81,6 +89,8 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 
     			@Override
     			public void onClick(View v) {
+					AnalyticsBase.reportLoggedInEvent("On Route Details Activity: more info dialog appears", getApplicationContext());
+
     				RouteViews.buildViewDetailsExtra(RouteDetailsActivity.this, currentRoute);
     			}
         		
@@ -91,6 +101,8 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 
     			@Override
     			public void onClick(View v) {
+					AnalyticsBase.reportLoggedInEvent("On Route Details Activity: performances dialog appears", getApplicationContext());
+
     				performancesDialog = RouteViews.buildPerformancesView(RouteDetailsActivity.this, currentRoute);
     			}
         		
@@ -181,6 +193,15 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
         final ListView listview = (ListView) performancesDialog.findViewById(R.id.list_events);
         PerformancesListAdapter listAdapter = new PerformancesListAdapter(this, currentRoute.persistedRoutePerformances);
 	    listview.setAdapter(listAdapter);
+	    listview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				AnalyticsBase.reportLoggedInEvent("On Route Details Activity: clicked performance row", getApplicationContext());
+			}
+	    	
+	    });
 	    
 		((TextView) performancesDialog.findViewById(R.id.challenge_or_check_in_text)).setTypeface(AppBase.getTypefaceStrong());
 
@@ -203,6 +224,9 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 		rankingDialog = new Dialog(this);
 		rankingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		rankingDialog.setContentView(R.layout.dialog_route_ranking);
+		
+		AnalyticsBase.reportLoggedInEvent("On Route Details Activity: rank route dialog", getApplicationContext(), 
+				"route-id", String.valueOf(currentRoute.remoteId));
 		
 		((TextView) rankingDialog.findViewById(R.id.route_security_value_text)).setTypeface(AppBase.getTypefaceStrong());
 		((TextView) rankingDialog.findViewById(R.id.route_fast_value_text)).setTypeface(AppBase.getTypefaceStrong());
@@ -253,9 +277,11 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 				int speed = getSelectedRankingValueForView(rankingDialog.findViewById(R.id.route_fast_container));
 				int comfort = getSelectedRankingValueForView(rankingDialog.findViewById(R.id.route_comfort_container));
 				int security = getSelectedRankingValueForView(rankingDialog.findViewById(R.id.route_security_container));
-				if(speed > 0  && comfort > 0 && security > 0)
+				if(speed > 0  && comfort > 0 && security > 0) {
+					AnalyticsBase.reportLoggedInEvent("On Route Details Activity: ranked route", getApplicationContext(), 
+							"route-id", String.valueOf(currentRoute.remoteId));
 					attemptCommitRouteRanking(security, speed, comfort);
-					
+				}
 			}
 			
 		});
@@ -270,6 +296,17 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 			}
 			
 		});
+		
+		rankingDialog.setOnDismissListener(new OnDismissListener() {
+
+			@Override
+			public void onDismiss(DialogInterface dialog) {
+				AnalyticsBase.reportLoggedInEvent("On Route Details Activity: ranked route view dismissed", getApplicationContext(), 
+						"route-id", String.valueOf(currentRoute.remoteId));				
+			}
+			
+		});
+		
 		rankingDialog.show();
 		
 		RouteRankings rankings = new RouteRankings();

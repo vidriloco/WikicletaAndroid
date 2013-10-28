@@ -18,6 +18,7 @@ public class ActivitiesActivity extends TabbedActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.string.activities_in_root, R.layout.activity_activities);
+
 	    this.fetchUserActivities();
 	}
 	

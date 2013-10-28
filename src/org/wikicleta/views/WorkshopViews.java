@@ -6,6 +6,7 @@ import org.wikicleta.R;
 import org.wikicleta.activities.CommentsActivity;
 import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.workshops.ModifyingActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.models.User;
@@ -81,6 +82,8 @@ public class WorkshopViews extends BaseViews {
         negativeRankingLegend.setText(String.valueOf(workshop.dislikesCount));
         negativeRankingLegend.setTypeface(AppBase.getTypefaceStrong());
         
+		AnalyticsBase.reportLoggedInEvent("On Discover Activity: workshop view", activity, "workshop-id", String.valueOf(workshop.remoteId));
+
         dialog.findViewById(R.id.positive_rankings_container).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -125,6 +128,8 @@ public class WorkshopViews extends BaseViews {
 
 				@Override
 				public void onClick(View v) {
+					AnalyticsBase.reportLoggedInEvent("On Discover Activity: workshop view twitter click", activity, "workshop-id",  String.valueOf(workshop.remoteId));
+
 					AppBase.launchTwitterActivityWithUsername(workshop.twitter);
 				}
         		
@@ -143,6 +148,7 @@ public class WorkshopViews extends BaseViews {
 
 				@Override
 				public void onClick(View v) {
+					AnalyticsBase.reportLoggedInEvent("On Discover Activity: workshop view webpage click", activity, "workshop-id",  String.valueOf(workshop.remoteId));
 					AppBase.launchBrowserActivityWithURL(workshop.webpage);
 				}
         		
@@ -267,6 +273,7 @@ public class WorkshopViews extends BaseViews {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
+								AnalyticsBase.reportLoggedInEvent("On Discover Activity: workshop view phone attempt", activity, "workshop-id",  String.valueOf(workshop.remoteId));
 								AppBase.launchPhoneCallingActivity(String.valueOf(Long.valueOf(workshop.cellPhone)));								
 							}
 							

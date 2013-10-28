@@ -2,6 +2,7 @@ package org.wikicleta.activities;
 
 import org.wikicleta.R;
 import org.wikicleta.activities.common.ModifyingOnMapBaseActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import android.os.Bundle;
 
@@ -14,6 +15,8 @@ public class ShareActivity extends ModifyingOnMapBaseActivity {
 		
 		AppBase.currentActivity = this;
 		loadActionButtons();
+		AnalyticsBase.reportLoggedInEvent("On Share Activity", getApplicationContext());
+
 	}
 	
 	@Override

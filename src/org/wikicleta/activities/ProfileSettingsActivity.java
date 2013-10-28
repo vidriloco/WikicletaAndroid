@@ -3,6 +3,7 @@ package org.wikicleta.activities;
 import java.util.HashMap;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.ImageSelectionActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
@@ -66,10 +67,15 @@ public class ProfileSettingsActivity extends ImageSelectionActivity implements R
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setCustomView(actionBarView);
 		
+		AnalyticsBase.reportLoggedInEvent("On Profile Activity", getApplicationContext());
+
+		
 		this.findViewById(R.id.save_profile).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				AnalyticsBase.reportLoggedInEvent("Attempted to update profile", getApplicationContext());
+
 				updateProfile();
 			}
 			

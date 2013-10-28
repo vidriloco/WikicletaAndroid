@@ -3,6 +3,7 @@ package org.wikicleta.activities;
 import java.util.ArrayList;
 import org.wikicleta.R;
 import org.wikicleta.adapters.CommentsListAdapter;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.Constants;
 import org.wikicleta.common.FieldValidators;
@@ -89,22 +90,14 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 		});
 		
         ((TextView) findViewById(R.id.text_comment_title)).setTypeface(AppBase.getTypefaceStrong());
-        
-        ImageView returnIcon = (ImageView) this.findViewById(R.id.return_button);
-    	returnIcon.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-    		
-    	});
     	
     	ImageView saveButton = (ImageView) this.findViewById(R.id.save_button);
     	saveButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				AnalyticsBase.reportLoggedInEvent("On Comments Activity: attempt save", getApplicationContext(), 
+						"resource-id", String.valueOf(selectedPoint.getRemoteId()), "resource-type", String.valueOf(selectedPoint.getKind()));
 				attemptCommit();
 			}
     		
@@ -115,6 +108,8 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 
 			@Override
 			public void onClick(View v) {
+				AnalyticsBase.reportLoggedInEvent("On Comments Activity: return to back", getApplicationContext(), 
+						"resource-id", String.valueOf(selectedPoint.getRemoteId()), "resource-type", String.valueOf(selectedPoint.getKind()));
 				if(commentTextField.getText().toString().isEmpty())
 					finish();
 				else
@@ -123,6 +118,8 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
     		
     	});
 
+		AnalyticsBase.reportLoggedInEvent("On Comments Activity", getApplicationContext());
+    	
 		commentTextField = (EditText) this.findViewById(R.id.comment_input_field);
 		if(android.os.Build.VERSION.SDK_INT >= 11)
 			drawLoadingView();
@@ -247,6 +244,8 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 			this.fetchComments();
 			Toasts.showToastWithMessage(this, R.string.comment_saved_successfully, R.drawable.success_icon);
 			commentTextField.setText("");
+			AnalyticsBase.reportLoggedInEvent("On Comments Activity: Saved Comment", getApplicationContext());
+
 		}
 	}
 

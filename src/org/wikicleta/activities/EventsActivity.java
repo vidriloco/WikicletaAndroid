@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import org.wikicleta.R;
 import org.wikicleta.activities.common.LocationAwareMapWithMarkersActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.EventProximityComparator;
 import org.wikicleta.interfaces.EventInterface;
@@ -36,6 +37,8 @@ public class EventsActivity extends LocationAwareMapWithMarkersActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState, R.layout.activity_events);
 		
+		AnalyticsBase.reportLoggedInEvent("On Events Activity", getApplicationContext());
+		
 		returnIcon = (ImageView) this.findViewById(R.id.return_button);
     	returnIcon.setOnClickListener(new OnClickListener() {
 
@@ -51,6 +54,8 @@ public class EventsActivity extends LocationAwareMapWithMarkersActivity {
 
 			@Override
 			public void onClick(View arg0) {
+				AnalyticsBase.reportLoggedInEvent("Events Activity: Displayed List", getApplicationContext());
+
 				EventsListingViewBuilder.buildView(EventsActivity.this);
 			}
     		
@@ -71,10 +76,16 @@ public class EventsActivity extends LocationAwareMapWithMarkersActivity {
 	@Override
 	public boolean onMarkerClick(Marker marker) {
 		MarkerInterface markerIn = (MarkerInterface) markers.get(marker.getPosition());
-		if(markerIn instanceof CyclingGroup)
-			CyclingGroupViews.buildViewForCyclingGroup(this, (CyclingGroup) markerIn);
-		if(markerIn instanceof Trip) {
-			TripViews.buildViewForTrip(this, (Trip) markerIn);
+		if(markerIn instanceof CyclingGroup) {
+			CyclingGroup cy = (CyclingGroup) markerIn;
+			CyclingGroupViews.buildViewForCyclingGroup(this, cy);
+			
+			AnalyticsBase.reportLoggedInEvent("Events Activity: Clicked cycling group", getApplicationContext(), "cycling-group-id", String.valueOf(cy.remoteId));
+		} if(markerIn instanceof Trip) {
+			Trip tr = (Trip) markerIn;
+			TripViews.buildViewForTrip(this, tr);
+			
+			AnalyticsBase.reportLoggedInEvent("Events Activity: Clicked trip", getApplicationContext(), "trip-id", String.valueOf(tr.remoteId));
 		}
 			
 		return true;

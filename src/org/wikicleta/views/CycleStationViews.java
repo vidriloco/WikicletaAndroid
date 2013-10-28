@@ -2,6 +2,7 @@ package org.wikicleta.views;
 
 import java.text.DecimalFormat;
 import org.wikicleta.R;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.GeoHelpers;
 import org.wikicleta.layers.common.LayersConnectorListener;
@@ -35,6 +36,8 @@ public class CycleStationViews  {
         
         TextView cycleStationDistance = (TextView) view.findViewById(R.id.cycle_station_distance);
         cycleStationName.setTypeface(AppBase.getTypefaceLight());
+        
+		AnalyticsBase.reportLoggedInEvent("On Discover Activity: cyclestation view", activity, "cyclestation-name", String.valueOf(item.name));
         
         LatLng location = listener.getLastLocation();
         if(location == null)

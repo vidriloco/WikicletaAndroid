@@ -3,6 +3,7 @@ package org.wikicleta.activities.common;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.wikicleta.R;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.Graphics;
 import android.content.Intent;
@@ -33,6 +34,8 @@ public class ImageSelectionActivity extends SherlockActivity {
 
 			@Override
 			public void onClick(View v) {
+				AnalyticsBase.reportLoggedInEvent("User choose pic", getApplicationContext());
+
 				selectImage();
 			}
     		
@@ -59,8 +62,10 @@ public class ImageSelectionActivity extends SherlockActivity {
 				e.printStackTrace();
 			}
             
-            if(bitmap != null)
+            if(bitmap != null) {
             	pic.setImageBitmap(Graphics.getRoundedImageAtSize(bitmap, 230, 115));
+				AnalyticsBase.reportLoggedInEvent("Valid pic choosen", getApplicationContext());
+            }
         }
 
     }

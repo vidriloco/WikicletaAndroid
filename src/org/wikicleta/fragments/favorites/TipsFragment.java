@@ -1,6 +1,9 @@
 package org.wikicleta.fragments.favorites;
 
 import org.wikicleta.R;
+import org.wikicleta.analytics.AnalyticsBase;
+import org.wikicleta.common.AppBase;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,9 @@ public class TipsFragment extends BaseFavoriteFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	View view = inflater.inflate(R.layout.fragment_tips, container, false);
+    	
+		AnalyticsBase.reportLoggedInEvent("Favorites Activity: On Tips", AppBase.currentActivity);
+
         this.drawLoadingView(view);
         return view;
     }

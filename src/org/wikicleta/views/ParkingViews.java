@@ -5,6 +5,7 @@ import org.wikicleta.R;
 import org.wikicleta.activities.CommentsActivity;
 import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.parkings.ModifyingActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.models.Parking;
@@ -70,6 +71,8 @@ public class ParkingViews extends BaseViews {
             updater.setImageAndImageProcessor(ownerPic, Others.ImageProcessor.ROUND_FOR_MINI_USER_PROFILE);
             updater.execute(parking.userPicURL);
         }
+
+		AnalyticsBase.reportLoggedInEvent("On Discover Activity: parking view", activity, "parking-id", String.valueOf(parking.remoteId));
 
         ImageView iconImage = (ImageView) dialog.findViewById(R.id.parking_kind_icon);
         iconImage.setImageDrawable(activity.getResources().getDrawable(parking.getDrawable()));

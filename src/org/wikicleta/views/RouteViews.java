@@ -6,6 +6,7 @@ import java.util.Date;
 import org.wikicleta.R;
 import org.wikicleta.activities.CommentsActivity;
 import org.wikicleta.activities.routes.RouteDetailsActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.models.Route;
@@ -55,10 +56,14 @@ public class RouteViews extends BaseViews {
 			public void onClick(View v) {
 				dialog.dismiss();
 				RouteDetailsActivity.currentRoute = route;
+				AnalyticsBase.reportLoggedInEvent("On Discover Activity: route view more details click", activity, "route-id", String.valueOf(route.remoteId));
+
 				AppBase.launchActivity(RouteDetailsActivity.class);
 			}
         	
         });
+        
+		AnalyticsBase.reportLoggedInEvent("On Discover Activity: route view", activity, "route-id", String.valueOf(route.remoteId));
         
         dialog.findViewById(R.id.route_security_container).setBackgroundColor(android.R.color.transparent);
         dialog.findViewById(R.id.route_fast_container).setBackgroundColor(android.R.color.transparent);

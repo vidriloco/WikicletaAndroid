@@ -6,6 +6,7 @@ import org.wikicleta.R;
 import org.wikicleta.activities.CommentsActivity;
 import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.tips.ModifyingActivity;
+import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.models.Tip;
@@ -69,6 +70,8 @@ public class TipViews extends BaseViews {
         
         creatorName.setText(activity.getResources().getString(R.string.created_by).concat(" ").concat(username));
         creatorName.setTypeface(AppBase.getTypefaceStrong());
+        
+		AnalyticsBase.reportLoggedInEvent("On Discover Activity: tip view", activity, "tip-id", String.valueOf(tip.remoteId));
         
         if(tip.hasPic()) {
             ImageView ownerPic = (ImageView) dialog.findViewById(R.id.contributor_pic);
