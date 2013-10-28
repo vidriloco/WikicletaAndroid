@@ -43,6 +43,7 @@ public class ModifyingOnMapBaseActivity extends LocationAwareMapWithControlsActi
 			@Override
 			public void onClick(View v) {
 				AppBase.launchActivity(RootActivity.class);
+				finish();
 			}
     		
     	});

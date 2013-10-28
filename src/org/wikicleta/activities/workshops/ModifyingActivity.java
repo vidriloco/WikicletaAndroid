@@ -43,7 +43,7 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 	
 	protected Marker marker;
 	
-	public Workshop workshop;
+	public static Workshop workshop;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +66,12 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 			turnOnLocation();
 			workshop = new Workshop();
 		}
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		workshop = null;
 	}
 	
 	protected void presentSaveForm() {

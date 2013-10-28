@@ -37,7 +37,7 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 	protected Spinner kindSelector;
 	protected EditText details;
 	protected CheckBox hasRoofCheckbox;
-	public Parking parking;
+	public static Parking parking;
 
 	
 	@Override
@@ -60,6 +60,12 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 			turnOnLocation();
 			parking = new Parking();
 		}
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		parking = null;
 	}
 
 	protected void presentSaveForm() {

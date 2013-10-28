@@ -130,9 +130,8 @@ public class ParkingViews extends BaseViews {
     			@Override
     			public void onClick(View v) {
     				dialog.dismiss();
-    				Bundle bundle = new Bundle();
-    				bundle.putSerializable("parking", parking);
-    				AppBase.launchActivityWithBundle(ModifyingActivity.class, bundle);
+    				ModifyingActivity.parking = parking;
+    				AppBase.launchActivity(ModifyingActivity.class);
     			}
             	
             });

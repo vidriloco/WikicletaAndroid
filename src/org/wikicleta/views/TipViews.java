@@ -137,9 +137,8 @@ public class TipViews extends BaseViews {
     			@Override
     			public void onClick(View v) {
     				dialog.dismiss();
-    				Bundle bundle = new Bundle();
-    				bundle.putSerializable("tip", tip);
-    				AppBase.launchActivityWithBundle(ModifyingActivity.class, bundle);
+    				ModifyingActivity.tip = tip;
+    				AppBase.launchActivity(ModifyingActivity.class);
     			}
             	
             });

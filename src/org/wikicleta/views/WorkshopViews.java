@@ -186,9 +186,8 @@ public class WorkshopViews extends BaseViews {
     			@Override
     			public void onClick(View v) {
     				dialog.dismiss();
-    				Bundle bundle = new Bundle();
-    				bundle.putSerializable("workshop", workshop);
-    				AppBase.launchActivityWithBundle(ModifyingActivity.class, bundle);
+    				ModifyingActivity.workshop = workshop;
+    				AppBase.launchActivity(ModifyingActivity.class);
     			}
             	
             });

@@ -39,7 +39,7 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 	
 	protected Marker marker;
 	
-	public Tip tip;
+	public static Tip tip;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +62,12 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 			tip = new Tip();
 		}
 
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		tip = null;
 	}
 	
 	protected void presentSaveForm() {
