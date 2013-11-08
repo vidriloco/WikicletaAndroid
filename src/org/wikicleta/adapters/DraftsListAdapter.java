@@ -109,7 +109,7 @@ public class DraftsListAdapter extends ArrayAdapter<ListedModelInterface> {
 				
 				AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(context, R.string.question, R.string.discard_draft);
 				
-				final AlertDialog alert = builder.setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener() {
+				final AlertDialog alert = builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialogLocal, int which) {
@@ -117,7 +117,7 @@ public class DraftsListAdapter extends ArrayAdapter<ListedModelInterface> {
 					}
 
 					
-				}).setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener() {
+				}).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {

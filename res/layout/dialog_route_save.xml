@@ -86,7 +86,7 @@
                 android:paddingRight="32dp"
 				android:layout_marginTop="50dp"
 				android:layout_marginBottom="20dp"
-                android:text="@string/routes_saving_form_save" />
+                android:text="@string/actions.save" />
         	</LinearLayout>
         	        
     </ScrollView>

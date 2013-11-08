@@ -22,7 +22,7 @@
 	           android:layout_height="wrap_content"
 	           android:gravity="right"
 	           android:layout_gravity="center_vertical"
-	           android:text="@string/save"
+	           android:text="@string/actions.save"
 	           android:textColor="@color/wikicleta_blue"
 	           android:textSize="20sp"
 	           android:padding="10dp"
@@ -91,7 +91,7 @@
 	           	android:paddingRight="32dp"
 				android:layout_marginTop="50dp"
 				android:layout_marginBottom="20dp"
-	            android:text="@string/save" />
+	            android:text="@string/actions.save" />
 		</LinearLayout>
 	</ScrollView>
 </RelativeLayout>

@@ -147,7 +147,7 @@ public class ParkingViews extends BaseViews {
     			public void onClick(View v) {
     				AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.question, R.string.tips_question_delete);
     				
-    				final AlertDialog alert = builder.setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener() {
+    				final AlertDialog alert = builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
 
 						@Override
 						public void onClick(DialogInterface dialogLocal, int which) {
@@ -156,7 +156,7 @@ public class ParkingViews extends BaseViews {
 						}
 
     					
-    				}).setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener() {
+    				}).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {

@@ -151,7 +151,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 						alertDialog.setTitle(getResources().getString(R.string.question));
 						alertDialog.setMessage(getResources().getString(R.string.routes_discard_route_question));
 						// If the user chooses 'Yes', then
-						alertDialog.setPositiveButton(getResources().getString(R.string.confirm_yes), new DialogInterface.OnClickListener() {
+						alertDialog.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								AnalyticsBase.reportLoggedInEvent("On New Route Activity: User canceled without resuming", getApplicationContext());
@@ -160,7 +160,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 							}
 						});
 						// If user chooses 'No', then the dialog closes
-						alertDialog.setNegativeButton(getResources().getString(R.string.confirm_no), new DialogInterface.OnClickListener() {
+						alertDialog.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								if(wasRecording) {
