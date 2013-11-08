@@ -19,7 +19,7 @@ public class ParkingsFragment extends BaseFavoriteFragment {
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_parkings, container, false);
+        View view = inflater.inflate(R.layout.fragment_parkings, null, false);
         
 		AnalyticsBase.reportLoggedInEvent("Favorites Activity: On Parkings", AppBase.currentActivity);
 

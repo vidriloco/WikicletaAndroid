@@ -19,7 +19,7 @@ public class TipsFragment extends BaseFavoriteFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    	View view = inflater.inflate(R.layout.fragment_tips, container, false);
+    	View view = inflater.inflate(R.layout.fragment_tips, null, false);
     	
 		AnalyticsBase.reportLoggedInEvent("Favorites Activity: On Tips", AppBase.currentActivity);
 

@@ -19,7 +19,7 @@ public class RoutesFragment extends BaseFavoriteFragment {
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_routes, container, false);
+		View view = inflater.inflate(R.layout.fragment_routes, null, false);
 		
 		AnalyticsBase.reportLoggedInEvent("Favorites Activity: On Routes", AppBase.currentActivity);
 
