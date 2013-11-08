@@ -203,7 +203,7 @@ public class WorkshopViews extends BaseViews {
     			public void onClick(View v) {
     				AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.question, R.string.tips_question_delete);
     				
-    				final AlertDialog alert = builder.setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener() {
+    				final AlertDialog alert = builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
 
 						@Override
 						public void onClick(DialogInterface dialogLocal, int which) {
@@ -212,7 +212,7 @@ public class WorkshopViews extends BaseViews {
 						}
 
     					
-    				}).setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener() {
+    				}).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -267,7 +267,7 @@ public class WorkshopViews extends BaseViews {
 					public void onClick(View v) {
 						dialog.hide();
 						Builder alertBuilder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.question, R.string.call_phone_number_confirmation);
-						alertBuilder.setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener(){
+						alertBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
 
 							@Override
 							public void onClick(DialogInterface dialog,
@@ -277,7 +277,7 @@ public class WorkshopViews extends BaseViews {
 							}
 							
 						});
-						alertBuilder.setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener(){
+						alertBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener(){
 
 							@Override
 							public void onClick(DialogInterface dialogLocal,
@@ -318,7 +318,7 @@ public class WorkshopViews extends BaseViews {
 					public void onClick(View v) {
 						dialog.hide();
 						Builder alertBuilder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.question, R.string.call_phone_number_confirmation);
-						alertBuilder.setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener(){
+						alertBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
 
 							@Override
 							public void onClick(DialogInterface dialog,
@@ -327,7 +327,7 @@ public class WorkshopViews extends BaseViews {
 							}
 							
 						});
-						alertBuilder.setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener(){
+						alertBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener(){
 
 							@Override
 							public void onClick(DialogInterface dialogLocal,

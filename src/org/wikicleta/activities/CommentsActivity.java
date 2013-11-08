@@ -129,11 +129,11 @@ public class CommentsActivity extends Activity implements RemoteFetchingDutyList
 	private void notifyAboutPotentialLossOfComment() {
 		AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(this, R.string.notification, R.string.comment_not_saved);
 		
-		builder.setNegativeButton(getResources().getString(R.string.confirm_no), new DialogInterface.OnClickListener() {
+		builder.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int id) {
 				dialog.dismiss();
 			}
-		}).setPositiveButton(getResources().getString(R.string.confirm_yes), new DialogInterface.OnClickListener() {
+		}).setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int id) {
 				finish();
 			}

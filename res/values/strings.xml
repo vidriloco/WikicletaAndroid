@@ -3,297 +3,374 @@
     <string name="app_name">Wikicleta</string>
 	<string name="nothing"></string>
 	<string name="dashes">--</string>
-	<string name="save">Guardar</string>
-	<string name="discard">Descartar</string>
-	<string name="retry">Reintentar subir</string>
-	<string name="save_as_draft">Guardar como borrador</string>
-	<string name="notification">Notificación</string>
-	<string name="question">Pregunta</string>
-	<string name="neutral">Aceptar</string>
-	<string name="confirm_yes">Si</string>
-	<string name="confirm_no">No</string>
-	<string name="question">Pregunta</string>
-	<string name="fav">fav</string>
-	<string name="favs">favs</string>
-	<string name="connectivity_problems">No ha sido posible conectar con el servidor remoto, por favor, revisa tu conexión</string>
-	<string name="hide">Ocultar</string>
-	<string name="attempt_reload_text">Toca aquí para re-intentar cargar</string>
-	<string name="event_today">Hoy</string>
-	<string name="event_tomorrow">Mañana</string>
-	<string name="event_unknown">No se sabe cuando</string>
-	<string name="event_other">En %d días</string>
+	<string name="discard">Discard</string>
+	<string name="retry">Retry</string>
+	<string name="save_as_draft">Save as draft</string>
+	<string name="notification">Notification</string>
+	<string name="question">Question</string>
+	<string name="neutral">Accept</string>
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	<string name="connectivity_problems">Please check your connection, we were unable to contact the remote server</string>
+	<string name="hide">Hide</string>
+	<string name="attempt_reload_text">Touch here to reload</string>
+	<string name="event_today">Today</string>
+	<string name="event_tomorrow">Tomorrow</string>
+	<string name="event_unknown">Unknown date</string>
+	<string name="event_other">In %d days</string>
 	
-	<string name="minutes">Minutos</string>
-	<string name="seconds">Segundos</string>
+	<string name="minutes">Minutes</string>
+	<string name="seconds">Seconds</string>
 	
-	<string name="see_comments">Ver Comentarios</string>
+	<string name="see_comments">See Comments</string>
 	
-	<string name="routes_dialog_section">Ruta</string>
+	<string name="routes_dialog_section">Route</string>
 	<string name="tips_dialog_section">Tip</string>
 	<string name="bicibus_dialog_section">Bicibus</string>
-	<string name="bike_parking_dialog_section">Estacionamiento</string>
-	<string name="bike_repair_dialog_section">Taller/tienda</string>
+	<string name="bike_parking_dialog_section">Parking</string>
+	<string name="bike_repair_dialog_section">Workshop/store</string>
 	
-	<string name="toggle_menu_routes">Rutas</string>
-	<string name="toggle_menu_tips">Tips</string>
-	<string name="toggle_menu_bike_parking">Estacionamientos</string>
-	<string name="toggle_menu_bike_sharing">Bicis públicas</string>
-	<string name="toggle_menu_bike_workshops_and_stores">Talleres y tiendas</string>
-	<string name="toggle_menu_cyclepaths">Ciclovías</string>
-	<string name="dialog_add">Añadir</string>
-	<string name="dialog_share">Nuevo</string>
-	<string name="dialog_toggle">Mostrar u Ocultar</string>
+	<string name="toggle_menu_routes">Route</string>
+	<string name="toggle_menu_tips">Tip</string>
+	<string name="toggle_menu_bike_parking">Parkings</string>
+	<string name="toggle_menu_bike_sharing">Public Bicycles</string>
+	<string name="toggle_menu_bike_workshops_and_stores">Workshops and stores</string>
+	<string name="toggle_menu_cyclepaths">Cyclepaths</string>
+	<string name="dialog_add">Add</string>
+	<string name="dialog_share">New</string>
+	<string name="dialog_toggle">Show or Hide</string>
 	
 	<!-- Subsections -->
-	<string name="route_recording_section">Nueva ruta</string>
+	<string name="route_recording_section">New route</string>
 			
 	<!-- Strings for routes -->
-	<string name="route">Ruta</string>
-	<string name="route_details">Detalles</string>
-	<string name="routes_title">Rutas</string>
-	<string name="save_route">Guardar ruta</string>
-	<string name="empty_routes_title">No has compartido ninguna ruta aún</string>
-	<string name="routes_question_delete">¿Deseas eliminar esta ruta?</string>
-	<string name="routes_discard_route_question">¿Realmente quieres descartar esta ruta?</string>
-	<string name="routes_saving_title">Guardar Ruta</string>
+	<string name="route">Route</string>
+	<string name="route_details">Details</string>
+	<string name="routes_title">Routes</string>
+	<string name="save_route">Save route</string>
+	<string name="empty_routes_title">You have not shared a route yet</string>
+	<string name="routes_question_delete">Do you want to delete this route?</string>
+	<string name="routes_discard_route_question">Do you want to discard this route?</string>
+	<string name="routes_saving_title">Save route</string>
 	
-	<string name="routes_recording_paused">Trazo de ruta en pausa</string>
-	<string name="routes_recording_resumed">Trazando ruta</string>
-	<string name="routes_recording_service_start">Iniciado el trazador de rutas</string>
-	<string name="routes_ready_for_recording">Puedes empezar a capturar tu ruta ahora</string>
-	<string name="routes_stats_speed">Velocidad</string>
-	<string name="routes_stats_time">Tiempo</string>
-	<string name="routes_stats_distance">Distancia</string>
+	<string name="routes_recording_paused">Route tracking on pause</string>
+	<string name="routes_recording_resumed">Tracking route</string>
+	<string name="routes_recording_service_start">Route tracker started</string>
+	<string name="routes_ready_for_recording">You can start tracking your route now</string>
+	<string name="routes_stats_speed">Speed</string>
+	<string name="routes_stats_time">Time</string>
+	<string name="routes_stats_distance">Distance</string>
 	
-	<string name="routes_saving_form_name">Nombre</string>
-	<string name="routes_saving_form_details">Detalles</string>
-	<string name="routes_saving_form_save">Guardar</string>
-	<string name="routes_saving_form_decline">Descartar</string>
-	<string name="routes_is_private_text">¿Es privada?</string>	
-	<string name="route_saved_successfully">Ruta guardada con éxito</string>
-	<string name="route_not_saved">No fué posible guardar la ruta</string>
+	<string name="routes_saving_form_name">Name</string>
+	<string name="routes_saving_form_details">Details</string>
+	<string name="routes_saving_form_decline">Discard</string>
+	<string name="routes_is_private_text">Is it private?</string>	
+	<string name="route_saved_successfully">Route saved successfully</string>
+	<string name="route_not_saved">We were unable to save your route</string>
 	
-	<string name="route_updated_successfully">Ruta actualizada correctamente</string>
-	<string name="route_not_updated">No fué posible guardar los cambios en esta ruta</string>
+	<string name="route_updated_successfully">Route updated successfully</string>
+	<string name="route_not_updated">We were unable to update the changes on your route</string>
 	
-	<string name="route_deleted_successfully">Ruta eliminada correctamente</string>
-	<string name="route_not_deleted">No fué posible eliminar esta ruta</string>
+	<string name="route_deleted_successfully">Route destroyed successfully</string>
+	<string name="route_not_deleted">We were unable to delete this route</string>
 	
-	<string name="route_sent_to_drafts">Ruta guardada como borrador</string>
+	<string name="route_sent_to_drafts">Route saved as draft</string>
 	
-	<string name="route_security_value">Seguridad</string>
-	<string name="route_fast_value">Rapidez</string>
-	<string name="route_comfort_value">Comodidad</string>
+	<string name="route_security_value">Safety</string>
+	<string name="route_fast_value">Speed</string>
+	<string name="route_comfort_value">Comfort</string>
 		
-	<string name="route_ranking_instructions_text">Toca una categoría y cambia su valor, según tu percepción de la ruta</string>
-	<string name="route_ranking_shared_successfully">Hemos recibido tu ranking sobre esta ruta. ¡gracias!</string>
-	<string name="route_ranking_failed_to_share">No pudimos recibir tu ranking de esta ruta. Intenta más tarde.</string>
+	<string name="route_ranking_instructions_text">Touch a category and change it\'s value, according to your perception of the route</string>
+	<string name="route_ranking_shared_successfully">You have ranked a route successfully! ¡Thanks!</string>
+	<string name="route_ranking_failed_to_share">We could not receive your ranking, please try again later</string>
 	
-	<string name="waiting_for_performances">Cargando tabla de rendimientos</string>
-	<string name="all_performants">Tabla de Rendimiento</string>
-	<string name="challenge_or_check_in_text">Compite / Haz check-in</string>
+	<string name="waiting_for_performances">Loading performances table</string>
+	<string name="all_performants">Performance table</string>
+	<string name="challenge_or_check_in_text">Compete / Check-in on route</string>
 	
-	<string name="route_performances_table_username_title_text">Usuario</string>
-	<string name="route_performances_table_date_title_text">Fecha</string>
-	<string name="route_performances_table_time_title_text">Tiempo</string>
-	<string name="route_performances_table_velocity_title_text">Vel.</string>
+	<string name="route_performances_table_username_title_text">User</string>
+	<string name="route_performances_table_date_title_text">Date</string>
+	<string name="route_performances_table_time_title_text">Time</string>
+	<string name="route_performances_table_velocity_title_text">Speed</string>
 		
 	<!-- Strings for Tips  -->
 	<string name="tip">Tip</string>
-	<string name="tips_new_title">Nuevo Tip</string>
-	<string name="tips_edit_title">Modificar Tip</string>
-	<string name="tips_save_title">Guardar Tip</string>
-	<string name="tips_changes_uploaded_successfully">Los cambios a tu tip se han guardado correctamente</string>
-	<string name="tips_changes_not_commited">Los cambios a tu tip no se pudieron subir. ¿Qué quieres hacer?</string>
-	<string name="tips_uploaded_successfully">Gracias por compartir tu tip. ¡Ya está arriba!</string>
-	<string name="tips_deleted_successfully">Tu tip ha sido eliminado</string>
-	<string name="tips_did_not_deleted">No fué posible eliminar el tip, intenta nuevamente</string>
-	<string name="tips_sent_to_drafts">Tu tip ha sido guardado como borrador</string>
-	<string name="tips_not_commited">No fué posible subir este tip. ¿Qué quieres hacer con él?</string>
-	<string name="tips_form_content_hint">Contenido del tip</string>
-	<string name="tips_category_select_instruction">¿Qué tipo de tip deseas compartir?</string>
-	<string name="tips_input_length_min_error">El contenido debe ser de al menos 30 caracteres</string>
-	<string name="tips_input_length_max_error">El contenido debe ser a lo más de 250 caracteres</string>
-	<string name="tips_input_empty">El contenido no puede estar vacío</string>
-	<string name="tips_uploading">Subiendo tu tip &#8230;</string>
-	<string name="tips_question_delete">¿Deseas eliminar este tip?</string>
-	<string name="tips.categories.danger">Peligro</string>
-	<string name="tips.categories.alert">Recomendación</string>
-	<string name="tips.categories.sightseeing">Para ver</string>
+	<string name="tips_new_title">New Tip</string>
+	<string name="tips_edit_title">Edit Tip</string>
+	<string name="tips_save_title">Save Tip</string>
+	<string name="tips_changes_uploaded_successfully">Changes to tip saved successfully</string>
+	<string name="tips_changes_not_commited">Changes to tip could not be saved. What shall we do?</string>
+	<string name="tips_uploaded_successfully">Thanks for sharing your tip!</string>
+	<string name="tips_deleted_successfully">Tip deleted successfully</string>
+	<string name="tips_did_not_deleted">It was impossible to destroy this tip, try again please</string>
+	<string name="tips_sent_to_drafts">Tip saved as draft</string>
+	<string name="tips_not_commited">It was impossible to save this tip. What shall we do?</string>
+	<string name="tips_form_content_hint">Tip contents</string>
+	<string name="tips_category_select_instruction">What kind of tip will you share?</string>
+	<string name="tips_input_length_min_error">The content should be at least of 30 characters</string>
+	<string name="tips_input_length_max_error">The content should be no more than 250 characters</string>
+	<string name="tips_input_empty">The content should not be empty</string>
+	<string name="tips_uploading">Uploading tip &#8230;</string>
+	<string name="tips_question_delete">Destroy this tip?</string>
+	<string name="tips.categories.danger">Danger</string>
+	<string name="tips.categories.alert">Information</string>
+	<string name="tips.categories.sightseeing">Sightseeing</string>
 
 	<!-- String for parkings -->
 	
-	<string name="parking">Bici-estacionamiento</string>
-	<string name="parkings_new_title">Nuevo Bici-estacionamiento</string>
-	<string name="parkings_edit_title">Modificar Bici-estacionamiento</string>
-	<string name="parkings_save_title">Guardar Bici-est.</string>
-	<string name="parkings_uploaded_successfully">Gracias por compartir este bici-estacionamiento. ¡Ya está arriba!</string>
-	<string name="parkings_changes_uploaded_successfully">Los cambios a este bici-estacionamiento se han guardado correctamente</string>
-	<string name="parkings_not_commited">No fué posible subir este bici-estacionamiento ¿Qué quieres hacer con él?</string>
-	<string name="parkings_changes_not_commited">Los cambios a este bici-estacionamiento no se pudieron guardar. ¿Qué quieres hacer?</string>
-	<string name="parkings_deleted_successfully">El bici-estacionamiento que compartiste ha sido eliminado</string>
-	<string name="parkings_did_not_deleted">El bici-estacionamiento que compartiste no pudo ser eliminado, intenta nuevamente</string>
-	<string name="parkings_sent_to_drafts">Este bici-estacionamiento ha sido guardado como borrador</string>
+	<string name="parking">Bike parking</string>
+	<string name="parkings_new_title">New bike parking</string>
+	<string name="parkings_edit_title">Edit bike parking</string>
+	<string name="parkings_save_title">Save bike parking</string>
+	<string name="parkings_uploaded_successfully">Thanks for sharing a new bike parking!</string>
+	<string name="parkings_changes_uploaded_successfully">Changes to bike parking saved successfully</string>
+	<string name="parkings_not_commited">It was impossible to save this bike parking. What shall we do?</string>
+	<string name="parkings_changes_not_commited">Changes to bike parking could not be saved. What shall we do?</string>
+	<string name="parkings_deleted_successfully">Bike parking deleted successfully</string>
+	<string name="parkings_did_not_deleted">It was impossible to destroy this bike parking, try again please</string>
+	<string name="parkings_sent_to_drafts">Bike parking sent to drafts</string>
 	
-	<string name="parkings_input_length_min_error">Los detalles deben de ser al menos de 30 caracteres</string>
-	<string name="parkings_input_length_max_error">Los detalles no deben tener más de 250 caracteres</string>
-	<string name="parkings_input_empty">Deja algún detalle sobre este bici-estacionamiento</string>
+	<string name="parkings_input_length_min_error">The details should be at least of 30 characters</string>
+	<string name="parkings_input_length_max_error">The details should be no more than 250 characters</string>
+	<string name="parkings_input_empty">Please, leave some details about this parking</string>
 	
-	<string name="parkings_kind_select_instruction">¿De qué tipo es el bici-estacionamiento que deseas compartir?</string>
-	<string name="parkings_form_details_hint">Detalles del bici-estacionamiento</string>
-	<string name="parkings_form_hasRoof">Tiene techo</string>
-	<string name="parkings.kinds.government_provided">Oficial</string>
-	<string name="parkings.kinds.urban_mobiliary">Mobiliario urbano</string>
-	<string name="parkings.kinds.venue_provided">De un establecimiento</string>
+	<string name="parkings_kind_select_instruction">What kind of bike parking will you share?</string>
+	<string name="parkings_form_details_hint">Bike parking details</string>
+	<string name="parkings_form_hasRoof">Has roof</string>
+	<string name="parkings.kinds.government_provided">Official</string>
+	<string name="parkings.kinds.urban_mobiliary">Furniture</string>
+	<string name="parkings.kinds.venue_provided">From a venue</string>
 	
 	<!-- Strings for workshops and stores -->
 	
-	<string name="workshop">Taller</string>
-	<string name="workshop_store">Taller-tienda</string>
-	<string name="workshops_new_title">Nuevo taller/tienda</string>
-	<string name="workshops_edit_title">Modificar taller/tienda</string>
-	<string name="workshops_save_title">Guardar taller/tienda</string>
-	<string name="workshops_uploaded_successfully">Gracias por compartir este taller/tienda. ¡Ya está arriba!</string>
-	<string name="workshops_changes_uploaded_successfully">Los cambios a este taller/tienda se han guardado correctamente</string>
-	<string name="workshops_not_commited">No fué posible subir este taller/tienda ¿Qué quieres hacer con él?</string>
-	<string name="workshops_changes_not_commited">Los cambios a este taller/tienda no se pudieron guardar. ¿Qué quieres hacer?</string>
-	<string name="workshops_deleted_successfully">El taller/tienda que compartiste ha sido eliminado</string>
-	<string name="workshops_did_not_deleted">El taller/tienda que compartiste no pudo ser eliminado, intenta nuevamente</string>
-	<string name="workshops_sent_to_drafts">Este taller/tienda ha sido guardado como borrador</string>
-	<string name="workshops_form_name_hint">Escribe el nombre</string>
-	<string name="workshops_form_details_hint">Dá algunos detalles</string>
-	<string name="workshops_form_isStore">Es tienda también</string>
-	<string name="workshops_form_phone_hint">Teléfono</string>
-	<string name="workshops_form_cellPhone_hint">Celular</string>
-	<string name="workshops_form_webpage_hint">Sitio web</string>
+	<string name="workshop">Workshop</string>
+	<string name="workshop_store">Workshop and store</string>
+	<string name="workshops_new_title">New workshop/store</string>
+	<string name="workshops_edit_title">Edit workshop/store</string>
+	<string name="workshops_save_title">Save workshop/store</string>
+	<string name="workshops_uploaded_successfully">Thanks for sharing a new workshop/store!</string>
+	<string name="workshops_changes_uploaded_successfully">Changes to workshop/store saved successfully</string>
+	<string name="workshops_not_commited">It was impossible to save this workshop/store. What shall we do?</string>
+	<string name="workshops_changes_not_commited">Changes to workshop/store could not be saved. What shall we do?</string>
+	<string name="workshops_deleted_successfully">Workshop/store deleted successfully</string>
+	<string name="workshops_did_not_deleted">It was impossible to destroy this workshop/store, try again please</string>
+	<string name="workshops_sent_to_drafts">Workshop/store sent to drafts</string>
+	<string name="workshops_form_name_hint">Write name</string>
+	<string name="workshops_form_details_hint">Give some details</string>
+	<string name="workshops_form_isStore">Is also a store</string>
+	<string name="workshops_form_phone_hint">Phone number</string>
+	<string name="workshops_form_cellPhone_hint">Cell-Phone number</string>
+	<string name="workshops_form_webpage_hint">Webpage</string>
 	<string name="workshops_form_twitter_hint">Twitter</string>
-	<string name="workshops_form_horary_hint">Horario</string>
-	<string name="workshops_form_extra_hint">Toca aquí para compartir información adicional sobre este taller/tienda</string>
-	<string name="workshops_bad_input_twitter_format">No debe llevar el símbolo "@"</string>
-	<string name="workshops_input_length_min_error">Los detalles deben de ser al menos de 30 caracteres</string>
-	<string name="workshops_input_length_max_error">Los detalles no deben tener más de 250 caracteres</string>
-	<string name="workshops_input_empty">Deja algún detalle sobre este taller/tienda</string>
-	<string name="workshops_input_empty_name">Es necesario un nombre para este taller/tienda</string>
-	<string name="workshops_input_length_min_error_name">El nombre está muy corto</string>
-	<string name="workshops_input_length_max_error_name">El nombre no debe tener más de 30 caracteres</string>
+	<string name="workshops_form_horary_hint">Schedule</string>
+	<string name="workshops_form_extra_hint">Tap here to include detailed information about this workshop/store</string>
+	<string name="workshops_bad_input_twitter_format">Should not have the "@"</string>
+	<string name="workshops_input_length_min_error">The details should be at least of 30 characters</string>
+	<string name="workshops_input_length_max_error">The details should be no more than 250 characters</string>
+	<string name="workshops_input_empty">Leave a detail about this workshop/store</string>
+	<string name="workshops_input_empty_name">A name for this workshop/store is needed</string>
+	<string name="workshops_input_length_min_error_name">The name is to short</string>
+	<string name="workshops_input_length_max_error_name">The name should not be longer than 30 characters</string>
 	
 	<!-- CyclingGroups strings -->
-	<string name="cycling_groups_meeting_time">Hora de Reunión</string>
-	<string name="cycling_groups_departing_time">Hora de Salida</string>
+	<string name="cycling_groups_meeting_time">Meeting time</string>
+	<string name="cycling_groups_departing_time">Leaving at</string>
 	<string name="cycling_groups_hour">%s hrs</string>
 	<string name="cycling_group_unknown_remaining_days_for_ride">---</string>
 	
-	<string name="listing_events">Eventos cercanos</string>
-	<string name="event_ride">Rodada</string>
-	<string name="event_trip">Paseo</string>
-	<string name="no_events_nearby">No hay eventos en esta área</string>
-	<string name="trip_details">Paseo a detalle</string>
-	<string name="trips_bar_route_start_text_value">Inicio</string>
-	<string name="trips_bar_route_end_text_value">Fin</string>
+	<string name="listing_events">Nearby events</string>
+	<string name="event_ride">Ride</string>
+	<string name="event_trip">Trip</string>
+	<string name="no_events_nearby">No events in this area</string>
+	<string name="trip_details">Trip details</string>
+	<string name="trips_bar_route_start_text_value">Start</string>
+	<string name="trips_bar_route_end_text_value">End</string>
 	
-	<string name="trip_pois.categories.service_station">Estación de Servicio</string>
-	<string name="trip_pois.categories.ambulance">Ambulancia</string>
-	<string name="trip_pois.categories.paramedic">Paramédico</string>
-	<string name="trip_pois.categories.bike_lending">Préstamo de bici</string>
-	<string name="trip_pois.categories.direction_mark">Dirección</string>
-	<string name="trip_pois.categories.km_mark">Kilómetro</string>
-	<string name="trip_pois.categories.transport_connection">Transporte Público</string>
-	<string name="trip_pois.categories.sightseeing">Para ver</string>
-	<string name="trip_pois.categories.start_flag">Inicio</string>
-	<string name="trip_pois.categories.finish_flag">Fin</string>
-	<string name="trip_pois.categories.grouped_services">Servicios</string>
-	<string name="trip_pois.categories.cycling_learning">Bici-escuela</string>
-	<string name="trip_pois.categories.free_grouped_services">Servicios gratuitos</string>
+	<string name="trip_pois.categories.service_station">Service station</string>
+	<string name="trip_pois.categories.ambulance">Ambulance</string>
+	<string name="trip_pois.categories.paramedic"></string>
+	<string name="trip_pois.categories.bike_lending">Bike Lending</string>
+	<string name="trip_pois.categories.direction_mark">Direction</string>
+	<string name="trip_pois.categories.km_mark">Kilometer</string>
+	<string name="trip_pois.categories.transport_connection">Public transportation</string>
+	<string name="trip_pois.categories.sightseeing">Sightseeing</string>
+	<string name="trip_pois.categories.start_flag">Start</string>
+	<string name="trip_pois.categories.finish_flag">End</string>
+	<string name="trip_pois.categories.grouped_services">Services</string>
+	<string name="trip_pois.categories.cycling_learning">Bike school</string>
+	<string name="trip_pois.categories.free_grouped_services">Free services</string>
 	<!-- Commons -->
-	<string name="form_anyoneCanEdit">Otros pueden modificarlo</string>
+	<string name="form_anyoneCanEdit">Anyone can edit?</string>
 	
 	<!-- Strings for cycle stations and bike sharing -->
-	<string name="cycle_station">Cicloestación</string>
-	<string name="one_available_slot">espacio disponible</string>
-	<string name="many_available_slots">espacios disponibles</string>
+	<string name="cycle_station">Cyclestation</string>
+	<string name="one_available_slot">available slot</string>
+	<string name="many_available_slots">available slots</string>
 
-	<string name="one_available_bike">bici disponible</string>
-	<string name="many_available_bikes">bicis disponibles</string>
+	<string name="one_available_bike">bicycle available</string>
+	<string name="many_available_bikes">available bicycles</string>
 	
-	<string name="waiting_for_gps">Esperando GPS &#8230;</string>
+	<string name="waiting_for_gps">Waiting for GPS &#8230;</string>
 	<!-- Strings for user profile -->
-	<string name="user_profile_title">Tu Perfil</string>
-	<string name="user_profile_tab">Tu</string>
-	<string name="user_drafts_tab">Borradores</string>
-	<string name="user_username_restriction">El nombre de usuario no debe ser mayor a 16 caracteres. Puede tener números, letras, guiones y guiones bajos.</string>
-	<string name="user_bio_length_restriction">Tu bio no debe ser de más de 200 caracteres de longitud</string>
-	<string name="user_profile_updated_successfully">Los cambios a tu perfil han sido guardados correctamente</string>
-	<string name="user_profile_could_not_update">Los cambios a tu perfil no pudieron guardarse, intenta más tarde por favor.</string>
+	<string name="user_profile_title">Your profile</string>
+	<string name="user_profile_tab">You</string>
+	<string name="user_drafts_tab">Drafts</string>
+	<string name="user_username_restriction">The username should not be greater than 16 characters. It may have numbers, letter, guiones, hyphen and lower hyphen.</string>
+	<string name="user_bio_length_restriction">Your bio should not be longer than 200 characters length</string>
+	<string name="user_profile_updated_successfully">Your profile has been updated successfully</string>
+	<string name="user_profile_could_not_update">Your profile was not updated, try again later please.</string>
+	<string name="syncing_profile_text_value">Synchronizing your profile &#8230;</string>
+	<string name="syncing_profile_failed_text_value">Could not synchroize tu perfil, toca aquí para intentarlo de nuevo</string>
 	
-	<string name="updating_your_profile">Actualizando tu perfil</string>
-	<string name="no_drafts_listed">No hay borradores</string>
-	<string name="profile_road_gear_title_text">Equipo para rodar:</string>
-	<string name="profile_stats_title_text">Cifras:</string>
-	<string name="profile_pedal_distance_title_text">Distancia recorrida:</string>
-	<string name="profile_road_time_title_text">Tiempo rodando:</string>
-	<string name="profile_routes_title_text">Rutas</string>
-	<string name="profile_places_title_text">Lugares</string>
-	<string name="profile_highlights_title_text">Riesgos</string>
-	<string name="profile_badges_title_text">Insignias ganadas:</string>		
-	<string name="profile_badge_faster_than_cars">Más rápido que los autos</string>	
-	<string name="profile_badge_long_runner">Ironman</string>	
-	<string name="profile_badge_brompton">Brompton</string>	
-	<string name="profile_badge_survivor">Sobreviviente</string>	
+	<string name="updating_your_profile">Updating your profile &#8230;</string>
+	<string name="no_drafts_listed">No drafts</string>	
 	
-	<string name="profile_erase_account_text_text">Eliminar mi cuenta de este teléfono</string>
-	<string name="profile_erase_account_text_button_text">Eliminar</string>
-	<string name="profile_welcome">¡Bienvenid@ a Wikicleta para Android!</string>
-	<string name="profile_city_not_set">Ciudad sin seleccionar</string>
-	<string name="profile_no_bikes_text_value">No has registrado aún una bici, puedes hacerlo desde la web</string>
-	<string name="profile_bike_list_text_value">Tus Bicis</string>
-	<string name="syncing_profile_text_value">Sincronizando tu perfil &#8230;</string>
-	<string name="syncing_profile_failed_text_value">No pudimos sincronizar tu perfil, toca aquí para intentarlo de nuevo</string>
+	<string name="profile_erase_account_text_text">Delete my account from this phone</string>
+	<string name="profile_erase_account_text_button_text">Delete</string>
+	<string name="profile_welcome">¡Welcome to Wikicleta for Android!</string>
 	
 	<!-- Challenges -->
-	<string name="challenges.names.climber">Pedal de Montaña</string>
-	<string name="challenges.names.messenger">Bicimensajero</string>
-	<string name="challenges.names.high">Pedal de Altura</string>
-	<string name="challenges.names.plain">Pedal de Aguante</string>
+	<string name="challenges.names.climber">Mountain pedal</string>
+	<string name="challenges.names.messenger">Bike messenger</string>
+	<string name="challenges.names.high">High pedal</string>
+	<string name="challenges.names.plain">Resistence pedal</string>
 	<string name="challenges.names.multimodal">Multimodal</string>
-	<string name="challenges.names.nocturne">Nocturno</string>
-	<string name="challenges_total_text">Puntos totales</string>
-	<string name="challenges_week_text">Puntos semanales</string>
-	<string name="challenges_category_text">Puntos ganados en esta categoría</string>
-	<string name="challenges_events_now_text">Retos en tu área</string>
-	<string name="challenges_events_discover_text">Descubre</string>
+	<string name="challenges.names.nocturne">Dark cycler</string>
+	<string name="challenges_total_text">Total points</string>
+	<string name="challenges_week_text">Weekly points</string>
+	<string name="challenges_category_text">Points earned on this category</string>
+	<string name="challenges_events_now_text">Challenges on your area</string>
+	<string name="challenges_events_discover_text">Discover</string>
 	<!-- Bar -->
-	<string name="bar_center_map_text_value">Encender GPS</string>
-	<string name="bar_center_map_enabled_text_value">Apagar GPS</string>
-	<string name="bar_maps_layers_button_text_value">Encuentra</string>
-	<string name="bar_maps_add_button_text_value">Comparte</string>
+	<string name="bar_center_map_text_value">Turn on GPS</string>
+	<string name="bar_center_map_enabled_text_value">Shutdown GPS</string>
+	<string name="bar_maps_layers_button_text_value">Find</string>
+	<string name="bar_maps_add_button_text_value">Share</string>
 	
-	<string name="bar_select_poi_back">Regresar</string>
-	<string name="bar_select_poi_save">Guardar</string>
+	<string name="bar_select_poi_back">Return</string>
 	
-	<string name="registering_user">Registrando usuario</string>
-	<string name="signing_in">Iniciando sesión</string>
-	<string name="uploading">Subiendo</string>
+	<string name="registering_user">Registering user &#8230;</string>
+	<string name="signing_in">Signing in &#8230;</string>
+	<string name="uploading">Uploading &#8230;</string>
 	<string name="destroying">Eliminando</string>
-	<string name="saved_as_draft_on">en borradores desde </string>
-	<string name="discard_draft">¿Quieres descartar este elemento guardado como borrador?</string>
+	<string name="saved_as_draft_on">as draft since </string>
+	<string name="discard_draft">Are you sure you want to discard this draft?</string>
 		
-	<string name="comments_input_length_max_error">Este comentario no debe ser mayor a 250 caracteres</string>
-	<string name="comments_input_length_min_error">Este comentario debe ser de al menos 15 caracteres</string>
-	<string name="comments_input_empty">Este comentario no puede ir vacío</string>
-	<string name="comment_saved_successfully">Tu comentario ha sido compartido</string>
-	<string name="comment_failed_to_save">Lo sentimos, no fué posible subir tu comentario, intenta de nuevo por favor.</string>
-	<string name="comment_failed_to_delete">Lo sentimos, no fué posible eliminar tu comentario.</string>
-	<string name="comment_not_saved">Tu comentario no ha sido guardado aún. ¿Descartarlo?</string>
-	<string name="comment_deleted_successfully">Tu comentario ha sido eliminado</string>
-	<string name="no_comments_to_show">¡Sé el primero en dejar un comentario!</string>	
+	<string name="comments_input_length_max_error">This comment should be no longer than 30 characters</string>
+	<string name="comments_input_length_min_error">This comment should be at least of 15 characters</string>
+	<string name="comments_input_empty">This comment cannot be left empty</string>
+	<string name="comment_saved_successfully">¡Comment shared, thanks!</string>
+	<string name="comment_failed_to_save">We are sorry, it was impossible to save your comment</string>
+	<string name="comment_failed_to_delete">We are sorry, it was impossible to delete your comment</string>
+	<string name="comment_not_saved">Your comment is unsaved. Shall we discard it?</string>
+	<string name="comment_deleted_successfully">Comment destroyed</string>
+	<string name="no_comments_to_show">Be the first to comment!</string>	
 	
 	<!-- About -->
-	<string name="made_in_text">Hecho en México</string>
-	<string name="attribution_icons_text">Usamos iconografía de</string>
+	<string name="made_in_text">Made in Mexico</string>
+	<string name="attribution_icons_text">We used icons from</string>
 	<string name="comes_from_text">www.thenounproject.com</string>
-	<string name="made_in_text">Hecho en México con </string>
-	<string name="time_text">Otoño de 2013</string>
-	<string name="app_version_one_text">Versión 1</string>
+	<string name="time_text">Autum 2013</string>
+	<string name="app_version_one_text">Version 1</string>
 	<string name="about_google_play_services">Google Play Services</string>
-	<string name="no_google_play_services">Wikicleta necesita que Google Play Services esté instalado."</string>
+	<string name="no_google_play_services">Wikicleta needs Google Play Services to be instaled."</string>
+	
+	<!-- Landing Activity strings -->
+    <string name="landing_join_text">Register</string>
+    <string name="landing_login_text">Login</string>
+    
+    <string name="drafts_on">On drafts </string>
+    <string name="created_by">created by </string>
+    <string name="updated_on">Updated </string>
+    <string name="created_on">Created </string>
+    
+    <string name="you">you</string>
+    <string name="call_phone_number_confirmation">Do you want to call the selected phone number?</string>
+    <string name="distance_from_location">At %1$s kms from current location</string>
+    <string name="could_not_get_distance">It was a</string>
+    <string name="actions.delete">Delete</string>
+    <string name="actions.modify">Edit</string>
+    <string name="actions.new">New</string>
+    <string name="actions.save">Save</string>
+    <string name="actions.update">Save</string>
+    <string name="actions.details">View details</string>
+    <string name="actions.rank">Rank</string>
+    <string name="actions.return">Return</string>
+    <string name="actions.review">Review</string>
+    <string name="actions.upload">Upload</string>
+    <string name="actions.login">Login</string>
+    <string name="actions.install">Install</string>
+    <string name="actions.go">Go</string>
+    
+    <!-- Registration Activity strings -->
+    <string name="registration_title">Join Wikicleta</string>
+    
+	<!-- Login Activity strings -->
+	<string name="login_username">Username</string>
+	<string name="login_password">Password</string>
+	<string name="login_title">Login</string>
+	
+	<!-- Profiles Activity -->
+	<string name="your_profile">Your profile</string>
+	<string name="your_profile_settings">Your preferences</string>
+	<string name="profile_details_content_hint">Your bio</string>
+	<string name="file_to_upload_profile">Select an image for your profile</string>
+	<string name="update_profile_text">Update profile</string>
+	<string name="twitter">Twitter</string>
+	<string name="facebook">Facebook</string>
+    <string name="webpage">Website</string>
+    <string name="prompt_pic_instructions">Put a picture from yourself</string>
+	<string name="prompt_email">Mail</string>
+    <string name="prompt_login">Your mail or password</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_password_confirmation">Password confirmation</string>
+    <string name="prompt_name">Your name</string>
+    <string name="prompt_username">Username</string>
+    
+    <string name="error_invalid_email">Invalid email</string>
+    <string name="error_invalid_password">Password too short</string>
+    <string name="error_incorrect_password">Bad password</string>
+    <string name="error_field_required">Required field</string>
+    <string name="error_not_matching_password_confirmation">The password and it\'s confirmation should match</string>
+	<string name="none"></string>
+	
+	<string name="timestamp_today">today</string>
+	<string name="timestamp_yesterday">yesterday</string>
+	<string name="timestamp_hour_ago">%s hour ago</string>
+	<string name="timestamp_hours_ago">%s hours ago</string>
+	<string name="timestamp_minutes_ago">%s minutes ago</string>
+	<string name="timestamp_just_now">just now</string>
+	<string name="timestamp_past_day">last %s</string>
+	
+	<string name="loading_selected_layers">Loading selected layers</string>
+	<!-- Root activity -->
+	<string name="activities_in_root">Your activity</string>
+	<string name="achievements_in_root">Your achievements</string>
+	<string name="friends_in_root">Your friends</string>
+	<string name="favorites_in_root">Your favorites</string>
+	<string name="settings_in_root">Preferences</string>
+	<string name="messages_in_root">Messages</string>
+	<string name="discover_in_root">Discover</string>
+	<string name="share_in_root">Share</string>
+	<string name="challenges_in_root">Challenges</string>
+	<string name="route_tracer_in_root">Route tracker</string>
+	<string name="events_in_root">Local Events</string>
+	
+	<string name="discover_section_in_root_text">Discover</string>
+	<string name="share_container_in_root_text">Share</string>
+	<string name="challenges_in_root_text">Challenges</string>
+	<string name="routes_tracer_in_root_text">Route tracker</string>
+	<string name="local_events_in_root_text">Local events</string>
+	<string name="about_in_root_text">About this app</string>
+	<!-- Favorites activity -->
+	<!-- Menu -->
+	<string name="favorites_menu_routes">Routes</string>
+	<string name="favorites_menu_workshops">Workshops</string>
+	<string name="favorites_menu_parkings">Bike parkings</string>
+	<string name="favorites_menu_tips">Tips</string>
+	<string name="favorites_empty_list">You have no favorites here</string>
+	<!-- Activities activity -->
+	<string name="activities_list">Recent</string>
+	<string name="activities_drafts">Drafts</string>
+	<string name="activities_list_empty">No activities to show</string>
 </resources>

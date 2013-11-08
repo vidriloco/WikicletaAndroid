@@ -96,7 +96,7 @@ public class LandingActivity extends AccessActivity {
 							}
 						}
 					})
-					.setNegativeButton(this.getString(R.string.confirm_no) ,new DialogInterface.OnClickListener() {
+					.setNegativeButton(this.getString(R.string.no) ,new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,int id) {
 							AnalyticsBase.reportUnloggedEvent("Will not install Google Play", LandingActivity.this.getApplicationContext());
 

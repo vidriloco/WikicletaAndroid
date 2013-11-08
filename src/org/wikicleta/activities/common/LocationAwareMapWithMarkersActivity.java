@@ -58,9 +58,9 @@ public class LocationAwareMapWithMarkersActivity extends LocationAwareMapWithCon
 
 			@Override
 			public void onCameraChange(CameraPosition position) {
-				if(map.getCameraPosition().zoom <= Constants.MIN_ALLOWED_ZOOM)
-					map.animateCamera(CameraUpdateFactory.zoomTo(Constants.MIN_ALLOWED_ZOOM));
-				else
+				//if(map.getCameraPosition().zoom <= Constants.MIN_ALLOWED_ZOOM)
+				//	map.animateCamera(CameraUpdateFactory.zoomTo(Constants.MIN_ALLOWED_ZOOM));
+				//else
 					reloadActiveLayers();
 			}
     		
