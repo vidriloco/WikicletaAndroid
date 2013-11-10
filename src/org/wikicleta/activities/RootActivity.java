@@ -151,23 +151,24 @@ public class RootActivity extends Activity implements ImageFetchedListener {
 	}
 	
 	public void userDetailsReceived(JSONObject object) {
+		String userPic = (String) object.get("user_pic");
+
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("username", (String) object.get("username"));
 		map.put("bio", (String) object.get("bio"));
 		map.put("updated_at", (String) object.get("updated_at"));
-
-		long mostRecentUpdatedOn = User.lastUpdateOn();
+		map.put("pic-url", userPic);
+		
+		boolean changedPic = User.picURL() != userPic;
 		
 		User.storeWithParams(map, User.token());
         creatorName.setText(User.username());
-
-        if(mostRecentUpdatedOn < User.lastUpdateOn()) {
-    		String URL = (String) object.get("user_pic");
+        if(changedPic) {
             ImageUpdater updater = Others.getImageFetcher();
             updater.setImageAndImageProcessor(ownerPic, Others.ImageProcessor.ROUND_FOR_USER_PROFILE);
             updater.setListener(this);
-            updater.execute(URL);
-        }
+            updater.execute(userPic);
+		}
 	}
 	
 	@Override
@@ -191,14 +192,11 @@ public class RootActivity extends Activity implements ImageFetchedListener {
 
 	@Override
 	public void imageFetchedFailed() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	protected void saveUserPic(Bitmap bitmap) {
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-
 		File f = new File(Constants.USER_PIC_DIR);
 		try {
 			f.createNewFile();

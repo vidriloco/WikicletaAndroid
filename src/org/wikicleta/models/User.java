@@ -35,6 +35,8 @@ public class User {
 			editor.putString("bio", params.get("bio"));
 		if(params.containsKey("identifier"))
 			editor.putLong("id", Long.parseLong(params.get("identifier")));
+		if(params.containsKey("pic-url"))
+			editor.putString("pic-url", params.get("pic-url"));
 		if(params.containsKey("updated_at")) {
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date creationDate = null;
@@ -68,6 +70,10 @@ public class User {
 	
 	public static String username() {
 		return getPreferences().getString("username", "");
+	}
+	
+	public static String picURL() {
+		return getPreferences().getString("pic-url", "");
 	}
 	
 	public static Long id() {

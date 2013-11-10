@@ -55,7 +55,7 @@ public class ImageSelectionActivity extends SherlockActivity {
             Uri selectedImage = data.getData();
             
             try {
-            	bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+            	bitmap = Graphics.scaleCenterCrop(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage), 200, 200) ;
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

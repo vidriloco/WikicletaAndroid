@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
-import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.SimpleAnimatorListener;
 import org.wikicleta.interfaces.MarkerInterface;
 import org.wikicleta.layers.common.LayersConnectorListener;
@@ -18,8 +17,6 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;

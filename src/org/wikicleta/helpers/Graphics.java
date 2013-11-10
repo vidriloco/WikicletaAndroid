@@ -14,8 +14,9 @@ import android.util.Base64;
 
 public class Graphics {
 	
-	public static String generateEncodedStringForImage(Bitmap bm) {
+	public static String generateEncodedStringForImage(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		Bitmap bm = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
 		bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); 
 		byte[] b = baos.toByteArray(); 
 		return Base64.encodeToString(b, Base64.DEFAULT);

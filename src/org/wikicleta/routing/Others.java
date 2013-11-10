@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import org.wikicleta.helpers.Graphics;
 import org.wikicleta.interfaces.ImageFetchedListener;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -86,7 +85,7 @@ public class Others {
 				
 				if(listener != null)
 					this.listener.imageFetchedSucceded(result);
-			}
+			} 
 	    }
 		
 		protected void scaleBitmap(Bitmap result) {
