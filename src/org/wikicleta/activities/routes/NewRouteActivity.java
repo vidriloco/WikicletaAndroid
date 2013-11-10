@@ -269,7 +269,7 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if(!theService.isTracking)
+		if(theService != null && !theService.isTracking)
 			theService.pauseRecording();
 	}
 	
