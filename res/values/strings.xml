@@ -81,7 +81,7 @@
 	<string name="route_comfort_value">Comfort</string>
 		
 	<string name="route_ranking_instructions_text">Touch a category and change it\'s value, according to your perception of the route</string>
-	<string name="route_ranking_shared_successfully">You have ranked a route successfully! ¡Thanks!</string>
+	<string name="route_ranking_shared_successfully">You have ranked a route successfully! Thanks!</string>
 	<string name="route_ranking_failed_to_share">We could not receive your ranking, please try again later</string>
 	
 	<string name="waiting_for_performances">Loading performances table</string>
@@ -215,12 +215,12 @@
 	<string name="user_profile_title">Your profile</string>
 	<string name="user_profile_tab">You</string>
 	<string name="user_drafts_tab">Drafts</string>
-	<string name="user_username_restriction">The username should not be greater than 16 characters. It may have numbers, letter, guiones, hyphen and lower hyphen.</string>
+	<string name="user_username_restriction">The username should not be greater than 16 characters. It may have numbers, lowercase letters, guiones, hyphen and lower hyphen.</string>
 	<string name="user_bio_length_restriction">Your bio should not be longer than 200 characters length</string>
 	<string name="user_profile_updated_successfully">Your profile has been updated successfully</string>
 	<string name="user_profile_could_not_update">Your profile was not updated, try again later please.</string>
 	<string name="syncing_profile_text_value">Synchronizing your profile &#8230;</string>
-	<string name="syncing_profile_failed_text_value">Could not synchroize tu perfil, toca aquí para intentarlo de nuevo</string>
+	<string name="syncing_profile_failed_text_value">Could not sync your profile, touch here to retry</string>
 	
 	<string name="updating_your_profile">Updating your profile &#8230;</string>
 	<string name="no_drafts_listed">No drafts</string>	
@@ -259,7 +259,7 @@
 	<string name="comments_input_length_max_error">This comment should be no longer than 30 characters</string>
 	<string name="comments_input_length_min_error">This comment should be at least of 15 characters</string>
 	<string name="comments_input_empty">This comment cannot be left empty</string>
-	<string name="comment_saved_successfully">¡Comment shared, thanks!</string>
+	<string name="comment_saved_successfully">Comment shared, thanks!</string>
 	<string name="comment_failed_to_save">We are sorry, it was impossible to save your comment</string>
 	<string name="comment_failed_to_delete">We are sorry, it was impossible to delete your comment</string>
 	<string name="comment_not_saved">Your comment is unsaved. Shall we discard it?</string>
@@ -270,7 +270,7 @@
 	<string name="made_in_text">Made in Mexico</string>
 	<string name="attribution_icons_text">We used icons from</string>
 	<string name="comes_from_text">www.thenounproject.com</string>
-	<string name="time_text">Autum 2013</string>
+	<string name="time_text">Autumn 2013</string>
 	<string name="app_version_one_text">Version 1</string>
 	<string name="about_google_play_services">Google Play Services</string>
 	<string name="no_google_play_services">Wikicleta needs Google Play Services to be instaled."</string>
@@ -287,7 +287,7 @@
     <string name="you">you</string>
     <string name="call_phone_number_confirmation">Do you want to call the selected phone number?</string>
     <string name="distance_from_location">At %1$s kms from current location</string>
-    <string name="could_not_get_distance">It was a</string>
+    <string name="could_not_get_distance">It was not possible to calculate distance to this point</string>
     <string name="actions.delete">Delete</string>
     <string name="actions.modify">Edit</string>
     <string name="actions.new">New</string>
@@ -319,7 +319,7 @@
 	<string name="twitter">Twitter</string>
 	<string name="facebook">Facebook</string>
     <string name="webpage">Website</string>
-    <string name="prompt_pic_instructions">Put a picture from yourself</string>
+    <string name="prompt_pic_instructions">Put a picture of yourself</string>
 	<string name="prompt_email">Mail</string>
     <string name="prompt_login">Your mail or password</string>
     <string name="prompt_password">Password</string>
