@@ -215,7 +215,7 @@
 	<string name="user_profile_title">Your profile</string>
 	<string name="user_profile_tab">You</string>
 	<string name="user_drafts_tab">Drafts</string>
-	<string name="user_username_restriction">The username should not be greater than 16 characters. It may have numbers, lowercase letters, guiones, hyphen and lower hyphen.</string>
+	<string name="user_username_restriction">The username should not be greater than 16 characters. It may have numbers, letters, guiones, hyphen and lower hyphen.</string>
 	<string name="user_bio_length_restriction">Your bio should not be longer than 200 characters length</string>
 	<string name="user_profile_updated_successfully">Your profile has been updated successfully</string>
 	<string name="user_profile_could_not_update">Your profile was not updated, try again later please.</string>

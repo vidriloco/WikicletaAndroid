@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.wikicleta"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="1.1" >
     
     <permission
         android:name="org.wikicleta.permission.MAPS_RECEIVE"
@@ -14,7 +14,7 @@
     
 
     <supports-screens
-        android:smallScreens="false"
+        android:smallScreens="true"
         android:normalScreens="true"
         android:largeScreens="true"
         android:xlargeScreens="true"
@@ -256,7 +256,7 @@
         <uses-library android:required="true" android:name="com.google.android.maps" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDc-FboLRjdh3qgvWKyQsJ5lsnf1TBE8kQ" />
+            android:value="AIzaSyCYLVNyHlVZlU68kvnTS9gE2rWCJ9O9JtQ" />
         
         <!-- google maps store API Key: AIzaSyCYLVNyHlVZlU68kvnTS9gE2rWCJ9O9JtQ -->
         <!-- google maps chelix API debug Key: AIzaSyDc-FboLRjdh3qgvWKyQsJ5lsnf1TBE8kQ -->

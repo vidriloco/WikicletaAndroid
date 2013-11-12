@@ -215,7 +215,7 @@
 	<string name="user_profile_title">Il tuo profilo</string>
 	<string name="user_profile_tab">Voi</string>
 	<string name="user_drafts_tab">Salvato</string>
-	<string name="user_username_restriction">Il nome utente non deve essere maggiore di 16 caratteri. Può avere i numeri, lettere minuscole, Guiones, trattino e trattino basso</string>
+	<string name="user_username_restriction">Il nome utente non deve essere maggiore di 16 caratteri. Può avere i numeri, lettere, guiones, trattino e trattino basso</string>
 	<string name="user_bio_length_restriction">Il tuo bio non deve essere più lungo di 200 caratteri di lunghezza</string>
 	<string name="user_profile_updated_successfully">Il tuo profilo è stato aggiornato</string>
 	<string name="user_profile_could_not_update">Il tuo profilo non è stato aggiornato, si prega di riprovare più tardi</string>
