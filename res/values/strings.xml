@@ -18,6 +18,7 @@
 	<string name="event_tomorrow">Tomorrow</string>
 	<string name="event_unknown">Unknown date</string>
 	<string name="event_other">In %d days</string>
+	<string name="details">See details</string>
 	
 	<string name="minutes">Minutes</string>
 	<string name="seconds">Seconds</string>
@@ -230,6 +231,7 @@
 	<string name="profile_welcome">¡Welcome to Wikicleta for Android!</string>
 	
 	<!-- Challenges -->
+	<string name="challenges.list.title">Retos cercanos</string>
 	<string name="challenges.names.climber">Mountain pedal</string>
 	<string name="challenges.names.messenger">Bike messenger</string>
 	<string name="challenges.names.high">High pedal</string>
@@ -241,6 +243,10 @@
 	<string name="challenges_category_text">Points earned on this category</string>
 	<string name="challenges_events_now_text">Challenges on your area</string>
 	<string name="challenges_events_discover_text">Discover</string>
+	
+	<string name="delivery_food">Food delivery</string>
+	<string name="delivery_package">Package delivery</string>
+	
 	<!-- Bar -->
 	<string name="bar_center_map_text_value">Turn on GPS</string>
 	<string name="bar_center_map_enabled_text_value">Shutdown GPS</string>

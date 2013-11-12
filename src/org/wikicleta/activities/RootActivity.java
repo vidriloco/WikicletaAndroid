@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.util.HashMap;
 import org.json.simple.JSONObject;
 import org.wikicleta.R;
+import org.wikicleta.activities.challenges.ChallengesOnMapActivity;
 import org.wikicleta.activities.routes.NewRouteActivity;
 import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
@@ -71,14 +72,14 @@ public class RootActivity extends Activity implements ImageFetchedListener {
         	
         });
         
-        /*findViewById(R.id.achievements_container).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.achievements_container).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				AppBase.launchActivity(AchievementsActivity.class);
 			}
         	
-        });*/
+        });
         
         findViewById(R.id.activity_container).setOnClickListener(new OnClickListener() {
 
@@ -143,6 +144,16 @@ public class RootActivity extends Activity implements ImageFetchedListener {
 			@Override
 			public void onClick(View v) {
 				AppBase.launchActivity(EventsActivity.class);
+			}
+        	
+        });
+        
+        LinearLayout challengesContainer = (LinearLayout) findViewById(R.id.challenges_container);
+        challengesContainer.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				AppBase.launchActivity(ChallengesOnMapActivity.class);
 			}
         	
         });

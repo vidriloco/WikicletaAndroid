@@ -251,12 +251,34 @@
             </intent-filter>
         </activity>
         
+        <activity
+            android:name="org.wikicleta.activities.challenges.ChallengesOnListActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sherlock.Light"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+                
+        <activity
+            android:name="org.wikicleta.activities.challenges.ChallengesOnMapActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sherlock.Light.NoActionBar"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
         <service android:name="org.wikicleta.services.routes.RouteTrackingService"
             android:enabled="true" />
         <uses-library android:required="true" android:name="com.google.android.maps" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDc-FboLRjdh3qgvWKyQsJ5lsnf1TBE8kQ" />
+            android:value="AIzaSyDoK1BddLkv-4lzJu4K1FOJHpAzCXlWO4Y" />
         
         <!-- google maps store API Key: AIzaSyCYLVNyHlVZlU68kvnTS9gE2rWCJ9O9JtQ -->
         <!-- google maps chelix API debug Key: AIzaSyDc-FboLRjdh3qgvWKyQsJ5lsnf1TBE8kQ -->

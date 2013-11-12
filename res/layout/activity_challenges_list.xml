@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout 
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="#fff">
+
+ <ImageView
+    android:id="@+id/wikicleta_logo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="60dp"
+    android:background="@drawable/menu_logo"
+    android:contentDescription="@string/none" >
+ </ImageView>
+
+ 
+ 	<LinearLayout
+	       android:id="@+id/under_control_group"
+	       android:layout_width="fill_parent"
+	       android:layout_height="wrap_content"
+	       android:orientation="horizontal"
+	       android:layout_alignParentBottom="true"
+	       android:paddingBottom="50dp"
+	       android:clickable="false" >
+  
+        <ImageView
+          android:id="@+id/return_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/return_icon"
+          android:clickable="true" />
+        <ImageView
+          android:id="@+id/map_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:contentDescription="@string/nothing"
+          android:src="@drawable/map_icon"
+          android:clickable="true" />
+	</LinearLayout>
+
+</RelativeLayout>

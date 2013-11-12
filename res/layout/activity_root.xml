@@ -64,7 +64,7 @@
 		android:orientation="horizontal"
 		android:baselineAligned="false"
 		android:layout_below="@id/user_info_container"
-		android:weightSum="2">
+		android:weightSum="3">
 	    <LinearLayout 
 	        android:id="@+id/activity_container"
 	        android:layout_width="0px"
@@ -85,7 +85,7 @@
           		android:text="@string/activities_in_root"
           		android:drawablePadding="10dp"
           		android:textAllCaps="true"
-          		android:textSize="13sp"
+          		android:textSize="10sp"
           		android:layout_marginLeft="10dp"
           		android:gravity="center_horizontal" />
 	    </LinearLayout>
@@ -99,7 +99,6 @@
 	        android:orientation="horizontal"
 	        android:clickable="true"
 	        android:padding="10dp"
-	        android:visibility="gone"
 	        android:background="@drawable/contact_item_selector">
 
 	        <TextView
@@ -109,7 +108,7 @@
           		android:textColor="@color/wikicleta_orange"
           		android:drawablePadding="10dp"
           		android:drawableTop="@drawable/achievements_icon"
-          		android:textSize="13sp"
+          		android:textSize="10sp"
           		android:layout_marginLeft="10dp"
           		android:text="@string/achievements_in_root"
           		android:gravity="center_horizontal"
@@ -134,7 +133,7 @@
           		android:drawablePadding="10dp"
           		android:drawableTop="@drawable/favorites_icon"
           		android:text="@string/favorites_in_root"
-          		android:textSize="13sp"
+          		android:textSize="10sp"
           		android:layout_marginLeft="10dp"
           		android:gravity="center_horizontal"
           		android:textAllCaps="true" />

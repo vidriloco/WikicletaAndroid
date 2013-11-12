@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <RelativeLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content">
+		    
+	    <ImageView android:id="@+id/dialog_close"
+	        android:contentDescription="@string/none"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/dialog_close_icon"/>
+
+	    <LinearLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@+id/dialog_close"
+	        android:layout_alignParentRight="true"
+	        android:layout_centerVertical="true"
+	        android:gravity="right" >
+
+	        <TextView
+	            android:id="@+id/delivery_type_text"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:gravity="right"
+	            android:text="@string/delivery_food"
+	            android:textColor="#203b50"
+	            android:textSize="16sp"
+	            android:layout_gravity="center_horizontal|center_vertical"
+	            android:layout_marginRight="15dp"
+	            android:textStyle="bold" />
+
+	        <ImageView
+	            android:id="@+id/delivery_image_icon"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:contentDescription="@string/none"
+	            android:src="@drawable/delivery_food_marker"
+	            android:gravity="right"
+	            android:layout_marginRight="10dp"
+	            android:scaleType="fitXY" />
+	    </LinearLayout>
+
+	</RelativeLayout>
+    
+    <TextView
+        android:id="@+id/challenge_contents"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Hay que llevar eso a ...."
+        android:textColor="#203b50"
+        android:textSize="16sp"
+        android:padding="10dp" />
+	
+    <include layout="@layout/thin_separator" android:id="@+id/separator_one" />
+    <LinearLayout 
+    android:id="@+id/challenges_prizes"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/wikicleta_lightest_blue"
+	android:orientation="horizontal"
+	android:baselineAligned="false"
+	android:weightSum="2">
+	    <LinearLayout 
+	        android:id="@+id/payment_container"
+	        android:layout_width="0px"
+	        android:layout_weight="1"
+	        android:layout_height="match_parent"
+	        android:gravity="center"
+	        android:orientation="horizontal"
+	        android:clickable="true"
+	        android:padding="10dp">
+
+	        <TextView
+          		android:id="@+id/payment_call_to_action"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:textColor="@color/wikicleta_orange"
+          		android:textSize="12sp"
+          		android:text="GANA"
+          		android:layout_marginLeft="10dp"
+          		android:gravity="center_horizontal" />
+	        <TextView
+          		android:id="@+id/payment_value"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:textColor="@color/wikicleta_blue"
+          		android:textSize="16sp"
+          		android:text="$ 50 MXN"
+          		android:layout_marginLeft="10dp"
+          		android:gravity="center_horizontal"
+          		android:textStyle="bold" />
+	    </LinearLayout>
+	
+	    <LinearLayout 
+	        android:id="@+id/prize_on_points_container"
+	        android:layout_width="0px"
+	        android:layout_weight="1"
+	        android:layout_height="match_parent"
+	        android:gravity="center"
+	        android:clickable="true"
+	        android:padding="10dp">
+	        <ImageView 
+	         	    android:id="@+id/prize_on_points_badge_category"
+	         	    android:layout_width="30dp"
+	          		android:layout_height="30dp"
+	          		android:src="@drawable/messenger_icon" />
+	        <TextView
+	          		android:id="@+id/prize_on_points_text"
+	          		android:layout_width="wrap_content"
+	          		android:layout_height="wrap_content"
+	          		android:textColor="@color/wikicleta_orange"
+	          		android:textSize="13sp"
+	          		android:text="15 Puntos"
+	          		android:layout_marginLeft="10dp"
+	          		android:gravity="center_horizontal" />
+	    </LinearLayout>
+    </LinearLayout>
+	<include layout="@layout/thin_separator" android:id="@+id/separator_two" />
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:layout_marginTop="15dp"
+		android:layout_marginBottom="20dp">
+        	<TextView
+		   		android:id="@+id/extra_considerations_title"
+		   		android:layout_width="wrap_content"
+		   		android:layout_height="wrap_content"
+		   		android:textColor="@color/wikicleta_orange"
+		   		android:textSize="16sp"
+		   		android:text="Consideraciones Importantes:"
+		   		android:layout_marginLeft="10dp"
+		   		android:gravity="center_horizontal"
+		   		android:textStyle="bold" />
+        	<TextView
+		   		android:id="@+id/extra_considerations"
+		   		android:layout_width="wrap_content"
+		   		android:layout_height="wrap_content"
+		   		android:textColor="@color/wikicleta_blue"
+		   		android:textSize="16sp"
+		   		android:text="Ninguna"
+		   		android:layout_marginLeft="10dp"
+		   		android:gravity="center_horizontal" />
+    </LinearLayout>
+    
+	<include layout="@layout/thin_separator" android:id="@+id/separator_three" />
+    <LinearLayout 
+        android:id="@+id/more_info_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_selector"
+        android:gravity="center"
+        android:clickable="true"
+        android:padding="14dp">
+        <TextView
+       		android:id="@+id/more_info_text"
+       		android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		android:text="@string/details"
+       		android:textColor="@color/wikicleta_orange"
+       		android:textSize="16sp"
+       		android:paddingLeft="10dp"
+       		android:paddingRight="10dp"
+       		android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

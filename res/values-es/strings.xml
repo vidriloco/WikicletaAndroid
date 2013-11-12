@@ -18,6 +18,7 @@
 	<string name="event_tomorrow">Mañana</string>
 	<string name="event_unknown">No se sabe cuando</string>
 	<string name="event_other">En %d días</string>
+	<string name="details">Ver Detalles</string>
 	
 	<string name="minutes">Minutos</string>
 	<string name="seconds">Segundos</string>
@@ -242,6 +243,10 @@
 	<string name="challenges_category_text">Puntos ganados en esta categoría</string>
 	<string name="challenges_events_now_text">Retos en tu área</string>
 	<string name="challenges_events_discover_text">Descubre</string>
+	
+	<string name="delivery_food">Llevar comida</string>
+	<string name="delivery_package">Llevar paquete</string>
+	
 	<!-- Bar -->
 	<string name="bar_center_map_text_value">Encender GPS</string>
 	<string name="bar_center_map_enabled_text_value">Apagar GPS</string>
