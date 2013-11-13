@@ -16,6 +16,7 @@ import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.layers.common.LayersConnectorListener;
+import org.wikicleta.models.LightPOI;
 import org.wikicleta.models.Parking;
 import org.wikicleta.models.User;
 import org.wikicleta.routing.Others.Cruds;
@@ -159,12 +160,14 @@ public class Parkings {
 	    protected void onPostExecute(Boolean success) {	    
 	    	dialog.dismiss();
 	    	if(success) {
+	    		LightPOI lighPoi = new LightPOI(parking.getTitle(), parking.getDetails(), parking.latitude, parking.longitude, parking.getKind(), parking.getDate());
 	    		if(parking != null && parking.getId() != null)
 					parking.delete();
 	    		if(mode == Cruds.CREATE)
 	    			Toasts.showToastWithMessage(activity, R.string.parkings_uploaded_successfully, R.drawable.success_icon);
 				else if(mode == Cruds.MODIFY)
 					Toasts.showToastWithMessage(activity, R.string.parkings_changes_uploaded_successfully, R.drawable.success_icon);
+	    		DiscoverActivity.selectedPoi = lighPoi;
 	    		AppBase.launchActivity(DiscoverActivity.class);
 	    		activity.finish();
 	    	} else {

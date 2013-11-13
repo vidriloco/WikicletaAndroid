@@ -18,6 +18,7 @@ import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.layers.common.LayersConnectorListener;
+import org.wikicleta.models.LightPOI;
 import org.wikicleta.models.Route;
 import org.wikicleta.models.RoutePerformance;
 import org.wikicleta.models.User;
@@ -354,6 +355,7 @@ public class Routes {
 	    protected void onPostExecute(Boolean success) {
 	    	dialog.dismiss();
 	    	if(success) {
+	    		LightPOI lighPoi = new LightPOI(route.getTitle(), route.getDetails(), route.getLatLng().latitude, route.getLatLng().longitude, route.getKind(), route.getDate());
 				if(route != null && route.getId() != null)
 					route.delete();
     			Toasts.showToastWithMessage(activity, R.string.route_saved_successfully, R.drawable.success_icon);
@@ -361,7 +363,8 @@ public class Routes {
 	    		dialog.dismiss();
 	    		activity.finish();
 				AnalyticsBase.reportLoggedInEvent("On New Route Activity: Route Saved successfully", activity);
-	    		AppBase.launchActivity(DiscoverActivity.class);
+				DiscoverActivity.selectedPoi = lighPoi;
+				AppBase.launchActivity(DiscoverActivity.class);
 	    	} else {	    		
 	    		AlertDialog.Builder builder = DialogBuilder.buildAlertWithTitleAndMessage(activity, R.string.notification, R.string.route_not_saved);
 	    		

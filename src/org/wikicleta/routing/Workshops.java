@@ -14,6 +14,7 @@ import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.common.Toasts;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.layers.common.LayersConnectorListener;
+import org.wikicleta.models.LightPOI;
 import org.wikicleta.models.User;
 import org.wikicleta.models.Workshop;
 import org.wikicleta.routing.Others.Cruds;
@@ -154,12 +155,14 @@ public class Workshops {
 	    	dialog.dismiss();
 	    	
 	    	if(success) {
+	    		LightPOI lighPoi = new LightPOI(workshop.getTitle(), workshop.getDetails(), workshop.latitude, workshop.longitude, workshop.getKind(), workshop.getDate());
 	    		if(workshop != null && workshop.getId() != null)
 					workshop.delete();
 	    		if(mode == Cruds.CREATE)
 	    			Toasts.showToastWithMessage(activity, R.string.workshops_uploaded_successfully, R.drawable.success_icon);
 				else if(mode == Cruds.MODIFY)
 					Toasts.showToastWithMessage(activity, R.string.workshops_changes_uploaded_successfully, R.drawable.success_icon);
+	    		DiscoverActivity.selectedPoi = lighPoi;
 	    		AppBase.launchActivity(DiscoverActivity.class);
 	    		activity.finish();
 	    	} else {

@@ -21,7 +21,7 @@ public class LightPOI implements ListedModelInterface {
 	public String kind;
 	public Date updatedAt;
 	
-	LightPOI(String title, String description, double lat, double lon, String kind, Date updatedAt) {
+	public LightPOI(String title, String description, double lat, double lon, String kind, Date updatedAt) {
 		this.title = title;
 		this.description = description;
 		this.lat = lat;
@@ -30,7 +30,7 @@ public class LightPOI implements ListedModelInterface {
 		this.updatedAt = updatedAt;
 	}
 	
-	LightPOI(Integer category, String description, double lat, double lon, String kind, Date updatedAt) {
+	public LightPOI(Integer category, String description, double lat, double lon, String kind, Date updatedAt) {
 		this.category = category;
 		this.description = description;
 		this.lat = lat;
