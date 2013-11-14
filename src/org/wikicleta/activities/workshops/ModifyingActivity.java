@@ -49,9 +49,10 @@ public class ModifyingActivity extends ModifyingOnMapBaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		attemptCenterOnLocationAtStart = false;
 		super.onCreate(savedInstanceState);
+		AppBase.currentActivity = this;
+
 		setTheme(R.style.Theme_wikicleta);
 		
-		AppBase.currentActivity = this;
     	assignToggleActionsForAutomapCenter();
 
     	// Workshop from a draft store on local db

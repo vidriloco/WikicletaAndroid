@@ -216,7 +216,7 @@
 	<string name="user_profile_title">Tu Perfil</string>
 	<string name="user_profile_tab">Tu</string>
 	<string name="user_drafts_tab">Borradores</string>
-	<string name="user_username_restriction">El nombre de usuario no debe ser mayor a 16 caracteres. Puede tener números, letras en minúsculas, guiones y guiones bajos.</string>
+	<string name="user_username_restriction">El nombre de usuario no debe ser mayor a 16 caracteres. Puede tener números, letras, guiones y guiones bajos.</string>
 	<string name="user_bio_length_restriction">Tu bio no debe ser de más de 200 caracteres de longitud</string>
 	<string name="user_profile_updated_successfully">Los cambios a tu perfil han sido guardados correctamente</string>
 	<string name="user_profile_could_not_update">Los cambios a tu perfil no pudieron guardarse, intenta más tarde por favor.</string>
@@ -277,7 +277,7 @@
 	<string name="no_google_play_services">Wikicleta necesita que Google Play Services esté instalado."</string>
 	
 	<!-- Landing Activity strings -->
-    <string name="landing_join_text">Regístrate</string>
+    <string name="landing_join_text">Regístro</string>
     <string name="landing_login_text">Iniciar</string>
     
     <string name="drafts_on">En borradores </string>
