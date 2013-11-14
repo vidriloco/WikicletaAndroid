@@ -115,7 +115,7 @@ public class Routes {
 				return false;
 
 			JSONObject object = (JSONObject) JSONValue.parse(fetchedString);
-			if((Boolean) object.get("success")) {
+			if(object.containsKey("success") && (Boolean) object.get("success")) {
 				routeExtras = (JSONObject) object.get("route");
 				return true;
 			} else {
@@ -355,7 +355,6 @@ public class Routes {
 	    protected void onPostExecute(Boolean success) {
 	    	dialog.dismiss();
 	    	if(success) {
-	    		LightPOI lighPoi = new LightPOI(route.getTitle(), route.getDetails(), route.getLatLng().latitude, route.getLatLng().longitude, route.getKind(), route.getDate());
 				if(route != null && route.getId() != null)
 					route.delete();
     			Toasts.showToastWithMessage(activity, R.string.route_saved_successfully, R.drawable.success_icon);
@@ -363,6 +362,8 @@ public class Routes {
 	    		dialog.dismiss();
 	    		activity.finish();
 				AnalyticsBase.reportLoggedInEvent("On New Route Activity: Route Saved successfully", activity);
+				
+	    		LightPOI lighPoi = new LightPOI(route.getTitle(), route.getDetails(), route.getLatLng().latitude, route.getLatLng().longitude, route.getKind(), route.getDate());
 				DiscoverActivity.selectedPoi = lighPoi;
 				AppBase.launchActivity(DiscoverActivity.class);
 	    	} else {	    		

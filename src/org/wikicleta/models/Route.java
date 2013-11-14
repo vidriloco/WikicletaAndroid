@@ -309,7 +309,13 @@ public class Route extends Model implements MarkerInterface, ListedModelInterfac
 	
 	@Override
 	public LatLng getLatLng() {
-		return this.originCoordinate;
+		if(this.originCoordinate != null)
+			return this.originCoordinate;
+		else
+			if(!this.instants().isEmpty())
+				return this.instants().get(0).geoPoint();
+			else
+				return null;
 	}
 
 	@Override
