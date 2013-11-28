@@ -26,6 +26,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Button;
 
 public class Routes {
@@ -110,7 +111,7 @@ public class Routes {
 		protected Boolean doInBackground(Route... args) {
 			route = args[0];
 			String fetchedString = NetworkOperations.getJSONExpectingString(showPath.replace(":id", String.valueOf(route.remoteId)), false);
-
+			Log.i("chelix testing", "This is the json with the route data: " + fetchedString);
 			if(fetchedString == null)
 				return false;
 
@@ -168,7 +169,7 @@ public class Routes {
 		protected Boolean doInBackground(Route... args) {
 			route = args[0];
 			String fetchedString = NetworkOperations.getJSONExpectingString(performancesPath.replace(":id", String.valueOf(route.remoteId)), false);
-
+			Log.i("chelix testing", "This is the json with the route Performances data: " + fetchedString);
 			if(fetchedString == null)
 				return false;
 

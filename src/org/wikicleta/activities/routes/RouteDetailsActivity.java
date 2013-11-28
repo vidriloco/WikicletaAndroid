@@ -1,6 +1,8 @@
 package org.wikicleta.activities.routes;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+
 import org.wikicleta.R;
 import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.activities.common.LocationAwareMapWithMarkersActivity;
@@ -9,9 +11,12 @@ import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.Toasts;
+import org.wikicleta.helpers.Formatters;
 import org.wikicleta.helpers.NotificationBuilder;
 import org.wikicleta.interfaces.RemoteFetchingDutyListener;
+import org.wikicleta.models.Instant;
 import org.wikicleta.models.Route;
+import org.wikicleta.models.RoutePerformance;
 import org.wikicleta.models.RouteRanking;
 import org.wikicleta.routing.RouteRankings;
 import org.wikicleta.routing.Routes;
@@ -19,8 +24,10 @@ import org.wikicleta.services.routes.RouteTrackingService;
 import org.wikicleta.services.routes.ServiceConstructor;
 import org.wikicleta.views.RouteViews;
 import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import android.app.AlertDialog;
@@ -28,6 +35,9 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -36,10 +46,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import  android.view.WindowManager.LayoutParams;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity implements RoutesConnectorInterface, RemoteFetchingDutyListener {
+public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity implements RoutesConnectorInterface, RemoteFetchingDutyListener, OnMarkerClickListener {
 	
 	protected NotificationBuilder notification;
 	public static Route currentRoute;
@@ -57,6 +68,7 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 	private Dialog rankingDialog;
 	
 	private RouteRanking lastRouteRanking;
+	private ArrayList<Instant> routeStops = null;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		attemptCenterOnLocationAtStart = false;
@@ -66,6 +78,7 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 
         AppBase.currentActivity = this;
         
+        routeStops = new ArrayList<Instant>();
         if(currentRoute == null)
         	AppBase.launchActivity(DiscoverActivity.class);
         else {
@@ -110,6 +123,7 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
         	
         	fetchAndDrawRoute();
         	loadMarkers();
+        	map.setOnMarkerClickListener(this);
         }
 	}
 	
@@ -154,6 +168,31 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 		Routes.Put updater = new Routes().new Put();
 		updater.activity = this;
 		updater.execute(currentRoute);
+	}
+	
+	private void loadPerformanceMarkers(){
+		double averageSpeed;
+		int c = 0;
+		for (RoutePerformance performance : currentRoute.persistedRoutePerformances) {
+			averageSpeed = performance.averageSpeed;
+			Log.i("Chelix", "Average speed: " + performance.averageSpeed);
+			for (Instant instant : performance.instants) {
+				if (instant.speed < (averageSpeed*.10)){
+					map.addMarker(new MarkerOptions()
+			        .position(instant.geoPoint())
+			        .snippet(String.valueOf(c))
+			        .icon(BitmapDescriptorFactory.fromResource(R.drawable.performance_low)));
+				}else if(instant.speed > (averageSpeed*.10)){
+					map.addMarker(new MarkerOptions()
+			        .position(instant.geoPoint())
+			        .snippet(String.valueOf(c))
+			        .icon(BitmapDescriptorFactory.fromResource(R.drawable.performance_high)));
+				}
+				c++;
+				routeStops.add(instant);
+				Log.i("Chelix", "Instant speed: " + (instant.speed * .10));
+			}
+		}
 	}
 	
 	@Override
@@ -205,6 +244,8 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 	    
 		((TextView) performancesDialog.findViewById(R.id.challenge_or_check_in_text)).setTypeface(AppBase.getTypefaceStrong());
 
+		loadPerformanceMarkers();
+		
 	}
 
 	@Override
@@ -375,6 +416,46 @@ public class RouteDetailsActivity extends LocationAwareMapWithMarkersActivity im
 	public void onFailed() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public boolean onMarkerClick(Marker marker) {
+		if (marker.getSnippet()!=null){
+			Instant selectedInstant = routeStops.get(Integer.valueOf(marker.getSnippet()));
+			Log.i("Chelix", "Instant time: " + selectedInstant.time);
+			Log.i("Chelix", "Instant speed: " + selectedInstant.speed);
+			buildInstantDetailDialog(selectedInstant.speed, selectedInstant.time);
+		}
+		return super.onMarkerClick(marker);
+	}
+	
+	private void buildInstantDetailDialog(float speed, long time){
+		DecimalFormat format=new DecimalFormat("#.##");
+		final Dialog dialog = new Dialog(RouteDetailsActivity.this);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(R.layout.dialog_instant_performance);
+		TextView txtSpeed = (TextView)dialog.findViewById(R.id.velocity_value_text);
+		TextView txtTime = (TextView)dialog.findViewById(R.id.time_value_text);
+		TextView txtDistance = (TextView)dialog.findViewById(R.id.distance_value_text);
+		txtSpeed.setText(String.valueOf(format.format(speed)) + " Km/H");
+		txtTime.setText(Formatters.millisecondsToTime(time));
+		LayoutParams lp = dialog.getWindow().getAttributes();
+		lp.gravity = Gravity.TOP;
+		dialog.show();
+		
+		new CountDownTimer(3000,1000) {
+			
+			@Override
+			public void onTick(long millisUntilFinished) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onFinish() {
+				dialog.dismiss();
+			}
+		}.start();
 	}
 
 }

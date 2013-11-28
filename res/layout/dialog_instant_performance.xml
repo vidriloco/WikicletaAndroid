@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" > 
+    <LinearLayout
+        android:id="@+id/container_for_title"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:background="@drawable/background_selector"
+    	android:gravity="center">
+        <TextView
+	    android:id="@+id/dialog_title"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:padding="14dp"
+	    android:text="@string/instant_performance"
+	    android:textColor="@color/wikicleta_blue"
+	    android:textSize="15sp"
+	    android:textStyle="bold" />
+    </LinearLayout>
+	<LinearLayout
+	    android:id="@+id/performances_table_header"
+	    android:layout_below="@+id/container_for_title"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:background="@drawable/contact_item_selector"
+		android:weightSum="3">
+	    
+	    <LinearLayout
+	        android:id="@+id/velocity_title_container"
+	        android:layout_width="1dp"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:layout_weight="1"
+	        android:gravity="center_horizontal" >
+	       	<TextView
+	       	    android:id="@+id/velocity_title_text"
+	       	    android:layout_width="fill_parent"
+	       	    android:layout_height="wrap_content"
+	       	    android:padding="5dp"
+				android:textColor="@color/wikicleta_white"
+	       	    android:text="@string/route_performances_table_velocity_title_text"
+	       	    android:alpha="0.8"
+	       	    android:gravity="center_horizontal"
+	       	    android:background="@color/wikicleta_blue"
+	       	    android:textSize="14sp" />
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/time_title_container"
+	        android:layout_width="1dp"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:layout_weight="1"
+	        android:gravity="center_horizontal" >
+	       	<TextView
+	       	    android:id="@+id/time_title_text"
+	       	    android:layout_width="fill_parent"
+	       	    android:layout_height="wrap_content"
+	       	    android:padding="5dp"
+				android:textColor="@color/wikicleta_white"
+	       	    android:text="@string/route_performances_table_time_title_text"
+	       	    android:gravity="center_horizontal"
+	       	    android:background="@color/wikicleta_blue"
+	       	    android:textSize="14sp" />
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/distance_title_container"
+	        android:layout_width="1dp"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:layout_weight="1"
+	        android:gravity="center_horizontal" >
+	       	<TextView
+	       	    android:id="@+id/distance_title_text"
+	       	    android:layout_width="fill_parent"
+	       	    android:layout_height="wrap_content"
+	       	    android:padding="5dp"
+				android:textColor="@color/wikicleta_white"
+	       	    android:text="@string/route_performances_table_distance_title_text"
+	       	    android:alpha="0.8"
+	       	    android:gravity="center_horizontal"
+	       	    android:background="@color/wikicleta_blue"
+	       	    android:textSize="14sp" />
+	    </LinearLayout>
+	</LinearLayout>
+
+	<LinearLayout 
+	    android:id="@+id/performances_table_content"
+	    android:layout_below="@+id/performances_table_header"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:background="@drawable/contact_item_selector"
+		android:weightSum="3">
+	    
+	    <LinearLayout
+	        android:id="@+id/velocity_value_container"
+	        android:layout_width="1dp"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:layout_weight="1"
+	        android:gravity="center_horizontal" >
+	       	<TextView
+	       	    android:id="@+id/velocity_value_text"
+	       	    android:layout_width="fill_parent"
+	       	    android:layout_height="wrap_content"
+	       	    android:padding="5dp"
+				android:textColor="@color/black"
+	       	    android:text="@string/route_performances_table_velocity_title_text"
+	       	    android:alpha="0.8"
+	       	    android:gravity="center_horizontal"
+	       	    android:background="@color/white"
+	       	    android:textSize="14sp" />
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/time_value_container"
+	        android:layout_width="1dp"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:layout_weight="1"
+	        android:gravity="center_horizontal" >
+	       	<TextView
+	       	    android:id="@+id/time_value_text"
+	       	    android:layout_width="fill_parent"
+	       	    android:layout_height="wrap_content"
+	       	    android:padding="5dp"
+				android:textColor="@color/black"
+	       	    android:text="@string/route_performances_table_time_title_text"
+	       	    android:gravity="center_horizontal"
+	       	    android:background="@color/white"
+	       	    android:textSize="14sp" />
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/distance_value_container"
+	        android:layout_width="1dp"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:layout_weight="1"
+	        android:gravity="center_horizontal" >
+	       	<TextView
+	       	    android:id="@+id/distance_value_text"
+	       	    android:layout_width="fill_parent"
+	       	    android:layout_height="wrap_content"
+	       	    android:padding="5dp"
+				android:textColor="@color/black"
+	       	    android:text="@string/route_performances_table_distance_title_text"
+	       	    android:alpha="0.8"
+	       	    android:gravity="center_horizontal"
+	       	    android:background="@color/white"
+	       	    android:textSize="14sp" />
+	    </LinearLayout>
+	</LinearLayout>
+</RelativeLayout>

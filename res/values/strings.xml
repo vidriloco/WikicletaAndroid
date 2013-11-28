@@ -87,11 +87,13 @@
 	<string name="waiting_for_performances">Loading performances table</string>
 	<string name="all_performants">Performance table</string>
 	<string name="challenge_or_check_in_text">Compete / Check-in on route</string>
+	<string name="instant_performance">Detalles</string>
 	
 	<string name="route_performances_table_username_title_text">User</string>
 	<string name="route_performances_table_date_title_text">Date</string>
 	<string name="route_performances_table_time_title_text">Time</string>
 	<string name="route_performances_table_velocity_title_text">Speed</string>
+	<string name="route_performances_table_distance_title_text">Distance</string>
 		
 	<!-- Strings for Tips  -->
 	<string name="tip">Tip</string>
