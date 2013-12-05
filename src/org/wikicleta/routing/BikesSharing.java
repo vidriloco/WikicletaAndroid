@@ -1,4 +1,5 @@
 package org.wikicleta.routing;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,10 +10,11 @@ import org.wikicleta.common.NetworkOperations;
 import org.wikicleta.layers.common.LayersConnectorListener;
 import org.wikicleta.models.CycleStation;
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class BikesSharing {
 	public class GetEcobici extends AsyncTask<Void, Void, Boolean> {
-		protected String url = "http://api.citybik.es/ecobici.json";
+		protected String getPath="/api/cycle_stations?";
 		public LayersConnectorListener connector;
 		public ArrayList<CycleStation> items;
 
@@ -30,12 +32,20 @@ public class BikesSharing {
 	    }
 	    
 		@Override
-		protected Boolean doInBackground(Void... params) {
-			String parsedValue = NetworkOperations.getJSONExpectingString(url, true);
-			if(parsedValue == null)
+		protected Boolean doInBackground(Void... args) {
+			String params = "viewport[sw]=".concat(viewport.get("sw")).concat("&viewport[ne]=").concat(viewport.get("ne"));
+			String fetchedString = NetworkOperations.getJSONExpectingStringGzipped(getPath.concat(params), false);
+			Log.i("WIKICLETA", fetchedString);
+			if(fetchedString == null)
 				return false;
-			objectList = (JSONArray) JSONValue.parse(parsedValue);
-			return true;
+			
+			JSONObject object = (JSONObject) JSONValue.parse(fetchedString);
+			if((Boolean) object.get("success")) {
+				objectList = (JSONArray) object.get("cycle_stations");
+				return true;
+			} else {
+				return false;
+			}
 		}
 
 		@Override

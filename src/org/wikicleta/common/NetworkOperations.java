@@ -1,7 +1,13 @@
 package org.wikicleta.common;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.zip.GZIPInputStream;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -33,6 +39,43 @@ public class NetworkOperations {
 		return response.getStatusLine().getStatusCode();
 	}
 	
+	public static String getJSONExpectingStringGzipped(String path, boolean prefixed) {
+		HashMap<String, String> headers = new HashMap<String, String>();
+		headers.put("Accept-Encoding", "gzip");
+		
+		HttpResponse response = NetworkOperations.getJSON(path, prefixed, headers);
+		Reader reader = null;
+		StringWriter writer = null;
+		String charset = "UTF-8"; // You should determine it based on response header.
+
+		try {
+		    InputStream gzippedResponse = response.getEntity().getContent();
+		    InputStream ungzippedResponse = new GZIPInputStream(gzippedResponse);
+		    reader = new InputStreamReader(ungzippedResponse, charset);
+		    writer = new StringWriter();
+
+		    char[] buffer = new char[10240];
+		    for (int length = 0; (length = reader.read(buffer)) > 0;) {
+		        writer.write(buffer, 0, length);
+		    }
+		} catch(Exception exception) {
+			
+		} finally {
+			try {
+				if(writer != null)
+					writer.close();
+				if(reader != null)
+					reader.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		if(writer != null)
+			return writer.toString();
+		return null;
+	}
 	
 	public static String postJSONExpectingStringTo(String path, String jsonValue) {
 		HttpResponse response = NetworkOperations.postJSON(path, jsonValue);
@@ -67,6 +110,10 @@ public class NetworkOperations {
 	}
 	
 	protected static HttpResponse getJSON(String path, boolean prefixed)  {
+		return getJSON(path, prefixed, null);
+	}
+	
+	protected static HttpResponse getJSON(String path, boolean prefixed, HashMap<String, String> extraHeaders)  {
 	    HttpClient client = new DefaultHttpClient();
 	    HttpGet request = null;
 	    if(prefixed)
@@ -76,6 +123,12 @@ public class NetworkOperations {
 	    
 		request.setHeader("Accept", "application/json");
 		request.setHeader("Content-type", "application/json");
+		if(extraHeaders != null) {
+			for(String key : extraHeaders.keySet()) {
+				String value = extraHeaders.get(key);
+				request.setHeader(key, value);
+			}
+		}
 	    //Handles what is returned from the page 
 	    
     	HttpResponse response = null;

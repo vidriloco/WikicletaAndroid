@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
+import org.wikicleta.common.Constants;
 import org.wikicleta.helpers.SimpleAnimatorListener;
 import org.wikicleta.interfaces.MarkerInterface;
 import org.wikicleta.layers.common.LayersConnectorListener;
@@ -37,7 +38,8 @@ public class LocationAwareMapWithMarkersActivity extends LocationAwareMapWithCon
 	protected Handler handler = new Handler();
 	protected boolean handlerRunning = false;
 	protected ConcurrentHashMap<LatLng, MarkerInterface> markers;
-
+	protected ConcurrentHashMap<LatLng, MarkerInterface> ecobiciMarkers;
+	
 	@SuppressLint("UseSparseArrays")
 	@Override
 	public void onCreate(Bundle savedInstanceState, int layoutID) {
@@ -64,6 +66,7 @@ public class LocationAwareMapWithMarkersActivity extends LocationAwareMapWithCon
     	});
    	 	map.setOnMarkerClickListener(this);
 		markers = new ConcurrentHashMap<LatLng, MarkerInterface>();
+		ecobiciMarkers = new ConcurrentHashMap<LatLng, MarkerInterface>();
 	}
 
 	public void reloadActiveLayers() {
@@ -126,6 +129,9 @@ public class LocationAwareMapWithMarkersActivity extends LocationAwareMapWithCon
 		});
 	}
 
+	
+	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void overlayFinishedLoadingWithPayload(boolean status, Object payload) {
@@ -141,7 +147,7 @@ public class LocationAwareMapWithMarkersActivity extends LocationAwareMapWithCon
 				markerInterfaced.setMarker(marker);
 	    		markers.put(marker.getPosition(), markerInterfaced);
 			}
-    	}		
+    	}
     	
 		pruneMarkers();
     	this.overlayFinishedLoading(status);

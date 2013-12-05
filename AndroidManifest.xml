@@ -39,7 +39,6 @@
         android:theme="@style/Theme.wikicleta" >
         <meta-data android:name="AA_DB_NAME" android:value="Wikicleta.db" />
 		<meta-data android:name="AA_DB_VERSION" android:value="1" />
-    	<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />    
         <activity
             android:name="org.wikicleta.activities.access.LandingActivity"
             android:label="@string/app_name"
@@ -256,7 +255,7 @@
         <uses-library android:required="true" android:name="com.google.android.maps" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCYLVNyHlVZlU68kvnTS9gE2rWCJ9O9JtQ" />
+            android:value="AIzaSyDoK1BddLkv-4lzJu4K1FOJHpAzCXlWO4Y" />
         
         <!-- google maps store API Key: AIzaSyCYLVNyHlVZlU68kvnTS9gE2rWCJ9O9JtQ -->
         <!-- google maps chelix API debug Key: AIzaSyDc-FboLRjdh3qgvWKyQsJ5lsnf1TBE8kQ -->

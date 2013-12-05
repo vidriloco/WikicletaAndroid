@@ -94,7 +94,7 @@ public class Parkings {
 		protected Boolean doInBackground(Void... args) {
 
 			String params = "viewport[sw]=".concat(viewport.get("sw")).concat("&viewport[ne]=").concat(viewport.get("ne"));
-			String fetchedString = NetworkOperations.getJSONExpectingString(getPath.concat(params), false);
+			String fetchedString = NetworkOperations.getJSONExpectingStringGzipped(getPath.concat(params), false);
 			if(fetchedString == null)
 				return false;
 			JSONObject object = (JSONObject) JSONValue.parse(fetchedString);

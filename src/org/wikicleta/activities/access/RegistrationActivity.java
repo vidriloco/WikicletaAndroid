@@ -19,6 +19,7 @@ import com.actionbarsherlock.app.ActionBar;
 import android.app.Dialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -181,9 +182,9 @@ public class RegistrationActivity extends ImageSelectionActivity {
 			String result = NetworkOperations.postJSONExpectingStringTo("/api/users", JSONValue.toJSONString(user));
 			if(result==null)
 				return false;
-			
+			Log.e("WIKICLETA", result);
 			responseObject = (JSONObject) JSONValue.parse(result);
-			if(responseObject.containsKey("errors")) {
+			if(responseObject!= null && responseObject.containsKey("errors")) {
 				return false;
 			} else {
 				User.storeWithParams(responseObject, (String) responseObject.get("auth_token"));

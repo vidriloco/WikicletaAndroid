@@ -14,13 +14,13 @@ public class CycleStation implements MarkerInterface, RemoteModelInterface {
 	public LatLng location;
 	public int availableSlots;
 	public int availableBikes;
-	public int id;
 	protected Marker marker;
+	public String agency;
 
-	public CycleStation(int id, String name, LatLng location, int availableSlots, int availableBikes) {
+	public CycleStation(String agency, String name, LatLng location, int availableSlots, int availableBikes) {
+		this.agency = agency;
 		this.availableBikes = availableBikes;
 		this.availableSlots = availableSlots;
-		this.id = id;
 		this.location = location;
 		this.name = name;
 	}
@@ -43,12 +43,12 @@ public class CycleStation implements MarkerInterface, RemoteModelInterface {
 	}
 	
 	public static CycleStation buildFrom(JSONObject object) {
-		long id = (Long) object.get("number");
 		String name = (String) object.get("name");
-		LatLng location = new LatLng(((Long) object.get("lat"))/1E6 , ((Long) object.get("lng"))/1E6);
-		long freeParking = (Long) object.get("free");
-		long bikes = (Long) object.get("bikes");
-		return new CycleStation((int) id, name, location, (int) freeParking, (int) bikes);
+		LatLng location = new LatLng((Double) object.get("lat"), (Double) object.get("lon"));
+		long freeParking = (Long) object.get("free_slots");
+		long bikes = (Long) object.get("bikes_available");
+		String agency = (String) object.get("agency");
+		return new CycleStation(agency, name, location, (int) freeParking, (int) bikes);
 	}
 
 	@Override
