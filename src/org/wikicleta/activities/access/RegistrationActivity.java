@@ -125,6 +125,7 @@ public class RegistrationActivity extends ImageSelectionActivity {
 		
 		if(FieldValidators.isFieldEmpty(mUsername)) {
 			mUsernameView.setError(getString(R.string.error_field_required));
+			return;
 		}
 		
 		if (FieldValidators.isFieldEmpty(mEmail)) {
