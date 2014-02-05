@@ -4,4 +4,5 @@
 	<dimen name="right_menu_visible_area_width">160dp</dimen>
     <dimen name="shadow_width">5dp</dimen>
     <dimen name="corner_radius">5dp</dimen>
+    <dimen name="profile_avatar_width">80dp</dimen>
 </resources>

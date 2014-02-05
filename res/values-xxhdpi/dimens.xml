@@ -1,0 +1,8 @@
+
+<resources>
+    <!--
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for w320dp devices (xxhdpi) here.
+    -->
+    <dimen name="profile_avatar_width">120dp</dimen>
+</resources>

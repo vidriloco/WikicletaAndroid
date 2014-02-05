@@ -22,11 +22,15 @@
         	android:orientation="vertical"
         	android:gravity="center"
         	android:layout_margin="50dp">
+        	
             <ImageView android:id="@+id/user_pic" 
-            android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
+            android:layout_width="@dimen/profile_avatar_width"
+        	android:layout_height="@dimen/profile_avatar_width"
         	android:layout_gravity="center"
+        	android:scaleType="fitXY"
+        	android:adjustViewBounds="true"
         	android:src="@drawable/profile_placeholder_avatar" />
+            
             <LinearLayout 
                 android:layout_width="fill_parent"
         		android:layout_height="wrap_content"
