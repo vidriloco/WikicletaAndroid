@@ -56,7 +56,7 @@
             android:drawableLeft="@drawable/login_icon"
             android:drawablePadding="15dp"
             android:gravity="center|center_vertical"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:clickable="true"
             android:background="@drawable/background_selector"
             android:textColor="@color/wikicleta_orange" />
@@ -71,7 +71,7 @@
             android:text="@string/landing_join_text"
             android:drawableLeft="@drawable/unite_icon"
             android:drawablePadding="15dp"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:background="@drawable/background_selector"
             android:textColor="@color/wikicleta_orange" />
 

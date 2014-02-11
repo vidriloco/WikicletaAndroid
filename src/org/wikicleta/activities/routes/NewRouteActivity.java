@@ -22,6 +22,7 @@ import android.app.Dialog;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -72,7 +73,8 @@ public class NewRouteActivity extends Activity implements ServiceListener, Navig
 		AnalyticsBase.reportLoggedInEvent("On New Route Activity", getApplicationContext());
 		
 		decimalFormat = new DecimalFormat("##.##");
-		decimalFormat.setRoundingMode(RoundingMode.DOWN);
+		if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.GINGERBREAD_MR1)
+			decimalFormat.setRoundingMode(RoundingMode.DOWN);
         recordRouteToolbarView = (RelativeLayout) findViewById(R.id.toggable_group);
         statsView = (RelativeLayout) findViewById(R.id.stats_container);
         gpsWaitingView = (RelativeLayout) findViewById(R.id.waiting_for_gps_container);
