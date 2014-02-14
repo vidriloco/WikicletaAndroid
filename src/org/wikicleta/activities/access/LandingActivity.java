@@ -2,6 +2,7 @@ package org.wikicleta.activities.access;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.wikicleta.R;
@@ -10,31 +11,33 @@ import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.common.FieldValidators;
 import org.wikicleta.common.NetworkOperations;
+import org.wikicleta.dialogs.LoginDialog;
+import org.wikicleta.dialogs.LoginDialog.LoginDialogListener;
 import org.wikicleta.helpers.DialogBuilder;
 import org.wikicleta.models.User;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.nineoldandroids.animation.AnimatorSet;
-import com.nineoldandroids.animation.ObjectAnimator;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
+
 public class LandingActivity extends AccessActivity {
 		
 	UserLoginTask mAuthTask;
+	private LoginDialog loginDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class LandingActivity extends AccessActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		AnalyticsBase.flushInstance();
+		loginDialog = null;
 	}
 	
 	protected void bootApplicationMainView() {
@@ -152,49 +156,68 @@ public class LandingActivity extends AccessActivity {
 	}
 	
 	protected void displaySignInForm() {
-		final Dialog toggleBuilder = new Dialog(this);
-		toggleBuilder.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        LayoutInflater inflater = this.getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_login, null);
-        ((TextView) view.findViewById(R.id.login_text)).setTypeface(AppBase.getTypefaceStrong());
-        
-        ((EditText) view.findViewById(R.id.login_username)).setTypeface(AppBase.getTypefaceStrong());
-        ((EditText) view.findViewById(R.id.login_password)).setTypeface(AppBase.getTypefaceStrong());
-        toggleBuilder.setContentView(view);
-        toggleBuilder.show();
-        
-        ((TextView) view.findViewById(R.id.button_return)).setTypeface(AppBase.getTypefaceStrong());
-        ((TextView) view.findViewById(R.id.button_login)).setTypeface(AppBase.getTypefaceStrong());
-
-        view.findViewById(R.id.return_button_container).setOnClickListener(new OnClickListener() {
-
+		
+		/**
+		 * The method to show login dialog have been changed to avoid the use
+		 * of final variables and avoid memory leaks.
+		 */
+		loginDialog = new LoginDialog(LandingActivity.this, new LoginDialogListener() {
+			
 			@Override
-			public void onClick(View v) {
-				toggleBuilder.dismiss();
+			public void onLoginButtonPressed() {
+				AnalyticsBase.reportUnloggedEvent("Attempted To Login", getApplicationContext(), "username", loginDialog.getUsername());				
+				attemptLogin(loginDialog.getUsernameEditText(), loginDialog.getPasswordEditText());
 			}
-        	
-        });
-        
-        view.findViewById(R.id.login_button_container).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				EditText username = (EditText) view.findViewById(R.id.login_username);
-				AnalyticsBase.reportUnloggedEvent("Attempted To Login", getApplicationContext(), "username", username.toString());				
-				attemptLogin(username, (EditText) view.findViewById(R.id.login_password));
-			}
-        	
-        });
-        
-        toggleBuilder.setOnDismissListener(new OnDismissListener() {
-
-			@Override
-			public void onDismiss(DialogInterface dialog) {
-				AnalyticsBase.reportUnloggedEvent("Dismissed Login View", getApplicationContext());				
-			}
-        	
-        });
+		});
+		loginDialog.setCanceledOnTouchOutside(false);
+		loginDialog.show();
+		
+		/**
+		 * Previous method to show login dialog
+		 */
+//		final Dialog toggleBuilder = new Dialog(this);
+//		toggleBuilder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//
+//        LayoutInflater inflater = this.getLayoutInflater();
+//        final View view = inflater.inflate(R.layout.dialog_login, null);
+//        ((TextView) view.findViewById(R.id.login_text)).setTypeface(AppBase.getTypefaceStrong());
+//        
+//        ((EditText) view.findViewById(R.id.login_username)).setTypeface(AppBase.getTypefaceStrong());
+//        ((EditText) view.findViewById(R.id.login_password)).setTypeface(AppBase.getTypefaceStrong());
+//        toggleBuilder.setContentView(view);
+//        toggleBuilder.show();
+//        
+//        ((TextView) view.findViewById(R.id.button_return)).setTypeface(AppBase.getTypefaceStrong());
+//        ((TextView) view.findViewById(R.id.button_login)).setTypeface(AppBase.getTypefaceStrong());
+//
+//        view.findViewById(R.id.return_button_container).setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				toggleBuilder.dismiss();
+//			}
+//        	
+//        });
+//        
+//        view.findViewById(R.id.login_button_container).setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				EditText username = (EditText) view.findViewById(R.id.login_username);
+//				AnalyticsBase.reportUnloggedEvent("Attempted To Login", getApplicationContext(), "username", username.toString());				
+//				attemptLogin(username, (EditText) view.findViewById(R.id.login_password));
+//			}
+//        	
+//        });
+//        
+//        toggleBuilder.setOnDismissListener(new OnDismissListener() {
+//
+//			@Override
+//			public void onDismiss(DialogInterface dialog) {
+//				AnalyticsBase.reportUnloggedEvent("Dismissed Login View", getApplicationContext());
+//			}
+//        	
+//        });
 	}
 	
 	protected void sendToRegistrationActivity() {
@@ -321,4 +344,5 @@ public class LandingActivity extends AccessActivity {
 			mAuthTask = null;
 		}
 	}
+	
 }
