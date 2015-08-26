@@ -1,10 +1,10 @@
 package org.wikicleta.services.routes;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 
 import android.app.Activity;
 import android.app.Service;
@@ -13,13 +13,13 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
 
-public class LocationAwareService extends Service implements GooglePlayServicesClient.ConnectionCallbacks,
-GooglePlayServicesClient.OnConnectionFailedListener,
+public class LocationAwareService extends Service implements GoogleApiClient.ConnectionCallbacks,
+GoogleApiClient.OnConnectionFailedListener,
 LocationListener {
 
 	protected Activity boundActivity;
 	protected static LocationRequest locationRequest;
-    protected LocationClient locationClient;
+	private GoogleApiClient locationClient = null;
 
 	protected static boolean locationManagerEnabled;
 	
@@ -39,8 +39,13 @@ LocationListener {
 		locationRequest.setInterval(MILLISECONDS_PER_SECOND*UPDATE_INTERVAL_IN_SECONDS);
 		locationRequest.setFastestInterval(MILLISECONDS_PER_SECOND * FASTEST_INTERVAL_IN_SECONDS);
 
-		locationClient = new LocationClient(this, this, this);
-
+		locationClient = new GoogleApiClient.Builder(getApplicationContext())
+        .addApi(LocationServices.API)
+        .addConnectionCallbacks(this)
+        .addOnConnectionFailedListener(this)
+        .build();
+		locationRequest = new LocationRequest();
+		
         this.enableLocationManager();
 	}
 	
@@ -74,14 +79,14 @@ LocationListener {
 		// TODO Auto-generated method stub
 	}
 
-	@Override
-	public void onConnected(Bundle connectionHint) {
-		// If already requested, start periodic updates
-        locationClient.requestLocationUpdates(locationRequest, this);
-	}
 
 	@Override
-	public void onDisconnected() {
+	public void onConnected(Bundle connectionHint) {
+        LocationServices.FusedLocationApi.requestLocationUpdates(locationClient, locationRequest, this);
+	}
+	
+	@Override
+	public void onConnectionSuspended(int cause) {
 		// TODO Auto-generated method stub
 		
 	}

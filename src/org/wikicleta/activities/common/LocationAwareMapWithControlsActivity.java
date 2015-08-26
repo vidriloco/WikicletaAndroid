@@ -2,11 +2,11 @@ package org.wikicleta.activities.common;
 
 import org.wikicleta.R;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import android.annotation.SuppressLint;
@@ -16,14 +16,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class LocationAwareMapWithControlsActivity extends ActivityWithLocationAwareMap implements GooglePlayServicesClient.ConnectionCallbacks,GooglePlayServicesClient.OnConnectionFailedListener,LocationListener {
+public class LocationAwareMapWithControlsActivity extends ActivityWithLocationAwareMap implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,LocationListener {
 	protected ImageView centerOnMapOn;
 	protected ImageView centerOnMapOff;
 	protected LinearLayout toolbar;
-	protected LocationClient locationClient;
 	protected LocationRequest locationRequest;
 	protected boolean firstLocationReceived;
 	protected boolean attemptCenterOnLocationAtStart=true;
+	
+	private GoogleApiClient locationClient = null;
 	
 	@SuppressLint("UseSparseArrays")
 	@Override
@@ -61,8 +62,12 @@ public class LocationAwareMapWithControlsActivity extends ActivityWithLocationAw
 		if(locationClient == null) {
 			int resp = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 			if(resp == ConnectionResult.SUCCESS){
-				locationClient = new LocationClient(this,this,this);
-				locationRequest = LocationRequest.create();
+				locationClient = new GoogleApiClient.Builder(getApplicationContext())
+	            .addApi(LocationServices.API)
+	            .addConnectionCallbacks(this)
+	            .addOnConnectionFailedListener(this)
+	            .build();
+				locationRequest = new LocationRequest();
 				locationRequest.setInterval(1000);
 			}
 		}
@@ -80,7 +85,7 @@ public class LocationAwareMapWithControlsActivity extends ActivityWithLocationAw
 		map.setMyLocationEnabled(false);
 		
 		if(locationClient != null  && locationClient.isConnected()) {
-			locationClient.removeLocationUpdates(this);
+	        LocationServices.FusedLocationApi.removeLocationUpdates(locationClient, this);
 			this.locationClient.disconnect();
 		}
 
@@ -111,11 +116,11 @@ public class LocationAwareMapWithControlsActivity extends ActivityWithLocationAw
 
 	@Override
 	public void onConnected(Bundle connectionHint) {
-		locationClient.requestLocationUpdates(locationRequest, this);		
+        LocationServices.FusedLocationApi.requestLocationUpdates(locationClient, locationRequest, this);
 	}
 
 	@Override
-	public void onDisconnected() {
+	public void onConnectionSuspended(int cause) {
 		// TODO Auto-generated method stub
 		
 	}
