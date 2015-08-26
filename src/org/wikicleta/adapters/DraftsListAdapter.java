@@ -1,6 +1,8 @@
 package org.wikicleta.adapters;
 
 import java.util.List;
+
+import org.ocpsoft.prettytime.PrettyTime;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.fragments.activities.DraftsFragment;
@@ -29,7 +31,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.activeandroid.Model;
-import com.ocpsoft.pretty.time.PrettyTime;
 
 public class DraftsListAdapter extends ArrayAdapter<ListedModelInterface> {
 	public final Activity context;

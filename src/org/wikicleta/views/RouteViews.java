@@ -3,6 +3,7 @@ package org.wikicleta.views;
 import java.text.DecimalFormat;
 import java.util.Date;
 
+import org.ocpsoft.prettytime.PrettyTime;
 import org.wikicleta.R;
 import org.wikicleta.activities.CommentsActivity;
 import org.wikicleta.activities.routes.RouteDetailsActivity;
@@ -17,8 +18,6 @@ import org.wikicleta.routing.Others.ImageUpdater;
 import org.wikicleta.routing.Routes;
 
 import com.nineoldandroids.animation.ObjectAnimator;
-import com.ocpsoft.pretty.time.PrettyTime;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;

@@ -2,6 +2,7 @@ package org.wikicleta.views;
 
 import java.util.Date;
 
+import org.ocpsoft.prettytime.PrettyTime;
 import org.wikicleta.R;
 import org.wikicleta.activities.CommentsActivity;
 import org.wikicleta.activities.DiscoverActivity;
@@ -28,8 +29,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.ocpsoft.pretty.time.PrettyTime;
 
 public class WorkshopViews extends BaseViews {
 	

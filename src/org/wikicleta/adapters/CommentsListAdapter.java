@@ -2,6 +2,7 @@ package org.wikicleta.adapters;
 
 import java.util.List;
 
+import org.ocpsoft.prettytime.PrettyTime;
 import org.wikicleta.R;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.interfaces.RemoteFetchingDutyListener;
@@ -10,7 +11,6 @@ import org.wikicleta.models.User;
 import org.wikicleta.routing.Others;
 import org.wikicleta.routing.RankedComments;
 import org.wikicleta.routing.Others.ImageUpdater;
-import com.ocpsoft.pretty.time.PrettyTime;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

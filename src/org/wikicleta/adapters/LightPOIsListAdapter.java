@@ -1,15 +1,14 @@
 package org.wikicleta.adapters;
 
 import java.util.List;
+
+import org.ocpsoft.prettytime.PrettyTime;
 import org.wikicleta.R;
 import org.wikicleta.activities.DiscoverActivity;
 import org.wikicleta.analytics.AnalyticsBase;
 import org.wikicleta.common.AppBase;
 import org.wikicleta.models.LightPOI;
 import org.wikicleta.models.helpers.ListedModelExtractor;
-
-import com.ocpsoft.pretty.time.PrettyTime;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
